@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Auto Insight — Selected Design</title>
+  <style>
+    :root {
+      color-scheme: light;
+      font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: #f3f4f6;
+      color: #111827;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      background: #eef2f7;
+    }
+
+    .app-shell {
+      display: grid;
+      grid-template-columns: 280px 1fr;
+      min-height: 100vh;
+    }
+
+    .sidebar {
+      background: #ffffff;
+      border-right: 1px solid #e5e7eb;
+      padding: 24px 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 24px;
+    }
+
+    .brand-icon {
+      width: 32px;
+      height: 32px;
+      border-radius: 12px;
+      background: linear-gradient(135deg, #4f46e5, #2563eb);
+      display: grid;
+      place-items: center;
+      color: white;
+      font-weight: 700;
+      font-size: 16px;
+    }
+
+    .brand-title {
+      font-size: 18px;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+    }
+
+    .search-box {
+      display: block;
+      width: 100%;
+      padding: 12px 14px;
+      border: 1px solid #d1d5db;
+      border-radius: 12px;
+      background: #f8fafc;
+      color: #4b5563;
+    }
+
+    .menu-group,
+    .group-list {
+      display: grid;
+      gap: 8px;
+    }
+
+    .menu-heading {
+      font-size: 12px;
+      font-weight: 700;
+      color: #6b7280;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+
+    .menu-item,
+    .menu-fallback {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 12px 14px;
+      border-radius: 12px;
+      background: #f8fafc;
+      color: #111827;
+      text-decoration: none;
+      font-size: 14px;
+      border: 1px solid transparent;
+      transition: background 0.2s ease, border-color 0.2s ease;
+    }
+
+    .menu-item:hover,
+    .menu-fallback:hover {
+      background: #eef2ff;
+      border-color: #c7d2fe;
+    }
+
+    .menu-item.active {
+      background: #eef2ff;
+      border-color: #bfdbfe;
+      font-weight: 700;
+    }
+
+    .footer-card {
+      margin-top: auto;
+      padding: 16px;
+      border-radius: 16px;
+      background: #f8fafc;
+      border: 1px solid #e5e7eb;
+    }
+
+    .footer-title {
+      font-size: 14px;
+      font-weight: 700;
+      margin-bottom: 8px;
+      color: #111827;
+    }
+
+    .footer-line {
+      font-size: 13px;
+      color: #4b5563;
+      line-height: 1.6;
+    }
+
+    .main {
+      padding: 24px 32px;
+    }
+
+    .topbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 24px;
+      gap: 16px;
+    }
+
+    .breadcrumb {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 13px;
+      color: #6b7280;
+    }
+
+    .breadcrumb span {
+      font-weight: 600;
+      color: #111827;
+    }
+
+    .action-button {
+      padding: 10px 18px;
+      border-radius: 12px;
+      border: 1px solid #d1d5db;
+      background: #ffffff;
+      color: #111827;
+      cursor: pointer;
+      font-size: 14px;
+      font-weight: 600;
+    }
+
+    .panel {
+      background: #ffffff;
+      border: 1px solid #e5e7eb;
+      border-radius: 24px;
+      padding: 28px;
+      box-shadow: 0 8px 24px rgba(15, 23, 42, 0.04);
+    }
+
+    .panel-title {
+      font-size: 20px;
+      font-weight: 700;
+      margin-bottom: 18px;
+    }
+
+    .meta-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px 28px;
+      color: #4b5563;
+      margin-bottom: 24px;
+      font-size: 14px;
+    }
+
+    .meta-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 12px;
+      border-radius: 999px;
+      background: #eef2ff;
+      color: #1d4ed8;
+      font-weight: 700;
+    }
+
+    .field-row {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 16px;
+      margin-bottom: 24px;
+    }
+
+    .field-card {
+      background: #f8fafc;
+      border: 1px solid #e5e7eb;
+      border-radius: 16px;
+      padding: 18px;
+    }
+
+    .field-label {
+      display: block;
+      margin-bottom: 8px;
+      color: #6b7280;
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 0.02em;
+    }
+
+    .field-value {
+      font-size: 15px;
+      color: #111827;
+      min-height: 32px;
+      display: inline-flex;
+      align-items: center;
+    }
+
+    .field-button {
+      margin-top: 12px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 10px 16px;
+      border-radius: 12px;
+      background: #2563eb;
+      color: white;
+      border: none;
+      cursor: pointer;
+      font-size: 13px;
+      font-weight: 700;
+    }
+
+    .grid-cards {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 20px;
+    }
+
+    .agent-card {
+      background: #ffffff;
+      border: 1px solid #e5e7eb;
+      border-radius: 24px;
+      padding: 22px;
+      min-height: 220px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .agent-title {
+      font-size: 16px;
+      font-weight: 700;
+      margin-bottom: 10px;
+    }
+
+    .agent-description {
+      color: #4b5563;
+      font-size: 14px;
+      line-height: 1.7;
+      flex: 1;
+      margin-bottom: 16px;
+    }
+
+    .agent-meta {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      font-size: 13px;
+      color: #6b7280;
+    }
+
+    .agent-meta span {
+      font-weight: 600;
+      color: #111827;
+    }
+
+    @media (max-width: 1200px) {
+      .grid-cards {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+    }
+
+    @media (max-width: 900px) {
+      .app-shell {
+        grid-template-columns: 1fr;
+      }
+
+      .field-row,
+      .meta-row,
+      .topbar {
+        flex-direction: column;
+      }
+
+      .grid-cards {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="sidebar">
+      <div class="brand">
+        <div class="brand-icon">A</div>
+        <div class="brand-title">Auto Insight</div>
+      </div>
+
+      <input class="search-box" type="search" placeholder="Search" aria-label="Search sidebar" />
+
+      <div class="menu-group">
+        <div class="menu-item active">Explore</div>
+      </div>
+
+      <div class="menu-group">
+        <div class="menu-heading">Actions</div>
+        <a class="menu-item" href="#">Action One</a>
+        <a class="menu-item" href="#">Action Two</a>
+      </div>
+
+      <div class="menu-group">
+        <div class="menu-heading">Dashboards</div>
+        <a class="menu-item" href="#">Pinned</a>
+        <a class="menu-item" href="#">Observability</a>
+        <a class="menu-item" href="#">Saved</a>
+      </div>
+
+      <div class="footer-card">
+        <div class="footer-title">Contact</div>
+        <div class="footer-line">Alice</div>
+        <div class="footer-line">alice@example.com</div>
+      </div>
+    </aside>
+
+    <main class="main">
+      <div class="topbar">
+        <div class="breadcrumb">
+          <span>Automation Opportunities</span>
+          <span>&gt;</span>
+          <span>New AI Agent</span>
+        </div>
+        <button class="action-button">Ask AI Assistant</button>
+      </div>
+
+      <section class="panel">
+        <div class="panel-title">Intent: Billing & Payment Inquiries</div>
+
+        <div class="meta-row">
+          <div>Created By: <strong>Michael Dalal</strong></div>
+          <div>Creation Date: <strong>Oct 30, 2025 4:24 PM</strong></div>
+          <div class="meta-badge">Draft</div>
+        </div>
+
+        <div class="field-row">
+          <div class="field-card">
+            <label class="field-label">AI Agent Name</label>
+            <div class="field-value">Ava Smith</div>
+          </div>
+          <div class="field-card">
+            <label class="field-label">Job Description</label>
+            <div class="field-value">Retrieves and explains line-item bills, rate plans, and billing cycle details.</div>
+          </div>
+        </div>
+
+        <button class="field-button">Save Agent</button>
+      </section>
+
+      <section class="panel" style="margin-top: 24px;">
+        <div class="panel-title">AI Tools</div>
+        <div class="grid-cards">
+          <article class="agent-card">
+            <div>
+              <div class="agent-title">get_transaction_detail</div>
+              <p class="agent-description">Retrieves and explains line-item bills, rate plans, and billing cycle details.</p>
+            </div>
+            <div class="agent-meta"><span>4 Tools</span><span>Top</span></div>
+          </article>
+
+          <article class="agent-card">
+            <div>
+              <div class="agent-title">Billing Summary</div>
+              <p class="agent-description">Summarizes recent payments, outstanding balances, and recurring charges.</p>
+            </div>
+            <div class="agent-meta"><span>3 Tools</span><span>Latest</span></div>
+          </article>
+
+          <article class="agent-card">
+            <div>
+              <div class="agent-title">Plan Recommendations</div>
+              <p class="agent-description">Suggests rate plan improvements and cost-saving options.</p>
+            </div>
+            <div class="agent-meta"><span>5 Tools</span><span>Smart</span></div>
+          </article>
+        </div>
+      </section>
+    </main>
+  </div>
+</body>
+</html>

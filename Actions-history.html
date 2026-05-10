@@ -1,0 +1,787 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Auto Insight - Actions History</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body class="deployed-dashboard">
+  <!-- Shell Top Bar -->
+  <header class="shell-top-bar">
+    <div class="shell-top-bar-left">
+      <div class="shell-app-logo">
+        <img src="https://new-analytics-ten.vercel.app/app-icon.svg" alt="Analytics" class="shell-app-icon">
+        <span class="shell-app-name">Analytics</span>
+      </div>
+    </div>
+    <div class="shell-top-bar-right">
+      <button class="shell-icon-btn">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <circle cx="12" cy="12" r="10"></circle>
+          <path d="M12 16v-4m0-4h.01"></path>
+        </svg>
+      </button>
+      <button class="shell-icon-btn">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path>
+          <path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
+        </svg>
+        <span style="position: absolute; top: 2px; right: 2px; width: 16px; height: 16px; background: var(--color-red-notification); border-radius: 8px; font-size: 11px; color: var(--color-bg-primary); display: flex; align-items: center; justify-content: center; border: 1px solid var(--color-bg-primary);">5</span>
+      </button>
+      <div class="shell-profile">
+        <div class="shell-profile-avatar">JS</div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Body Container -->
+  <div class="body-container">
+    <div class="content-wrapper">
+    <div class="app-container">
+      <div class="app-shell">
+    <!-- ===== SIDEBAR ===== -->
+    <aside class="sidebar">
+      <button class="sidebar-item">
+        <svg class="sidebar-item-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
+          <polyline points="9 22 9 12 15 12 15 22"/>
+        </svg>
+        <span class="sidebar-item-label">New Session</span>
+      </button>
+
+      <button class="sidebar-item">
+        <svg class="sidebar-item-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M12 8V4H8"/>
+          <rect width="16" height="12" x="4" y="8" rx="2"/>
+          <path d="M2 14h2"/>
+          <path d="M20 14h2"/>
+          <path d="M15 13v2"/>
+          <path d="M9 13v2"/>
+        </svg>
+        <span class="sidebar-item-label">Automation Opportunities</span>
+      </button>
+
+      <button class="sidebar-item">
+        <svg class="sidebar-item-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M12 6V2H8"/>
+          <path d="m16 18 4 4V8a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h10z"/>
+          <path d="M2 12h2"/>
+          <path d="M20 12h2"/>
+          <path d="M9 11v2"/>
+          <path d="M15 11v2"/>
+        </svg>
+        <span class="sidebar-item-label">AI Agent</span>
+      </button>
+
+      <button class="sidebar-item">
+        <svg class="sidebar-item-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M3 14h3a2 2 0 0 1 2 2v3a2 2 0 0 1-2 2H4a1 1 0 0 1-1-1z"/>
+          <path d="M21 14h-3a2 2 0 0 0-2 2v3a2 2 0 0 0 2 2h2a1 1 0 0 0 1-1z"/>
+          <path d="M21 14a9 9 0 0 0-18 0"/>
+        </svg>
+        <span class="sidebar-item-label">Agent</span>
+      </button>
+
+      <button class="sidebar-item active">
+        <svg class="sidebar-item-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M16 22h2a2 2 0 0 0 2-2V7l-5-5H6a2 2 0 0 0-2 2v3"/>
+          <path d="M14 2v4a2 2 0 0 0 2 2h4"/>
+          <circle cx="8" cy="16" r="6"/>
+          <path d="M9.5 17.5 8 16.25V14"/>
+        </svg>
+        <span class="sidebar-item-label">Action History</span>
+      </button>
+
+      <div class="sidebar-section">
+        <button class="sidebar-item">
+          <svg class="sidebar-item-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="m19 21-7-4-7 4V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/>
+          </svg>
+          <span class="sidebar-item-label">Saved Dashboards</span>
+          <svg class="sidebar-item-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <line x1="12" y1="5" x2="12" y2="19"></line>
+            <line x1="5" y1="12" x2="19" y2="12"></line>
+          </svg>
+        </button>
+        <div class="sidebar-nested">
+          <button class="sidebar-nested-item">
+            <svg class="sidebar-item-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M20 20a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-7.9a2 2 0 0 1-1.69-.9L9.6 3.9A2 2 0 0 0 7.93 3H4a2 2 0 0 0-2 2v13a2 2 0 0 0 2 2Z"/>
+            </svg>
+            Customer Support Anal&hellip;
+          </button>
+          <div class="sidebar-nested">
+            <button class="sidebar-nested-item">Customer Support Det&hellip;</button>
+          </div>
+          <button class="sidebar-nested-item">
+            <svg class="sidebar-item-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M20 20a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-7.9a2 2 0 0 1-1.69-.9L9.6 3.9A2 2 0 0 0 7.93 3H4a2 2 0 0 0-2 2v13a2 2 0 0 0 2 2Z"/>
+            </svg>
+            Product Insights
+          </button>
+          <button class="sidebar-nested-item">Weekly KPI Summary</button>
+          <button class="sidebar-nested-item">Quarterly Board Deck Metrics</button>
+          <button class="sidebar-nested-item">Monthly Business Review</button>
+        </div>
+      </div>
+
+      <div class="sidebar-section">
+        <button class="sidebar-item">
+          <svg class="sidebar-item-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/>
+            <path d="M3 3v5h5"/>
+            <path d="M12 7v5l4 2"/>
+          </svg>
+          <span class="sidebar-item-label">Recent</span>
+        </button>
+        <div class="sidebar-nested">
+          <button class="sidebar-nested-item">Why are users dropping off a&hellip;</button>
+          <button class="sidebar-nested-item">Agent escalation trends this&hellip;</button>
+          <button class="sidebar-nested-item">Knowledge Performance</button>
+        </div>
+      </div>
+    </aside>
+
+    <!-- ===== NARROW RIGHT PANEL ===== -->
+    <div class="narrow-panel" id="narrow-panel">
+      <div style="padding: 20px; border-bottom: 1px solid var(--color-border);">
+        <h3 style="margin: 0 0 12px 0; font-size: 14px; font-weight: 600;">Panel</h3>
+      </div>
+      <div style="padding: 20px;">
+        <p style="margin: 0; font-size: 13px; color: var(--color-text-secondary);">Additional details and options will appear here.</p>
+      </div>
+    </div>
+
+    <!-- ===== MAIN CONTENT ===== -->
+    <div class="main-content">
+      <!-- Topbar Navigation -->
+      <div class="topbar-navigation">
+        <button class="topbar-back-btn">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+            <line x1="15" y1="3" x2="15" y2="21"></line>
+          </svg>
+        </button>
+        <div class="topbar-breadcrumb">History</div>
+        <div class="topbar-spacer"></div>
+        <button class="topbar-ask-ai-btn">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 1 1-8 0 4 4 0 0 1 8 0z"></path>
+          </svg>
+          Ask AI
+        </button>
+      </div>
+
+      <div class="main-sticky-header">
+        <h1 class="main-title">Actions History</h1>
+
+        <div class="filters">
+          <div class="search-box">
+            <svg class="search-box-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="11" cy="11" r="8"></circle>
+              <path d="m21 21-4.35-4.35"></path>
+            </svg>
+            <input type="text" class="search-box-input" placeholder="Search actions...">
+          </div>
+          <button class="filter-btn">
+            Date range: <span class="filter-btn-value">01/07/25 – 31/07/25</span>
+            <span style="margin-left: 4px;">⌄</span>
+          </button>
+          <div class="filter-wrapper">
+            <button class="filter-btn" id="status-filter-btn">
+              Status: <span class="filter-btn-value" id="status-value">All</span>
+              <span style="margin-left: 4px;">⌄</span>
+            </button>
+            <div class="filter-dropdown" id="status-dropdown">
+              <button class="filter-dropdown-item" data-value="All">All</button>
+              <button class="filter-dropdown-item" data-value="Draft">Draft</button>
+              <button class="filter-dropdown-item" data-value="Published">Published</button>
+            </div>
+          </div>
+          <button class="filter-btn">
+            Type: <span class="filter-btn-value">All</span>
+            <span style="margin-left: 4px;">⌄</span>
+          </button>
+          <button class="reset-filters-btn">↻ Reset Filters</button>
+        </div>
+      </div>
+
+      <div class="main-area">
+        <section class="ai-insights" id="aiInsights" aria-label="AI Insights">
+          <header class="ai-insights-header">
+            <button class="ai-insights-toggle" id="aiInsightsToggle" type="button" aria-label="Collapse AI Insights" aria-expanded="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m18 15-6-6-6 6"/></svg>
+            </button>
+            <svg class="ai-insights-sparkles" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M9.937 15.5A2 2 0 0 0 8.5 14.063l-6.135-1.582a.5.5 0 0 1 0-.962L8.5 9.936A2 2 0 0 0 9.937 8.5l1.582-6.135a.5.5 0 0 1 .963 0L14.063 8.5A2 2 0 0 0 15.5 9.937l6.135 1.581a.5.5 0 0 1 0 .964L15.5 14.063a2 2 0 0 0-1.437 1.437l-1.582 6.135a.5.5 0 0 1-.963 0z"/>
+              <path d="M20 3v4"/><path d="M22 5h-4"/><path d="M4 17v2"/><path d="M5 18H3"/>
+            </svg>
+            <h2 class="ai-insights-title">AI Insights</h2>
+          </header>
+
+          <div class="ai-insights-content">
+            <div class="ai-insights-section">
+              <div class="ai-insights-section-header">
+                <svg class="ai-insights-section-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <line x1="8" x2="21" y1="6" y2="6"/><line x1="8" x2="21" y1="12" y2="12"/><line x1="8" x2="21" y1="18" y2="18"/>
+                  <line x1="3" x2="3.01" y1="6" y2="6"/><line x1="3" x2="3.01" y1="12" y2="12"/><line x1="3" x2="3.01" y1="18" y2="18"/>
+                </svg>
+                <h3 class="ai-insights-section-title">Generated Summary</h3>
+              </div>
+              <p class="ai-insights-summary">I analyzed 143,000 interactions across 3 major categories and identified opportunities to automate 3% of your workload, saving $38K annually.</p>
+              <p class="ai-insights-summary">Here's what I found:</p>
+              <ul class="ai-insights-list">
+                <li>
+                  <strong>Billing &amp; Payment Inquiries leads automation potential:</strong> This category accounts for 68% of total automatable volume with $33K in annual savings.<br>
+                  This category includes high-volume topics like Bill Explanation, Payment Arrangement, and Refund Requests.
+                </li>
+                <li>
+                  <strong>Card Services &amp; Management shows high efficiency:</strong> With a 90% automation rate and 4.2/5 sentiment score, this category demonstrates that card-related inquiries are well-suited for AI automation with positive customer experiences.
+                </li>
+                <li>
+                  <strong>Account Management &amp; Support offers steady opportunity:</strong> While smaller in volume, this category maintains consistent automation rates and handles critical account operations with 6m average handle times.
+                </li>
+              </ul>
+            </div>
+
+            <div class="ai-insights-section">
+              <div class="ai-insights-section-header">
+                <svg class="ai-insights-section-icon ai-insights-bolt" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <path d="M4 14a1 1 0 0 1-.78-1.63l9.9-10.2a.5.5 0 0 1 .86.46l-1.92 6.02A1 1 0 0 0 13 10h7a1 1 0 0 1 .78 1.63l-9.9 10.2a.5.5 0 0 1-.86-.46l1.92-6.02A1 1 0 0 0 11 14z"/>
+                </svg>
+                <h3 class="ai-insights-section-title">Recommended actions</h3>
+                <button class="ai-insights-dismiss" type="button">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <path d="M10.268 21a2 2 0 0 0 3.464 0"/>
+                    <path d="M3.262 15.326A1 1 0 0 0 4 17h16a1 1 0 0 0 .74-1.673C19.41 13.956 18 12.499 18 8A6 6 0 0 0 6 8c0 4.499-1.411 5.956-2.738 7.326"/>
+                  </svg>
+                  Dismiss
+                </button>
+              </div>
+              <div class="ai-recommendations">
+                <article class="ai-recommendation">
+                  <h4 class="ai-recommendation-title">Prioritize Billing &amp; Payment Inquiries category</h4>
+                  <p class="ai-recommendation-text">Automating this category will deliver $33K annual savings (63% of total ROI) and handle the majority of high-volume customer inquiries across billing topics.</p>
+                  <span class="ai-recommendation-pill">$33K annual savings</span>
+                </article>
+                <article class="ai-recommendation">
+                  <h4 class="ai-recommendation-title">Prioritize Billing &amp; Payment Inquiries category</h4>
+                  <p class="ai-recommendation-text">Automating this category will deliver $33K annual savings (63% of total ROI) and handle the majority of high-volume customer inquiries across billing topics.</p>
+                  <span class="ai-recommendation-pill">$33K annual savings</span>
+                </article>
+                <article class="ai-recommendation">
+                  <h4 class="ai-recommendation-title">Prioritize Billing &amp; Payment Inquiries category</h4>
+                  <p class="ai-recommendation-text">Automating this category will deliver $33K annual savings (63% of total ROI) and handle the majority of high-volume customer inquiries across billing topics.</p>
+                  <span class="ai-recommendation-pill">$33K annual savings</span>
+                </article>
+              </div>
+            </div>
+          </div>
+        </section>
+        <p class="main-description">Track your actions and their projected impact</p>
+        <p class="table-row-count">Showing <span id="visible-count">10</span> of <span id="total-count">20</span> actions</p>
+        <div class="table-container">
+          <table class="sb-argstableBlock">
+            <thead class="sb-argstableBlock-head">
+              <tr>
+                <th style="width: 28%;">Actions</th>
+                <th style="width: 14%;">Type</th>
+                <th style="width: 14%;">Status</th>
+                <th style="width: 14%;">Triggered By</th>
+                <th style="width: 12%;">Date</th>
+                <th style="width: 13%;">Impact</th>
+                <th style="width: 5%;"></th>
+              </tr>
+            </thead>
+            <tbody class="sb-argstableBlock-body">
+              <tr>
+                <td>
+                  <div class="action-name">Automate Bill Payment</div>
+                  <div class="action-description">Handles one-time bill payments, faster transaction recovery, and payment method updates without agent involvement.</div>
+                </td>
+                <td><span class="badge badge-secondary">AI Agent</span></td>
+                <td><span class="badge badge-default"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Published</span></td>
+                <td>John Doe</td>
+                <td class="date-cell">Feb 20, 2026</td>
+                <td class="impact-cell">Automates 28,080 interactions annually Projected annual savings of $219,800</td>
+                <td><button class="ghost-btn" aria-label="Open menu"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="5.01"/><line x1="12" y1="12" x2="12" y2="12.01"/><line x1="12" y1="19" x2="12" y2="19.01"/></svg></button></td>
+              </tr>
+              <tr>
+                <td>
+                  <div class="action-name">Automate Plan Upgrade</div>
+                  <div class="action-description">Guides customers through upgrades via compression, eligibility checks, and instant tier charges without requiring a live agent.</div>
+                </td>
+                <td><span class="badge badge-secondary">Deterministic Process</span></td>
+                <td><span class="badge badge-default"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Published</span></td>
+                <td>Emily Rodriguez</td>
+                <td class="date-cell">Feb 20, 2026</td>
+                <td class="impact-cell">Automates 13,440 interactions annually Projected annual savings of $64,480</td>
+                <td><button class="ghost-btn" aria-label="Open menu"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="5.01"/><line x1="12" y1="12" x2="12" y2="12.01"/><line x1="12" y1="19" x2="12" y2="19.01"/></svg></button></td>
+              </tr>
+              <tr>
+                <td>
+                  <div class="action-name">Automate Password Reset</div>
+                  <div class="action-description">Verifies customer identity via unique SMS and walks them through a secure self-service password reset end-to-end.</div>
+                </td>
+                <td><span class="badge badge-secondary">AI Agent</span></td>
+                <td><span class="badge badge-default"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Published</span></td>
+                <td>Sarah Johnson</td>
+                <td class="date-cell">Feb 20, 2026</td>
+                <td class="impact-cell">Automates 37,440 interactions annually Projected annual savings of $150,280</td>
+                <td><button class="ghost-btn" aria-label="Open menu"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="5.01"/><line x1="12" y1="12" x2="12" y2="12.01"/><line x1="12" y1="19" x2="12" y2="19.01"/></svg></button></td>
+              </tr>
+              <tr>
+                <td>
+                  <div class="action-name">Automate Appointment Booking</div>
+                  <div class="action-description">Lets customers self-schedule, reschedule, or cancel service appointments using real-time slot availability.</div>
+                </td>
+                <td><span class="badge badge-secondary">Deterministic Process</span></td>
+                <td><span class="badge badge-default"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Published</span></td>
+                <td>Michael Chen</td>
+                <td class="date-cell">Feb 20, 2026</td>
+                <td class="impact-cell">Automates 10,880 interactions annually Projected annual savings of $46,920</td>
+                <td><button class="ghost-btn" aria-label="Open menu"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="5.01"/><line x1="12" y1="12" x2="12" y2="12.01"/><line x1="12" y1="19" x2="12" y2="19.01"/></svg></button></td>
+              </tr>
+              <tr>
+                <td>
+                  <div class="action-name">Automate Service Status Check</div>
+                  <div class="action-description">Delivers real-time outage info, estimated resolution notifications to customers in affected areas.</div>
+                </td>
+                <td><span class="badge badge-secondary">Deterministic Process</span></td>
+                <td><span class="badge badge-default"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Published</span></td>
+                <td>John Doe</td>
+                <td class="date-cell">Feb 20, 2026</td>
+                <td class="impact-cell">Automates 18,720 interactions annually Projected annual savings of $81,120</td>
+                <td><button class="ghost-btn" aria-label="Open menu"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="5.01"/><line x1="12" y1="12" x2="12" y2="12.01"/><line x1="12" y1="19" x2="12" y2="19.01"/></svg></button></td>
+              </tr>
+            </tbody>
+          </table>
+          <div class="load-indicator" id="load-indicator" hidden>
+            <span class="loader-icon" aria-hidden="true"></span>
+            <span>Loading more data</span>
+          </div>
+          <div class="action-menu-popover" id="action-menu-popover" role="menu" aria-label="Row actions">
+            <button class="action-menu-item" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 8V4H8"/><rect width="16" height="12" x="4" y="8" rx="2"/><path d="M2 14h2"/><path d="M20 14h2"/><path d="M15 13v2"/><path d="M9 13v2"/></svg>View AI Agent</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- AI Panel -->
+    <div class="ai-panel" id="aiPanel">
+      <div class="ai-panel-header">
+        <div class="ai-panel-title">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 1 1-8 0 4 4 0 0 1 8 0z"></path>
+          </svg>
+          New Chat
+        </div>
+        <button class="ai-panel-close-btn" id="aiPanelClose">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M18 6 6 18M6 6l12 12"></path>
+          </svg>
+        </button>
+      </div>
+      <div class="ai-panel-content">
+        <svg class="ai-panel-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 1 1-8 0 4 4 0 0 1 8 0z"></path>
+        </svg>
+        <div class="ai-panel-greeting">How can I help you today?</div>
+        <div class="ai-panel-subtitle">Ask anything about you...</div>
+        <div class="ai-suggestions">
+          <button class="ai-suggestion-btn">What are the key insights here?</button>
+          <button class="ai-suggestion-btn">What should I focus on first?</button>
+          <button class="ai-suggestion-btn">What changed recently?</button>
+          <button class="ai-suggestion-btn">What actions do you recommend?</button>
+        </div>
+      </div>
+      <div class="ai-panel-input-wrapper">
+        <div class="ai-panel-input-container">
+          <textarea class="ai-panel-input" placeholder="Ask a question..." id="aiPanelInput" rows="3"></textarea>
+          <button class="ai-panel-send-btn" id="aiPanelSend">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="m5 12 7-7 7 7M12 19V5"></path>
+            </svg>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    </div>
+  </div>
+
+  <script>
+    const mainArea = document.querySelector('.main-area');
+    const tableContainer = document.querySelector('.table-container');
+    const tableBody = document.querySelector('.sb-argstableBlock-body');
+    const searchInput = document.querySelector('.search-box-input');
+    const loadIndicator = document.getElementById('load-indicator');
+    const actionMenu = document.getElementById('action-menu-popover');
+    const visibleCountEl = document.getElementById('visible-count');
+    const totalCountEl = document.getElementById('total-count');
+    let isLoading = false;
+
+    function updateRowCount() {
+      const visible = Array.from(tableBody.querySelectorAll('tr')).filter(tr => !tr.hidden).length;
+      visibleCountEl.textContent = visible;
+    }
+
+    // Status filter dropdown
+    const statusFilterBtn = document.getElementById('status-filter-btn');
+    const statusDropdown = document.getElementById('status-dropdown');
+    const statusValue = document.getElementById('status-value');
+    const statusDropdownItems = statusDropdown.querySelectorAll('.filter-dropdown-item');
+
+    statusFilterBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      statusDropdown.classList.toggle('visible');
+    });
+
+    statusDropdownItems.forEach(item => {
+      item.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const value = item.getAttribute('data-value');
+        statusValue.textContent = value;
+        statusDropdown.classList.remove('visible');
+      });
+    });
+
+    // Close dropdown when clicking outside
+    document.addEventListener('click', () => {
+      statusDropdown.classList.remove('visible');
+    });
+
+    function filterTableRows() {
+      const query = searchInput.value.trim().toLowerCase();
+      const rows = Array.from(tableBody.querySelectorAll('tr'));
+
+      rows.forEach(row => {
+        const rowText = row.textContent.toLowerCase();
+        row.hidden = query.length > 0 && !rowText.includes(query);
+      });
+      updateRowCount();
+    }
+
+    searchInput.addEventListener('input', filterTableRows);
+
+    const moreRows = [
+      {
+        name: 'Automate Refund Status Check',
+        description: 'Tracks refunds in real-time from payment processing, confirming issuance, fully without handoff.',
+        type: 'AI Agent',
+        badgeClass: 'badge-secondary',
+        status: 'Created',
+        statusClass: 'badge-default',
+        triggeredBy: 'David Kim',
+        date: 'Feb 20, 2026',
+        impact: 'Automates 22,440 interactions annually Projected annual savings of $112,680'
+      },
+      {
+        name: 'Automate Billing Inquiry',
+        description: 'Provides instant invoice lookups, payment status updates, and next-step guidance.',
+        type: 'AI Agent',
+        badgeClass: 'badge-secondary',
+        status: 'Published',
+        statusClass: 'badge-default',
+        triggeredBy: 'Aisha Patel',
+        date: 'Feb 21, 2026',
+        impact: 'Automates 9,600 interactions annually Projected annual savings of $42,400'
+      },
+      {
+        name: 'Automate Plan Cancellation',
+        description: 'Handles cancellation requests with eligibility checks, retention options, and confirmation flow.',
+        type: 'Deterministic Process',
+        badgeClass: 'badge-secondary',
+        status: 'Published',
+        statusClass: 'badge-default',
+        triggeredBy: 'Daniel Lee',
+        date: 'Feb 21, 2026',
+        impact: 'Automates 8,320 interactions annually Projected annual savings of $36,720'
+      },
+      {
+        name: 'Automate Account Verification',
+        description: 'Verifies customer identity automatically and enables secure account operations.',
+        type: 'AI Agent',
+        badgeClass: 'badge-secondary',
+        status: 'Published',
+        statusClass: 'badge-default',
+        triggeredBy: 'Priya Singh',
+        date: 'Feb 21, 2026',
+        impact: 'Automates 16,700 interactions annually Projected annual savings of $67,200'
+      },
+      {
+        name: 'Automate Shipping Update',
+        description: 'Notifies customers with tracking updates and expected delivery times automatically.',
+        type: 'Deterministic Process',
+        badgeClass: 'badge-secondary',
+        status: 'Published',
+        statusClass: 'badge-default',
+        triggeredBy: 'Lisa Carter',
+        date: 'Feb 21, 2026',
+        impact: 'Automates 12,200 interactions annually Projected annual savings of $54,880'
+      },
+      {
+        name: 'Automate Subscription Renewal',
+        description: 'Handles renewal reminders, payment collection, and confirmation without manual follow-up.',
+        type: 'AI Agent',
+        badgeClass: 'badge-secondary',
+        status: 'Created',
+        statusClass: 'badge-default',
+        triggeredBy: 'Marcus Green',
+        date: 'Feb 21, 2026',
+        impact: 'Automates 14,500 interactions annually Projected annual savings of $59,600'
+      },
+      {
+        name: 'Automate Fraud Check',
+        description: 'Flags suspicious activity and triggers verification workflows with minimal friction.',
+        type: 'Deterministic Process',
+        badgeClass: 'badge-secondary',
+        status: 'Published',
+        statusClass: 'badge-default',
+        triggeredBy: 'Elena Martinez',
+        date: 'Feb 21, 2026',
+        impact: 'Automates 11,960 interactions annually Projected annual savings of $52,780'
+      },
+      {
+        name: 'Automate Chat Routing',
+        description: 'Directs customers to the right support channel based on intent and queue availability.',
+        type: 'AI Agent',
+        badgeClass: 'badge-secondary',
+        status: 'Published',
+        statusClass: 'badge-default',
+        triggeredBy: 'Jason Wu',
+        date: 'Feb 21, 2026',
+        impact: 'Automates 19,340 interactions annually Projected annual savings of $83,400'
+      },
+      {
+        name: 'Automate Contact Update',
+        description: 'Updates customer contact details safely through verification and confirmation flows.',
+        type: 'Deterministic Process',
+        badgeClass: 'badge-secondary',
+        status: 'Published',
+        statusClass: 'badge-default',
+        triggeredBy: 'Olivia Banks',
+        date: 'Feb 21, 2026',
+        impact: 'Automates 7,680 interactions annually Projected annual savings of $34,560'
+      },
+      {
+        name: 'Automate Policy Escalation',
+        description: 'Escalates policy exceptions with automatic documentation and follow-up actions.',
+        type: 'AI Agent',
+        badgeClass: 'badge-secondary',
+        status: 'Published',
+        statusClass: 'badge-default',
+        triggeredBy: 'Sofia Ivanov',
+        date: 'Feb 21, 2026',
+        impact: 'Automates 9,760 interactions annually Projected annual savings of $45,200'
+      },
+      {
+        name: 'Automate Feedback Collection',
+        description: 'Collects post-interaction feedback and creates a summarized quality score automatically.',
+        type: 'Deterministic Process',
+        badgeClass: 'badge-secondary',
+        status: 'Created',
+        statusClass: 'badge-default',
+        triggeredBy: 'Noah Kim',
+        date: 'Feb 21, 2026',
+        impact: 'Automates 6,540 interactions annually Projected annual savings of $28,320'
+      },
+      {
+        name: 'Automate Delivery Confirmation',
+        description: 'Sends delivery confirmations automatically once orders are marked shipped.',
+        type: 'Deterministic Process',
+        badgeClass: 'badge-secondary',
+        status: 'Published',
+        statusClass: 'badge-default',
+        triggeredBy: 'Noah Kim',
+        date: 'Feb 22, 2026',
+        impact: 'Automates 11,200 interactions annually Projected annual savings of $50,320'
+      }
+    ];
+
+    const CHECK_ICON_SVG = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>';
+
+    function createRow(row) {
+      const tr = document.createElement('tr');
+      const statusIcon = row.status === 'Published' ? CHECK_ICON_SVG : '';
+      tr.innerHTML = `
+        <td>
+          <div class="action-name">${row.name}</div>
+          <div class="action-description">${row.description}</div>
+        </td>
+        <td><span class="badge ${row.badgeClass}">${row.type}</span></td>
+        <td><span class="badge ${row.statusClass}">${statusIcon}${row.status}</span></td>
+        <td>${row.triggeredBy}</td>
+        <td class="date-cell">${row.date}</td>
+        <td class="impact-cell">${row.impact}</td>
+        <td><button class="ghost-btn" aria-label="Open menu"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="5.01"/><line x1="12" y1="12" x2="12" y2="12.01"/><line x1="12" y1="19" x2="12" y2="19.01"/></svg></button></td>
+      `;
+      return tr;
+    }
+
+    function loadMoreRows() {
+      if (isLoading || moreRows.length === 0) return;
+      isLoading = true;
+      loadIndicator.hidden = false;
+      setTimeout(() => {
+        const rowsToAdd = moreRows.splice(0, 10);
+        rowsToAdd.forEach(row => tableBody.appendChild(createRow(row)));
+        filterTableRows();
+        updateRowCount();
+        isLoading = false;
+        loadIndicator.hidden = true;
+        if (moreRows.length === 0) {
+          tableContainer.removeEventListener('scroll', handleScroll);
+        }
+      }, 800);
+    }
+
+    document.addEventListener('click', (event) => {
+      const menuButton = event.target.closest('.ghost-btn');
+      const menuItem = event.target.closest('.action-menu-item');
+
+      if (menuItem) {
+        // Check if the menu item is "View AI Agent"
+        if (menuItem.textContent.trim() === 'View AI Agent') {
+          window.location.href = 'AI Agent.html';
+          return;
+        }
+        actionMenu.classList.remove('visible');
+        return;
+      }
+
+      if (menuButton) {
+        event.stopPropagation();
+        const rect = menuButton.getBoundingClientRect();
+        actionMenu.classList.add('visible');
+
+        actionMenu.style.left = `${Math.min(rect.left, window.innerWidth - actionMenu.offsetWidth - 8)}px`;
+        const belowTop = rect.bottom + 6;
+        const maxTop = window.innerHeight - actionMenu.offsetHeight - 8;
+        actionMenu.style.top = `${Math.min(belowTop, maxTop)}px`;
+        return;
+      }
+
+      if (!event.target.closest('.action-menu-popover')) {
+        actionMenu.classList.remove('visible');
+      }
+    });
+
+    function handleScroll() {
+      if (isLoading || moreRows.length === 0) return;
+      const remaining = tableContainer.scrollHeight - tableContainer.scrollTop - tableContainer.clientHeight;
+      if (remaining < 80) {
+        loadMoreRows();
+      }
+    }
+
+    tableContainer.addEventListener('scroll', handleScroll);
+
+    // Wheel fallback — triggers load when user scrolls down even before there's
+    // overflow content (e.g. when only 5 rows are loaded and they fit exactly).
+    tableContainer.addEventListener('wheel', (e) => {
+      if (e.deltaY > 0) handleScroll();
+    }, { passive: true });
+
+    // Touch fallback — same idea on touch devices
+    let lastTouchY = null;
+    tableContainer.addEventListener('touchstart', (e) => {
+      lastTouchY = e.touches[0].clientY;
+    }, { passive: true });
+    tableContainer.addEventListener('touchmove', (e) => {
+      const y = e.touches[0].clientY;
+      if (lastTouchY !== null && y < lastTouchY) handleScroll();
+      lastTouchY = y;
+    }, { passive: true });
+
+    // Toggle sidebar with the topbar back button
+    const sidebar = document.querySelector('.sidebar');
+    const topbarBackBtn = document.querySelector('.topbar-back-btn');
+    topbarBackBtn.addEventListener('click', function() {
+      sidebar.classList.toggle('collapsed');
+    });
+
+    // AI Panel Toggle
+    const aiPanel = document.getElementById('aiPanel');
+    const askAiBtn = document.querySelector('.topbar-ask-ai-btn');
+    const aiPanelClose = document.getElementById('aiPanelClose');
+    const aiPanelInput = document.getElementById('aiPanelInput');
+    const aiPanelSend = document.getElementById('aiPanelSend');
+    const contentWrapper = document.querySelector('.content-wrapper');
+
+    // Toggle AI panel
+    askAiBtn.addEventListener('click', () => {
+      aiPanel.classList.toggle('open');
+      contentWrapper.classList.toggle('ai-open');
+      if (aiPanel.classList.contains('open')) {
+        setTimeout(() => aiPanelInput.focus(), 300);
+      }
+    });
+
+    // Close AI panel
+    // "+" button — start a new chat (clear input). Does NOT close the panel;
+    // the panel is toggled by the topbar Ask AI button.
+    aiPanelClose.addEventListener('click', () => {
+      aiPanelInput.value = '';
+      aiPanelSend.disabled = true;
+      aiPanelInput.focus();
+    });
+
+    // Handle suggestion buttons
+    document.querySelectorAll('.ai-suggestion-btn').forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        aiPanelInput.value = e.target.textContent;
+        aiPanelInput.focus();
+      });
+    });
+
+    // Handle send button
+    aiPanelSend.addEventListener('click', () => {
+      const message = aiPanelInput.value.trim();
+      if (message) {
+        console.log('Sending message:', message);
+        // Add your AI message handling here
+        aiPanelInput.value = '';
+      }
+    });
+
+    // Handle Enter key in input
+    aiPanelInput.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' && !e.shiftKey) {
+        e.preventDefault();
+        aiPanelSend.click();
+      }
+    });
+
+    // Enable/disable send button based on input
+    aiPanelInput.addEventListener('input', () => {
+      aiPanelSend.disabled = !aiPanelInput.value.trim();
+    });
+
+    // Initialize send button state
+    aiPanelSend.disabled = true;
+
+    // Initialize row counts
+    totalCountEl.textContent = tableBody.querySelectorAll('tr').length + moreRows.length;
+    updateRowCount();
+
+    // AI Insights — collapse / expand toggle
+    const aiInsights = document.getElementById('aiInsights');
+    const aiInsightsToggle = document.getElementById('aiInsightsToggle');
+    aiInsightsToggle.addEventListener('click', () => {
+      const isCollapsed = aiInsights.classList.toggle('collapsed');
+      aiInsightsToggle.setAttribute('aria-expanded', String(!isCollapsed));
+      aiInsightsToggle.setAttribute('aria-label', isCollapsed ? 'Expand AI Insights' : 'Collapse AI Insights');
+    });
+
+    // AI Insights — dismiss recommended actions section
+    const aiInsightsDismiss = document.querySelector('.ai-insights-dismiss');
+    if (aiInsightsDismiss) {
+      aiInsightsDismiss.addEventListener('click', () => {
+        aiInsightsDismiss.closest('.ai-insights-section').remove();
+      });
+    }
+  </script>
+</body>
+</html>
