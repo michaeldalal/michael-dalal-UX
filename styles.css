@@ -803,6 +803,13 @@ body {
     object-fit: cover;
 }
 
+.agent-avatar-initials {
+    font-size: var(--text-3xl);
+    font-weight: var(--font-semibold);
+    color: var(--color-primary-900);
+    letter-spacing: 0.02em;
+}
+
 .agent-info {
     flex: 1;
 }
@@ -915,6 +922,7 @@ body {
 
 .flow-row {
     display: flex;
+    align-items: stretch;
     gap: var(--space-4);
     justify-content: center;
     margin-bottom: var(--space-0);
@@ -938,7 +946,7 @@ body {
     border: 1px solid var(--color-border);
     border-radius: var(--rounded-md);
     padding: var(--space-4);
-    width: 16rem;
+
     display: flex;
     flex-direction: column;
     gap: var(--space-2);
@@ -965,6 +973,10 @@ body {
 
 .agent-card-small .agent-title {
     font-size: var(--text-md);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    min-width: 0;
 }
 
 .agent-card-small .agent-description {
@@ -1044,6 +1056,19 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center;
+    flex: 1;
+}
+
+/* Skill cards inside an agent-column stretch to fill their column so all
+   four skill cards in the row share the same height regardless of how long
+   their description text is. The connector-line above them stays a fixed
+   height, so cards equalize on the bottom. */
+.agent-column > .agent-card-small {
+    flex: 1;
+}
+
+.agent-card-small .agent-stats {
+    margin-top: auto;
 }
 
 /* Skills divider — dashed line with centered label */

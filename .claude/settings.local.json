@@ -4,7 +4,11 @@
       "mcp__figma__search_design_system",
       "mcp__figma__get_libraries",
       "mcp__figma__get_variable_defs",
-      "mcp__figma__use_figma"
+      "mcp__figma__use_figma",
+      "Bash(git -C /Users/michaelda/Documents/Claude status)",
+      "Bash(git -C /Users/michaelda/Documents/Claude branch -a)",
+      "Bash(git -C /Users/michaelda/Documents/Claude log --oneline -5)",
+      "mcp__claude_ai_Figma__use_figma"
     ]
   }
 }
