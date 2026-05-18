@@ -1,0 +1,144 @@
+.auto-insight-page {
+  font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  background: #eef2f7;
+  color: #111827;
+  min-height: 100vh;
+}
+.auto-insight-page * { box-sizing: border-box; }
+
+.auto-insight-page .app-shell {
+  display: grid;
+  grid-template-columns: 280px 1fr;
+  min-height: 100vh;
+}
+
+.auto-insight-page .sidebar {
+  background: #ffffff;
+  border-right: 1px solid #e5e7eb;
+  padding: 24px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.auto-insight-page .brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 24px;
+}
+
+.auto-insight-page .brand-icon {
+  width: 32px;
+  height: 32px;
+  border-radius: 12px;
+  background: linear-gradient(135deg, #4f46e5, #2563eb);
+  display: grid;
+  place-items: center;
+  color: white;
+  font-weight: 700;
+  font-size: 16px;
+}
+
+.auto-insight-page .brand-title {
+  font-size: 18px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+
+.auto-insight-page .search-box {
+  display: block;
+  width: 100%;
+  padding: 12px 14px;
+  border: 1px solid #d1d5db;
+  border-radius: 12px;
+  background: #f8fafc;
+  color: #4b5563;
+}
+
+.auto-insight-page .menu-group { display: grid; gap: 8px; }
+
+.auto-insight-page .menu-heading {
+  font-size: 12px;
+  font-weight: 700;
+  color: #6b7280;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.auto-insight-page .menu-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 14px;
+  border-radius: 12px;
+  background: #f8fafc;
+  color: #111827;
+  text-decoration: none;
+  font-size: 14px;
+  border: 1px solid transparent;
+  transition: background 0.2s ease, border-color 0.2s ease;
+}
+.auto-insight-page .menu-item:hover { background: #eef2ff; border-color: #c7d2fe; }
+.auto-insight-page .menu-item.active { background: #eef2ff; border-color: #bfdbfe; font-weight: 700; }
+
+.auto-insight-page .footer-card {
+  margin-top: auto;
+  padding: 16px;
+  border-radius: 16px;
+  background: #f8fafc;
+  border: 1px solid #e5e7eb;
+}
+.auto-insight-page .footer-title { font-size: 14px; font-weight: 700; margin-bottom: 8px; color: #111827; }
+.auto-insight-page .footer-line { font-size: 13px; color: #4b5563; line-height: 1.6; }
+
+.auto-insight-page .main { padding: 24px 32px; }
+.auto-insight-page .topbar {
+  display: flex; justify-content: space-between; align-items: center;
+  margin-bottom: 24px; gap: 16px;
+}
+.auto-insight-page .breadcrumb { display: flex; align-items: center; gap: 10px; font-size: 13px; color: #6b7280; }
+.auto-insight-page .breadcrumb span { font-weight: 600; color: #111827; }
+.auto-insight-page .action-button {
+  padding: 10px 18px; border-radius: 12px; border: 1px solid #d1d5db;
+  background: #ffffff; color: #111827; cursor: pointer; font-size: 14px; font-weight: 600;
+}
+
+.auto-insight-page .panel {
+  background: #ffffff; border: 1px solid #e5e7eb; border-radius: 24px;
+  padding: 28px; box-shadow: 0 8px 24px rgba(15, 23, 42, 0.04);
+}
+.auto-insight-page .panel-title { font-size: 20px; font-weight: 700; margin-bottom: 18px; }
+.auto-insight-page .meta-row { display: flex; flex-wrap: wrap; gap: 12px 28px; color: #4b5563; margin-bottom: 24px; font-size: 14px; }
+.auto-insight-page .meta-badge { display: inline-flex; align-items: center; gap: 8px; padding: 8px 12px; border-radius: 999px; background: #eef2ff; color: #1d4ed8; font-weight: 700; }
+.auto-insight-page .field-row { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; margin-bottom: 24px; }
+.auto-insight-page .field-card { background: #f8fafc; border: 1px solid #e5e7eb; border-radius: 16px; padding: 18px; }
+.auto-insight-page .field-label { display: block; margin-bottom: 8px; color: #6b7280; font-size: 13px; font-weight: 700; letter-spacing: 0.02em; }
+.auto-insight-page .field-value { font-size: 15px; color: #111827; min-height: 32px; display: inline-flex; align-items: center; }
+.auto-insight-page .field-button {
+  margin-top: 12px; display: inline-flex; align-items: center; justify-content: center;
+  padding: 10px 16px; border-radius: 12px; background: #2563eb; color: white;
+  border: none; cursor: pointer; font-size: 13px; font-weight: 700;
+}
+
+.auto-insight-page .grid-cards { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 20px; }
+.auto-insight-page .agent-card {
+  background: #ffffff; border: 1px solid #e5e7eb; border-radius: 24px;
+  padding: 22px; min-height: 220px;
+  display: flex; flex-direction: column; justify-content: space-between;
+}
+.auto-insight-page .agent-title { font-size: 16px; font-weight: 700; margin-bottom: 10px; }
+.auto-insight-page .agent-description { color: #4b5563; font-size: 14px; line-height: 1.7; flex: 1; margin-bottom: 16px; }
+.auto-insight-page .agent-meta { display: flex; justify-content: space-between; align-items: center; gap: 12px; font-size: 13px; color: #6b7280; }
+.auto-insight-page .agent-meta span { font-weight: 600; color: #111827; }
+
+@media (max-width: 1200px) {
+  .auto-insight-page .grid-cards { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (max-width: 900px) {
+  .auto-insight-page .app-shell { grid-template-columns: 1fr; }
+  .auto-insight-page .field-row,
+  .auto-insight-page .meta-row,
+  .auto-insight-page .topbar { flex-direction: column; }
+  .auto-insight-page .grid-cards { grid-template-columns: 1fr; }
+}

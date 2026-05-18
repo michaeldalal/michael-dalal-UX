@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Settings - Auto Insight</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body class="deployed-dashboard settings-page">
+  <!-- Shell Top Bar -->
+  <header class="shell-top-bar">
+    <div class="shell-top-bar-left">
+      <div class="shell-app-logo">
+        <img src="https://new-analytics-ten.vercel.app/app-icon.svg" alt="Analytics" class="shell-app-icon">
+        <span class="shell-app-name">Analytics</span>
+      </div>
+    </div>
+    <div class="shell-top-bar-right">
+      <button class="shell-icon-btn">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <circle cx="12" cy="12" r="10"></circle>
+          <path d="M12 16v-4m0-4h.01"></path>
+        </svg>
+      </button>
+      <button class="shell-icon-btn">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path>
+          <path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
+        </svg>
+        <span style="position: absolute; top: 2px; right: 2px; width: 16px; height: 16px; background: var(--color-red-notification); border-radius: 8px; font-size: 11px; color: var(--color-bg-primary); display: flex; align-items: center; justify-content: center; border: 1px solid var(--color-bg-primary);">5</span>
+      </button>
+      <div class="shell-profile">
+        <div class="shell-profile-avatar">JS</div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Body Container -->
+  <div class="body-container">
+    <div class="content-wrapper">
+    <div class="app-container">
+      <div class="app-shell">
+    <!-- ===== SIDEBAR ===== -->
+    <aside class="sidebar">
+      <button class="sidebar-item">
+        <svg class="sidebar-item-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
+          <polyline points="9 22 9 12 15 12 15 22"/>
+        </svg>
+        <span class="sidebar-item-label">New Session</span>
+      </button>
+
+      <button class="sidebar-item active" onclick="window.location.href='automation-opportunities.html'">
+        <svg class="sidebar-item-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M12 8V4H8"/>
+          <rect width="16" height="12" x="4" y="8" rx="2"/>
+          <path d="M2 14h2"/>
+          <path d="M20 14h2"/>
+          <path d="M15 13v2"/>
+          <path d="M9 13v2"/>
+        </svg>
+        <span class="sidebar-item-label">Automation Opportunities</span>
+      </button>
+
+      <button class="sidebar-item">
+        <svg class="sidebar-item-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M12 6V2H8"/>
+          <path d="m16 18 4 4V8a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h10z"/>
+          <path d="M2 12h2"/>
+          <path d="M20 12h2"/>
+          <path d="M9 11v2"/>
+          <path d="M15 11v2"/>
+        </svg>
+        <span class="sidebar-item-label">AI Agent</span>
+      </button>
+
+      <button class="sidebar-item">
+        <svg class="sidebar-item-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M3 14h3a2 2 0 0 1 2 2v3a2 2 0 0 1-2 2H4a1 1 0 0 1-1-1z"/>
+          <path d="M21 14h-3a2 2 0 0 0-2 2v3a2 2 0 0 0 2 2h2a1 1 0 0 0 1-1z"/>
+          <path d="M21 14a9 9 0 0 0-18 0"/>
+        </svg>
+        <span class="sidebar-item-label">Agent</span>
+      </button>
+
+      <button class="sidebar-item">
+        <svg class="sidebar-item-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M16 22h2a2 2 0 0 0 2-2V7l-5-5H6a2 2 0 0 0-2 2v3"/>
+          <path d="M14 2v4a2 2 0 0 0 2 2h4"/>
+          <circle cx="8" cy="16" r="6"/>
+          <path d="M9.5 17.5 8 16.25V14"/>
+        </svg>
+        <span class="sidebar-item-label">Action History</span>
+      </button>
+
+      <div class="sidebar-section">
+        <button class="sidebar-item">
+          <svg class="sidebar-item-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="m19 21-7-4-7 4V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/>
+          </svg>
+          <span class="sidebar-item-label">Saved Dashboards</span>
+          <svg class="sidebar-item-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <line x1="12" y1="5" x2="12" y2="19"></line>
+            <line x1="5" y1="12" x2="19" y2="12"></line>
+          </svg>
+        </button>
+      </div>
+
+      <div class="sidebar-section">
+        <button class="sidebar-item">
+          <svg class="sidebar-item-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/>
+            <path d="M3 3v5h5"/>
+            <path d="M12 7v5l4 2"/>
+          </svg>
+          <span class="sidebar-item-label">Recent</span>
+        </button>
+      </div>
+    </aside>
+
+    <!-- ===== MAIN CONTENT ===== -->
+    <div class="main-content">
+      <!-- Topbar Navigation with breadcrumb trail -->
+      <div class="topbar-navigation">
+        <button class="topbar-back-btn">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+            <line x1="15" y1="3" x2="15" y2="21"></line>
+          </svg>
+        </button>
+        <div class="topbar-breadcrumb settings-breadcrumb">
+          <a href="automation-opportunities.html" class="breadcrumb-link">Automation Opportunities</a>
+          <svg class="breadcrumb-separator" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="m9 18 6-6-6-6"/>
+          </svg>
+          <span class="breadcrumb-current">Settings</span>
+        </div>
+        <div class="topbar-spacer"></div>
+        <button class="topbar-ask-ai-btn">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M9.937 15.5A2 2 0 0 0 8.5 14.063l-6.135-1.582a.5.5 0 0 1 0-.962L8.5 9.936A2 2 0 0 0 9.937 8.5l1.582-6.135a.5.5 0 0 1 .963 0L14.063 8.5A2 2 0 0 0 15.5 9.937l6.135 1.581a.5.5 0 0 1 0 .964L15.5 14.063a2 2 0 0 0-1.437 1.437l-1.582 6.135a.5.5 0 0 1-.963 0z"/>
+            <path d="M20 3v4"/><path d="M22 5h-4"/><path d="M4 17v2"/><path d="M5 18H3"/>
+          </svg>
+          Ask AI
+        </button>
+      </div>
+
+      <!-- Settings sticky page header -->
+      <div class="opportunities-sticky-header">
+        <div class="opportunities-page-header">
+          <h1 class="opportunities-title">Settings</h1>
+          <div class="settings-header-actions">
+            <button class="settings-cancel-btn" type="button">Cancel</button>
+            <button class="settings-save-btn" type="button" disabled>Save</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Settings body -->
+      <div class="main-area">
+        <div class="settings-container">
+
+          <!-- Company section -->
+          <section class="settings-section">
+            <h2 class="settings-section-title">Company Details</h2>
+            <div class="settings-field">
+              <label class="settings-label" for="bankName">Bank Name</label>
+              <input class="settings-input" id="bankName" type="text" value="ABS Bank">
+            </div>
+            <div class="settings-field">
+              <label class="settings-label" for="companyDescription">Company Description</label>
+              <textarea class="settings-input settings-textarea" id="companyDescription" rows="3">ABS Bank is a modern financial institution providing secure, reliable banking services to individuals and businesses. It focuses on delivering seamless digital experiences, efficient operations, and trusted customer support.</textarea>
+            </div>
+          </section>
+
+          <!-- Automation Opportunities section -->
+          <section class="settings-section settings-section--narrow">
+            <h2 class="settings-section-title">Automation Opportunities</h2>
+
+            <div class="settings-field">
+              <label class="settings-label" for="analyzePeriod">Analyze period</label>
+              <div class="settings-select-wrapper">
+                <select class="settings-input settings-select" id="analyzePeriod">
+                  <option>Last 30 Days</option>
+                  <option>Last 60 Days</option>
+                  <option>Last 90 Days</option>
+                  <option>This Year</option>
+                </select>
+                <svg class="settings-select-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <path d="m6 9 6 6 6-6"/>
+                </svg>
+              </div>
+              <p class="settings-helper">Analyzes interactions from the past 30 days.</p>
+            </div>
+
+            <div class="settings-subsection">
+              <div class="settings-subsection-title">
+                Cost calculation
+                <span class="settings-info" tabindex="0" aria-label="Cost calculation info" data-tooltip="Represents the default cost associated with an interaction, which helps in ROI calculations. 'Target Containment' refers to the percentage of interactions expected to be fully resolved by the automated system without human intervention.">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <circle cx="12" cy="12" r="10"/>
+                    <path d="M12 16v-4"/>
+                    <path d="M12 8h.01"/>
+                  </svg>
+                </span>
+              </div>
+
+              <div class="settings-row">
+                <div class="settings-field">
+                  <label class="settings-label" for="callCost">Call cost (USD)</label>
+                  <div class="settings-input-affix">
+                    <input class="settings-input" id="callCost" type="text" value="2">
+                    <span class="settings-input-suffix">$</span>
+                  </div>
+                </div>
+                <div class="settings-field">
+                  <label class="settings-label" for="costPer">PER</label>
+                  <div class="settings-select-wrapper">
+                    <select class="settings-input settings-select" id="costPer">
+                      <option>Minutes</option>
+                      <option>Seconds</option>
+                      <option>Hours</option>
+                    </select>
+                    <svg class="settings-select-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                      <path d="m6 9 6 6 6-6"/>
+                    </svg>
+                  </div>
+                </div>
+              </div>
+
+              <div class="settings-field">
+                <label class="settings-label" for="chatCost">Chat Cost (USD)</label>
+                <div class="settings-input-affix">
+                  <input class="settings-input" id="chatCost" type="text" value="2">
+                  <span class="settings-input-suffix">$</span>
+                </div>
+              </div>
+
+              <div class="settings-field">
+                <label class="settings-label" for="targetContainment">Target containment</label>
+                <div class="settings-input-affix">
+                  <input class="settings-input" id="targetContainment" type="text" value="100%">
+                  <span class="settings-input-suffix">%</span>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <!-- Cognigy AI Settings section -->
+          <section class="settings-section">
+            <h2 class="settings-section-title">Cognigy AI Settings</h2>
+
+            <div class="settings-row">
+              <div class="settings-field">
+                <label class="settings-label" for="apiKey">API key</label>
+                <input class="settings-input" id="apiKey" type="text" placeholder="Enter Cognigy API Key. E.g: c4413fa830745ad47f0&hellip;">
+              </div>
+              <div class="settings-field">
+                <label class="settings-label" for="siteUrl">Site URL</label>
+                <div class="settings-verify-row">
+                  <input class="settings-input" id="siteUrl" type="text" placeholder="https://trial.cognigy.ai">
+                  <div class="settings-verify-indicator" id="cognigyVerify" data-state="idle" aria-live="polite">
+                    <svg class="settings-verify-loader-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                      <path d="M21 12a9 9 0 1 1-6.219-8.56"/>
+                    </svg>
+                    <svg class="settings-verify-success-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                      <path d="M21.801 10A10 10 0 1 1 17 3.335"/>
+                      <path d="m9 11 3 3L22 4"/>
+                    </svg>
+                    <span class="settings-verify-text">Verifying</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <button class="settings-secondary-btn cognigy-edit-api-btn" type="button" id="editApiKeyBtn">Edit API Key</button>
+          </section>
+
+        </div>
+      </div>
+    </div>
+
+    <!-- AI Panel -->
+    <div class="ai-panel" id="aiPanel">
+      <div class="ai-panel-header">
+        <div class="ai-panel-title">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M9.937 15.5A2 2 0 0 0 8.5 14.063l-6.135-1.582a.5.5 0 0 1 0-.962L8.5 9.936A2 2 0 0 0 9.937 8.5l1.582-6.135a.5.5 0 0 1 .963 0L14.063 8.5A2 2 0 0 0 15.5 9.937l6.135 1.581a.5.5 0 0 1 0 .964L15.5 14.063a2 2 0 0 0-1.437 1.437l-1.582 6.135a.5.5 0 0 1-.963 0z"/>
+          </svg>
+          New Chat
+        </div>
+        <button class="ai-panel-close-btn" id="aiPanelClose" aria-label="Close">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M5 12h14"/><path d="M12 5v14"/>
+          </svg>
+        </button>
+      </div>
+      <div class="ai-panel-content">
+        <svg class="ai-panel-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M9.937 15.5A2 2 0 0 0 8.5 14.063l-6.135-1.582a.5.5 0 0 1 0-.962L8.5 9.936A2 2 0 0 0 9.937 8.5l1.582-6.135a.5.5 0 0 1 .963 0L14.063 8.5A2 2 0 0 0 15.5 9.937l6.135 1.581a.5.5 0 0 1 0 .964L15.5 14.063a2 2 0 0 0-1.437 1.437l-1.582 6.135a.5.5 0 0 1-.963 0z"/>
+        </svg>
+        <div class="ai-panel-greeting">How can I help you today?</div>
+        <div class="ai-panel-subtitle">Ask anything about your&hellip;</div>
+        <div class="ai-suggestions">
+          <button class="ai-suggestion-btn">How do I configure cost calculation?</button>
+          <button class="ai-suggestion-btn">What does target containment mean?</button>
+          <button class="ai-suggestion-btn">Where can I find my API key?</button>
+          <button class="ai-suggestion-btn">How do I change the analyze period?</button>
+        </div>
+      </div>
+      <div class="ai-panel-input-wrapper">
+        <div class="ai-panel-input-container">
+          <textarea class="ai-panel-input" placeholder="Ask a question..." id="aiPanelInput" rows="3"></textarea>
+          <button class="ai-panel-send-btn" id="aiPanelSend">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="m5 12 7-7 7 7M12 19V5"></path>
+            </svg>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    </div>
+    </div>
+  </div>
+  </div>
+
+  <script>
+    // Sidebar toggle via topbar back button
+    const sidebar = document.querySelector('.sidebar');
+    const topbarBackBtn = document.querySelector('.topbar-back-btn');
+    topbarBackBtn.addEventListener('click', () => sidebar.classList.toggle('collapsed'));
+
+    // Enable Save button on any settings input change
+    const saveBtn = document.querySelector('.settings-save-btn');
+    const cancelBtn = document.querySelector('.settings-cancel-btn');
+    const settingsContainer = document.querySelector('.settings-container');
+    const initialValues = new Map();
+
+    settingsContainer.querySelectorAll('input, textarea, select').forEach(el => {
+      initialValues.set(el, el.value);
+      const eventName = el.tagName === 'SELECT' ? 'change' : 'input';
+      el.addEventListener(eventName, () => { saveBtn.disabled = false; });
+    });
+
+    cancelBtn.addEventListener('click', () => {
+      initialValues.forEach((value, el) => { el.value = value; });
+      saveBtn.disabled = true;
+    });
+    saveBtn.addEventListener('click', () => {
+      settingsContainer.querySelectorAll('input, textarea, select').forEach(el => {
+        initialValues.set(el, el.value);
+      });
+      saveBtn.disabled = true;
+    });
+
+    // AI Panel
+    const aiPanel = document.getElementById('aiPanel');
+    const askAiBtn = document.querySelector('.topbar-ask-ai-btn');
+    const aiPanelClose = document.getElementById('aiPanelClose');
+    const aiPanelInput = document.getElementById('aiPanelInput');
+    const aiPanelSend = document.getElementById('aiPanelSend');
+    const contentWrapper = document.querySelector('.content-wrapper');
+
+    askAiBtn.addEventListener('click', () => {
+      aiPanel.classList.toggle('open');
+      contentWrapper.classList.toggle('ai-open');
+      if (aiPanel.classList.contains('open')) setTimeout(() => aiPanelInput.focus(), 300);
+    });
+    aiPanelClose.addEventListener('click', () => {
+      aiPanel.classList.remove('open');
+      contentWrapper.classList.remove('ai-open');
+      aiPanelInput.value = '';
+      aiPanelSend.disabled = true;
+    });
+    document.querySelectorAll('.ai-suggestion-btn').forEach(btn => {
+      btn.addEventListener('click', e => { aiPanelInput.value = e.target.textContent; aiPanelInput.focus(); });
+    });
+    aiPanelSend.addEventListener('click', () => {
+      const message = aiPanelInput.value.trim();
+      if (message) { console.log('Sending:', message); aiPanelInput.value = ''; aiPanelSend.disabled = true; }
+    });
+    aiPanelInput.addEventListener('keydown', e => {
+      if (e.key === 'Enter' && !e.shiftKey) {
+        e.preventDefault();
+        aiPanelSend.click();
+      }
+    });
+    aiPanelInput.addEventListener('input', () => { aiPanelSend.disabled = !aiPanelInput.value.trim(); });
+
+    // Verify Cognigy connection once both API key and Site URL are filled
+    const apiKeyInput = document.getElementById('apiKey');
+    const siteUrlInput = document.getElementById('siteUrl');
+    const verifyIndicator = document.getElementById('cognigyVerify');
+    const editApiKeyBtn = document.getElementById('editApiKeyBtn');
+    let verifyTimer = null;
+
+    function bothFilled() {
+      return apiKeyInput.value.trim() && siteUrlInput.value.trim();
+    }
+    function resetVerify() {
+      verifyIndicator.dataset.state = 'idle';
+      if (verifyTimer) { clearTimeout(verifyTimer); verifyTimer = null; }
+    }
+    function lockApiKey() {
+      apiKeyInput.disabled = true;
+      apiKeyInput.type = 'password';
+    }
+    function unlockApiKey() {
+      apiKeyInput.disabled = false;
+      apiKeyInput.type = 'text';
+      apiKeyInput.value = '';
+      apiKeyInput.focus();
+      resetVerify();
+    }
+    function runVerify() {
+      if (!bothFilled()) { resetVerify(); return; }
+      verifyIndicator.dataset.state = 'verifying';
+      if (verifyTimer) clearTimeout(verifyTimer);
+      verifyTimer = setTimeout(() => {
+        verifyIndicator.dataset.state = 'success';
+        lockApiKey();
+      }, 1500);
+    }
+    if (editApiKeyBtn) editApiKeyBtn.addEventListener('click', unlockApiKey);
+
+    [apiKeyInput, siteUrlInput].forEach(input => {
+      input.addEventListener('input', resetVerify);
+      input.addEventListener('blur', runVerify);
+    });
+  </script>
+</body>
+</html>

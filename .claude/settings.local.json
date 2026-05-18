@@ -8,7 +8,9 @@
       "Bash(git -C /Users/michaelda/Documents/Claude status)",
       "Bash(git -C /Users/michaelda/Documents/Claude branch -a)",
       "Bash(git -C /Users/michaelda/Documents/Claude log --oneline -5)",
-      "mcp__claude_ai_Figma__use_figma"
+      "mcp__claude_ai_Figma__use_figma",
+      "Bash(npm install *)",
+      "Bash(npm run *)"
     ]
   }
 }

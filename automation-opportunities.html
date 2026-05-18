@@ -170,12 +170,12 @@
         <!-- Page header -->
         <div class="opportunities-page-header">
           <h1 class="opportunities-title">Automation Opportunities</h1>
-          <button class="opportunities-settings" type="button" aria-label="Settings">
+          <a class="opportunities-settings" href="settings.html" aria-label="Settings">
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
               <path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"/>
               <circle cx="12" cy="12" r="3"/>
             </svg>
-          </button>
+          </a>
         </div>
 
         <!-- Filters -->
@@ -252,9 +252,9 @@
 
         <!-- Tabs -->
         <div class="opportunities-tabs" role="tablist">
-          <button class="opportunities-tab active" role="tab" aria-selected="true">Categories</button>
-          <button class="opportunities-tab" role="tab">Topics</button>
-          <button class="opportunities-tab" role="tab">Sub-topics</button>
+          <button class="opportunities-tab active" role="tab" aria-selected="true" data-tab="categories">Categories</button>
+          <button class="opportunities-tab" role="tab" data-tab="topics">Topics</button>
+          <button class="opportunities-tab" role="tab" data-tab="sub-topics">Sub-topics</button>
         </div>
       </div>
 
@@ -409,6 +409,7 @@
             <h2 class="section-meta-title">Top Opportunities</h2>
             <span class="section-meta-sub">/ Yearly Impact Projection: Aug 2025 &ndash; Jul 2026</span>
           </div>
+          <div class="opportunities-view" data-view="categories">
           <div class="opportunity-list">
             <article class="opportunity-card">
               <header class="opportunity-card-header">
@@ -923,7 +924,31 @@
                   <p class="opportunity-card-subtitle">2 Related Topics</p>
                 </div>
                 <div class="opportunity-card-actions">
-                  <button class="opportunity-create-btn" type="button">Create AI Agent</button>
+                  <div class="agent-dropdown">
+                    <button class="opportunity-create-btn agent-dropdown-toggle" type="button" aria-haspopup="true" aria-expanded="false">
+                      View AI Agent
+                      <svg class="agent-dropdown-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                        <path d="m6 9 6 6 6-6"/>
+                      </svg>
+                    </button>
+                    <div class="agent-dropdown-menu" role="menu" aria-label="AI Agents">
+                      <div class="agent-dropdown-header">AI Agents (2)</div>
+                      <a class="agent-dropdown-item" role="menuitem" href="AI Agent.html">
+                        <span class="agent-dropdown-item-label">August 11, 2025&nbsp;&nbsp;12:24 PM</span>
+                        <svg class="agent-dropdown-item-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                          <path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7"/><circle cx="12" cy="12" r="3"/>
+                        </svg>
+                      </a>
+                      <a class="agent-dropdown-item" role="menuitem" href="AI Agent.html">
+                        <span class="agent-dropdown-item-label">October 30, 2025&nbsp;&nbsp;4:24 PM</span>
+                        <svg class="agent-dropdown-item-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                          <path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7"/><circle cx="12" cy="12" r="3"/>
+                        </svg>
+                      </a>
+                      <div class="agent-dropdown-divider"></div>
+                      <button class="agent-dropdown-item agent-dropdown-create" role="menuitem" type="button">Create AI Agent</button>
+                    </div>
+                  </div>
                   <button class="ghost-btn" type="button" aria-label="Share">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" x2="15.42" y1="13.51" y2="17.49"/><line x1="15.41" x2="8.59" y1="6.51" y2="10.49"/></svg>
                   </button>
@@ -1148,6 +1173,356 @@
             <span class="loader-icon" aria-hidden="true"></span>
             <span>Loading more opportunities</span>
           </div>
+          </div>
+
+          <!-- Topics view -->
+          <div class="opportunities-view" data-view="topics" hidden>
+            <div class="opportunity-list">
+
+              <!-- Bill Explanation — collapsed; expands to show 3 Charge Breakdowns -->
+              <article class="opportunity-card">
+                <header class="opportunity-card-header">
+                  <div>
+                    <h3 class="opportunity-card-title">Bill Explanation</h3>
+                    <p class="opportunity-card-subtitle">Category: Billing &amp; Payment Inquiries</p>
+                  </div>
+                  <div class="opportunity-card-actions">
+                    <button class="opportunity-create-btn" type="button">Create AI Agent</button>
+                    <button class="ghost-btn" type="button" aria-label="Share">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" x2="15.42" y1="13.51" y2="17.49"/><line x1="15.41" x2="8.59" y1="6.51" y2="10.49"/></svg>
+                    </button>
+                    <button class="ghost-btn" type="button" aria-label="More options">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="5.01"/><line x1="12" y1="12" x2="12" y2="12.01"/><line x1="12" y1="19" x2="12" y2="19.01"/></svg>
+                    </button>
+                  </div>
+                </header>
+                <div class="opportunity-metrics">
+                  <div class="opportunity-metric"><div class="opportunity-metric-value">45,000</div><div class="opportunity-metric-label">Total Call (CC)</div></div>
+                  <div class="opportunity-metric"><div class="opportunity-metric-value">1,800</div><div class="opportunity-metric-label">Category Volume</div></div>
+                  <div class="opportunity-metric"><div class="opportunity-metric-value">1,620</div><div class="opportunity-metric-label">Automatable Volume</div></div>
+                  <div class="opportunity-metric"><div class="opportunity-metric-value">3.6%</div><div class="opportunity-metric-label">Automatable % (CC)</div></div>
+                  <div class="opportunity-metric"><div class="opportunity-metric-value">4:00</div><div class="opportunity-metric-label">Duration</div></div>
+                  <div class="opportunity-metric"><div class="opportunity-metric-value">3.6</div><div class="opportunity-metric-label">Sentiment</div></div>
+                  <div class="opportunity-metric"><div class="opportunity-metric-value savings">$13K</div><div class="opportunity-metric-label">Annual Savings</div></div>
+                </div>
+
+                <div class="opportunity-details">
+                  <section class="agent-actions">
+                    <h4 class="agent-actions-title">Agent Actions for This Topic</h4>
+                    <div class="agent-action-row"><span class="agent-action-label">Billing Was Discussed</span><div class="agent-action-bar"><div class="agent-action-fill" style="width: 100%"></div></div><span class="agent-action-value">1,620</span></div>
+                    <div class="agent-action-row"><span class="agent-action-label">Agent Provided Information About&hellip;</span><div class="agent-action-bar"><div class="agent-action-fill" style="width: 88.9%"></div></div><span class="agent-action-value">1,440</span></div>
+                    <div class="agent-action-row"><span class="agent-action-label">Account Was Reviewed</span><div class="agent-action-bar"><div class="agent-action-fill" style="width: 77.8%"></div></div><span class="agent-action-value">1,260</span></div>
+                    <div class="agent-action-row"><span class="agent-action-label">Caller Was Authenticated</span><div class="agent-action-bar"><div class="agent-action-fill" style="width: 66.7%"></div></div><span class="agent-action-value">1,080</span></div>
+                  </section>
+
+                  <div class="opportunity-sub-sub-list">
+                    <article class="opportunity-sub-sub-card">
+                      <header class="opportunity-sub-sub-card-header">
+                        <span class="opportunity-numbered-badge">1</span>
+                        <h5 class="opportunity-sub-sub-card-title">Charge Breakdown</h5>
+                        <button class="ghost-btn" type="button" aria-label="More options"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="5.01"/><line x1="12" y1="12" x2="12" y2="12.01"/><line x1="12" y1="19" x2="12" y2="19.01"/></svg></button>
+                      </header>
+                      <div class="opportunity-metrics opportunity-sub-metrics">
+                        <div class="opportunity-metric"><div class="opportunity-metric-value">45,000</div><div class="opportunity-metric-label">Total Call (CC)</div></div>
+                        <div class="opportunity-metric"><div class="opportunity-metric-value">900</div><div class="opportunity-metric-label">Category Volume</div></div>
+                        <div class="opportunity-metric"><div class="opportunity-metric-value">855</div><div class="opportunity-metric-label">Automatable Volume</div></div>
+                        <div class="opportunity-metric"><div class="opportunity-metric-value">1.9%</div><div class="opportunity-metric-label">Automatable % (CC)</div></div>
+                        <div class="opportunity-metric"><div class="opportunity-metric-value">4:00</div><div class="opportunity-metric-label">Duration</div></div>
+                        <div class="opportunity-metric"><div class="opportunity-metric-value">3.6</div><div class="opportunity-metric-label">Sentiment</div></div>
+                        <div class="opportunity-metric"><div class="opportunity-metric-value savings">$7K</div><div class="opportunity-metric-label">Annual Savings</div></div>
+                      </div>
+                      <section class="agent-actions-inline">
+                        <h6 class="agent-actions-inline-title">Agent Actions in This Sub-topic</h6>
+                        <div class="agent-action-row"><span class="agent-action-label">Billing Was Discussed</span><div class="agent-action-bar"><div class="agent-action-fill" style="width: 100%"></div></div><span class="agent-action-value">810</span></div>
+                        <div class="agent-action-row"><span class="agent-action-label">Agent Provided Information About&hellip;</span><div class="agent-action-bar"><div class="agent-action-fill" style="width: 88.9%"></div></div><span class="agent-action-value">720</span></div>
+                        <div class="agent-action-row"><span class="agent-action-label">Account Was Reviewed&hellip;</span><div class="agent-action-bar"><div class="agent-action-fill" style="width: 77.8%"></div></div><span class="agent-action-value">630</span></div>
+                      </section>
+                      <button class="deterministic-btn" type="button">Create Deterministic Process</button>
+                    </article>
+
+                    <article class="opportunity-sub-sub-card">
+                      <header class="opportunity-sub-sub-card-header">
+                        <span class="opportunity-numbered-badge">2</span>
+                        <h5 class="opportunity-sub-sub-card-title">Charge Breakdown</h5>
+                        <button class="ghost-btn" type="button" aria-label="More options"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="5.01"/><line x1="12" y1="12" x2="12" y2="12.01"/><line x1="12" y1="19" x2="12" y2="19.01"/></svg></button>
+                      </header>
+                      <div class="opportunity-metrics opportunity-sub-metrics">
+                        <div class="opportunity-metric"><div class="opportunity-metric-value">45,000</div><div class="opportunity-metric-label">Total Call (CC)</div></div>
+                        <div class="opportunity-metric"><div class="opportunity-metric-value">600</div><div class="opportunity-metric-label">Category Volume</div></div>
+                        <div class="opportunity-metric"><div class="opportunity-metric-value">522</div><div class="opportunity-metric-label">Automatable Volume</div></div>
+                        <div class="opportunity-metric"><div class="opportunity-metric-value">1.2%</div><div class="opportunity-metric-label">Automatable % (CC)</div></div>
+                        <div class="opportunity-metric"><div class="opportunity-metric-value">4:00</div><div class="opportunity-metric-label">Duration</div></div>
+                        <div class="opportunity-metric"><div class="opportunity-metric-value">3.6</div><div class="opportunity-metric-label">Sentiment</div></div>
+                        <div class="opportunity-metric"><div class="opportunity-metric-value savings">$4K</div><div class="opportunity-metric-label">Annual Savings</div></div>
+                      </div>
+                      <section class="agent-actions-inline">
+                        <h6 class="agent-actions-inline-title">Agent Actions in This Sub-topic</h6>
+                        <div class="agent-action-row"><span class="agent-action-label">Billing Was Discussed</span><div class="agent-action-bar"><div class="agent-action-fill" style="width: 100%"></div></div><span class="agent-action-value">540</span></div>
+                        <div class="agent-action-row"><span class="agent-action-label">Agent Provided Information About&hellip;</span><div class="agent-action-bar"><div class="agent-action-fill" style="width: 88.9%"></div></div><span class="agent-action-value">480</span></div>
+                        <div class="agent-action-row"><span class="agent-action-label">Account Was Reviewed</span><div class="agent-action-bar"><div class="agent-action-fill" style="width: 66.7%"></div></div><span class="agent-action-value">360</span></div>
+                      </section>
+                      <button class="deterministic-btn" type="button">Create Deterministic Process</button>
+                    </article>
+
+                    <article class="opportunity-sub-sub-card">
+                      <header class="opportunity-sub-sub-card-header">
+                        <span class="opportunity-numbered-badge">3</span>
+                        <h5 class="opportunity-sub-sub-card-title">Charge Breakdown</h5>
+                        <button class="ghost-btn" type="button" aria-label="More options"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="5.01"/><line x1="12" y1="12" x2="12" y2="12.01"/><line x1="12" y1="19" x2="12" y2="19.01"/></svg></button>
+                      </header>
+                      <div class="opportunity-metrics opportunity-sub-metrics">
+                        <div class="opportunity-metric"><div class="opportunity-metric-value">45,000</div><div class="opportunity-metric-label">Total Call (CC)</div></div>
+                        <div class="opportunity-metric"><div class="opportunity-metric-value">300</div><div class="opportunity-metric-label">Category Volume</div></div>
+                        <div class="opportunity-metric"><div class="opportunity-metric-value">252</div><div class="opportunity-metric-label">Automatable Volume</div></div>
+                        <div class="opportunity-metric"><div class="opportunity-metric-value">0.6%</div><div class="opportunity-metric-label">Automatable % (CC)</div></div>
+                        <div class="opportunity-metric"><div class="opportunity-metric-value">4:00</div><div class="opportunity-metric-label">Duration</div></div>
+                        <div class="opportunity-metric"><div class="opportunity-metric-value">3.4</div><div class="opportunity-metric-label">Sentiment</div></div>
+                        <div class="opportunity-metric"><div class="opportunity-metric-value savings">$2K</div><div class="opportunity-metric-label">Annual Savings</div></div>
+                      </div>
+                      <section class="agent-actions-inline">
+                        <h6 class="agent-actions-inline-title">Agent Actions in This Sub-topic</h6>
+                        <div class="agent-action-row"><span class="agent-action-label">Billing Was Discussed&hellip;</span><div class="agent-action-bar"><div class="agent-action-fill" style="width: 100%"></div></div><span class="agent-action-value">270</span></div>
+                        <div class="agent-action-row"><span class="agent-action-label">Agent Explained Billing Cycle&hellip;</span><div class="agent-action-bar"><div class="agent-action-fill" style="width: 88.9%"></div></div><span class="agent-action-value">240</span></div>
+                      </section>
+                      <button class="deterministic-btn" type="button">Create Deterministic Process</button>
+                    </article>
+                  </div>
+                </div>
+
+                <button class="opportunity-expand" type="button">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+                  <span class="expand-label">Explore Breakdown &amp; Related Opportunities</span>
+                </button>
+              </article>
+
+              <!-- Card Activation -->
+              <article class="opportunity-card">
+                <header class="opportunity-card-header">
+                  <div>
+                    <h3 class="opportunity-card-title">Card Activation</h3>
+                    <p class="opportunity-card-subtitle">Category: Card Services &amp; Management</p>
+                  </div>
+                  <div class="opportunity-card-actions">
+                    <button class="opportunity-create-btn" type="button">Create AI Agent</button>
+                    <button class="ghost-btn" type="button" aria-label="Share">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" x2="15.42" y1="13.51" y2="17.49"/><line x1="15.41" x2="8.59" y1="6.51" y2="10.49"/></svg>
+                    </button>
+                    <button class="ghost-btn" type="button" aria-label="More options">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="5.01"/><line x1="12" y1="12" x2="12" y2="12.01"/><line x1="12" y1="19" x2="12" y2="19.01"/></svg>
+                    </button>
+                  </div>
+                </header>
+                <div class="opportunity-metrics">
+                  <div class="opportunity-metric"><div class="opportunity-metric-value">45,000</div><div class="opportunity-metric-label">Total Call (CC)</div></div>
+                  <div class="opportunity-metric"><div class="opportunity-metric-value">1,600</div><div class="opportunity-metric-label">Category Volume</div></div>
+                  <div class="opportunity-metric"><div class="opportunity-metric-value">1,520</div><div class="opportunity-metric-label">Automatable Volume</div></div>
+                  <div class="opportunity-metric"><div class="opportunity-metric-value">3.2%</div><div class="opportunity-metric-label">Automatable % (CC)</div></div>
+                  <div class="opportunity-metric"><div class="opportunity-metric-value">5:15</div><div class="opportunity-metric-label">Duration</div></div>
+                  <div class="opportunity-metric"><div class="opportunity-metric-value">3.7</div><div class="opportunity-metric-label">Sentiment</div></div>
+                  <div class="opportunity-metric"><div class="opportunity-metric-value savings">$16K</div><div class="opportunity-metric-label">Annual Savings</div></div>
+                </div>
+                <button class="opportunity-expand" type="button">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+                  <span class="expand-label">Explore Breakdown &amp; Related Opportunities</span>
+                </button>
+              </article>
+
+              <!-- Payment Methods -->
+              <article class="opportunity-card">
+                <header class="opportunity-card-header">
+                  <div>
+                    <h3 class="opportunity-card-title">Payment Methods</h3>
+                    <p class="opportunity-card-subtitle">Category: Billing &amp; Payment Inquiries</p>
+                  </div>
+                  <div class="opportunity-card-actions">
+                    <button class="opportunity-create-btn" type="button">Create AI Agent</button>
+                    <button class="ghost-btn" type="button" aria-label="Share">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" x2="15.42" y1="13.51" y2="17.49"/><line x1="15.41" x2="8.59" y1="6.51" y2="10.49"/></svg>
+                    </button>
+                    <button class="ghost-btn" type="button" aria-label="More options">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="5.01"/><line x1="12" y1="12" x2="12" y2="12.01"/><line x1="12" y1="19" x2="12" y2="19.01"/></svg>
+                    </button>
+                  </div>
+                </header>
+                <div class="opportunity-metrics">
+                  <div class="opportunity-metric"><div class="opportunity-metric-value">45,000</div><div class="opportunity-metric-label">Total Call (CC)</div></div>
+                  <div class="opportunity-metric"><div class="opportunity-metric-value">1,500</div><div class="opportunity-metric-label">Category Volume</div></div>
+                  <div class="opportunity-metric"><div class="opportunity-metric-value">1,290</div><div class="opportunity-metric-label">Automatable Volume</div></div>
+                  <div class="opportunity-metric"><div class="opportunity-metric-value">2.9%</div><div class="opportunity-metric-label">Automatable % (CC)</div></div>
+                  <div class="opportunity-metric"><div class="opportunity-metric-value">3:30</div><div class="opportunity-metric-label">Duration</div></div>
+                  <div class="opportunity-metric"><div class="opportunity-metric-value">3.5</div><div class="opportunity-metric-label">Sentiment</div></div>
+                  <div class="opportunity-metric"><div class="opportunity-metric-value savings">$9K</div><div class="opportunity-metric-label">Annual Savings</div></div>
+                </div>
+                <button class="opportunity-expand" type="button">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+                  <span class="expand-label">Explore Breakdown &amp; Related Opportunities</span>
+                </button>
+              </article>
+
+            </div>
+          </div>
+
+          <!-- Sub-topics view -->
+          <div class="opportunities-view" data-view="sub-topics" hidden>
+            <div class="opportunity-list">
+
+              <article class="opportunity-card subtopic-card">
+                <header class="opportunity-card-header">
+                  <div>
+                    <h3 class="opportunity-card-title">Charge Breakdown</h3>
+                    <p class="opportunity-card-subtitle">Billing &amp; Payment Inquiries &rarr; Bill Explanation</p>
+                  </div>
+                  <div class="opportunity-card-actions">
+                    <button class="deterministic-btn" type="button">Create Deterministic Process</button>
+                    <button class="ghost-btn" type="button" aria-label="AI assist">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9.937 15.5A2 2 0 0 0 8.5 14.063l-6.135-1.582a.5.5 0 0 1 0-.962L8.5 9.936A2 2 0 0 0 9.937 8.5l1.582-6.135a.5.5 0 0 1 .963 0L14.063 8.5A2 2 0 0 0 15.5 9.937l6.135 1.581a.5.5 0 0 1 0 .964L15.5 14.063a2 2 0 0 0-1.437 1.437l-1.582 6.135a.5.5 0 0 1-.963 0z"/><path d="M20 3v4"/><path d="M22 5h-4"/><path d="M4 17v2"/><path d="M5 18H3"/></svg>
+                    </button>
+                    <button class="ghost-btn" type="button" aria-label="More options">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="5.01"/><line x1="12" y1="12" x2="12" y2="12.01"/><line x1="12" y1="19" x2="12" y2="19.01"/></svg>
+                    </button>
+                  </div>
+                </header>
+                <div class="opportunity-metrics">
+                  <div class="opportunity-metric"><div class="opportunity-metric-value">45,000</div><div class="opportunity-metric-label">Total Call (CC)</div></div>
+                  <div class="opportunity-metric"><div class="opportunity-metric-value">900</div><div class="opportunity-metric-label">Category Volume</div></div>
+                  <div class="opportunity-metric"><div class="opportunity-metric-value">855</div><div class="opportunity-metric-label">Automatable Volume</div></div>
+                  <div class="opportunity-metric"><div class="opportunity-metric-value">1.9%</div><div class="opportunity-metric-label">Automatable % (CC)</div></div>
+                  <div class="opportunity-metric"><div class="opportunity-metric-value">4:00</div><div class="opportunity-metric-label">Duration</div></div>
+                  <div class="opportunity-metric"><div class="opportunity-metric-value">4.6</div><div class="opportunity-metric-label">Sentiment</div></div>
+                  <div class="opportunity-metric"><div class="opportunity-metric-value savings">$7K</div><div class="opportunity-metric-label">Annual Savings</div></div>
+                </div>
+                <button class="opportunity-expand" type="button">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+                  <span class="expand-label">Explore Breakdown</span>
+                </button>
+              </article>
+
+              <article class="opportunity-card subtopic-card">
+                <header class="opportunity-card-header">
+                  <div>
+                    <h3 class="opportunity-card-title">Add Payment Method</h3>
+                    <p class="opportunity-card-subtitle">Billing &amp; Payment Inquiries &rarr; Payment Methods</p>
+                  </div>
+                  <div class="opportunity-card-actions">
+                    <button class="deterministic-btn" type="button">Create Deterministic Process</button>
+                    <button class="ghost-btn" type="button" aria-label="AI assist">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9.937 15.5A2 2 0 0 0 8.5 14.063l-6.135-1.582a.5.5 0 0 1 0-.962L8.5 9.936A2 2 0 0 0 9.937 8.5l1.582-6.135a.5.5 0 0 1 .963 0L14.063 8.5A2 2 0 0 0 15.5 9.937l6.135 1.581a.5.5 0 0 1 0 .964L15.5 14.063a2 2 0 0 0-1.437 1.437l-1.582 6.135a.5.5 0 0 1-.963 0z"/><path d="M20 3v4"/><path d="M22 5h-4"/><path d="M4 17v2"/><path d="M5 18H3"/></svg>
+                    </button>
+                    <button class="ghost-btn" type="button" aria-label="More options">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="5.01"/><line x1="12" y1="12" x2="12" y2="12.01"/><line x1="12" y1="19" x2="12" y2="19.01"/></svg>
+                    </button>
+                  </div>
+                </header>
+                <div class="opportunity-metrics">
+                  <div class="opportunity-metric"><div class="opportunity-metric-value">45,000</div><div class="opportunity-metric-label">Total Call (CC)</div></div>
+                  <div class="opportunity-metric"><div class="opportunity-metric-value">800</div><div class="opportunity-metric-label">Category Volume</div></div>
+                  <div class="opportunity-metric"><div class="opportunity-metric-value">752</div><div class="opportunity-metric-label">Automatable Volume</div></div>
+                  <div class="opportunity-metric"><div class="opportunity-metric-value">1.7%</div><div class="opportunity-metric-label">Automatable % (CC)</div></div>
+                  <div class="opportunity-metric"><div class="opportunity-metric-value">4:15</div><div class="opportunity-metric-label">Duration</div></div>
+                  <div class="opportunity-metric"><div class="opportunity-metric-value">3.7</div><div class="opportunity-metric-label">Sentiment</div></div>
+                  <div class="opportunity-metric"><div class="opportunity-metric-value savings">$6K</div><div class="opportunity-metric-label">Annual Savings</div></div>
+                </div>
+                <button class="opportunity-expand" type="button">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+                  <span class="expand-label">Explore Breakdown</span>
+                </button>
+              </article>
+
+              <article class="opportunity-card subtopic-card">
+                <header class="opportunity-card-header">
+                  <div>
+                    <h3 class="opportunity-card-title">Update Payment</h3>
+                    <p class="opportunity-card-subtitle">Billing &amp; Payment Inquiries &rarr; Payment Methods</p>
+                  </div>
+                  <div class="opportunity-card-actions">
+                    <button class="deterministic-btn" type="button">Create Deterministic Process</button>
+                    <button class="ghost-btn" type="button" aria-label="AI assist">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9.937 15.5A2 2 0 0 0 8.5 14.063l-6.135-1.582a.5.5 0 0 1 0-.962L8.5 9.936A2 2 0 0 0 9.937 8.5l1.582-6.135a.5.5 0 0 1 .963 0L14.063 8.5A2 2 0 0 0 15.5 9.937l6.135 1.581a.5.5 0 0 1 0 .964L15.5 14.063a2 2 0 0 0-1.437 1.437l-1.582 6.135a.5.5 0 0 1-.963 0z"/><path d="M20 3v4"/><path d="M22 5h-4"/><path d="M4 17v2"/><path d="M5 18H3"/></svg>
+                    </button>
+                    <button class="ghost-btn" type="button" aria-label="More options">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="5.01"/><line x1="12" y1="12" x2="12" y2="12.01"/><line x1="12" y1="19" x2="12" y2="19.01"/></svg>
+                    </button>
+                  </div>
+                </header>
+                <div class="opportunity-metrics">
+                  <div class="opportunity-metric"><div class="opportunity-metric-value">45,000</div><div class="opportunity-metric-label">Total Call (CC)</div></div>
+                  <div class="opportunity-metric"><div class="opportunity-metric-value">700</div><div class="opportunity-metric-label">Category Volume</div></div>
+                  <div class="opportunity-metric"><div class="opportunity-metric-value">630</div><div class="opportunity-metric-label">Automatable Volume</div></div>
+                  <div class="opportunity-metric"><div class="opportunity-metric-value">1.4%</div><div class="opportunity-metric-label">Automatable % (CC)</div></div>
+                  <div class="opportunity-metric"><div class="opportunity-metric-value">3:30</div><div class="opportunity-metric-label">Duration</div></div>
+                  <div class="opportunity-metric"><div class="opportunity-metric-value">3.5</div><div class="opportunity-metric-label">Sentiment</div></div>
+                  <div class="opportunity-metric"><div class="opportunity-metric-value savings">$4K</div><div class="opportunity-metric-label">Annual Savings</div></div>
+                </div>
+                <button class="opportunity-expand" type="button">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+                  <span class="expand-label">Explore Breakdown</span>
+                </button>
+              </article>
+
+              <article class="opportunity-card subtopic-card">
+                <header class="opportunity-card-header">
+                  <div>
+                    <h3 class="opportunity-card-title">Fee Questions</h3>
+                    <p class="opportunity-card-subtitle">Billing &amp; Payment Inquiries &rarr; Bill Explanation</p>
+                  </div>
+                  <div class="opportunity-card-actions">
+                    <button class="deterministic-btn" type="button">Create Deterministic Process</button>
+                    <button class="ghost-btn" type="button" aria-label="AI assist">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9.937 15.5A2 2 0 0 0 8.5 14.063l-6.135-1.582a.5.5 0 0 1 0-.962L8.5 9.936A2 2 0 0 0 9.937 8.5l1.582-6.135a.5.5 0 0 1 .963 0L14.063 8.5A2 2 0 0 0 15.5 9.937l6.135 1.581a.5.5 0 0 1 0 .964L15.5 14.063a2 2 0 0 0-1.437 1.437l-1.582 6.135a.5.5 0 0 1-.963 0z"/><path d="M20 3v4"/><path d="M22 5h-4"/><path d="M4 17v2"/><path d="M5 18H3"/></svg>
+                    </button>
+                    <button class="ghost-btn" type="button" aria-label="More options">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="5.01"/><line x1="12" y1="12" x2="12" y2="12.01"/><line x1="12" y1="19" x2="12" y2="19.01"/></svg>
+                    </button>
+                  </div>
+                </header>
+                <div class="opportunity-metrics">
+                  <div class="opportunity-metric"><div class="opportunity-metric-value">45,000</div><div class="opportunity-metric-label">Total Call (CC)</div></div>
+                  <div class="opportunity-metric"><div class="opportunity-metric-value">600</div><div class="opportunity-metric-label">Category Volume</div></div>
+                  <div class="opportunity-metric"><div class="opportunity-metric-value">522</div><div class="opportunity-metric-label">Automatable Volume</div></div>
+                  <div class="opportunity-metric"><div class="opportunity-metric-value">1.2%</div><div class="opportunity-metric-label">Automatable % (CC)</div></div>
+                  <div class="opportunity-metric"><div class="opportunity-metric-value">3:45</div><div class="opportunity-metric-label">Duration</div></div>
+                  <div class="opportunity-metric"><div class="opportunity-metric-value">3.5</div><div class="opportunity-metric-label">Sentiment</div></div>
+                  <div class="opportunity-metric"><div class="opportunity-metric-value savings">$4K</div><div class="opportunity-metric-label">Annual Savings</div></div>
+                </div>
+                <button class="opportunity-expand" type="button">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+                  <span class="expand-label">Explore Breakdown</span>
+                </button>
+              </article>
+
+              <article class="opportunity-card subtopic-card">
+                <header class="opportunity-card-header">
+                  <div>
+                    <h3 class="opportunity-card-title">Billing Cycle</h3>
+                    <p class="opportunity-card-subtitle">Billing &amp; Payment Inquiries &rarr; Bill Explanation</p>
+                  </div>
+                  <div class="opportunity-card-actions">
+                    <button class="deterministic-btn" type="button">Create Deterministic Process</button>
+                    <button class="ghost-btn" type="button" aria-label="AI assist">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9.937 15.5A2 2 0 0 0 8.5 14.063l-6.135-1.582a.5.5 0 0 1 0-.962L8.5 9.936A2 2 0 0 0 9.937 8.5l1.582-6.135a.5.5 0 0 1 .963 0L14.063 8.5A2 2 0 0 0 15.5 9.937l6.135 1.581a.5.5 0 0 1 0 .964L15.5 14.063a2 2 0 0 0-1.437 1.437l-1.582 6.135a.5.5 0 0 1-.963 0z"/><path d="M20 3v4"/><path d="M22 5h-4"/><path d="M4 17v2"/><path d="M5 18H3"/></svg>
+                    </button>
+                    <button class="ghost-btn" type="button" aria-label="More options">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="5.01"/><line x1="12" y1="12" x2="12" y2="12.01"/><line x1="12" y1="19" x2="12" y2="19.01"/></svg>
+                    </button>
+                  </div>
+                </header>
+                <div class="opportunity-metrics">
+                  <div class="opportunity-metric"><div class="opportunity-metric-value">45,000</div><div class="opportunity-metric-label">Total Call (CC)</div></div>
+                  <div class="opportunity-metric"><div class="opportunity-metric-value">300</div><div class="opportunity-metric-label">Category Volume</div></div>
+                  <div class="opportunity-metric"><div class="opportunity-metric-value">252</div><div class="opportunity-metric-label">Automatable Volume</div></div>
+                  <div class="opportunity-metric"><div class="opportunity-metric-value">0.6%</div><div class="opportunity-metric-label">Automatable % (CC)</div></div>
+                  <div class="opportunity-metric"><div class="opportunity-metric-value">3:00</div><div class="opportunity-metric-label">Duration</div></div>
+                  <div class="opportunity-metric"><div class="opportunity-metric-value">3.2</div><div class="opportunity-metric-label">Sentiment</div></div>
+                  <div class="opportunity-metric"><div class="opportunity-metric-value savings">$2K</div><div class="opportunity-metric-label">Annual Savings</div></div>
+                </div>
+                <button class="opportunity-expand" type="button">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+                  <span class="expand-label">Explore Breakdown</span>
+                </button>
+              </article>
+
+            </div>
+          </div>
         </section>
       </div>
     </div>
@@ -1192,6 +1567,267 @@
       </div>
     </div>
 
+    </div>
+  </div>
+
+  <!-- Shared opportunity-card / sub-card kebab menu -->
+  <div class="action-menu-popover" id="opportunityMenuPopover" role="menu" aria-label="Card actions">
+    <button class="action-menu-item" type="button">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polygon points="6 3 20 12 6 21 6 3"/></svg>
+      View sample interactions
+    </button>
+  </div>
+
+  <!-- Sample Interactions modal -->
+  <div class="modal-backdrop" id="sampleInteractionsModal" hidden>
+    <div class="modal-dialog" role="dialog" aria-modal="true" aria-labelledby="sampleInteractionsTitle">
+      <header class="modal-header">
+        <div>
+          <h2 class="modal-title" id="sampleInteractionsTitle">Sample Interactions</h2>
+          <p class="modal-subtitle" id="sampleInteractionsSubtitle">Category: Billing &amp; Payment Inquiries</p>
+        </div>
+        <button class="modal-close" type="button" aria-label="Close">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 6 6 18M6 6l12 12"/></svg>
+        </button>
+      </header>
+
+      <div class="modal-body">
+        <!-- Filters -->
+        <div class="filters modal-filters">
+          <button class="filter-btn" type="button">
+            Date range: <span class="filter-btn-value">02/03/25 &ndash; 31/05/25</span>
+            <svg class="filter-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
+          </button>
+          <div class="filter-wrapper">
+            <button class="filter-btn" type="button">
+              Team: <span class="filter-btn-value">All</span>
+              <svg class="filter-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
+            </button>
+            <div class="filter-dropdown filter-dropdown-multi">
+              <div class="filter-dropdown-title">Team</div>
+              <label class="filter-checkbox-item"><input type="checkbox"><span>Team A</span></label>
+              <label class="filter-checkbox-item"><input type="checkbox"><span>Team B</span></label>
+              <label class="filter-checkbox-item"><input type="checkbox"><span>Team C</span></label>
+            </div>
+          </div>
+          <div class="filter-wrapper">
+            <button class="filter-btn" type="button">
+              Agent Name: <span class="filter-btn-value">All</span>
+              <svg class="filter-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
+            </button>
+            <div class="filter-dropdown filter-dropdown-multi">
+              <div class="filter-dropdown-title">Agent Name</div>
+              <label class="filter-checkbox-item"><input type="checkbox"><span>Micah Wiley</span></label>
+              <label class="filter-checkbox-item"><input type="checkbox"><span>Jaxen Gibson</span></label>
+              <label class="filter-checkbox-item"><input type="checkbox"><span>Tatum Logan</span></label>
+              <label class="filter-checkbox-item"><input type="checkbox"><span>Dominic Williams</span></label>
+              <label class="filter-checkbox-item"><input type="checkbox"><span>Sophia Carter</span></label>
+              <label class="filter-checkbox-item"><input type="checkbox"><span>Liam Turner</span></label>
+              <label class="filter-checkbox-item"><input type="checkbox"><span>Ava Thompson</span></label>
+            </div>
+          </div>
+          <div class="filter-wrapper">
+            <button class="filter-btn" type="button">
+              Channel: <span class="filter-btn-value">All</span>
+              <svg class="filter-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
+            </button>
+            <div class="filter-dropdown filter-dropdown-multi">
+              <div class="filter-dropdown-title">Channel</div>
+              <label class="filter-checkbox-item"><input type="checkbox"><span>Voice</span></label>
+              <label class="filter-checkbox-item"><input type="checkbox"><span>Chat</span></label>
+            </div>
+          </div>
+          <div class="filter-wrapper">
+            <button class="filter-btn" type="button">
+              Skill: <span class="filter-btn-value">All</span>
+              <svg class="filter-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
+            </button>
+            <div class="filter-dropdown filter-dropdown-multi">
+              <div class="filter-dropdown-title">Skill</div>
+              <label class="filter-checkbox-item"><input type="checkbox"><span>Skill A</span></label>
+              <label class="filter-checkbox-item"><input type="checkbox"><span>Skill B</span></label>
+              <label class="filter-checkbox-item"><input type="checkbox"><span>Skill C</span></label>
+              <label class="filter-checkbox-item"><input type="checkbox"><span>Skill D</span></label>
+            </div>
+          </div>
+          <button class="reset-filters-btn" type="button">↻ Reset Filters</button>
+        </div>
+
+        <!-- Stats -->
+        <div class="stats-grid modal-stats">
+          <div class="stat-tile"><div class="stat-tile-label">Voice Interactions</div><div class="stat-tile-value">24</div></div>
+          <div class="stat-tile"><div class="stat-tile-label">Chat Interactions</div><div class="stat-tile-value">24</div></div>
+          <div class="stat-tile"><div class="stat-tile-label">Teams</div><div class="stat-tile-value">12</div></div>
+          <div class="stat-tile"><div class="stat-tile-label">Agents</div><div class="stat-tile-value">127</div></div>
+          <div class="stat-tile"><div class="stat-tile-label">Avg. Sentiment</div><div class="stat-tile-value">4.78</div></div>
+        </div>
+
+        <!-- Table -->
+        <div class="modal-table-wrapper">
+          <table class="modal-table">
+            <thead>
+              <tr>
+                <th>Channel</th>
+                <th>Agent Name</th>
+                <th>Team</th>
+                <th>Date &amp; Time</th>
+                <th>Duration</th>
+                <th>CSAT</th>
+                <th>Skill</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><span class="channel-icon channel-voice" aria-label="Voice"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg></span></td>
+                <td>Micah Wiley</td>
+                <td>Team A</td>
+                <td>Oct 30, 2025 4:24 PM</td>
+                <td>7:35</td>
+                <td>4.65</td>
+                <td>Skill A</td>
+                <td><button class="ghost-btn" type="button" aria-label="Play interaction"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="6 3 20 12 6 21 6 3"/></svg></button></td>
+              </tr>
+              <tr>
+                <td><span class="channel-icon channel-voice" aria-label="Voice"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg></span></td>
+                <td>Jaxen Gibson</td>
+                <td>Team B</td>
+                <td>Oct 30, 2025 4:24 PM</td>
+                <td>7:32</td>
+                <td>4.80</td>
+                <td>Skill A</td>
+                <td><button class="ghost-btn" type="button" aria-label="Play interaction"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="6 3 20 12 6 21 6 3"/></svg></button></td>
+              </tr>
+              <tr>
+                <td><span class="channel-icon channel-voice" aria-label="Voice"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg></span></td>
+                <td>Tatum Logan</td>
+                <td>Team C</td>
+                <td>Oct 30, 2025 4:24 PM</td>
+                <td>7:32</td>
+                <td>4.44</td>
+                <td>Skill A</td>
+                <td><button class="ghost-btn" type="button" aria-label="Play interaction"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="6 3 20 12 6 21 6 3"/></svg></button></td>
+              </tr>
+              <tr>
+                <td><span class="channel-icon channel-voice" aria-label="Voice"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg></span></td>
+                <td>Dominic Williams</td>
+                <td>Team A</td>
+                <td>Oct 30, 2025 4:24 PM</td>
+                <td>7:32</td>
+                <td>4.44</td>
+                <td>Skill A</td>
+                <td><button class="ghost-btn" type="button" aria-label="Play interaction"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="6 3 20 12 6 21 6 3"/></svg></button></td>
+              </tr>
+              <tr>
+                <td><span class="channel-icon channel-voice" aria-label="Voice"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg></span></td>
+                <td>Sophia Carter</td>
+                <td>Team A</td>
+                <td>Oct 30, 2025 4:24 PM</td>
+                <td>7:32</td>
+                <td>4.44</td>
+                <td>Skill A</td>
+                <td><button class="ghost-btn" type="button" aria-label="Play interaction"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="6 3 20 12 6 21 6 3"/></svg></button></td>
+              </tr>
+              <tr>
+                <td><span class="channel-icon channel-chat" aria-label="Chat"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 9a2 2 0 0 1-2 2H6l-4 4V4c0-1.1.9-2 2-2h8a2 2 0 0 1 2 2z"/><path d="M18 9h2a2 2 0 0 1 2 2v11l-4-4h-6a2 2 0 0 1-2-2v-1"/></svg></span></td>
+                <td>Liam Turner</td>
+                <td>Team A</td>
+                <td>Oct 30, 2025 4:24 PM</td>
+                <td>7:32</td>
+                <td>4.44</td>
+                <td>Skill A</td>
+                <td><button class="ghost-btn" type="button" aria-label="Play interaction"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="6 3 20 12 6 21 6 3"/></svg></button></td>
+              </tr>
+              <tr>
+                <td><span class="channel-icon channel-chat" aria-label="Chat"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 9a2 2 0 0 1-2 2H6l-4 4V4c0-1.1.9-2 2-2h8a2 2 0 0 1 2 2z"/><path d="M18 9h2a2 2 0 0 1 2 2v11l-4-4h-6a2 2 0 0 1-2-2v-1"/></svg></span></td>
+                <td>Ava Thompson</td>
+                <td>Team A</td>
+                <td>Oct 30, 2025 4:24 PM</td>
+                <td>7:32</td>
+                <td>4.44</td>
+                <td>Skill A</td>
+                <td><button class="ghost-btn" type="button" aria-label="Play interaction"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="6 3 20 12 6 21 6 3"/></svg></button></td>
+              </tr>
+            </tbody>
+          </table>
+          <div class="modal-empty-state" id="sampleEmptyState" hidden>
+            <h3 class="modal-empty-state-title">No Results Founds</h3>
+            <button class="modal-empty-reset" type="button">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/></svg>
+              Reset Filters
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <footer class="modal-footer">
+        <button class="modal-close-btn" type="button">Close</button>
+      </footer>
+    </div>
+  </div>
+
+  <!-- Share modal (shared across all card share buttons) -->
+  <div class="share-modal-backdrop" id="shareModalBackdrop" hidden>
+    <div class="share-modal" role="dialog" aria-modal="true" aria-labelledby="shareModalTitle">
+      <header class="share-modal-header">
+        <h2 class="share-modal-title" id="shareModalTitle">Share</h2>
+        <button class="share-modal-close" type="button" aria-label="Close" data-action="share-close">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M18 6 6 18"/><path d="m6 6 12 12"/>
+          </svg>
+        </button>
+      </header>
+      <div class="share-modal-body">
+        <label class="share-modal-label" for="shareLink">Share link</label>
+        <div class="share-modal-link-row">
+          <input class="share-modal-input" id="shareLink" type="text" value="https://analytics.cognigy.ai/opportunities/card-services" readonly>
+          <button class="share-modal-copy" type="button" data-action="share-copy">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/>
+            </svg>
+            <span class="share-modal-copy-text">Copy</span>
+          </button>
+        </div>
+        <div class="share-modal-divider"><span>or share via</span></div>
+        <div class="share-modal-options">
+          <button class="share-modal-option" type="button" data-action="share-email">
+            <span class="share-modal-option-icon" data-share="email">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/>
+              </svg>
+            </span>
+            <span>Email</span>
+          </button>
+          <button class="share-modal-option" type="button">
+            <span class="share-modal-option-icon" data-share="slack">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <rect width="3" height="8" x="13" y="2" rx="1.5"/><path d="M19 8.5V10h1.5A1.5 1.5 0 1 0 19 8.5"/>
+                <rect width="3" height="8" x="8" y="14" rx="1.5"/><path d="M5 15.5V14H3.5A1.5 1.5 0 1 0 5 15.5"/>
+                <rect width="8" height="3" x="14" y="13" rx="1.5"/><path d="M15.5 19H14v1.5a1.5 1.5 0 1 0 1.5-1.5"/>
+                <rect width="8" height="3" x="2" y="8" rx="1.5"/><path d="M8.5 5H10V3.5A1.5 1.5 0 1 0 8.5 5"/>
+              </svg>
+            </span>
+            <span>Slack</span>
+          </button>
+          <button class="share-modal-option" type="button" data-action="share-teams">
+            <span class="share-modal-option-icon" data-share="teams">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M21 11v3a4 4 0 0 1-4 4H7a4 4 0 0 1-4-4V8a4 4 0 0 1 4-4h10"/>
+                <circle cx="17" cy="5" r="3"/>
+              </svg>
+            </span>
+            <span>Microsoft Teams</span>
+          </button>
+          <button class="share-modal-option" type="button" data-action="share-download-pdf">
+            <span class="share-modal-option-icon" data-share="download">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/>
+              </svg>
+            </span>
+            <span>Download PDF</span>
+          </button>
+        </div>
+      </div>
     </div>
   </div>
 
@@ -1243,7 +1879,7 @@
       }
     });
 
-    // Tabs
+    // Tabs — swap the visible Top Opportunities view based on the tab
     document.querySelectorAll('.opportunities-tab').forEach(tab => {
       tab.addEventListener('click', () => {
         document.querySelectorAll('.opportunities-tab').forEach(t => {
@@ -1252,6 +1888,11 @@
         });
         tab.classList.add('active');
         tab.setAttribute('aria-selected', 'true');
+        const view = tab.dataset.tab;
+        if (!view) return;
+        document.querySelectorAll('.opportunities-view').forEach(v => {
+          v.hidden = (v.dataset.view !== view);
+        });
       });
     });
 
@@ -1355,6 +1996,74 @@
           { title: 'Points Redemption', subtopics: 2, m: ['14,800', '900', '700', '4.7%', '3:00', '4.3', '$7K'] },
           { title: 'Tier Status',       subtopics: 1, m: ['14,800', '750', '620', '4.2%', '3:20', '4.3', '$5K'] }
         ]
+      },
+      'Card Activation': {
+        actions: [
+          { label: 'Card Activated',          value: 1520, pct: 100 },
+          { label: 'Activation Confirmed',    value: 1320, pct: 87 },
+          { label: 'Account Linked',          value: 980,  pct: 64 },
+          { label: 'Welcome Pack Sent',       value: 700,  pct: 46 }
+        ],
+        subTopics: [
+          { title: 'New Card Activation', subtopics: 2, m: ['45,000', '900', '855', '1.9%', '5:00', '3.8', '$9K'] },
+          { title: 'Reactivation',        subtopics: 1, m: ['45,000', '450', '420', '0.9%', '5:30', '3.7', '$5K'] },
+          { title: 'Travel Activation',   subtopics: 1, m: ['45,000', '250', '245', '0.5%', '4:30', '3.7', '$2K'] }
+        ]
+      },
+      'Payment Methods': {
+        actions: [
+          { label: 'Payment Method Updated',  value: 1290, pct: 100 },
+          { label: 'Bank Account Verified',   value: 1100, pct: 85 },
+          { label: 'Card Tokenized',          value: 860,  pct: 67 },
+          { label: 'Auto-Pay Enabled',        value: 620,  pct: 48 }
+        ],
+        subTopics: [
+          { title: 'Card on File',  subtopics: 2, m: ['45,000', '800', '720', '1.6%', '3:20', '3.6', '$5K'] },
+          { title: 'ACH Setup',     subtopics: 1, m: ['45,000', '500', '420', '0.9%', '3:40', '3.5', '$3K'] },
+          { title: 'Mobile Wallet', subtopics: 1, m: ['45,000', '200', '150', '0.3%', '3:00', '3.4', '$1K'] }
+        ]
+      },
+
+      // Sub-topic breakdown data (leaf level — just an Agent Actions chart)
+      'Charge Breakdown': {
+        actions: [
+          { label: 'Billing Was Discussed',                 value: 810, pct: 100 },
+          { label: 'Agent Provided Information About…', value: 720, pct: 89 },
+          { label: 'Account Was Reviewed',                  value: 630, pct: 78 },
+          { label: 'Account Was Canceled',                  value: 630, pct: 78 },
+          { label: 'Verify Account',                        value: 630, pct: 78 }
+        ]
+      },
+      'Add Payment Method': {
+        actions: [
+          { label: 'Payment Method Added',                  value: 720, pct: 100 },
+          { label: 'Card Tokenized',                        value: 620, pct: 86 },
+          { label: 'Bank Account Verified',                 value: 540, pct: 75 },
+          { label: 'Account Was Reviewed',                  value: 460, pct: 64 }
+        ]
+      },
+      'Update Payment': {
+        actions: [
+          { label: 'Payment Method Updated',                value: 600, pct: 100 },
+          { label: 'Card Replaced',                         value: 510, pct: 85 },
+          { label: 'Account Was Reviewed',                  value: 430, pct: 72 },
+          { label: 'Verify Account',                        value: 380, pct: 63 }
+        ]
+      },
+      'Fee Questions': {
+        actions: [
+          { label: 'Fees Were Discussed',                   value: 500, pct: 100 },
+          { label: 'Agent Provided Information About…', value: 430, pct: 86 },
+          { label: 'Account Was Reviewed',                  value: 360, pct: 72 },
+          { label: 'Verify Account',                        value: 320, pct: 64 }
+        ]
+      },
+      'Billing Cycle': {
+        actions: [
+          { label: 'Billing Cycle Was Discussed',           value: 250, pct: 100 },
+          { label: 'Agent Explained Billing Cycle',         value: 220, pct: 88 },
+          { label: 'Account Was Reviewed',                  value: 170, pct: 68 }
+        ]
       }
     };
 
@@ -1406,6 +2115,86 @@
       `;
     }
 
+    // Topics-view breakdown — produces the Bill-Explanation-style layout:
+    // numbered sub-sub-cards with their own metrics + sub-topic actions + a
+    // "Create Deterministic Process" button.
+    function buildTopicBreakdownHtml(data) {
+      const actionRows = data.actions.map(a => `
+        <div class="agent-action-row">
+          <span class="agent-action-label">${a.label}</span>
+          <div class="agent-action-bar"><div class="agent-action-fill" style="width: ${a.pct}%"></div></div>
+          <span class="agent-action-value">${a.value.toLocaleString()}</span>
+        </div>
+      `).join('');
+
+      const subActions = (s) => (s.subActions || [
+        { label: 'Action Was Discussed',                  value: Math.round(parseInt(String(s.m[2]).replace(/[^\d]/g,''),10) * 0.95), pct: 100 },
+        { label: 'Agent Provided Information About…', value: Math.round(parseInt(String(s.m[2]).replace(/[^\d]/g,''),10) * 0.85), pct: 89 },
+        { label: 'Account Was Reviewed',                  value: Math.round(parseInt(String(s.m[2]).replace(/[^\d]/g,''),10) * 0.72), pct: 76 }
+      ]).map(a => `
+        <div class="agent-action-row">
+          <span class="agent-action-label">${a.label}</span>
+          <div class="agent-action-bar"><div class="agent-action-fill" style="width: ${a.pct}%"></div></div>
+          <span class="agent-action-value">${a.value.toLocaleString()}</span>
+        </div>
+      `).join('');
+
+      const subSubCards = data.subTopics.map((s, i) => `
+        <article class="opportunity-sub-sub-card">
+          <header class="opportunity-sub-sub-card-header">
+            <span class="opportunity-numbered-badge">${i + 1}</span>
+            <h5 class="opportunity-sub-sub-card-title">${s.title}</h5>
+            <button class="ghost-btn" type="button" aria-label="More options"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="5.01"/><line x1="12" y1="12" x2="12" y2="12.01"/><line x1="12" y1="19" x2="12" y2="19.01"/></svg></button>
+          </header>
+          <div class="opportunity-metrics opportunity-sub-metrics">
+            <div class="opportunity-metric"><div class="opportunity-metric-value">${s.m[0]}</div><div class="opportunity-metric-label">Total Call (CC)</div></div>
+            <div class="opportunity-metric"><div class="opportunity-metric-value">${s.m[1]}</div><div class="opportunity-metric-label">Category Volume</div></div>
+            <div class="opportunity-metric"><div class="opportunity-metric-value">${s.m[2]}</div><div class="opportunity-metric-label">Automatable Volume</div></div>
+            <div class="opportunity-metric"><div class="opportunity-metric-value">${s.m[3]}</div><div class="opportunity-metric-label">Automatable % (CC)</div></div>
+            <div class="opportunity-metric"><div class="opportunity-metric-value">${s.m[4]}</div><div class="opportunity-metric-label">Duration</div></div>
+            <div class="opportunity-metric"><div class="opportunity-metric-value">${s.m[5]}</div><div class="opportunity-metric-label">Sentiment</div></div>
+            <div class="opportunity-metric"><div class="opportunity-metric-value savings">${s.m[6]}</div><div class="opportunity-metric-label">Annual Savings</div></div>
+          </div>
+          <section class="agent-actions-inline">
+            <h6 class="agent-actions-inline-title">Agent Actions in This Sub-topic</h6>
+            ${subActions(s)}
+          </section>
+          <button class="deterministic-btn" type="button">Create Deterministic Process</button>
+        </article>
+      `).join('');
+
+      return `
+        <div class="opportunity-details">
+          <section class="agent-actions">
+            <h4 class="agent-actions-title">Agent Actions for This Topic</h4>
+            ${actionRows}
+          </section>
+          <div class="opportunity-sub-sub-list">
+            ${subSubCards}
+          </div>
+        </div>
+      `;
+    }
+
+    // Sub-topic breakdown — only an Agent Actions chart (leaf-level cards).
+    function buildSubTopicBreakdownHtml(data) {
+      const actionRows = data.actions.map(a => `
+        <div class="agent-action-row">
+          <span class="agent-action-label">${a.label}</span>
+          <div class="agent-action-bar"><div class="agent-action-fill" style="width: ${a.pct}%"></div></div>
+          <span class="agent-action-value">${a.value.toLocaleString()}</span>
+        </div>
+      `).join('');
+      return `
+        <div class="opportunity-details">
+          <section class="agent-actions">
+            <h4 class="agent-actions-title">Agent Actions for This Sub-topic</h4>
+            ${actionRows}
+          </section>
+        </div>
+      `;
+    }
+
     // Lazily inject the breakdown HTML into a card the first time it's expanded,
     // using the title to look up the right data set.
     function ensureBreakdown(card) {
@@ -1416,7 +2205,12 @@
       const data = breakdownData[title];
       if (!data) return;
       const button = card.querySelector('.opportunity-expand');
-      button.insertAdjacentHTML('beforebegin', buildBreakdownHtml(data));
+      const isSubTopicsView = !!card.closest('.opportunities-view[data-view="sub-topics"]');
+      const isTopicsView = !!card.closest('.opportunities-view[data-view="topics"]');
+      const html = isSubTopicsView
+        ? buildSubTopicBreakdownHtml(data)
+        : (isTopicsView ? buildTopicBreakdownHtml(data) : buildBreakdownHtml(data));
+      button.insertAdjacentHTML('beforebegin', html);
     }
 
     // Opportunity expand toggle — flips the chevron, expands the card so its
@@ -1429,9 +2223,10 @@
         btn.classList.toggle('expanded', expanded);
         const label = btn.querySelector('.expand-label');
         if (label) {
+          const short = card.classList.contains('subtopic-card');
           label.textContent = expanded
-            ? 'Hide Breakdown & Related Opportunities'
-            : 'Explore Breakdown & Related Opportunities';
+            ? (short ? 'Hide Breakdown' : 'Hide Breakdown & Related Opportunities')
+            : (short ? 'Explore Breakdown' : 'Explore Breakdown & Related Opportunities');
         }
         // Wire any newly-injected sub-toggles
         card.querySelectorAll('.opportunity-sub-toggle').forEach(toggle => {
@@ -1680,12 +2475,12 @@
       contentWrapper.classList.toggle('ai-open');
       if (aiPanel.classList.contains('open')) setTimeout(() => aiPanelInput.focus(), 300);
     });
-    // "+" button — start a new chat (clear input). Does NOT close the panel;
-    // the panel is toggled by the topbar Ask AI button.
+    // Close (X) button — closes the chat panel and clears the input.
     aiPanelClose.addEventListener('click', () => {
+      aiPanel.classList.remove('open');
+      contentWrapper.classList.remove('ai-open');
       aiPanelInput.value = '';
       aiPanelSend.disabled = true;
-      aiPanelInput.focus();
     });
     document.querySelectorAll('.ai-suggestion-btn').forEach(btn => {
       btn.addEventListener('click', e => { aiPanelInput.value = e.target.textContent; aiPanelInput.focus(); });
@@ -1702,6 +2497,248 @@
     });
     aiPanelInput.addEventListener('input', () => { aiPanelSend.disabled = !aiPanelInput.value.trim(); });
     aiPanelSend.disabled = true;
+
+    // ===== Card / sub-card kebab menu + Sample Interactions modal =====
+    const opportunityMenu = document.getElementById('opportunityMenuPopover');
+    const sampleModal = document.getElementById('sampleInteractionsModal');
+    const sampleModalSubtitle = document.getElementById('sampleInteractionsSubtitle');
+    let lastKebabContext = null;
+
+    function openSampleInteractions() {
+      // Use the title of the nearest opportunity-card to label the modal
+      if (lastKebabContext) {
+        const card = lastKebabContext.closest('.opportunity-card');
+        const subCard = lastKebabContext.closest('.opportunity-sub-card, .opportunity-sub-sub-card');
+        const titleEl =
+          (subCard && subCard.querySelector('.opportunity-sub-card-title, .opportunity-sub-sub-card-title')) ||
+          (card && card.querySelector('.opportunity-card-title'));
+        if (titleEl) {
+          sampleModalSubtitle.textContent = `Category: ${titleEl.textContent.trim()}`;
+        }
+      }
+      sampleModal.hidden = false;
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeSampleInteractions() {
+      sampleModal.hidden = true;
+      document.body.style.overflow = '';
+    }
+
+    // ---- Filter logic for the Sample Interactions table ----
+    function getModalSelected(filterTitle) {
+      const dropdowns = sampleModal.querySelectorAll('.filter-dropdown-multi');
+      for (const dd of dropdowns) {
+        const title = dd.querySelector('.filter-dropdown-title');
+        if (title && title.textContent.trim() === filterTitle) {
+          return [...dd.querySelectorAll('input[type="checkbox"]:checked')]
+            .map(cb => cb.nextElementSibling.textContent.trim());
+        }
+      }
+      return [];
+    }
+
+    const sampleEmptyState = document.getElementById('sampleEmptyState');
+
+    function applySampleFilters() {
+      const teamSel = getModalSelected('Team');
+      const agentSel = getModalSelected('Agent Name');
+      const channelSel = getModalSelected('Channel');
+      const skillSel = getModalSelected('Skill');
+
+      let visible = 0;
+      sampleModal.querySelectorAll('.modal-table tbody tr').forEach(row => {
+        const channel = row.querySelector('.channel-voice') ? 'Voice' : 'Chat';
+        const agent = row.cells[1].textContent.trim();
+        const team = row.cells[2].textContent.trim();
+        const skill = row.cells[6].textContent.trim();
+
+        const matches =
+          (!teamSel.length    || teamSel.includes(team)) &&
+          (!agentSel.length   || agentSel.includes(agent)) &&
+          (!channelSel.length || channelSel.includes(channel)) &&
+          (!skillSel.length   || skillSel.includes(skill));
+        row.hidden = !matches;
+        if (matches) visible++;
+      });
+
+      // Toggle empty state overlay when no rows match
+      sampleEmptyState.hidden = visible > 0;
+    }
+
+    sampleModal.querySelectorAll('.filter-checkbox-item input[type="checkbox"]')
+      .forEach(cb => cb.addEventListener('change', applySampleFilters));
+
+    function resetSampleFilters() {
+      sampleModal.querySelectorAll('.filter-checkbox-item input[type="checkbox"]').forEach(cb => {
+        if (cb.checked) {
+          cb.checked = false;
+          cb.dispatchEvent(new Event('change'));
+        }
+      });
+    }
+
+    // Top-row Reset Filters
+    sampleModal.querySelector('.reset-filters-btn').addEventListener('click', resetSampleFilters);
+    // Empty-state Reset Filters
+    sampleModal.querySelector('.modal-empty-reset').addEventListener('click', resetSampleFilters);
+
+    sampleModal.addEventListener('click', event => {
+      if (event.target === sampleModal) closeSampleInteractions();
+    });
+    sampleModal.querySelector('.modal-close').addEventListener('click', closeSampleInteractions);
+    sampleModal.querySelector('.modal-close-btn').addEventListener('click', closeSampleInteractions);
+    document.addEventListener('keydown', event => {
+      if (event.key === 'Escape' && !sampleModal.hidden) closeSampleInteractions();
+    });
+
+    document.addEventListener('click', event => {
+      const menuButton = event.target.closest('.ghost-btn[aria-label="More options"]');
+      const menuItem = event.target.closest('#opportunityMenuPopover .action-menu-item');
+
+      if (menuItem) {
+        opportunityMenu.classList.remove('visible');
+        openSampleInteractions();
+        return;
+      }
+
+      if (menuButton) {
+        event.stopPropagation();
+        lastKebabContext = menuButton;
+        const rect = menuButton.getBoundingClientRect();
+        opportunityMenu.classList.add('visible');
+        opportunityMenu.style.left = `${Math.min(rect.left, window.innerWidth - opportunityMenu.offsetWidth - 8)}px`;
+        const belowTop = rect.bottom + 6;
+        const maxTop = window.innerHeight - opportunityMenu.offsetHeight - 8;
+        opportunityMenu.style.top = `${Math.min(belowTop, maxTop)}px`;
+        return;
+      }
+
+      if (!event.target.closest('#opportunityMenuPopover')) {
+        opportunityMenu.classList.remove('visible');
+      }
+    });
+
+    // ===== "Select all" master checkbox for every multi-select dropdown =====
+    document.querySelectorAll('.filter-dropdown-multi').forEach(dd => {
+      if (dd.querySelector('.filter-checkbox-master')) return;
+
+      const master = document.createElement('label');
+      master.className = 'filter-checkbox-item filter-checkbox-master';
+      master.innerHTML = '<input type="checkbox"><span>Select all</span>';
+
+      const title = dd.querySelector('.filter-dropdown-title');
+      if (title) title.insertAdjacentElement('afterend', master);
+      else dd.insertBefore(master, dd.firstChild);
+
+      const masterCb = master.querySelector('input');
+      const itemCbs = [...dd.querySelectorAll(
+        '.filter-checkbox-item:not(.filter-checkbox-master) input[type="checkbox"]'
+      )];
+
+      let bulkUpdating = false;
+
+      masterCb.addEventListener('change', () => {
+        bulkUpdating = true;
+        itemCbs.forEach(cb => {
+          if (cb.checked !== masterCb.checked) {
+            cb.checked = masterCb.checked;
+            cb.dispatchEvent(new Event('change'));
+          }
+        });
+        bulkUpdating = false;
+        masterCb.indeterminate = false;
+      });
+
+      const syncMaster = () => {
+        if (bulkUpdating) return;
+        const checked = itemCbs.filter(c => c.checked).length;
+        if (checked === 0) {
+          masterCb.checked = false;
+          masterCb.indeterminate = false;
+        } else if (checked === itemCbs.length) {
+          masterCb.checked = true;
+          masterCb.indeterminate = false;
+        } else {
+          masterCb.checked = false;
+          masterCb.indeterminate = true;
+        }
+      };
+      itemCbs.forEach(cb => cb.addEventListener('change', syncMaster));
+    });
+
+    // Share modal — opens when any card share button is clicked
+    const shareModal = document.getElementById('shareModalBackdrop');
+    const shareLinkInput = document.getElementById('shareLink');
+    function openShareModal() { shareModal.hidden = false; }
+    function closeShareModal() { shareModal.hidden = true; }
+    document.addEventListener('click', e => {
+      const shareBtn = e.target.closest('button[aria-label="Share"]');
+      if (shareBtn) { e.preventDefault(); openShareModal(); return; }
+      if (e.target.closest('[data-action="share-close"]') || e.target === shareModal) {
+        closeShareModal(); return;
+      }
+      const copyBtn = e.target.closest('[data-action="share-copy"]');
+      if (copyBtn && shareLinkInput) {
+        navigator.clipboard?.writeText(shareLinkInput.value).catch(() => {});
+        const txt = copyBtn.querySelector('.share-modal-copy-text');
+        if (txt) {
+          const prev = txt.textContent;
+          txt.textContent = 'Copied';
+          setTimeout(() => { txt.textContent = prev; }, 1500);
+        }
+      }
+      if (e.target.closest('[data-action="share-download-pdf"]')) {
+        // Close the modal first so it isn't captured in the printed output,
+        // then open the browser print dialog (user can choose Save as PDF).
+        closeShareModal();
+        setTimeout(() => window.print(), 100);
+      }
+      if (e.target.closest('[data-action="share-teams"]')) {
+        // Opens Microsoft Teams' native "Share to Teams" picker in a new tab
+        // — the user chooses recipients (people, chats, or channels) inside Teams.
+        const url = shareLinkInput?.value || window.location.href;
+        const msg = 'Sharing an Automation Opportunity worth reviewing.';
+        const shareUrl = `https://teams.microsoft.com/share?href=${encodeURIComponent(url)}&msgText=${encodeURIComponent(msg)}&preview=true`;
+        window.open(shareUrl, '_blank', 'noopener');
+        closeShareModal();
+      }
+      if (e.target.closest('[data-action="share-email"]')) {
+        const url = shareLinkInput?.value || window.location.href;
+        const subject = 'Automation Opportunity — worth a look';
+        // Place the URL on its own line with no trailing punctuation so mail
+        // clients (Gmail, Outlook, Apple Mail) auto-link it as clickable.
+        const body = `Hi,\n\nI thought you'd find this automation opportunity interesting. It highlights customer-service interactions our AI agents could automate, along with the projected impact.\n\nTake a look here:\n${url}\n\nThanks!`;
+        window.location.href = `mailto:?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+        closeShareModal();
+      }
+    });
+    document.addEventListener('keydown', e => { if (e.key === 'Escape' && !shareModal.hidden) closeShareModal(); });
+
+    // Create/View AI Agent dropdowns
+    document.querySelectorAll('.agent-dropdown').forEach(dropdown => {
+      const toggle = dropdown.querySelector('.agent-dropdown-toggle');
+      toggle.addEventListener('click', e => {
+        e.stopPropagation();
+        const isOpen = dropdown.classList.toggle('open');
+        toggle.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+        // Close any other open dropdowns
+        document.querySelectorAll('.agent-dropdown.open').forEach(other => {
+          if (other !== dropdown) {
+            other.classList.remove('open');
+            other.querySelector('.agent-dropdown-toggle').setAttribute('aria-expanded', 'false');
+          }
+        });
+      });
+    });
+    document.addEventListener('click', e => {
+      document.querySelectorAll('.agent-dropdown.open').forEach(dropdown => {
+        if (!dropdown.contains(e.target)) {
+          dropdown.classList.remove('open');
+          dropdown.querySelector('.agent-dropdown-toggle').setAttribute('aria-expanded', 'false');
+        }
+      });
+    });
   </script>
 </body>
 </html>

@@ -83,7 +83,7 @@
                 <span class="sidebar-item-label">Agent</span>
             </button>
 
-            <button class="sidebar-item">
+            <a href="Actions-history.html" class="sidebar-item">
                 <svg class="sidebar-item-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
                     <path d="M16 22h2a2 2 0 0 0 2-2V7l-5-5H6a2 2 0 0 0-2 2v3"/>
                     <path d="M14 2v4a2 2 0 0 0 2 2h4"/>
@@ -91,7 +91,7 @@
                     <path d="M9.5 17.5 8 16.25V14"/>
                 </svg>
                 <span class="sidebar-item-label">Action History</span>
-            </button>
+            </a>
 
             <div class="sidebar-section">
                 <button class="sidebar-item">
@@ -153,10 +153,10 @@
                         <line x1="15" y1="3" x2="15" y2="21"></line>
                     </svg>
                 </button>
-                <div class="topbar-breadcrumb">Automation Opportunities</div>
+                <div class="topbar-breadcrumb" id="agentBreadcrumb">Automation Opportunities</div>
                 <button class="topbar-ask-ai-btn">
                     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <path d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 1 1-8 0 4 4 0 0 1 8 0z"></path>
+                        <path d="M9.937 15.5A2 2 0 0 0 8.5 14.063l-6.135-1.582a.5.5 0 0 1 0-.962L8.5 9.936A2 2 0 0 0 9.937 8.5l1.582-6.135a.5.5 0 0 1 .963 0L14.063 8.5A2 2 0 0 0 15.5 9.937l6.135 1.581a.5.5 0 0 1 0 .964L15.5 14.063a2 2 0 0 0-1.437 1.437l-1.582 6.135a.5.5 0 0 1-.963 0z"/><path d="M20 3v4"/><path d="M22 5h-4"/><path d="M4 17v2"/><path d="M5 18H3"/>
                     </svg>
                     Ask AI
                 </button>
@@ -194,7 +194,7 @@
                     </div>
                     
                     <div class="button-group">
-                        <button class="button-group-item">Textual View</button>
+                        <a class="button-group-item" href="ai-agent-textual.html">Textual View</a>
                         <button class="button-group-item active">Flow View</button>
                     </div>
                 </div>
@@ -202,44 +202,112 @@
 
             <!-- Screen Content -->
             <section class="screen-content">
+                <!-- Fullscreen-only header (shows when canvas is in full-screen mode) -->
+                <div class="flow-fullscreen-header">
+                    <h2 class="flow-fullscreen-title">Intent: Billing &amp; Payment Inquiries</h2>
+                </div>
+                <!-- Flow Controls (sticky, canvas-level) -->
+                <div class="flow-controls" id="flowControls">
+                    <button class="flow-control-btn" type="button" data-tooltip="Zoom out" aria-label="Zoom out" id="flowZoomOut">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                            <path d="M5 12h14"/>
+                        </svg>
+                    </button>
+                    <span class="flow-zoom" id="flowZoomLabel">100%</span>
+                    <button class="flow-control-btn" type="button" data-tooltip="Zoom in" aria-label="Zoom in" id="flowZoomIn">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                            <path d="M5 12h14"/><path d="M12 5v14"/>
+                        </svg>
+                    </button>
+                    <button class="flow-control-btn" type="button" data-tooltip="Reset zoom" aria-label="Reset zoom" id="flowZoomReset">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                            <path d="M3 7V5a2 2 0 0 1 2-2h2"/>
+                            <path d="M17 3h2a2 2 0 0 1 2 2v2"/>
+                            <path d="M21 17v2a2 2 0 0 1-2 2h-2"/>
+                            <path d="M7 21H5a2 2 0 0 1-2-2v-2"/>
+                            <circle cx="12" cy="12" r="1"/>
+                        </svg>
+                    </button>
+                    <button class="flow-control-btn" type="button" data-tooltip="Full screen" aria-label="Full screen" id="flowFullscreen">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                            <path d="M3 7V5a2 2 0 0 1 2-2h2"/>
+                            <path d="M17 3h2a2 2 0 0 1 2 2v2"/>
+                            <path d="M21 17v2a2 2 0 0 1-2 2h-2"/>
+                            <path d="M7 21H5a2 2 0 0 1-2-2v-2"/>
+                            <path d="m14 10 7-7"/>
+                            <path d="m3 21 7-7"/>
+                            <path d="M21 8V3h-5"/>
+                            <path d="M3 16v5h5"/>
+                        </svg>
+                    </button>
+                </div>
                 <div class="flow-container">
-                    <!-- Flow Controls -->
-                    <div class="flow-controls">
-                        <span class="flow-controls-text">Drag to pan</span>
-                        <div class="flow-controls-buttons">
-                            <button class="flow-control-btn">+</button>
-                            <button class="flow-control-btn">−</button>
-                            <button class="flow-control-btn">⊙</button>
-                        </div>
-                        <span class="flow-zoom">100%</span>
-                    </div>
-
+                    <div class="flow-canvas">
                     <!-- Top Agent (Ava Smith) -->
                     <div class="flow-header">
-                        <div class="agent-card">
-                            <div class="agent-card-header">
-                                <div class="agent-avatar" aria-label="Ava Smith">
-                                    <span class="agent-avatar-initials">AS</span>
-                                </div>
-                                <div class="agent-info">
-                                    <div class="agent-title-row">
-                                        <h3 class="agent-title">Ava Smith</h3>
-                                        <button class="edit-btn" type="button" aria-label="Edit agent">
-                                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                                                <path d="M17 3a2.85 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z"/>
-                                                <path d="m15 5 4 4"/>
-                                            </svg>
-                                        </button>
+                        <div class="agent-card" data-editable="agent">
+                            <div class="agent-card-view">
+                                <div class="agent-card-header">
+                                    <div class="agent-avatar" aria-label="Ava Smith">
+                                        <img src="images/ava-smith.png" alt="Ava Smith">
                                     </div>
-                                    <p class="agent-subtitle">Billing_Payment_Inquiries_1698624240</p>
-                                    <span class="badge badge-default">Agent</span>
+                                    <div class="agent-info">
+                                        <div class="agent-title-row">
+                                            <h3 class="agent-title">Ava Smith</h3>
+                                            <button class="edit-btn" type="button" aria-label="Edit agent" data-action="open-edit">
+                                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                                                    <path d="M17 3a2.85 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z"/>
+                                                    <path d="m15 5 4 4"/>
+                                                </svg>
+                                            </button>
+                                        </div>
+                                        <p class="agent-subtitle">Billing_Payment_Inquiries_1698624240</p>
+                                        <span class="badge badge-default">Agent</span>
+                                    </div>
+                                </div>
+                                <p class="agent-description">You are a billing and payment customer service agent. Greet the customer warmly and invoke the most relevant skill: billing-inquiry for invoice questions, charge-dispute for disputed</p>
+                                <div class="agent-stats">
+                                    <span class="stat-pill">4 Skills</span>
+                                    <span class="stat-pill">11 Tools</span>
                                 </div>
                             </div>
-                            <p class="agent-description">You are a billing and payment customer service agent. Greet the customer warmly and invoke the most relevant skill: billing-inquiry for invoice questions, charge-dispute for disputed</p>
-                            <div class="agent-stats">
-                                <span class="stat-pill">4 Skills</span>
-                                <span class="stat-pill">11 Tools</span>
-                            </div>
+                            <form class="agent-edit-form" novalidate>
+                                <div class="agent-edit-header">
+                                    <div class="agent-avatar" aria-hidden="true">
+                                        <img src="images/ava-smith.png" alt="">
+                                    </div>
+                                    <div class="agent-edit-header-info">
+                                        <h3 class="agent-title">Ava Smith</h3>
+                                        <p class="agent-subtitle">Billing_Payment_Inquiries_1698624240</p>
+                                        <span class="badge badge-default">Agent</span>
+                                    </div>
+                                    <button type="button" class="edit-close-btn" aria-label="Close" data-action="close-edit">
+                                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                                            <path d="M18 6 6 18"/><path d="m6 6 12 12"/>
+                                        </svg>
+                                    </button>
+                                </div>
+                                <div class="agent-edit-field">
+                                    <label class="agent-edit-label" for="agentPersonaName">Persona Name</label>
+                                    <input class="agent-edit-input" id="agentPersonaName" type="text" value="Ava Smith">
+                                </div>
+                                <div class="agent-edit-field">
+                                    <label class="agent-edit-label" for="agentIdentifier">Agent Identifier</label>
+                                    <input class="agent-edit-input" id="agentIdentifier" type="text" value="Billing_Payment_Inquiries_1698624240">
+                                </div>
+                                <div class="agent-edit-field">
+                                    <label class="agent-edit-label" for="agentInstruction">Instruction</label>
+                                    <textarea class="agent-edit-input agent-edit-textarea" id="agentInstruction" rows="4" maxlength="300" data-counter="true">You are a billing and payment customer service agent. Greet the customer warmly and invoke the most relevant skill: billing-inquiry for invoice questions, charge-dispute for disputed transactions, payment-arrangement for instalment plans, and refund-processing for approved refunds.</textarea>
+                                    <div class="agent-edit-counter">
+                                        <span class="agent-edit-chars">0 characters</span>
+                                        <span class="agent-edit-remaining">300 remaining</span>
+                                    </div>
+                                </div>
+                                <div class="agent-edit-actions">
+                                    <button type="button" class="agent-edit-cancel" data-action="close-edit">Cancel</button>
+                                    <button type="button" class="agent-edit-save" data-action="save-edit">Save</button>
+                                </div>
+                            </form>
                         </div>
                     </div>
 
@@ -249,7 +317,8 @@
                     <div class="flow-row">
                         <div class="agent-column">
                             <div class="connector-line"></div>
-                            <div class="agent-card-small skill-card selected">
+                            <div class="agent-card-small skill-card">
+                            <div class="agent-card-view">
                                 <div class="agent-card-header">
                                     <span class="skill-avatar" aria-hidden="true">
                                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -268,7 +337,7 @@
                                                 </svg>
                                             </button>
                                         </div>
-                                        <span class="badge badge-default">Skill</span>
+                                        <span class="badge badge-warning">Skill</span>
                                     </div>
                                 </div>
                                 <p class="agent-description">Handles billing questions, invoice retrieval, and charge explanations.</p>
@@ -277,11 +346,13 @@
                                     <span class="stat-pill">4 Tools</span>
                                 </div>
                             </div>
+                            </div>
                         </div>
 
                         <div class="agent-column">
                             <div class="connector-line"></div>
                             <div class="agent-card-small skill-card">
+                            <div class="agent-card-view">
                                 <div class="agent-card-header">
                                     <span class="skill-avatar" aria-hidden="true">
                                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -300,7 +371,7 @@
                                                 </svg>
                                             </button>
                                         </div>
-                                        <span class="badge badge-default">Skill</span>
+                                        <span class="badge badge-warning">Skill</span>
                                     </div>
                                 </div>
                                 <p class="agent-description">Investigates disputed charges, validates transactions, initiates refunds.</p>
@@ -309,11 +380,13 @@
                                     <span class="stat-pill">3 Tools</span>
                                 </div>
                             </div>
+                            </div>
                         </div>
 
                         <div class="agent-column">
                             <div class="connector-line"></div>
                             <div class="agent-card-small skill-card">
+                            <div class="agent-card-view">
                                 <div class="agent-card-header">
                                     <span class="skill-avatar" aria-hidden="true">
                                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -332,7 +405,7 @@
                                                 </svg>
                                             </button>
                                         </div>
-                                        <span class="badge badge-default">Skill</span>
+                                        <span class="badge badge-warning">Skill</span>
                                     </div>
                                 </div>
                                 <p class="agent-description">Creates and modifies instalment plans for customers who cannot pay in full.</p>
@@ -341,11 +414,13 @@
                                     <span class="stat-pill">3 Tools</span>
                                 </div>
                             </div>
+                            </div>
                         </div>
 
                         <div class="agent-column">
                             <div class="connector-line"></div>
                             <div class="agent-card-small skill-card">
+                            <div class="agent-card-view">
                                 <div class="agent-card-header">
                                     <span class="skill-avatar" aria-hidden="true">
                                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -364,7 +439,7 @@
                                                 </svg>
                                             </button>
                                         </div>
-                                        <span class="badge badge-default">Skill</span>
+                                        <span class="badge badge-warning">Skill</span>
                                     </div>
                                 </div>
                                 <p class="agent-description">Processes approved refunds, tracks status, and updates account credits.</p>
@@ -373,11 +448,16 @@
                                     <span class="stat-pill">1 Tools</span>
                                 </div>
                             </div>
+                            </div>
                         </div>
                     </div>
 
                     <div class="flow-divider">
                         <span class="flow-divider-label">Skills &mdash; click a skill to explore its tools</span>
+                    </div>
+
+                    <!-- Tools row (populated when a skill is selected) -->
+                    <div class="flow-row tools-row" id="toolsRow" hidden></div>
                     </div>
                 </div>
             </section>
@@ -391,7 +471,7 @@
             <div class="ai-panel-header">
                 <div class="ai-panel-title">
                     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <path d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 1 1-8 0 4 4 0 0 1 8 0z"></path>
+                        <path d="M9.937 15.5A2 2 0 0 0 8.5 14.063l-6.135-1.582a.5.5 0 0 1 0-.962L8.5 9.936A2 2 0 0 0 9.937 8.5l1.582-6.135a.5.5 0 0 1 .963 0L14.063 8.5A2 2 0 0 0 15.5 9.937l6.135 1.581a.5.5 0 0 1 0 .964L15.5 14.063a2 2 0 0 0-1.437 1.437l-1.582 6.135a.5.5 0 0 1-.963 0z"/><path d="M20 3v4"/><path d="M22 5h-4"/><path d="M4 17v2"/><path d="M5 18H3"/>
                     </svg>
                     New Chat
                 </div>
@@ -403,7 +483,7 @@
             </div>
             <div class="ai-panel-content">
                 <svg class="ai-panel-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <path d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 1 1-8 0 4 4 0 0 1 8 0z"></path>
+                    <path d="M9.937 15.5A2 2 0 0 0 8.5 14.063l-6.135-1.582a.5.5 0 0 1 0-.962L8.5 9.936A2 2 0 0 0 9.937 8.5l1.582-6.135a.5.5 0 0 1 .963 0L14.063 8.5A2 2 0 0 0 15.5 9.937l6.135 1.581a.5.5 0 0 1 0 .964L15.5 14.063a2 2 0 0 0-1.437 1.437l-1.582 6.135a.5.5 0 0 1-.963 0z"/><path d="M20 3v4"/><path d="M22 5h-4"/><path d="M4 17v2"/><path d="M5 18H3"/>
                 </svg>
                 <div class="ai-panel-greeting">How can I help you today?</div>
                 <div class="ai-panel-subtitle">Ask anything about you...</div>
@@ -434,6 +514,12 @@
             const sidebar = document.querySelector('.sidebar');
             const sidebarItems = document.querySelectorAll('.sidebar-item');
             const topbarBackBtn = document.querySelector('.topbar-back-btn');
+
+            // Breadcrumb reflects where the user came from
+            const breadcrumb = document.getElementById('agentBreadcrumb');
+            if (breadcrumb && /Actions-history\.html$/i.test(document.referrer)) {
+                breadcrumb.innerHTML = '<a href="Actions-history.html" class="breadcrumb-link">Actions History</a> &rsaquo; AI Agent';
+            }
 
             // Toggle sidebar with topbar back button
             topbarBackBtn.addEventListener('click', function() {
@@ -466,12 +552,12 @@
                 }
             });
 
-            // "+" button — start a new chat (clear input). Does NOT close the
-            // panel; the panel is toggled by the topbar Ask AI button.
+            // Close (X) button — closes the chat panel and clears the input.
             aiPanelClose.addEventListener('click', () => {
+                aiPanel.classList.remove('open');
+                contentWrapper.classList.remove('ai-open');
                 aiPanelInput.value = '';
                 aiPanelSend.disabled = true;
-                aiPanelInput.focus();
             });
 
             // Handle suggestion buttons
@@ -507,6 +593,427 @@
 
             // Initialize send button state
             aiPanelSend.disabled = true;
+
+            // Flow zoom + pan
+            const screenContent = document.querySelector('.screen-content');
+            const flowContainer = document.querySelector('.flow-container');
+            const flowCanvas = document.querySelector('.flow-canvas');
+            const zoomLabel = document.getElementById('flowZoomLabel');
+            const zoomOutBtn = document.getElementById('flowZoomOut');
+            const zoomInBtn = document.getElementById('flowZoomIn');
+            const zoomResetBtn = document.getElementById('flowZoomReset');
+            const fullscreenBtn = document.getElementById('flowFullscreen');
+            const ZOOM_MIN = 20, ZOOM_MAX = 200, ZOOM_STEP = 10;
+            let zoomLevel = 100;
+            let panX = 0, panY = 0;
+
+            function applyTransform() {
+                flowCanvas.style.transform = `translate(${panX}px, ${panY}px) scale(${zoomLevel / 100})`;
+            }
+            function applyZoom() {
+                zoomLevel = Math.min(ZOOM_MAX, Math.max(ZOOM_MIN, zoomLevel));
+                zoomLabel.textContent = `${zoomLevel}%`;
+                zoomOutBtn.disabled = zoomLevel <= ZOOM_MIN;
+                zoomInBtn.disabled = zoomLevel >= ZOOM_MAX;
+                applyTransform();
+            }
+            zoomOutBtn.addEventListener('click', () => { zoomLevel -= ZOOM_STEP; applyZoom(); });
+            zoomInBtn.addEventListener('click', () => { zoomLevel += ZOOM_STEP; applyZoom(); });
+            zoomResetBtn.addEventListener('click', () => { zoomLevel = 100; panX = 0; panY = 0; applyZoom(); });
+            applyZoom();
+
+            // Drag to pan
+            let isPanning = false;
+            let panStartX = 0, panStartY = 0;
+            let originX = 0, originY = 0;
+
+            screenContent.addEventListener('mousedown', e => {
+                if (e.button !== 0) return;
+                // Only pan when starting drag from empty canvas — not on
+                // any card, button, or the floating zoom controls.
+                if (e.target.closest('.flow-controls, .agent-card, .agent-card-small, .flow-divider, button, a, input, textarea, select')) return;
+                isPanning = true;
+                panStartX = e.clientX;
+                panStartY = e.clientY;
+                originX = panX;
+                originY = panY;
+                screenContent.classList.add('is-panning');
+                e.preventDefault();
+            });
+            window.addEventListener('mousemove', e => {
+                if (!isPanning) return;
+                panX = originX + (e.clientX - panStartX);
+                panY = originY + (e.clientY - panStartY);
+                applyTransform();
+            });
+            window.addEventListener('mouseup', () => {
+                if (!isPanning) return;
+                isPanning = false;
+                screenContent.classList.remove('is-panning');
+            });
+
+            // ===== SKILL -> TOOLS =====
+            const skillTools = {
+                'Charge Dispute & Refund': [
+                    { name: 'validate_charge', desc: 'Validates a charged transaction against the customer account.', params: 3 },
+                    { name: 'fetch_invoice', desc: 'Retrieves an invoice or statement by ID for review.', params: 2 },
+                    { name: 'open_dispute', desc: 'Opens a formal dispute case for a contested charge.', params: 4 },
+                    { name: 'log_refund', desc: 'Records a refund decision against the disputed charge.', params: 3 }
+                ],
+                'charge-dispute': [
+                    { name: 'validate_charge', desc: 'Validates a charged transaction against the customer account.', params: 3 },
+                    { name: 'open_dispute', desc: 'Opens a formal dispute case for a contested charge.', params: 4 },
+                    { name: 'log_refund', desc: 'Records a refund decision against the disputed charge.', params: 3 }
+                ],
+                'payment-arrangement': [
+                    { name: 'get_billing_history', desc: 'Creates and modifies instalment plans for customers who cannot pay in full.', params: 3 },
+                    { name: 'get_billing_history', desc: 'Retrieves all charges, credits, and payments for a customer account within a date range.', params: 3 },
+                    { name: 'get_billing_history', desc: 'Retrieves all charges, credits, and payments for a customer account within a date range.', params: 3 }
+                ],
+                'refund-processing': [
+                    { name: 'process_refund', desc: 'Processes an approved refund against the original transaction.', params: 1 }
+                ]
+            };
+
+            const toolIconSvg = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M22 14.34V19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2v-4.66"/>
+                <path d="M22 7V5a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2v2"/>
+                <path d="M2 13h20"/>
+                <path d="M14 13a2 2 0 0 1-4 0"/>
+                <path d="M9 7V3h6v4"/>
+            </svg>`;
+
+            function renderTool(t) {
+                const paramsJson = encodeURIComponent(JSON.stringify(t.paramList || Array.from({length: t.params || 0}, () => ({name: '', desc: ''}))));
+                return `
+                    <div class="agent-column">
+                        <div class="connector-line"></div>
+                        <div class="agent-card-small tool" data-params="${paramsJson}">
+                            <div class="agent-card-view">
+                                <div class="agent-card-header">
+                                    <span class="skill-avatar" aria-hidden="true">${toolIconSvg}</span>
+                                    <div class="agent-info">
+                                        <div class="agent-title-row">
+                                            <h4 class="agent-title">${t.name}</h4>
+                                            <button class="edit-btn" type="button" aria-label="Edit tool" data-action="open-edit" style="width: 24px; height: 24px;">
+                                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                                                    <path d="M17 3a2.85 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z"/>
+                                                    <path d="m15 5 4 4"/>
+                                                </svg>
+                                            </button>
+                                        </div>
+                                        <span class="badge badge-success">Tool</span>
+                                    </div>
+                                </div>
+                                <p class="agent-description">${t.desc}</p>
+                                <div class="agent-stats">
+                                    <span class="stat-pill">${t.params} params</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>`;
+            }
+
+            const toolsRow = document.getElementById('toolsRow');
+            const flowDivider = document.querySelector('.flow-divider');
+
+            function setToolsVisible(visible) {
+                toolsRow.hidden = !visible;
+                if (flowDivider) flowDivider.hidden = visible;
+            }
+
+            function positionToolsTrunk(skillCard) {
+                // Vertical line from the selected skill down to the tools-row horizontal line.
+                let trunk = document.getElementById('toolsTrunk');
+                if (!trunk) {
+                    trunk = document.createElement('div');
+                    trunk.id = 'toolsTrunk';
+                    trunk.className = 'tools-trunk';
+                    skillCard.closest('.flow-canvas').appendChild(trunk);
+                }
+                const canvasRect = trunk.parentElement.getBoundingClientRect();
+                const skillRect = skillCard.getBoundingClientRect();
+                const toolsRect = toolsRow.getBoundingClientRect();
+                trunk.style.left = (skillRect.left + skillRect.width / 2 - canvasRect.left - 0.5) + 'px';
+                trunk.style.top = (skillRect.bottom - canvasRect.top) + 'px';
+                trunk.style.height = Math.max(0, toolsRect.top - skillRect.bottom) + 'px';
+                trunk.style.display = 'block';
+            }
+
+            function hideToolsTrunk() {
+                const trunk = document.getElementById('toolsTrunk');
+                if (trunk) trunk.style.display = 'none';
+            }
+
+            function showToolsFor(skillCard) {
+                document.querySelectorAll('.skill-card.is-active').forEach(c => {
+                    if (c !== skillCard) c.classList.remove('is-active');
+                });
+                const isActive = skillCard.classList.toggle('is-active');
+                if (!isActive) { setToolsVisible(false); toolsRow.innerHTML = ''; hideToolsTrunk(); return; }
+                const title = skillCard.querySelector('.agent-title')?.textContent.trim() || '';
+                const tools = skillTools[title] || [];
+                if (tools.length === 0) { setToolsVisible(false); toolsRow.innerHTML = ''; hideToolsTrunk(); return; }
+                toolsRow.innerHTML = tools.map(renderTool).join('');
+                // Horizontal line inset depends on the number of tools (center-to-center of first and last).
+                const inset = (50 / tools.length) + '%';
+                toolsRow.style.setProperty('--tools-line-inset', inset);
+                toolsRow.style.paddingLeft = '0';
+                setToolsVisible(true);
+                requestAnimationFrame(() => {
+                    // Align the tools row horizontally so its center sits below the selected skill's center.
+                    const canvasRect = toolsRow.parentElement.getBoundingClientRect();
+                    const skillRect = skillCard.getBoundingClientRect();
+                    const toolsWidth = toolsRow.scrollWidth;
+                    const skillCenterInCanvas = skillRect.left + skillRect.width / 2 - canvasRect.left;
+                    const padLeft = Math.max(0, skillCenterInCanvas - toolsWidth / 2);
+                    toolsRow.style.paddingLeft = padLeft + 'px';
+                    positionToolsTrunk(skillCard);
+                });
+            }
+
+            document.querySelectorAll('.skill-card').forEach(card => {
+                card.addEventListener('click', e => {
+                    // Don't trigger when clicking the edit button or while in edit mode
+                    if (e.target.closest('.edit-btn, .agent-edit-form')) return;
+                    if (card.classList.contains('editing')) return;
+                    showToolsFor(card);
+                });
+            });
+
+            // ===== EDIT MODE (agent + skill cards) =====
+            function buildToolEditForm(card) {
+                const view = card.querySelector('.agent-card-view');
+                const title = view.querySelector('.agent-title')?.textContent.trim() || '';
+                const description = view.querySelector('.agent-description')?.textContent.trim() || '';
+                const iconSvg = view.querySelector('.skill-avatar')?.innerHTML || '';
+                let params = [];
+                try { params = JSON.parse(decodeURIComponent(card.dataset.params || '[]')); } catch {}
+                const paramRows = params.map((p, i) => `
+                    <div class="tool-param-row">
+                        <input class="agent-edit-input" type="text" value="${(p.name || `param${i+1}`).replace(/"/g,'&quot;')}" placeholder="Parameter name">
+                        <input class="agent-edit-input" type="text" value="${(p.desc || '').replace(/"/g,'&quot;')}" placeholder="Parameter description">
+                    </div>`).join('');
+                const form = document.createElement('form');
+                form.className = 'agent-edit-form tool-edit-form';
+                form.setAttribute('novalidate', '');
+                form.innerHTML = `
+                    <div class="agent-edit-header">
+                        <span class="skill-avatar" aria-hidden="true">${iconSvg}</span>
+                        <div class="agent-edit-header-info">
+                            <h4 class="agent-title">${title}</h4>
+                            <span class="badge badge-success">Tool</span>
+                        </div>
+                        <button type="button" class="edit-close-btn" aria-label="Close" data-action="close-edit">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                                <path d="M18 6 6 18"/><path d="m6 6 12 12"/>
+                            </svg>
+                        </button>
+                    </div>
+                    <div class="agent-edit-field">
+                        <label class="agent-edit-label">Tool Name:</label>
+                        <input class="agent-edit-input" type="text" value="${title.replace(/"/g,'&quot;')}">
+                    </div>
+                    <div class="agent-edit-field">
+                        <label class="agent-edit-label">Tool Description:</label>
+                        <textarea class="agent-edit-input agent-edit-textarea" rows="4" maxlength="300" data-counter="true">${description}</textarea>
+                        <div class="agent-edit-counter">
+                            <span class="agent-edit-chars">0 characters</span>
+                            <span class="agent-edit-remaining">300 remaining</span>
+                        </div>
+                    </div>
+                    <div class="tool-params">
+                        <div class="tool-params-header">
+                            <span>Parameter Name</span>
+                            <span>Description</span>
+                        </div>
+                        ${paramRows}
+                    </div>
+                    <div class="agent-edit-actions">
+                        <button type="button" class="agent-edit-cancel" data-action="close-edit">Cancel</button>
+                        <button type="button" class="agent-edit-save" data-action="save-edit">Save</button>
+                    </div>`;
+                return form;
+            }
+
+            function buildSkillEditForm(card) {
+                const view = card.querySelector('.agent-card-view');
+                const title = view.querySelector('.agent-title')?.textContent.trim() || '';
+                const descs = view.querySelectorAll('.agent-description');
+                const description = descs[0]?.textContent.trim() || '';
+                const instructions = descs[1]?.textContent.replace(/[……]+$/, '').trim() || '';
+                const skillIconSvg = view.querySelector('.skill-avatar')?.innerHTML || '';
+                const form = document.createElement('form');
+                form.className = 'agent-edit-form';
+                form.setAttribute('novalidate', '');
+                form.innerHTML = `
+                    <div class="agent-edit-header">
+                        <span class="skill-avatar" aria-hidden="true">${skillIconSvg}</span>
+                        <div class="agent-edit-header-info">
+                            <h4 class="agent-title">${title}</h4>
+                            <span class="badge badge-warning">Skill</span>
+                        </div>
+                        <button type="button" class="edit-close-btn" aria-label="Close" data-action="close-edit">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                                <path d="M18 6 6 18"/><path d="m6 6 12 12"/>
+                            </svg>
+                        </button>
+                    </div>
+                    <div class="agent-edit-field">
+                        <label class="agent-edit-label">Skill Name:</label>
+                        <input class="agent-edit-input" type="text" value="${title.replace(/"/g, '&quot;')}">
+                        <p class="agent-edit-helper">Must contain only lowercase alphanumeric characters and hyphens</p>
+                    </div>
+                    <div class="agent-edit-field">
+                        <label class="agent-edit-label">Description:</label>
+                        <textarea class="agent-edit-input agent-edit-textarea" rows="4" maxlength="300" data-counter="true">${description}</textarea>
+                        <div class="agent-edit-counter">
+                            <span class="agent-edit-chars">0 characters</span>
+                            <span class="agent-edit-remaining">300 remaining</span>
+                        </div>
+                    </div>
+                    <div class="agent-edit-field">
+                        <label class="agent-edit-label">Instructions:</label>
+                        <textarea class="agent-edit-input agent-edit-textarea" rows="4" maxlength="300" data-counter="true">${instructions}</textarea>
+                        <div class="agent-edit-counter">
+                            <span class="agent-edit-chars">0 characters</span>
+                            <span class="agent-edit-remaining">300 remaining</span>
+                        </div>
+                    </div>
+                    <div class="agent-edit-actions">
+                        <button type="button" class="agent-edit-cancel" data-action="close-edit">Cancel</button>
+                        <button type="button" class="agent-edit-save" data-action="save-edit">Save</button>
+                    </div>`;
+                return form;
+            }
+
+            function updateCounter(textarea) {
+                const wrapper = textarea.parentElement;
+                const chars = wrapper.querySelector('.agent-edit-chars');
+                const remaining = wrapper.querySelector('.agent-edit-remaining');
+                if (!chars || !remaining) return;
+                const max = parseInt(textarea.getAttribute('maxlength') || '0', 10);
+                const len = textarea.value.length;
+                chars.textContent = `${len} characters`;
+                remaining.textContent = `${Math.max(0, max - len)} remaining`;
+            }
+
+            function wireCounters(scope) {
+                scope.querySelectorAll('textarea[data-counter="true"]').forEach(t => {
+                    updateCounter(t);
+                    t.addEventListener('input', () => updateCounter(t));
+                });
+            }
+
+            function openEdit(card) {
+                // Only one card can be in edit mode at a time
+                document.querySelectorAll('.agent-card.editing, .agent-card-small.editing').forEach(other => {
+                    if (other !== card) other.classList.remove('editing');
+                });
+                // Skill / tool cards build their edit form lazily on first open
+                if (!card.querySelector('.agent-edit-form')) {
+                    if (card.classList.contains('skill-card')) {
+                        card.appendChild(buildSkillEditForm(card));
+                    } else if (card.classList.contains('tool')) {
+                        card.appendChild(buildToolEditForm(card));
+                    }
+                }
+                wireCounters(card);
+                card.classList.add('editing');
+            }
+
+            function closeEdit(card) {
+                card.classList.remove('editing');
+            }
+
+            function saveEdit(card) {
+                const form = card.querySelector('.agent-edit-form');
+                const view = card.querySelector('.agent-card-view');
+                if (!form || !view) { closeEdit(card); return; }
+                if (card.classList.contains('skill-card')) {
+                    const [nameInput] = form.querySelectorAll('.agent-edit-input:not(textarea)');
+                    const textareas = form.querySelectorAll('textarea');
+                    const title = view.querySelector('.agent-title');
+                    const descs = view.querySelectorAll('.agent-description');
+                    if (nameInput && title) title.textContent = nameInput.value;
+                    if (textareas[0] && descs[0]) descs[0].textContent = textareas[0].value;
+                    if (textareas[1] && descs[1]) descs[1].textContent = textareas[1].value;
+                } else if (card.classList.contains('tool')) {
+                    const inputs = form.querySelectorAll('.agent-edit-field .agent-edit-input:not(textarea)');
+                    const textareas = form.querySelectorAll('textarea');
+                    const title = view.querySelector('.agent-title');
+                    const desc = view.querySelector('.agent-description');
+                    const statPill = view.querySelector('.stat-pill');
+                    if (inputs[0] && title) title.textContent = inputs[0].value;
+                    if (textareas[0] && desc) desc.textContent = textareas[0].value;
+                    const paramRows = form.querySelectorAll('.tool-param-row');
+                    const params = Array.from(paramRows).map(row => {
+                        const [nameI, descI] = row.querySelectorAll('input');
+                        return { name: nameI?.value || '', desc: descI?.value || '' };
+                    });
+                    card.dataset.params = encodeURIComponent(JSON.stringify(params));
+                    if (statPill) statPill.textContent = `${params.length} params`;
+                } else {
+                    const persona = form.querySelector('#agentPersonaName');
+                    const identifier = form.querySelector('#agentIdentifier');
+                    const instruction = form.querySelector('#agentInstruction');
+                    const title = view.querySelector('.agent-title');
+                    const subtitle = view.querySelector('.agent-subtitle');
+                    const desc = view.querySelector('.agent-description');
+                    if (persona && title) title.textContent = persona.value;
+                    if (identifier && subtitle) subtitle.textContent = identifier.value;
+                    if (instruction && desc) desc.textContent = instruction.value;
+                }
+                closeEdit(card);
+            }
+
+            document.addEventListener('click', e => {
+                const action = e.target.closest('[data-action]')?.dataset.action;
+                if (!action) return;
+                const card = e.target.closest('.agent-card, .agent-card-small');
+                if (!card) return;
+                if (action === 'open-edit') openEdit(card);
+                else if (action === 'close-edit') closeEdit(card);
+                else if (action === 'save-edit') saveEdit(card);
+            });
+
+            // Wire the inline (already-rendered) agent edit form's counters
+            wireCounters(document);
+
+            // Tag the skill-card edit buttons so the delegated click handler picks them up
+            document.querySelectorAll('.agent-card-small.skill-card .edit-btn').forEach(btn => {
+                btn.setAttribute('data-action', 'open-edit');
+            });
+
+            // Fullscreen toggle on the canvas area (so the header + zoom legend show too)
+            const fullscreenHeader = document.querySelector('.flow-fullscreen-header');
+            const flowControls = document.getElementById('flowControls');
+            const flowControlsOriginalParent = flowControls.parentNode;
+            const flowControlsOriginalNext = flowControls.nextSibling;
+
+            fullscreenBtn.addEventListener('click', () => {
+                if (!document.fullscreenElement) {
+                    screenContent.requestFullscreen?.();
+                } else {
+                    document.exitFullscreen?.();
+                }
+            });
+
+            // On fullscreen change, move the zoom legend into the header (right side) and back
+            document.addEventListener('fullscreenchange', () => {
+                const inFullscreen = document.fullscreenElement === screenContent;
+                if (inFullscreen) {
+                    fullscreenHeader.appendChild(flowControls);
+                    flowControls.classList.add('flow-controls--in-header');
+                    fullscreenBtn.setAttribute('data-tooltip', 'Exit full screen');
+                    fullscreenBtn.setAttribute('aria-label', 'Exit full screen');
+                } else {
+                    flowControls.classList.remove('flow-controls--in-header');
+                    flowControlsOriginalParent.insertBefore(flowControls, flowControlsOriginalNext);
+                    fullscreenBtn.setAttribute('data-tooltip', 'Full screen');
+                    fullscreenBtn.setAttribute('aria-label', 'Full screen');
+                }
+            });
         });
     </script>
 

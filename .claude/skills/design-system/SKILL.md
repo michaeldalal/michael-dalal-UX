@@ -7,11 +7,40 @@ description: Cognigy / NICE design system component catalogue. Use this skill be
 
 This skill documents the component catalogue extracted from the Figma design system file (C26 Design System ⭐ Tali) and the working `styles.css` / `AI Agent.html` / `deployed-dashboard.html` reference implementations.
 
+> **All components are now available as React JSX files in [`/components/`](../../../components/).** Build new UI as React components — not HTML. The CSS class documentation below remains the authoritative reference for the underlying styling vocabulary that each React component renders.
+
 **For all design tokens — colors, typography, spacing, radius, shadows, motion — read [`.claude/tokens/tokens.md`](../../tokens/tokens.md). This file lists components only; do not duplicate token values here.**
 
 ---
 
-## Component Catalogue
+## React Components
+
+All components live in [`/components/`](../../../components/) and are the canonical building blocks for new UI. Default exports unless noted. Import paths assume the repo root.
+
+| Component | Import | Main props |
+| --- | --- | --- |
+| **AIInsights** | `import AIInsights from '/components/AIInsights.jsx'` | `summary`, `insightList`, `recommendations`, `showMeta`, `generatedAgo` |
+| **AIPanel** | `import AIPanel from '/components/AIPanel.jsx'` | `open`, `onClose`, `suggestions` |
+| **ActionsDataTable** | `import ActionsDataTable from '/components/ActionsDataTable.jsx'` | `rows`, `visibleCount`, `totalCount` |
+| **AppLayout** | `import AppLayout from '/components/AppLayout.jsx'` | `activeSidebar`, `breadcrumb`, `breadcrumbParts`, `bodyClassName`, `shellWrapperClass`, `aiSuggestions`, `children` |
+| **Badge** | `import Badge from '/components/Badge.jsx'` | `variant` (`default` \| `secondary` \| `draft` \| `agent` \| etc.), `withCheck`, `className`, `children` |
+| **FilterButton** | `import FilterButton from '/components/FilterButton.jsx'` | `label`, `value`, `onClick`, `id`, `type` |
+| **IconButton** | `import IconButton from '/components/IconButton.jsx'` | `variant` (`shell` \| `ghost`), `ariaLabel`, `onClick`, `className`, `children` |
+| **OpportunityCard** | `import OpportunityCard from '/components/OpportunityCard.jsx'` | `data`. Also named-exports `OpportunityMetrics`, `AgentActions`, `AgentActionsRow` |
+| **SearchBox** | `import SearchBox from '/components/SearchBox.jsx'` | `value`, `onChange`, `placeholder`, `className` |
+| **ShellTopBar** | `import ShellTopBar from '/components/ShellTopBar.jsx'` | `notificationCount`, `initials` |
+| **Sidebar** | `import Sidebar from '/components/Sidebar.jsx'` | `active` (route key), `collapsed` |
+| **StatPill** | `import StatPill from '/components/StatPill.jsx'` | `children`, `className` |
+| **TopbarNavigation** | `import TopbarNavigation from '/components/TopbarNavigation.jsx'` | `breadcrumb`, `breadcrumbParts`, `onToggleSidebar`, `onAskAI`, `showSpacer` |
+| **icons** | `import { SparklesIcon, HomeIcon, ... } from '/components/icons.jsx'` | Named exports for every SVG icon used across components |
+
+`AppLayout` is the standard page shell — wrap new screens in it to inherit `ShellTopBar`, `Sidebar`, `TopbarNavigation`, and the `AIPanel` slide-over without re-wiring state.
+
+---
+
+## Component Catalogue (CSS classes)
+
+The CSS class documentation below remains the source of truth for the underlying styling vocabulary that each React component renders. Refer to it when extending components, scoping page-specific overrides, or reading existing markup.
 
 All components ship in `styles.css`. Reuse the existing class names — do not invent parallel BEM/utility versions.
 
@@ -129,8 +158,9 @@ All components ship in `styles.css`. Reuse the existing class names — do not i
 
 ## Usage Rules
 
-1. **Always link `styles.css`** in any new HTML page in this workspace — do not redefine styles locally.
-2. **Tokens are sourced from [`.claude/tokens/tokens.md`](../../tokens/tokens.md).** Read that file first whenever you need a value. Never hardcode hex colors, pixel sizes, or other raw literals — reference the appropriate CSS variable instead.
-3. **Reach for an existing component first.** If the catalogue above covers the need, reuse the class. Only create new classes when extending genuinely new behavior.
-4. **Scope page-specific overrides under a body-class selector.** The deployed dashboard uses `.deployed-dashboard` to scope its variants of shared shell classes; follow the same pattern for any new page.
-5. **Match the established surface stack and motion language** as documented in `tokens.md`. Do not introduce shadows, gradients, or transition timings that break the system.
+1. **All new UI must be built in React JSX — not HTML.** Import components from `/components/`. Never write raw HTML files. The existing HTML files (`AI Agent.html`, `index.html`, etc.) are legacy reference implementations only.
+2. **Always link `styles.css`** in any page that hosts the React tree — do not redefine styles locally.
+3. **Tokens are sourced from [`.claude/tokens/tokens.md`](../../tokens/tokens.md).** Read that file first whenever you need a value. Never hardcode hex colors, pixel sizes, or other raw literals — reference the appropriate CSS variable instead.
+4. **Reach for an existing component first.** If the React catalogue above covers the need, import it. If only the CSS class catalogue covers it, extend or compose a JSX component around those classes — don't drop back to raw HTML.
+5. **Scope page-specific overrides under a body-class selector.** The deployed dashboard uses `.deployed-dashboard` to scope its variants of shared shell classes; follow the same pattern for any new page (pass via `AppLayout`'s `bodyClassName` prop).
+6. **Match the established surface stack and motion language** as documented in `tokens.md`. Do not introduce shadows, gradients, or transition timings that break the system.
