@@ -68,60 +68,324 @@
     --tracking--0-5: -0.005em;
     --tracking--1: -0.01em;
 
-    /* Cognigy Color Tokens — Brand / primary */
-    --primary-0: #ffffff;
-    --primary-50: #ecf5fe;
-    --primary-300: #5ea9fd;
-    --primary-500: #126bce;
-    --teal-500: #14b8a6;
-    --color-primary-900: #0b233d;
-    --color-primary-50-secondary: #ecf5fe;
-    --color-primary-100: #c8e2fc;
-    --color-blue-button: #126bce;
-    --color-blue-button-hover: #0e56a7;
-    --color-purple-badge: #126bce;
-    --color-purple-light: #ecf5fe;
-    --color-green-badge: #10b981;
-    --color-amber-warning: #f59e0b;
-    --color-red-notification: #bc2626;
+    /* ====================================================================
+       Cognigy Design Tokens — Colors (synced from .claude/tokens/tokens.md)
+       ==================================================================== */
 
-    /* Surfaces */
-    --color-shell-bg: var(--neutral-50);
-    --color-bg-primary: #ffffff;
-    --color-bg-secondary: #f8f8f8;
-    --color-bg-tertiary: #fafafa;
-    --color-bg-hover: var(--neutral-50);
-    --color-bg-loader: #f8fafc;
-    --color-sidebar-bg: #fcfcfd;
-    --color-sidebar-foreground: #404040;
+    /* Brand / Primary */
+    --primary-0:   #ffffff;
+    --primary-25:  #ecf5fe;
+    --primary-50:  #E5F2FF;  /* Primary/P50 - Secondary */
+    --primary-100: #D2E7FE;
+    --primary-200: #A7D0FE;
+    --primary-300: #5EA9FD;
+    --primary-400: #308FF8;
+    --primary-500: #126BCE;
+    --primary-600: #17569B;
+    --primary-700: #164479;
+    --primary-800: #0E2D4E;
+    --primary-900: #0B233D;
 
-    /* Text */
-    --color-text-primary: #111827;
-    --color-text-secondary: #404040;
-    --color-text-muted: #737373;
-    --color-text-icon: #6b7280;
-    --color-text-placeholder: #9ca3af;
-    --color-text-black: #000000;
-    --color-text-on-brand: #ffffff;
-
-    /* Borders */
-    --color-border: #e5e7eb;
-    --color-border-light: #a3a3a3;
-    --color-border-hover: #d1d5db;
-    --color-border-row: #e6e6e6;
+    /* Primary disabled variants */
+    --primary-disabled:       #126BCE80;
+    --secondary-disabled:     #ECF5FE80;
+    --primary-0-disabled:     #FFFFFF80;
+    --primary-900-disabled:   #0B233D80;
 
     /* Neutral scale */
     --neutral-0:   #ffffff;
-    --neutral-50:  #fafafa;
-    --neutral-100: #f5f5f5;
-    --neutral-200: #e5e5e5;
-    --neutral-300: #d4d4d4;
-    --neutral-400: #a3a3a3;
-    --neutral-500: #737373;
-    --neutral-600: #525252;
-    --neutral-700: #404040;
-    --neutral-800: #262626;
-    --neutral-900: #171717;
+    --neutral-25:  #F9FAFB;
+    --neutral-50:  #F3F4F6;
+    --neutral-100: #E5E7EB;
+    --neutral-200: #D1D5DB;
+    --neutral-300: #9CA3AF;
+    --neutral-400: #6B7280;
+    --neutral-500: #4B5563;
+    --neutral-600: #374151;
+    --neutral-700: #1F2937;
+    --neutral-800: #111827;
+    --neutral-900: #000000;
+
+    /* Success */
+    --success-default:   #208337;
+    --success-hover:     #1C7330;
+    --success-border:    #24943E;
+    --success-secondary: #186329;
+    --success-bg:        #EFFBF1;
+    --success-disabled:  #28A74580;
+
+    /* Warning */
+    --warning-default:  #FFB800;
+    --warning-hover:    #F5AF00;
+    --warning-border:   #A37A00;
+    --warning-bg:       #FFF6E0;
+    --warning-disabled: #FFB80080;
+
+    /* Error */
+    --error-default:    #E32926;
+    --error-hover:      #C71D1A;
+    --error-secondary:  #C71D1A;
+    --error-border:     #E53935;
+    --error-bg:         #FDEAEA;
+    --error-disabled:   #E3292680;
+
+    /* Yellow scale */
+    --yellow-25:  #FFF8E6;
+    --yellow-50:  #FFEDBF;
+    --yellow-100: #FFE299;
+    --yellow-200: #FFD366;
+    --yellow-300: #FFC857;
+    --yellow-400: #FFBE37;
+    --yellow-500: #FFB110;
+
+    /* Blue scale (visualisation — different ramp from Primary) */
+    --blue-25:  #E9ECFB;
+    --blue-50:  #C7D0F8;
+    --blue-100: #A3B1F2;
+    --blue-200: #7F91ED;
+    --blue-300: #5EA9FD;  /* legacy alias kept to Primary/P300 — see --vis-blue-300 below for the true visualisation Blue/300 */
+    --vis-blue-300: #556CD6;
+    --blue-400: #4855BB;
+    --blue-500: #3B439F;
+
+    /* Magenta */
+    --magenta-25:  #FBE6F2;
+    --magenta-50:  #F4BFE6;
+    --magenta-100: #EE99DB;
+    --magenta-200: #E666C9;
+    --magenta-300: #E754A8;
+    --magenta-400: #CF3A8F;
+    --magenta-500: #B7337A;
+
+    /* Teal */
+    --teal-25:  #E6FBF8;
+    --teal-50:  #BFF4EC;
+    --teal-100: #99E8DF;
+    --teal-200: #66DCCF;
+    --teal-300: #00BFA6;
+    --teal-400: #009E8F;
+    --teal-500: #008070;
+
+    /* ---------- Alpha Color Palettes (Storybook) ---------- */
+
+    /* Light Blue (#27CAFF) */
+    --alpha-light-blue-0:    #27CAFF00;
+    --alpha-light-blue-5:    #27CAFF0D;
+    --alpha-light-blue-10:   #27CAFF1A;
+    --alpha-light-blue-20:   #27CAFF33;
+    --alpha-light-blue-30:   #27CAFF4D;
+    --alpha-light-blue-40:   #27CAFF66;
+    --alpha-light-blue-50:   #27CAFF80;
+    --alpha-light-blue-60:   #27CAFF99;
+    --alpha-light-blue-70:   #27CAFFB2;
+    --alpha-light-blue-80:   #27CAFFCC;
+    --alpha-light-blue-90:   #27CAFFE5;
+    --alpha-light-blue-100:  #27CAFF;
+    --alpha-light-blue-text: #0085B1;
+
+    /* Magenta (#E754A8) */
+    --alpha-magenta-0:    #E754A800;
+    --alpha-magenta-5:    #E754A80D;
+    --alpha-magenta-10:   #E754A81A;
+    --alpha-magenta-20:   #E754A833;
+    --alpha-magenta-30:   #E754A84D;
+    --alpha-magenta-40:   #E754A866;
+    --alpha-magenta-50:   #E754A880;
+    --alpha-magenta-60:   #E754A899;
+    --alpha-magenta-70:   #E754A8B2;
+    --alpha-magenta-80:   #E754A8CC;
+    --alpha-magenta-90:   #E754A8E5;
+    --alpha-magenta-100:  #E754A8;
+    --alpha-magenta-text: #B7337A;
+
+    /* Red (#E53935) */
+    --alpha-red-0:    #E5393500;
+    --alpha-red-5:    #E539350D;
+    --alpha-red-10:   #E539351A;
+    --alpha-red-20:   #E5393533;
+    --alpha-red-30:   #E539354D;
+    --alpha-red-40:   #E5393566;
+    --alpha-red-50:   #E5393580;
+    --alpha-red-60:   #E5393599;
+    --alpha-red-70:   #E53935B2;
+    --alpha-red-80:   #E53935CC;
+    --alpha-red-90:   #E53935E5;
+    --alpha-red-100:  #E53935;
+    --alpha-red-text: #A0152A;
+
+    /* Yellow (#FFC857) */
+    --alpha-yellow-0:    #FFC85700;
+    --alpha-yellow-5:    #FFC8570D;
+    --alpha-yellow-10:   #FFC8571A;
+    --alpha-yellow-20:   #FFC85733;
+    --alpha-yellow-30:   #FFC8574D;
+    --alpha-yellow-40:   #FFC85766;
+    --alpha-yellow-50:   #FFC85780;
+    --alpha-yellow-60:   #FFC85799;
+    --alpha-yellow-70:   #FFC857B2;
+    --alpha-yellow-80:   #FFC857CC;
+    --alpha-yellow-90:   #FFC857E5;
+    --alpha-yellow-100:  #FFC857;
+    --alpha-yellow-text: #B07700;
+
+    /* Teal (#1AC8A8) */
+    --alpha-teal-0:    #1AC8A800;
+    --alpha-teal-5:    #1AC8A80D;
+    --alpha-teal-10:   #1AC8A81A;
+    --alpha-teal-20:   #1AC8A833;
+    --alpha-teal-30:   #1AC8A84D;
+    --alpha-teal-40:   #1AC8A866;
+    --alpha-teal-50:   #1AC8A880;
+    --alpha-teal-60:   #1AC8A899;
+    --alpha-teal-70:   #1AC8A8B2;
+    --alpha-teal-80:   #1AC8A8CC;
+    --alpha-teal-90:   #1AC8A8E5;
+    --alpha-teal-100:  #1AC8A8;
+    --alpha-teal-text: #0C7262;
+
+    /* Orange (#FF620A) */
+    --alpha-orange-0:    #FF620A00;
+    --alpha-orange-5:    #FF620A0D;
+    --alpha-orange-10:   #FF620A1A;
+    --alpha-orange-20:   #FF620A33;
+    --alpha-orange-30:   #FF620A4D;
+    --alpha-orange-40:   #FF620A66;
+    --alpha-orange-50:   #FF620A80;
+    --alpha-orange-60:   #FF620A99;
+    --alpha-orange-70:   #FF620AB2;
+    --alpha-orange-80:   #FF620ACC;
+    --alpha-orange-90:   #FF620AE5;
+    --alpha-orange-100:  #FF620A;
+    --alpha-orange-text: #B23B00;
+
+    /* Lime (#A8D61D) */
+    --alpha-lime-0:    #A8D61D00;
+    --alpha-lime-5:    #A8D61D0D;
+    --alpha-lime-10:   #A8D61D1A;
+    --alpha-lime-20:   #A8D61D33;
+    --alpha-lime-30:   #A8D61D4D;
+    --alpha-lime-40:   #A8D61D66;
+    --alpha-lime-50:   #A8D61D80;
+    --alpha-lime-60:   #A8D61D99;
+    --alpha-lime-70:   #A8D61DB2;
+    --alpha-lime-80:   #A8D61DCC;
+    --alpha-lime-90:   #A8D61DE5;
+    --alpha-lime-100:  #A8D61D;
+    --alpha-lime-text: #68850F;
+
+    /* Blue (#556CD6 — visualisation) */
+    --alpha-blue-0:    #556CD600;
+    --alpha-blue-5:    #556CD60D;
+    --alpha-blue-10:   #556CD61A;
+    --alpha-blue-20:   #556CD633;
+    --alpha-blue-30:   #556CD64D;
+    --alpha-blue-40:   #556CD666;
+    --alpha-blue-50:   #556CD680;
+    --alpha-blue-60:   #556CD699;
+    --alpha-blue-70:   #556CD6B2;
+    --alpha-blue-80:   #556CD6CC;
+    --alpha-blue-90:   #556CD6E5;
+    --alpha-blue-100:  #556CD6;
+    --alpha-blue-text: #3B439F;
+
+    /* Green (#189E56) */
+    --alpha-green-0:    #189E5600;
+    --alpha-green-5:    #189E560D;
+    --alpha-green-10:   #189E561A;
+    --alpha-green-20:   #189E5633;
+    --alpha-green-30:   #189E564D;
+    --alpha-green-40:   #189E5666;
+    --alpha-green-50:   #189E5680;
+    --alpha-green-60:   #189E5699;
+    --alpha-green-70:   #189E56B2;
+    --alpha-green-80:   #189E56CC;
+    --alpha-green-90:   #189E56E5;
+    --alpha-green-100:  #189E56;
+    --alpha-green-text: #10743F;
+
+    /* Primary alpha (#126BCE) */
+    --alpha-primary-0:    #126BCE00;
+    --alpha-primary-5:    #126BCE0D;
+    --alpha-primary-10:   #126BCE1A;
+    --alpha-primary-20:   #126BCE33;
+    --alpha-primary-30:   #126BCE4D;
+    --alpha-primary-40:   #126BCE66;
+    --alpha-primary-50:   #126BCE80;
+    --alpha-primary-60:   #126BCE99;
+    --alpha-primary-70:   #126BCEB2;
+    --alpha-primary-80:   #126BCECC;
+    --alpha-primary-90:   #126BCEE5;
+    --alpha-primary-100:  #126BCE;
+    --alpha-primary-text: #171717;
+
+    /* White & Black alpha (Alpha Mode 1) */
+    --alpha-white-0:   #FFFFFF00;
+    --alpha-white-5:   #FFFFFF0D;
+    --alpha-white-10:  #FFFFFF1A;
+    --alpha-white-20:  #FFFFFF33;
+    --alpha-white-30:  #FFFFFF4D;
+    --alpha-white-40:  #FFFFFF66;
+    --alpha-white-50:  #FFFFFF80;
+    --alpha-white-60:  #FFFFFF99;
+    --alpha-white-70:  #FFFFFFB2;
+    --alpha-white-80:  #FFFFFFCC;
+    --alpha-white-90:  #FFFFFFE5;
+    --alpha-white-100: #FFFFFF;
+
+    --alpha-black-0:   #00000000;
+    --alpha-black-5:   #0000000D;
+    --alpha-black-10:  #0000001A;
+    --alpha-black-15:  #00000026;
+    --alpha-black-20:  #00000033;
+    --alpha-black-30:  #0000004D;
+    --alpha-black-40:  #00000066;
+    --alpha-black-50:  #00000080;
+    --alpha-black-60:  #00000099;
+    --alpha-black-70:  #000000B2;
+    --alpha-black-80:  #000000CC;
+    --alpha-black-90:  #000000E5;
+    --alpha-black-100: #000000;
+
+    /* ---------- Chart accent (Automatable Volume overlay) ---------- */
+    --chart-overlay-green: #67C15E;
+
+    /* ---------- Legacy semantic aliases (kept for compatibility) ---------- */
+    --color-primary-900:           var(--primary-900);
+    --color-primary-50-secondary:  var(--primary-50);
+    --color-primary-100:           var(--primary-100);
+    --color-blue-button:           var(--primary-500);
+    --color-blue-button-hover:     var(--primary-600);
+    --color-purple-badge:          var(--primary-500);
+    --color-purple-light:          var(--primary-25);
+    --color-green-badge:           var(--success-default);
+    --color-amber-warning:         var(--warning-default);
+    --color-red-notification:      var(--error-default);
+    --bg-alpha-teal-10:            var(--alpha-teal-10);
+
+    /* Surfaces */
+    --color-shell-bg:        var(--neutral-50);
+    --color-bg-primary:      var(--neutral-0);
+    --color-bg-secondary:    var(--neutral-25);
+    --color-bg-tertiary:     var(--neutral-50);
+    --color-bg-hover:        var(--neutral-50);
+    --color-bg-loader:       #F8FAFC;
+    --color-sidebar-bg:      #FCFCFD;
+    --color-sidebar-foreground: var(--neutral-700);
+
+    /* Text — keyed off the neutral scale */
+    --color-text-primary:     var(--neutral-700);
+    --color-text-secondary:   var(--neutral-600);
+    --color-text-muted:       var(--neutral-500);
+    --color-text-icon:        var(--neutral-400);
+    --color-text-placeholder: var(--neutral-300);
+    --color-text-black:       var(--neutral-900);
+    --color-text-on-brand:    var(--primary-0);
+
+    /* Borders — keyed off the neutral scale */
+    --color-border:        var(--neutral-100);
+    --color-border-light:  var(--neutral-300);
+    --color-border-hover:  var(--neutral-200);
+    --color-border-row:    var(--neutral-100);
 
     /* Avatars / accents */
     --color-avatar-bg: #5d6a79;
@@ -179,7 +443,7 @@
 body {
     font-family: var(--font-sans);
     background: var(--neutral-50);
-    color: #0b233d;
+    color: var(--primary-900);
     font-size: var(--text-sm);
     line-height: 1.5;
     margin: var(--space-0);
@@ -241,7 +505,7 @@ body {
     border: none;
     border-radius: var(--rounded-md);
     cursor: pointer;
-    color: #6b7280;
+    color: var(--neutral-400);
     position: relative;
 }
 
@@ -324,7 +588,7 @@ body {
 .sidebar {
     width: 16rem;
     background: var(--neutral-0);
-    border-right: 0.0625rem solid #e5e7eb;
+    border-right: 0.0625rem solid var(--neutral-100);
     padding: var(--space-6) var(--space-4);
     display: flex;
     flex-direction: column;
@@ -351,7 +615,7 @@ body {
     display: block;
     font-size: var(--text-micro);
     font-weight: var(--font-semibold);
-    color: #6b7280;
+    color: var(--neutral-400);
     padding: var(--space-1) var(--space-2);
     margin-top: var(--space-2);
     text-transform: uppercase;
@@ -371,7 +635,7 @@ body {
     padding: 0 var(--space-2);
     border-radius: var(--rounded-sm);
     text-decoration: none;
-    color: #404040;
+    color: var(--neutral-700);
     cursor: pointer;
     background: transparent;
     border: none;
@@ -390,12 +654,12 @@ body {
 }
 
 .sidebar-item:hover {
-    background: #f8f8f8;
+    background: var(--color-bg-secondary);
 }
 
 .sidebar-item.active {
-    background: #ecf5fe;
-    color: #126bce;
+    background: var(--primary-25);
+    color: var(--primary-500);
 }
 
 .sidebar-item-icon {
@@ -418,7 +682,7 @@ body {
     padding: var(--space-2);
     border-radius: var(--rounded-sm);
     text-decoration: none;
-    color: #6b7280;
+    color: var(--neutral-400);
     cursor: pointer;
     background: transparent;
     border: none;
@@ -435,7 +699,7 @@ body {
 }
 
 .sidebar-toggle-btn:hover {
-    background: #f8f8f8;
+    background: var(--color-bg-secondary);
 }
 
 .sidebar-toggle-icon {
@@ -489,7 +753,7 @@ body {
 
 .sidebar-nested {
     margin-left: var(--space-2);
-    border-left: 0.0625rem solid #e5e7eb;
+    border-left: 0.0625rem solid var(--neutral-100);
     padding-left: var(--space-2);
 }
 
@@ -504,7 +768,7 @@ body {
     padding: var(--space-1) var(--space-2);
     border-radius: var(--rounded-sm);
     text-decoration: none;
-    color: #404040;
+    color: var(--neutral-700);
     cursor: pointer;
     background: transparent;
     border: none;
@@ -525,7 +789,7 @@ body {
     top: 50%;
     width: 0.5rem;
     height: 0.0625rem;
-    background: #e5e5e5;
+    background: var(--neutral-200);
     transform: translateY(-50%);
 }
 
@@ -563,7 +827,7 @@ body {
 .topbar-navigation {
     height: 3.5rem;
     background: white;
-    border-bottom: 0.0625rem solid #e5e7eb;
+    border-bottom: 0.0625rem solid var(--neutral-100);
     display: flex;
     align-items: center;
     gap: var(--space-2);
@@ -592,7 +856,7 @@ body {
 .topbar-breadcrumb {
     flex: 1;
     font-size: var(--text-sm);
-    color: #0b233d;
+    color: var(--primary-900);
     font-weight: var(--font-medium);
 }
 
@@ -600,32 +864,36 @@ body {
     display: flex;
     align-items: center;
     gap: var(--space-2);
-    padding: var(--space-1) var(--space-3);
+    padding: var(--space-2) var(--space-3);
     background: transparent;
-    border: 0.0625rem solid #126bce;
+    border: 0.0625rem solid var(--primary-500);
     border-radius: var(--rounded-sm);
     cursor: pointer;
     font-size: var(--text-xs);
-    color: #126bce;
+    color: var(--primary-500);
     font-weight: var(--font-medium);
 }
 
 .topbar-ask-ai-btn:hover {
-    background: #ecf5fe;
+    background: var(--primary-25);
 }
 
 /* Sticky Section Styles */
 .sticky-section {
-    background: white;
-    border-bottom: 0.0625rem solid rgba(0, 0, 0, 0.15);
-    padding: var(--space-5) var(--space-7);
+    background: var(--primary-0);
+    border-bottom: 0.0625rem solid var(--color-border);
+    padding: var(--space-5) var(--space-7) 0;
+    flex-shrink: 0;
 }
 
 .section-title {
-    font-size: var(--text-xl);
+    font-size: var(--text-3xl);
     font-weight: var(--font-medium);
     color: #2a1b66;
     margin-bottom: var(--space-4);
+    background: linear-gradient(77deg, #6366F1 18.3%, #A855F7 51.87%, #EC4899 85.44%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
 }
 
 .form-row {
@@ -641,7 +909,7 @@ body {
 
 .form-label {
     font-size: var(--text-sm);
-    color: #1f2937;
+    color: var(--neutral-700);
     margin-bottom: var(--space-2);
     display: block;
 }
@@ -649,54 +917,55 @@ body {
 .form-input {
     width: 100%;
     padding: var(--space-2) var(--space-3);
-    border: 0.0625rem solid #e5e7eb;
+    border: 0.0625rem solid var(--neutral-100);
     border-radius: var(--rounded-md);
     font-size: var(--text-sm);
-    color: #6b7280;
+    color: var(--neutral-400);
 }
 
 .form-select {
     width: 100%;
     padding: var(--space-2) var(--space-3);
-    border: 0.0625rem solid #e5e7eb;
+    border: 0.0625rem solid var(--neutral-100);
     border-radius: var(--rounded-md);
     font-size: var(--text-sm);
-    color: #6b7280;
+    color: var(--neutral-400);
     background: white;
 }
 
 .publish-btn {
     padding: var(--space-2) var(--space-4);
     background: white;
-    border: 0.0625rem solid #126bce;
+    border: 0.0625rem solid var(--primary-500);
     border-radius: var(--rounded-md);
-    color: #126bce;
+    color: var(--primary-500);
     font-size: var(--text-xs);
     font-weight: var(--font-medium);
     cursor: pointer;
 }
 
 .publish-btn:hover {
-    background: #ecf5fe;
+    background: var(--primary-25);
 }
 
 .metadata-row {
     display: flex;
     align-items: center;
     justify-content: space-between;
+    padding-bottom: var(--space-4);
 }
 
 .metadata-group {
     display: flex;
-    gap: var(--space-4);
+    gap: var(--space-6);
 }
 
 .metadata-item {
     display: flex;
     align-items: center;
     gap: var(--space-2);
-    padding-right: var(--space-4);
-    border-right: 0.0625rem solid #e5e5e5;
+    padding-right: var(--space-6);
+    border-right: 0.0625rem solid var(--neutral-200);
     font-size: var(--text-sm);
 }
 
@@ -711,7 +980,8 @@ body {
 }
 
 .metadata-value {
-    font-size: var(--text-sm);
+    font-size: var(--text-xs);
+    font-weight: var(--font-medium);
 }
 
 .badge {
@@ -723,8 +993,8 @@ body {
 
 .badge-draft {
     background: white;
-    border: 0.0625rem solid #126bce;
-    color: #0b233d;
+    border: 0.0625rem solid var(--primary-500);
+    color: var(--primary-900);
 }
 
 .button-group {
@@ -740,43 +1010,38 @@ body {
     border: none;
     background: transparent;
     cursor: pointer;
-    color: #126bce;
-    text-decoration: none;
+    color: var(--primary-500);
 }
 
 .button-group-item.active {
-    background: #ecf5fe;
-    border: 0.0625rem solid #126bce;
-    border-radius: 8px;
+    background: var(--primary-25);
+    border: 0.0625rem solid var(--primary-500);
+    border-radius: var(--rounded-md);
 }
 
 /* Screen Content Styles — dotted canvas background */
 .screen-content {
+    position: relative;
     flex: 1;
-    background-color: var(--color-bg-tertiary);
-    background-image: radial-gradient(circle at 0.0625rem 0.0625rem, var(--neutral-200) 0.0625rem, transparent 0);
+    background-color: var(--neutral-25);
     background-size: 1rem 1rem;
     overflow: hidden;
     padding: var(--space-12) var(--space-0) var(--space-7);
-    display: flex;
-    flex-direction: column;
     cursor: grab;
 }
 
-/* Cards and interactive children inside the canvas should use their own
-   cursor so the grab/hand only shows over empty (dotted) area. */
+.screen-content.is-panning {
+    cursor: grabbing;
+    user-select: none;
+}
+
+/* Cards / controls inside the canvas should keep their own cursor so the
+   grab cursor only appears over empty (dotted) area. */
 .screen-content .agent-card,
 .screen-content .agent-card-small,
 .screen-content .flow-controls,
 .screen-content .flow-divider {
     cursor: default;
-}
-
-.screen-content.is-panning,
-.screen-content.is-panning .agent-card,
-.screen-content.is-panning .agent-card-small {
-    cursor: grabbing;
-    user-select: none;
 }
 
 .flow-canvas {
@@ -786,66 +1051,22 @@ body {
 
 .flow-container {
     max-width: 80rem;
-    width: 100%;
     margin: var(--space-0) auto;
     padding: var(--space-0) var(--space-7);
     position: relative;
 }
 
-.flow-container:fullscreen,
-.flow-container:-webkit-full-screen {
-    max-width: none;
-    padding: var(--space-12) var(--space-7);
-    background-color: var(--color-bg-tertiary);
-    background-image: radial-gradient(circle at 0.0625rem 0.0625rem, var(--neutral-200) 0.0625rem, transparent 0);
+/* The flow canvas keeps the dotted "canvas" look so zooming in still shows
+   the same backdrop behind the content (instead of plain white). */
+.flow-canvas {
+    background-color: var(--neutral-25);
     background-size: 1rem 1rem;
-    overflow: auto;
-}
-
-/* Fullscreen-only header for the canvas */
-.flow-fullscreen-header {
-    display: none;
-}
-
-.screen-content:fullscreen,
-.screen-content:-webkit-full-screen {
-    padding: 0;
-    overflow-y: auto;
-}
-
-.screen-content:fullscreen .flow-fullscreen-header,
-.screen-content:-webkit-full-screen .flow-fullscreen-header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: var(--space-4);
-    padding: var(--space-4) var(--space-6);
-    background: var(--color-bg-primary);
-    border-bottom: 0.0625rem solid var(--color-border);
-    flex-shrink: 0;
-    position: sticky;
-    top: 0;
-    z-index: 20;
-}
-
-.flow-controls.flow-controls--in-header {
-    position: static;
-    align-self: auto;
-    margin: 0;
-    border: none;
-    box-shadow: none;
-}
-
-.flow-fullscreen-title {
-    margin: 0;
-    font-size: var(--text-lg);
-    font-weight: var(--font-semibold);
-    color: var(--color-primary-900);
 }
 
 .flow-header {
     display: flex;
     justify-content: center;
+  
 }
 
 .agent-card {
@@ -864,9 +1085,9 @@ body {
 }
 
 .agent-avatar {
-    width: 5rem;
-    height: 5rem;
-    background: #ecf5fe;
+    width: 6rem;
+    height: 6rem;
+    background: var(--primary-25);
     border-radius: var(--rounded-md);
     display: flex;
     align-items: center;
@@ -890,13 +1111,14 @@ body {
 
 .agent-info {
     flex: 1;
+    min-width: 0;
 }
 
 .agent-title-row {
     display: flex;
     align-items: center;
     gap: var(--space-2);
-
+    margin-bottom: var(--space-1);
 }
 
 .agent-title {
@@ -908,147 +1130,8 @@ body {
 
 .agent-subtitle {
     font-size: var(--text-xs);
-    font-weight: var(--font-medium);
-    color: var(--color-primary-900);
-    margin-bottom: var(--space-1);
-}
-
-/* ===== EDIT MODE (agent + skill cards) ============================== */
-.agent-edit-form {
-    display: none;
-    flex-direction: column;
-    gap: var(--space-3);
-}
-
-.agent-card.editing .agent-card-view,
-.agent-card-small.editing .agent-card-view {
-    display: none;
-}
-
-.agent-card.editing .agent-edit-form,
-.agent-card-small.editing .agent-edit-form {
-    display: flex;
-}
-
-.agent-edit-header {
-    display: flex;
-    align-items: flex-start;
-    gap: var(--space-3);
+    color: var(--color-text-muted);
     margin-bottom: var(--space-2);
-}
-
-.agent-edit-header-info {
-    flex: 1;
-    min-width: 0;
-}
-
-.edit-close-btn {
-    flex-shrink: 0;
-    width: 2.25rem;
-    height: 2.25rem;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    background: transparent;
-    border: none;
-    color: var(--color-primary-900);
-    cursor: pointer;
-    border-radius: var(--rounded-md);
-}
-
-.edit-close-btn:hover {
-    background: var(--neutral-50);
-}
-
-.agent-edit-field {
-    display: flex;
-    flex-direction: column;
-    gap: var(--space-2);
-}
-
-.agent-edit-label {
-    font-size: var(--text-sm);
-    font-weight: var(--font-medium);
-    color: var(--color-primary-900);
-}
-
-.agent-edit-input {
-    width: 100%;
-    padding: var(--space-2) var(--space-3);
-    background: var(--color-bg-primary);
-    border: 0.0625rem solid var(--color-border);
-    border-radius: var(--rounded-md);
-    font-family: var(--font-sans);
-    font-size: var(--text-sm);
-    color: var(--color-primary-900);
-    outline: none;
-    transition: border-color 0.15s ease;
-}
-
-.agent-edit-input:focus {
-    border-color: var(--color-blue-button);
-}
-
-.agent-edit-input::placeholder {
-    color: var(--color-text-placeholder);
-}
-
-.agent-edit-textarea {
-    resize: vertical;
-    min-height: 5rem;
-    line-height: 1.4;
-}
-
-.agent-edit-helper {
-    font-size: var(--text-xs);
-    color: var(--color-text-muted);
-    margin: 0;
-}
-
-.agent-edit-counter {
-    display: flex;
-    justify-content: space-between;
-    font-size: var(--text-xs);
-    color: var(--color-text-muted);
-}
-
-.agent-edit-actions {
-    display: flex;
-    justify-content: flex-end;
-    gap: var(--space-2);
-    margin-top: var(--space-2);
-}
-
-.agent-edit-cancel,
-.agent-edit-save {
-    height: 2.25rem;
-    padding: 0 var(--space-4);
-    border-radius: var(--rounded-md);
-    font-size: var(--text-sm);
-    font-weight: 500;
-    cursor: pointer;
-    transition: background-color 0.15s ease, border-color 0.15s ease;
-}
-
-.agent-edit-cancel {
-    background: var(--primary-0);
-    color: var(--color-primary-900);
-    border: 0.0625rem solid var(--color-border);
-}
-
-.agent-edit-cancel:hover {
-    background: var(--neutral-50);
-}
-
-.agent-edit-save {
-    background: var(--color-blue-button);
-    color: var(--primary-0);
-    border: 0.0625rem solid var(--color-blue-button);
-}
-
-.agent-edit-save:hover {
-    background: var(--color-blue-button-hover);
-    border-color: var(--color-blue-button-hover);
 }
 
 .agent-stats {
@@ -1087,7 +1170,7 @@ body {
     flex-shrink: 0;
     width: 3.2rem;
     height: 3.2rem;
-    background: #556CD6;
+    background: var(--primary-500);
     color: var(--color-text-on-brand);
     border-radius: var(--rounded-md);
     display: inline-flex;
@@ -1096,28 +1179,30 @@ body {
 }
 
 .skill-avatar svg {
-    width: 1.25rem;
-    height: 1.25rem;
+    width: 1.5rem;
+    height: 1.5rem;
 }
 
 .edit-btn {
+    flex-shrink: 0;
     width: 2.25rem;
     height: 2.25rem;
-    display: flex;
+    display: inline-flex;
     align-items: center;
     justify-content: center;
     border-radius: var(--rounded-md);
     border: none;
     background: transparent;
+    color: var(--color-primary-900);
     cursor: pointer;
 }
 
 .edit-btn:hover {
-    background: #f9fafb;
+    background: var(--neutral-25);
 }
 
 .badge-agent {
-    background: #126bce;
+    background: var(--primary-500);
     color: white;
     padding: var(--space-0-5) var(--space-2);
     border-radius: var(--rounded-md);
@@ -1150,10 +1235,10 @@ body {
     content: '';
     position: absolute;
     top: 0;
-    /* Run only from the leftmost column's vertical connector to the rightmost
-       column's vertical connector (4 equal columns => 12.5% inset each side). */
-    left: 12.5%;
-    right: 12.5%;
+    left: 50%;
+    transform: translateX(-50%);
+    /* 4 cards × 16rem + 3 gaps × 1rem − 16rem (half-card pad on each side) */
+    width: 51rem;
     height: 0.0625rem;
     background: var(--neutral-400);
 }
@@ -1170,11 +1255,10 @@ body {
 }
 
 .agent-card-small.skill-card {
-    width: 21.25rem;
+    width: 18.75rem;
+    height: 12.5rem;
     background: var(--color-bg-primary);
-    border: 0.125rem solid var(--primary-300);
-    font-size: var(--text-sm);
-    color: var(--neutral-500);
+    border: 0.125rem solid var(--primary-500);
     transition: box-shadow 0.2s ease;
 }
 
@@ -1182,47 +1266,16 @@ body {
     box-shadow: 0 1.25rem 2.5rem -0.5rem var(--shadow-xl);
 }
 
-.agent-card-small.skill-card.editing {
-    width: 31.25rem;
-}
-
-.agent-card-small.tool.editing {
-    width: 37.5rem;
-    height: auto;
-}
-
-.tool-params {
-    border: 0.0625rem solid var(--color-border);
-    border-radius: var(--rounded-md);
+.agent-card-small.skill-card .agent-card-view {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+    height: 100%;
     overflow: hidden;
 }
 
-.tool-params-header {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: var(--space-3);
-    padding: var(--space-3);
-    background: var(--neutral-50);
-    font-size: var(--text-sm);
-    font-weight: var(--font-medium);
-    color: var(--color-primary-900);
-}
-
-.tool-param-row {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: var(--space-3);
-    padding: var(--space-2) var(--space-3);
-}
-
-.tool-param-row + .tool-param-row {
-    border-top: 0.0625rem solid var(--color-border);
-}
-
-.badge-success {
-    background: rgba(32, 131, 55, 0.1);
-    color: #1c7330;
-    border: 0.0625rem solid #24943e;
+.agent-card-small.skill-card .agent-stats {
+    margin-top: auto;
 }
 
 .agent-card-small.selected {
@@ -1231,49 +1284,7 @@ body {
 }
 
 .agent-card-small.tool {
-    width: 18.75rem;
-    height: 12.5rem;
-    border: 0.125rem solid var(--teal-500);
-    font-size: var(--text-sm);
-    color: var(--neutral-500);
-    background: var(--color-bg-primary);
-}
-
-.agent-card-small.tool .skill-avatar,
-.agent-card-small.tool .tool-avatar {
-    background: var(--teal-500);
-}
-
-.tools-row {
-    margin-top: var(--space-7);
-    position: relative;
-    justify-content: flex-start;
-}
-
-.tools-row[hidden] {
-    display: none;
-}
-
-/* Horizontal connector across the top of the tools row. The left/right
-   inset is set by JS based on how many tools are rendered. */
-.tools-row::before {
-    background: var(--neutral-400);
-    left: var(--tools-line-inset, 12.5%);
-    right: var(--tools-line-inset, 12.5%);
-}
-
-/* Vertical trunk from the selected skill above down to the tools horizontal
-   line. Positioned (and shown) by JS. */
-.tools-trunk {
-    position: absolute;
-    width: 0.0625rem;
-    background: var(--neutral-400);
-    pointer-events: none;
-}
-
-.skill-card.is-active {
-    border-color: var(--color-blue-button);
-    box-shadow: 0 1.25rem 2.5rem -0.5rem var(--shadow-xl);
+    border: 0.0625rem solid var(--color-border);
 }
 
 .agent-card-small .agent-avatar {
@@ -1295,6 +1306,11 @@ body {
     line-height: var(--leading-3);
 }
 
+.badge-tool {
+    background: white;
+    border: 0.0625rem solid #8f73e3;
+    color: #2a1b66;
+}
 
 .badge-agent-secondary {
     background: #e0dbf5;
@@ -1302,12 +1318,9 @@ body {
 }
 
 .flow-controls {
-    position: sticky;
-    top: 0 rem;
-    align-self: flex-end;
-    margin-right: 1.5rem;
-    margin-top: -1.5rem;
-    margin-bottom: -3rem;
+    position: absolute;
+    top: 1.5rem;
+    right: 1.5rem;
     z-index: 10;
     background: var(--color-bg-primary);
     border: 0.0625rem solid var(--color-border);
@@ -1343,6 +1356,11 @@ body {
     background: var(--neutral-50);
 }
 
+.flow-control-btn:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+}
+
 .flow-control-btn[data-tooltip]::after {
     content: attr(data-tooltip);
     position: absolute;
@@ -1353,7 +1371,6 @@ body {
     background: var(--neutral-900);
     color: var(--primary-0);
     font-size: var(--text-xs);
-    font-weight: 400;
     line-height: 1.2;
     white-space: nowrap;
     border-radius: var(--rounded-sm, 0.25rem);
@@ -1378,7 +1395,7 @@ body {
 
 .connector-line {
     width: 0.0625rem;
-    height: 2rem;
+    height: 1.5rem;
     background: var(--neutral-400);
     margin: var(--space-0) auto;
 }
@@ -1391,7 +1408,7 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center;
-    flex: 0 0 auto;
+    flex: 1;
 }
 
 /* Skill cards inside an agent-column stretch to fill their column so all
@@ -1462,25 +1479,33 @@ body {
     align-items: center;
     justify-content: space-between;
     padding: var(--space-4) var(--space-5);
+    gap: var(--space-2);
 }
 
 .ai-panel-title {
     font-size: var(--text-md);
-    font-weight: var(--font-medium);
-    color: #0b233d;
+    font-weight: var(--font-semibold);
+    color: var(--color-primary-900);
     display: flex;
     align-items: center;
     gap: var(--space-2);
 }
 
 .ai-panel-title svg {
-    color: var(--color-blue-button);
+    color: #8B5CF6;
 }
 
+.ai-panel-header-actions {
+    display: flex;
+    align-items: center;
+    gap: var(--space-1);
+}
+
+.ai-panel-header-btn,
 .ai-panel-close-btn {
     width: 2rem;
     height: 2rem;
-    display: flex;
+    display: inline-flex;
     align-items: center;
     justify-content: center;
     border: none;
@@ -1488,33 +1513,31 @@ body {
     border-radius: var(--rounded-sm);
     cursor: pointer;
     color: var(--color-text-icon);
+    transition: background-color 0.15s ease;
 }
 
+.ai-panel-header-btn:hover,
 .ai-panel-close-btn:hover {
-    background: var(--neutral-50);
+    background: var(--color-bg-primary);
 }
 
+/* Empty state group and input wrapper share the remaining space evenly via
+   `margin-top: auto` on the content and `margin-bottom: auto` on the input
+   wrapper — they meet in the vertical middle of the panel. */
 .ai-panel-content {
-    flex: 1;
+    flex: 0 0 auto;
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding: var(--space-7) var(--space-5) var(--space-3);
-    overflow-y: auto;
+    padding: 0 var(--space-5) var(--space-3);
+    margin-top: auto;
 }
 
-/* Empty-state sparkle in a tinted blue rounded square — centered vertically.
-   Pairs with `margin-top: auto` on .ai-suggestions to split the free space
-   evenly above the greeting block and below the subtitle. */
 .ai-panel-icon {
-    margin-top: auto;
     box-sizing: content-box;
-    width: 1.5rem;
-    height: 1.5rem;
-    padding: var(--space-2);
-    background: var(--color-primary-50-secondary);
-    border-radius: var(--rounded-sm);
-    color: var(--color-blue-button);
+    width: 1.75rem;
+    height: 1.75rem;
+    color: #8B5CF6;
     margin-bottom: var(--space-3);
 }
 
@@ -1531,22 +1554,22 @@ body {
     color: var(--color-text-muted);
     margin-bottom: var(--space-6);
     text-align: center;
+    margin-bottom: 0;
 }
 
-/* Suggestion chips — outlined pills, blue border, dark navy text */
+/* Suggestion chips — outlined pills below the input, flex-wrap row */
 .ai-suggestions {
     display: flex;
-    flex-direction: column;
-    align-items: flex-start;
+    flex-wrap: wrap;
+    justify-content: center;
     gap: var(--space-2);
     width: 100%;
-    margin-top: auto;
-    margin-bottom: var(--space-3);
+    margin-top: var(--space-3);
 }
 
 .ai-suggestion-btn {
     padding: var(--space-1) var(--space-3);
-    background: transparent;
+    background: var(--color-bg-primary);
     border: 0.0625rem solid var(--color-blue-button);
     border-radius: var(--rounded-full);
     font-family: var(--font-sans);
@@ -1562,23 +1585,47 @@ body {
     background: var(--color-primary-50-secondary);
 }
 
-/* Input area — taller box with send button anchored bottom-right */
+/* Input area — single-row composer: attach | textarea | send.
+   `margin-bottom: auto` partners with the content's `margin-top: auto`
+   so both blocks meet at the vertical center of the panel. */
 .ai-panel-input-wrapper {
-    padding: 0 var(--space-5) var(--space-4);
+    padding: 0 var(--space-5);
     margin-top: 0;
+    margin-bottom: auto;
 }
 
 .ai-panel-input-container {
-    position: relative;
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
     background: var(--color-bg-primary);
     border: 0.0625rem solid var(--color-border);
     border-radius: var(--rounded-md);
-    padding: var(--space-3) var(--space-3) var(--space-2);
+    padding: var(--space-2) var(--space-2) var(--space-2) var(--space-3);
+}
+
+.ai-panel-attach-btn {
+    flex-shrink: 0;
+    width: 1.75rem;
+    height: 1.75rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border: none;
+    background: transparent;
+    border-radius: var(--rounded-sm);
+    cursor: pointer;
+    color: var(--color-text-icon);
+    padding: 0;
+}
+
+.ai-panel-attach-btn:hover {
+    color: var(--color-primary-900);
 }
 
 .ai-panel-input {
-    display: block;
-    width: 100%;
+    flex: 1 1 auto;
+    min-width: 0;
     border: none;
     background: transparent;
     outline: none;
@@ -1586,9 +1633,9 @@ body {
     font-size: var(--text-sm);
     color: var(--color-primary-900);
     resize: none;
-    min-height: 4rem;
-    padding-right: 2.5rem;
-    line-height: var(--leading-3);
+    min-height: 1.5rem;
+    line-height: 1.5;
+    padding: 0;
 }
 
 .ai-panel-input::placeholder {
@@ -1596,12 +1643,10 @@ body {
 }
 
 .ai-panel-send-btn {
-    position: absolute;
-    bottom: var(--space-2);
-    right: var(--space-2);
-    width: 2rem;
-    height: 2rem;
-    display: flex;
+    flex-shrink: 0;
+    width: 2.25rem;
+    height: 2.25rem;
+    display: inline-flex;
     align-items: center;
     justify-content: center;
     background: var(--color-blue-button);
@@ -1610,6 +1655,7 @@ body {
     color: var(--color-text-on-brand);
     cursor: pointer;
     transition: background 0.2s;
+    padding: 0;
 }
 
 .ai-panel-send-btn:hover {
@@ -1662,6 +1708,21 @@ body {
     height: 1.125rem;
 }
 
+/* Menu icon in card actions matches Create AI Agent button style */
+.opportunity-card-actions .ghost-btn {
+    background: var(--color-bg-primary);
+    border: 0.0625rem solid var(--color-border);
+    border-radius: var(--rounded-md);
+    color: var(--color-primary-900);
+    padding: var(--space-2);
+}
+
+.opportunity-card-actions .ghost-btn:hover {
+    background: var(--color-bg-secondary);
+    border-color: var(--color-border-hover);
+    color: var(--color-primary-900);
+}
+
 .ai-assistant-icon {
     width: 1rem;
     height: 1rem;
@@ -1711,27 +1772,141 @@ body {
     flex: 1;
     overflow-y: auto;
     overflow-x: hidden;
-    background: var(--primary-0);
-    padding: var(--space-12) var(--space-7) var(--space-6) var(--space-7);
+    background: var(--neutral-25);
+    padding: var(--space-6) var(--space-7) var(--space-6) var(--space-7);
     min-width: 0;
     min-height: 0;
 }
 
 /* Cap content sections at 80rem (80rem) and center within main-area */
 .main-area > * {
-    max-width: 80rem;
+    max-width: 86rem;
     margin-left: auto;
     margin-right: auto;
 }
 
+/* ===== AI Briefing — hero summary above the dashboard ===== */
+.ai-briefing {
+    position: relative;
+    margin-bottom: var(--space-7);
+    padding: var(--space-6);
+    background: linear-gradient(90deg, rgba(18, 107, 206, 0.10) 0%, rgba(134, 48, 232, 0.10) 100%);
+    border-radius: var(--rounded-md);
+}
+
+/* Gradient border that respects border-radius — drawn as a pseudo-element
+   ring using mask-composite to cut out the inner area. */
+.ai-briefing::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    padding: 0.0625rem;
+    border-radius: inherit;
+    background: linear-gradient(135deg, #6366F1 0%, #A855F7 50%, #EC4899 100%);
+    -webkit-mask:
+        linear-gradient(#000 0 0) content-box,
+        linear-gradient(#000 0 0);
+    -webkit-mask-composite: xor;
+    mask:
+        linear-gradient(#000 0 0) content-box,
+        linear-gradient(#000 0 0);
+    mask-composite: exclude;
+    pointer-events: none;
+}
+
+.ai-briefing-glow {
+    display: none;
+}
+
+.ai-briefing-header {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    margin-bottom: var(--space-5);
+}
+
+.ai-briefing-avatar {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--primary-500);
+ 
+}
+
+.ai-briefing-avatar svg {
+    width: 1.5rem;
+    height: 1.5rem;
+}
+
+.ai-briefing-tag {
+    font-size: var(--text-sm);
+    font-weight: var(--font-semibold);
+    letter-spacing: 0.08em;
+    color: var(--color-primary-900);
+}
+
+.ai-briefing-sep {
+    color: var(--color-text-muted);
+    margin: 0 0.125rem;
+}
+
+.ai-briefing-time {
+    font-size: var(--text-xs);
+    color: var(--color-text-muted);
+}
+
+.ai-briefing-headline {
+    position: relative;
+    margin: 0 0 var(--space-4);
+    font-size: var(--text-xl);
+    font-weight: var(--font-semibold);
+    line-height: 1.4;
+    color: var(--color-primary-900);
+    letter-spacing: -0.01em;
+}
+
+.ai-briefing-headline em {
+    font-style: normal;
+    color: var(--color-blue-button);
+    font-weight: var(--font-semibold);
+}
+
+.ai-briefing-sub {
+
+    font-size: var(--text-sm);
+    color: var(--neutral-500);
+    font-weight: var(--font-semibold);
+}
+
 /* AI Insights — full panel above the table */
 .ai-insights {
-    background: var(--color-bg-primary);
-    border: 0.0625rem solid var(--color-border);
+    position: relative;
+    background: linear-gradient(90deg, rgba(18, 107, 206, 0.10) 0%, rgba(134, 48, 232, 0.10) 100%);
     border-radius: var(--rounded-md);
     padding: var(--space-5) var(--space-6);
     margin-bottom: var(--space-5);
     flex-shrink: 0;
+}
+
+/* Gradient border for .ai-insights — same pseudo-element technique as
+   .ai-briefing so the border respects border-radius. */
+.ai-insights::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    padding: 0.0625rem;
+    border-radius: inherit;
+    background: linear-gradient(135deg, #6366F1 0%, #A855F7 50%, #EC4899 100%);
+    -webkit-mask:
+        linear-gradient(#000 0 0) content-box,
+        linear-gradient(#000 0 0);
+    -webkit-mask-composite: xor;
+    mask:
+        linear-gradient(#000 0 0) content-box,
+        linear-gradient(#000 0 0);
+    mask-composite: exclude;
+    pointer-events: none;
 }
 
 .ai-insights-header {
@@ -1776,13 +1951,13 @@ body {
 .ai-insights-sparkles {
     width: 1.25rem;
     height: 1.25rem;
-    color: var(--color-primary-900);
+    color: var(--primary-500);
     flex-shrink: 0;
 }
 
 .ai-insights-title {
     font-size: var(--text-lg);
-    font-weight: var(--font-semibold);
+    font-weight: var(--font-medium);
     color: var(--color-primary-900);
     line-height: 1;
     margin: 0;
@@ -1897,8 +2072,8 @@ body {
 }
 
 .ai-recommendation {
-    background: var(--color-primary-50-secondary);
-    border: 0.0625rem solid var(--color-blue-button);
+    background: rgba(255, 255, 255, 0.4);
+    border: 0.0625rem solid rgba(255, 255, 255, 1);
     border-radius: var(--rounded-md);
     padding: var(--space-4);
     display: flex;
@@ -1908,7 +2083,7 @@ body {
 
 .ai-recommendation-title {
     font-size: var(--text-sm);
-    font-weight: var(--font-semibold);
+    font-weight: var(--font-medium);
     color: var(--color-primary-900);
     line-height: var(--leading-3);
     margin: 0;
@@ -1916,8 +2091,8 @@ body {
 
 .ai-recommendation-text {
     font-size: var(--text-xs);
-    color: var(--color-text-secondary);
-    line-height: var(--leading-3);
+    color: var(--neutral-700);
+
     flex: 1;
 }
 
@@ -1959,12 +2134,16 @@ body {
 }
 
 .main-title {
-    font-size: var(--text-xl);
+    font-size: var(--text-3xl);
     font-weight: var(--font-medium);
     color: var(--color-primary-900);
     margin-bottom: var(--space-5);
     line-height: var(--leading-5);
+    background: linear-gradient(77deg, #6366F1 18.3%, #A855F7 51.87%, #EC4899 85.44%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
 }
+
 
 /* Filters & search */
 .filters {
@@ -2015,7 +2194,7 @@ body {
     background: var(--color-bg-primary);
     font-family: var(--font-sans);
     font-size: var(--text-sm);
-    color: var(--color-text-secondary);
+    color: var(--neutral-400);
     cursor: pointer;
     transition: all 0.2s;
 }
@@ -2032,7 +2211,7 @@ body {
 }
 
 .filter-btn-value {
-    font-weight: var(--font-medium);
+    font-weight: var(--font-regular);
     color: var(--color-text-primary);
 }
 
@@ -2046,7 +2225,31 @@ body {
     font-size: var(--text-sm);
     font-weight: var(--font-medium);
     cursor: pointer;
-    transition: all 0.2s;
+    transition: background-color 0.2s, border-color 0.2s, opacity 0.3s ease;
+}
+
+.reset-filters-btn.is-resetting {
+    pointer-events: none;
+}
+
+.reset-filters-btn.is-fading {
+    opacity: 0;
+}
+
+.reset-filters-spinner {
+    display: inline-block;
+    width: 0.75rem;
+    height: 0.75rem;
+    border: 0.125rem solid currentColor;
+    border-right-color: transparent;
+    border-radius: 50%;
+    vertical-align: -0.125rem;
+    margin-right: 0.25rem;
+    animation: reset-filters-spin 0.6s linear infinite;
+}
+
+@keyframes reset-filters-spin {
+    to { transform: rotate(360deg); }
 }
 
 .reset-filters-btn:hover {
@@ -2077,29 +2280,78 @@ body {
     display: block;
 }
 
-/* Multi-select variant — uses checkbox items inside a titled list */
+/* Multi-select variant — searchable list with a select-all + search header */
 .filter-dropdown-multi {
-    min-width: 14rem;
-    padding: var(--space-4);
-    box-shadow: 0 0.5rem 1.5rem -0.25rem var(--shadow-md);
+    min-width: 18rem;
+    padding: 0;
+    box-shadow: 0 0.0625rem 0.1875rem var(--shadow-sm);
+    overflow: hidden;
 }
 
 .filter-dropdown-title {
+    display: none;
+}
+
+/* Header row: select-all checkbox + search input, with bottom divider */
+.filter-dropdown-search-header {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+    padding: var(--space-3) var(--space-4);
+    border-bottom: 0.0625rem solid var(--color-border);
+}
+
+.filter-select-all {
+    width: 1rem;
+    height: 1rem;
+    flex-shrink: 0;
+    cursor: pointer;
+    accent-color: var(--color-blue-button);
+}
+
+.filter-search-input {
+    flex: 1 1 auto;
+    min-width: 0;
+    border: none;
+    outline: none;
+    background: transparent;
+    font-family: var(--font-sans);
     font-size: var(--text-sm);
+    color: var(--color-primary-900);
+    padding: 0;
+}
+
+.filter-search-input::placeholder {
     color: var(--color-text-muted);
-    margin-bottom: var(--space-3);
+}
+
+/* Scrollable list region beneath the header */
+.filter-dropdown-list {
+    max-height: 16rem;
+    overflow-y: auto;
+    padding: var(--space-2) var(--space-1);
 }
 
 .filter-checkbox-item {
     display: flex;
     align-items: center;
     gap: var(--space-3);
-    padding: var(--space-2) 0;
+    padding: var(--space-2) var(--space-3);
     cursor: pointer;
     font-family: var(--font-sans);
     font-size: var(--text-sm);
     color: var(--color-primary-900);
     user-select: none;
+    border-radius: var(--rounded-sm);
+    transition: background-color 0.15s;
+}
+
+.filter-checkbox-item:hover {
+    background: var(--primary-25);
+}
+
+.filter-checkbox-item.hidden {
+    display: none;
 }
 
 .filter-checkbox-item input[type="checkbox"] {
@@ -2108,16 +2360,6 @@ body {
     flex-shrink: 0;
     cursor: pointer;
     accent-color: var(--color-blue-button);
-}
-
-/* "Select all" master checkbox — sits at the top of each multi-select
-   dropdown, separated from the actual options by a thin divider. */
-.filter-checkbox-master {
-    font-weight: var(--font-medium);
-    color: var(--color-text-secondary);
-    border-bottom: 0.0625rem solid var(--color-border);
-    padding-bottom: var(--space-2);
-    margin-bottom: var(--space-1);
 }
 
 .filter-dropdown-item {
@@ -2134,7 +2376,7 @@ body {
 }
 
 .filter-dropdown-item:hover {
-    background: var(--color-bg-secondary);
+    background: var(--primary-25);
 }
 
 /* Data table — internal scroll, sticky header.
@@ -2265,7 +2507,7 @@ body {
     background: var(--color-bg-primary);
     border: 0.0625rem solid var(--color-shadow-popover-border);
     border-radius: var(--rounded-sm);
-    box-shadow: 0 0.875rem 2rem var(--color-shadow-popover);
+    box-shadow: 0 0.0625rem 0.1875rem var(--shadow-sm);
     z-index: 1000;
     padding: 0.375rem 0;
     display: none;
@@ -2298,7 +2540,7 @@ body {
 }
 
 .action-menu-item:hover {
-    background: var(--color-bg-loader);
+    background: var(--primary-25);
 }
 
 .action-menu {
@@ -2348,11 +2590,6 @@ body {
 .badge-in-progress {
     background: var(--color-amber-warning);
     color: var(--color-text-on-brand);
-}
-
-.badge-warning {
-    background: rgba(245, 158, 11, 0.15);
-    color: #92400e;
 }
 
 /* Scrollbar styling (applies app-wide) */
@@ -2413,7 +2650,8 @@ body {
 /* ===== AUTOMATION OPPORTUNITIES PAGE ==================================== */
 /* ======================================================================== */
 
-/* Top section — sits as a sibling of .main-area so it spans the full width of
+/* Top section — sits as a sibling of 
+ so it spans the full width of
    .main-content and stays put while .main-area scrolls underneath. Same idea
    as `.main-sticky-header` on the Actions History page. */
 .opportunities-sticky-header {
@@ -2442,6 +2680,9 @@ body {
     font-weight: var(--font-semibold);
     color: var(--color-primary-900);
     margin: 0;
+    background: linear-gradient(77deg, #6366F1 18.3%, #A855F7 51.87%, #EC4899 85.44%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
 }
 
 .opportunities-settings {
@@ -2460,7 +2701,7 @@ body {
 
 .opportunities-settings:hover {
     color: var(--color-primary-900);
-    background: var(--color-bg-secondary);
+    background: var(--primary-25);
 }
 
 /* Filter row spacing */
@@ -2599,7 +2840,7 @@ body {
 
 /* Section meta row — "Analyzed Period / Monthly Analysis…" */
 .opportunities-section {
-    margin-top: var(--space-6);
+    margin-top: var(--space-7);
 }
 
 .section-meta-row {
@@ -2610,8 +2851,8 @@ body {
 }
 
 .section-meta-title {
-    font-size: var(--text-md);
-    font-weight: var(--font-medium);
+    font-size: var(--text-xl);
+    font-weight: var(--font-regular);
     color: var(--color-primary-900);
     margin: 0;
 }
@@ -2646,7 +2887,8 @@ body {
 
 .stat-tile-label {
     font-size: var(--text-sm);
-    color: var(--color-text-muted);
+    color: var(--neutral-500);
+    font-weight: var(--font-regular);
 }
 
 .stat-tile-value {
@@ -2660,14 +2902,20 @@ body {
 .opportunity-list {
     display: flex;
     flex-direction: column;
-    gap: var(--space-3);
+    gap: var(--space-4);
 }
 
 .opportunity-card {
     background: var(--color-bg-primary);
     border: 0.0625rem solid var(--color-border);
     border-radius: var(--rounded-md);
-    padding: var(--space-4) var(--space-5);
+    padding: var(--space-5) var(--space-6);
+    transition: border-color 0.15s ease;
+    border-left: 4px solid var(--neutral-300);
+}
+
+.opportunity-card.expanded {
+    border-color: var(--primary-500);
 }
 
 .opportunity-card-header {
@@ -2682,12 +2930,13 @@ body {
     font-size: var(--text-lg);
     font-weight: var(--font-medium);
     color: var(--color-primary-900);
-    margin: 0 0 var(--space-1);
+     padding-bottom: var(--space-1);
+
 }
 
 .opportunity-card-subtitle {
-    font-size: var(--text-sm);
-    color: var(--color-text-muted);
+    font-size: var(--text-xs);
+    color: var(--neutral-500);
     margin: 0;
 }
 
@@ -2727,14 +2976,10 @@ body {
     gap: var(--space-2);
 }
 
-.agent-dropdown-toggle[aria-expanded="true"] {
-    border-color: var(--color-blue-button);
-    box-shadow: 0 0 0 0.0625rem var(--color-blue-button);
-}
-
 .agent-dropdown-chevron {
     width: 1rem;
     height: 1rem;
+    flex-shrink: 0;
     transition: transform 0.15s ease;
 }
 
@@ -2745,12 +2990,12 @@ body {
 .agent-dropdown-menu {
     position: absolute;
     top: calc(100% + 0.375rem);
-    left: 0;
+    left: -9.1875rem;
     min-width: 18rem;
     background: var(--color-bg-primary);
     border: 0.0625rem solid var(--color-border);
     border-radius: var(--rounded-md);
-    box-shadow: var(--shadow-md);
+    box-shadow: 0 0.0625rem 0.1875rem var(--shadow-sm);
     padding: var(--space-1) 0;
     z-index: 30;
     display: none;
@@ -2761,7 +3006,7 @@ body {
 }
 
 .agent-dropdown-header {
-    padding: var(--space-2) var(--space-3);
+    padding: var(--space-2) var(--space-4);
     font-size: var(--text-sm);
     color: var(--color-primary-900);
     font-weight: var(--font-medium);
@@ -2779,7 +3024,7 @@ body {
     justify-content: space-between;
     gap: var(--space-3);
     width: 100%;
-    padding: var(--space-2) var(--space-3);
+    padding: var(--space-2) var(--space-4);
     background: transparent;
     border: none;
     font-family: var(--font-sans);
@@ -2791,7 +3036,7 @@ body {
 }
 
 .agent-dropdown-item:hover {
-    background: var(--neutral-50);
+    background: var(--primary-25);
 }
 
 .agent-dropdown-item-icon {
@@ -2814,53 +3059,76 @@ body {
    or label cannot push its neighbours). Content stays left-aligned inside
    each item, and the vertical separator is drawn 0.75rem past each item's right
    edge — i.e., dead-centre of the 1.5rem gap. */
+/* Opportunity metric strip — grid layout so cells flow into multiple rows
+   when there isn't enough horizontal space, AND every cell (including the
+   Annual Savings cell when it wraps to a new row) aligns flush to the left
+   of its column. No per-cell horizontal padding so the value and label
+   share the same left edge, and wrapped rows have no extra indentation. */
+/* Flex-wrap so each metric sizes to its own content (no forced 1fr stretch)
+   and rows reflow when the container is too narrow. 32px column-gap puts
+   the vertical divider 16px from the content on each side. */
 .opportunity-metrics {
     display: flex;
-    gap: var(--space-6); /* 1.5rem */
+    flex-wrap: wrap;
+    column-gap: var(--space-7);   /* 32px */
+    row-gap: var(--space-4);
     margin-bottom: var(--space-3);
+
+}
+
+.opportunity-card.expanded .opportunity-metrics {
+    border-bottom: none;
+    padding-bottom: 0;
 }
 
 .opportunity-metric {
     position: relative;
-    padding-right: var(--space-4);
-    padding-left: var(--space-4);
+    flex: 0 0 auto;           /* width = content (no stretch) */
     min-width: 0;
     display: flex;
     flex-direction: column;
-    gap: var(--space-1);
+    align-items: flex-start;   /* value + label share left edge */
+   
     text-align: left;
 }
 
-/* First metric ("Total Call (CC)") aligns flush with the card content edge. */
-.opportunity-metric:first-child {
-    padding-left: 0;
-}
-
-.opportunity-metric:not(:last-child)::after {
+/* Vertical separator between metrics on the same row. The `.is-row-start`
+   class is applied by JS to the first cell of every visual row (including
+   the DOM first child and the first cell of any wrapped row), and the
+   `::before` rule below is suppressed on those so wrapped rows never get
+   a stray rule on the left. */
+.opportunity-metric:not(.is-row-start)::before {
     content: '';
     position: absolute;
-    right: calc(-1 * var(--space-3)); /* -0.75rem = midpoint of the 1.5rem gap */
+    left: calc(-1 * var(--space-4));   /* exact midpoint of the 32px gap → 16px on each side */
     top: 0;
-    height: 100%;
+    bottom: 0;
     width: 0.0625rem;
     background: var(--color-border);
 }
 
 .opportunity-metric-value {
-    font-size: var(--text-lg);
-    font-weight: var(--font-semibold);
+    font-size: var(--text-md);
+    font-weight: var(--font-medium);
     color: var(--color-primary-900);
-    line-height: 1.2;
+}
+
+.opportunity-sub-card .opportunity-metric-value {
+    font-size: var(--text-sm);
 }
 
 .opportunity-metric-value.savings {
-    color: var(--color-success-default, #208337);
+    color: var(--color-success-default, var(--success-default));
+    font-weight: var(--font-semibold);
 }
 
 .opportunity-metric-label {
-    font-size: var(--text-sm);
-    color: var(--color-text-muted);
-    white-space: nowrap;
+    font-size: var(--text-xs);
+    color: var(--neutral-500);
+    text-align: left;
+    line-height: 1.25;
+    /* Allow multi-line labels — each wrapped line keeps the same left
+       alignment as the value above it. */
 }
 
 /* Breakdown details — shown only when the parent card has .expanded */
@@ -2877,22 +3145,25 @@ body {
 
 /* Agent actions horizontal bar chart in a tinted blue box */
 .agent-actions {
-    background: #F5FAFF;
-    border-radius: var(--rounded-md);
-    padding: var(--space-4) var(--space-5);
-    border: 0.0625rem solid var(--color-border);
+   /*   background: var(--neutral-25); */
+   /*  border-radius: var(--rounded-md); */
+    padding: var(--space-4) var(--space-0);
+    /* border: 0.0625rem solid var(--color-border); */
 }
 
 .agent-actions-title {
+    display: flex;
+    align-items: center;
+    gap: 8px;
     font-size: var(--text-sm);
-    font-weight: var(--font-semibold);
+    font-weight: var(--font-medium);
     color: var(--color-primary-900);
     margin-bottom: var(--space-3);
 }
 
 .agent-action-row {
     display: grid;
-    grid-template-columns: 14rem 27.5rem auto;
+    grid-template-columns: minmax(8rem, 14rem) minmax(0, 31.25rem) auto;
     align-items: center;
     gap: var(--space-3);
     padding: var(--space-1) 0;
@@ -2908,14 +3179,14 @@ body {
 
 .agent-action-bar {
     height: 0.5rem;
-    background: var(--neutral-200);
+    background: var(--neutral-100);
     border-radius: var(--rounded-full);
     overflow: hidden;
 }
 
 .agent-action-fill {
     height: 100%;
-    background: var(--color-blue-button);
+    background: var(--primary-500);
     border-radius: var(--rounded-full);
 }
 
@@ -3016,17 +3287,8 @@ body {
     border-top: 0.0625rem solid var(--color-border);
 }
 
-.opportunity-sub-sub-list > .opportunity-sub-sub-card:last-child {
-    padding-bottom: 0;
-}
-
-.opportunities-view[data-view="topics"] .opportunity-card.expanded .opportunity-expand {
-    margin-top: var(--space-2);
-}
-
 .opportunity-sub-sub-card:first-child {
-    border-top: none;
-    padding-top: 0;
+    padding-top: var(--space-5);
 }
 
 .opportunity-sub-sub-card-header {
@@ -3056,6 +3318,24 @@ body {
     align-items: center;
     justify-content: center;
 }
+
+/* Avg. Sentiment icon + value display inside sub-list table */
+.sentiment-val {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.25rem;
+    font-weight: inherit;
+}
+.sentiment-val svg {
+    width: 1rem;
+    height: 1rem;
+    flex-shrink: 0;
+}
+.sentiment-val--1 { color: var(--error-secondary); }
+.sentiment-val--2 { color: var(--error-border); }
+.sentiment-val--3 { color: var(----alpha-yellow-text, #B07700); }
+.sentiment-val--4 { color: var(--success-border); }
+.sentiment-val--5 { color: var(--success-secondary); }
 
 /* "Create Deterministic Process" outlined ghost button */
 .deterministic-btn {
@@ -3119,12 +3399,14 @@ body {
     cursor: pointer;
     color: var(--color-text-secondary);
     font-family: var(--font-sans);
-    font-size: var(--text-xs);
+    font-size: var(--text-sm);
     font-weight: var(--font-medium);
     padding: var(--space-2) var(--space-3);
     transition: background-color 0.2s, color 0.2s;
     align-self: flex-start;
 }
+
+
 
 .opportunity-expand:hover,
 .opportunity-load-more:hover {
@@ -3251,10 +3533,8 @@ body {
 
 /* Dashboard-scoped overrides for shared shell classes
    (only apply when <body class="deployed-dashboard">) */
-.deployed-dashboard .topbar-navigation {
-    justify-content: space-between;
-    padding: 0 var(--space-5);
-}
+
+
 
 .deployed-dashboard .topbar-ask-ai-btn {
     border-color: var(--color-border);
@@ -3269,640 +3549,6 @@ body {
 }
 
 .deployed-dashboard .content-wrapper {
-    gap: var(--space-2);
-}
-
-/* ======================================================================== */
-/* ===== SAMPLE INTERACTIONS MODAL ========================================= */
-/* ======================================================================== */
-
-.modal-backdrop {
-    position: fixed;
-    inset: 0;
-    background: rgba(15, 23, 42, 0.4);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: var(--space-4);
-    z-index: 1000;
-}
-
-.modal-backdrop[hidden] {
-    display: none;
-}
-
-.modal-dialog {
-    background: var(--neutral-0);
-    border-radius: var(--rounded-lg);
-    box-shadow: 0 1.25rem 3.125rem -0.625rem var(--shadow-2xl), 0 0.5rem 1rem var(--shadow-md);
-    display: flex;
-    flex-direction: column;
-    width: 100%;
-    max-width: 64rem;
-    /* Locked height so the dialog stays the same size when filters reduce
-       the number of visible rows. */
-    height: 90vh;
-    max-height: 45rem;
-    overflow: hidden;
-}
-
-.modal-header {
-    display: flex;
-    align-items: flex-start;
-    justify-content: space-between;
-    gap: var(--space-4);
-    padding: var(--space-5) var(--space-6);
-}
-
-.modal-title {
-    font-size: var(--text-xl);
-    font-weight: var(--font-semibold);
-    color: var(--color-primary-900);
-    margin: 0;
-}
-
-.modal-subtitle {
-    font-size: var(--text-sm);
-    color: var(--color-text-muted);
-    margin: var(--space-1) 0 0;
-}
-
-.modal-close {
-    width: 2rem;
-    height: 2rem;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    background: transparent;
-    border: none;
-    border-radius: var(--rounded-sm);
-    cursor: pointer;
-    color: var(--color-text-icon);
-    flex-shrink: 0;
-}
-
-.modal-close:hover {
-    background: var(--neutral-50);
-}
-
-.modal-close svg {
-    width: 1.25rem;
-    height: 1.25rem;
-}
-
-.modal-body {
-    flex: 1;
-    overflow-y: auto;
-    padding: 0 var(--space-6);
-    display: flex;
-    flex-direction: column;
-    gap: var(--space-4);
-}
-
-.modal-filters {
-    flex-wrap: wrap;
-}
-
-.modal-stats {
-    grid-template-columns: repeat(5, minmax(0, 1fr));
-}
-
-.modal-table-wrapper {
-    position: relative;
-    flex: 1;
-    min-height: 0;
-    border: 0.0625rem solid var(--color-border);
-    border-radius: var(--rounded-md);
-    overflow-y: auto;
-    background: var(--neutral-0);
-}
-
-/* No-results empty state overlay — fills the table-wrapper, centered. */
-.modal-empty-state {
-    position: absolute;
-    inset: 0;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: var(--space-5);
-    padding: var(--space-7);
-    background: var(--neutral-0);
-}
-
-.modal-empty-state[hidden] {
-    display: none;
-}
-
-.modal-empty-state-title {
-    margin: 0;
-    color: var(--color-blue-button);
-    font-size: var(--text-xl);
-    font-weight: var(--font-semibold);
-}
-
-.modal-empty-reset {
-    display: inline-flex;
-    align-items: center;
-    gap: var(--space-2);
-    padding: var(--space-2) var(--space-4);
-    background: var(--color-bg-primary);
-    border: 0.0625rem solid var(--color-border);
-    border-radius: var(--rounded-md);
-    color: var(--color-primary-900);
-    font-family: var(--font-sans);
-    font-size: var(--text-sm);
-    font-weight: var(--font-medium);
-    cursor: pointer;
-    transition: background-color 0.2s, border-color 0.2s;
-}
-
-.modal-empty-reset:hover {
-    background: var(--neutral-50);
-    border-color: var(--color-border-hover);
-}
-
-.modal-empty-reset svg {
-    width: 1rem;
-    height: 1rem;
-}
-
-.modal-table {
-    width: 100%;
-    border-collapse: collapse;
-    font-family: var(--font-sans);
-    font-size: var(--text-sm);
-}
-
-.modal-table thead {
-    background: var(--neutral-50);
-}
-
-.modal-table th {
-    text-align: left;
-    padding: var(--space-3) var(--space-4);
-    font-size: var(--text-xs);
-    font-weight: var(--font-medium);
-    color: var(--color-text-secondary);
-    text-transform: uppercase;
-    letter-spacing: 0.04em;
-    white-space: nowrap;
-}
-
-.modal-table tbody tr {
-    border-top: 0.0625rem solid var(--color-border);
-}
-
-.modal-table td {
-    padding: var(--space-3) var(--space-4);
-    color: var(--color-primary-900);
-    vertical-align: middle;
-    white-space: nowrap;
-}
-
-.modal-table td:last-child {
-    text-align: right;
-    width: 2.5rem;
-}
-
-.channel-icon {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    width: 1.75rem;
-    height: 1.75rem;
-    border-radius: var(--rounded-full);
-    color: var(--primary-900);
-}
-
-.channel-icon svg {
-    width: 1rem;
-    height: 1rem;
-}
-
-.modal-footer {
-    display: flex;
-    justify-content: flex-end;
-    padding: var(--space-4) var(--space-6) var(--space-5);
-}
-
-.modal-close-btn {
-    padding: var(--space-2) var(--space-4);
-    background: var(--color-bg-primary);
-    border: 0.0625rem solid var(--color-border);
-    border-radius: var(--rounded-md);
-    color: var(--color-primary-900);
-    font-family: var(--font-sans);
-    font-size: var(--text-sm);
-    font-weight: var(--font-medium);
-    cursor: pointer;
-    transition: background-color 0.2s, border-color 0.2s;
-}
-
-.modal-close-btn:hover {
-    background: var(--neutral-50);
-    border-color: var(--color-border-hover);
-}
-
-/* ======================================================================== */
-/* ===== SETTINGS PAGE ===================================================== */
-/* ======================================================================== */
-
-/* Breadcrumb trail used on the Settings page topbar */
-.settings-breadcrumb {
-    display: flex;
-    align-items: center;
-    gap: var(--space-2);
-    font-size: var(--text-sm);
-    color: var(--color-text-muted);
-}
-
-.breadcrumb-icon {
-    width: 1rem;
-    height: 1rem;
-    color: var(--color-text-muted);
-}
-
-.breadcrumb-link {
-    color: var(--color-text-muted);
-    text-decoration: none;
-}
-
-.breadcrumb-link:hover {
-    color: var(--color-primary-900);
-}
-
-.breadcrumb-separator {
-    width: 0.875rem;
-    height: 0.875rem;
-    color: var(--color-text-muted);
-}
-
-.breadcrumb-current {
-    font-weight: var(--font-medium);
-    color: var(--color-primary-900);
-}
-
-/* Settings body wrapper */
-.settings-container {
-    width: 80rem;
-    max-width: 100%;
-    margin: 0 auto;
-    display: flex;
-    flex-direction: column;
-    gap: var(--space-5);
-    padding: var(--space-5) 0;
-}
-
-.settings-section {
-    width: 100%;
-    background: var(--color-bg-primary);
-    border: 0.0625rem solid var(--color-border);
-    border-radius: var(--rounded-md);
-    padding: var(--space-5) var(--space-6);
-    display: flex;
-    flex-direction: column;
-    gap: var(--space-4);
-}
-
-.settings-section-title {
-    font-size: var(--text-xl);
-    font-weight: var(--font-semibold);
-    color: var(--color-primary-900);
-    margin: 0 0 var(--space-1);
-}
-
-.settings-subsection {
-    display: flex;
-    flex-direction: column;
-    gap: var(--space-3);
-}
-
-.settings-subsection-title {
-    display: inline-flex;
-    align-items: center;
-    gap: var(--space-1);
-    font-size: var(--text-md);
-    font-weight: var(--font-semibold);
-    color: var(--color-primary-900);
-}
-
-.settings-info {
-    position: relative;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    width: 0.875rem;
-    height: 0.875rem;
-    color: var(--color-text-muted);
-    cursor: help;
-}
-
-.settings-info svg {
-    width: 0.875rem;
-    height: 0.875rem;
-}
-
-.settings-info[data-tooltip]::before,
-.settings-info[data-tooltip]::after {
-    position: absolute;
-    left: 50%;
-    bottom: calc(100% + 0.5rem);
-    opacity: 0;
-    pointer-events: none;
-    transition: opacity 0.15s ease;
-    z-index: 50;
-}
-
-.settings-info[data-tooltip]::before {
-    content: attr(data-tooltip);
-    transform: translateX(-50%);
-    width: max-content;
-    max-width: 18rem;
-    padding: var(--space-2) var(--space-3);
-    background: var(--neutral-900);
-    color: var(--primary-0);
-    font-size: var(--text-xs);
-    font-weight: 400;
-    line-height: 1.4;
-    text-align: left;
-    white-space: normal;
-    border-radius: var(--radius-md, 0.5rem);
-    box-shadow: var(--shadow-md);
-}
-
-.settings-info[data-tooltip]::after {
-    content: "";
-    transform: translateX(-50%);
-    bottom: calc(100% + 0.125rem);
-    border: 0.375rem solid transparent;
-    border-top-color: var(--neutral-900);
-}
-
-.settings-info[data-tooltip]:hover::before,
-.settings-info[data-tooltip]:hover::after,
-.settings-info[data-tooltip]:focus-visible::before,
-.settings-info[data-tooltip]:focus-visible::after {
-    opacity: 1;
-}
-
-.settings-row {
-    display: flex;
-    flex-wrap: wrap;
-    gap: var(--space-4);
-}
-
-.settings-row > .settings-field {
-    width: 25rem;
-}
-
-.settings-section--narrow .settings-input,
-.settings-section--narrow .settings-input-affix,
-.settings-section--narrow .settings-select-wrapper {
-    max-width: 15rem;
-}
-
-.settings-section--narrow .settings-row > .settings-field {
-    width: 15rem;
-}
-
-.cognigy-edit-api-btn {
-    align-self: flex-start;
-}
-
-/* Verify indicator (API key / Site URL) */
-.settings-verify-row {
-    display: flex;
-    align-items: center;
-    gap: var(--space-3);
-}
-
-.settings-verify-row > .settings-input {
-    flex: 1 1 auto;
-}
-
-.settings-verify-indicator {
-    display: none;
-    align-items: center;
-    gap: var(--space-2);
-    color: var(--color-primary-900);
-    font-size: var(--text-sm);
-    font-weight: 500;
-    white-space: nowrap;
-}
-
-.settings-verify-indicator[data-state="verifying"],
-.settings-verify-indicator[data-state="success"] {
-    display: inline-flex;
-}
-
-.settings-verify-loader-icon {
-    width: 1rem;
-    height: 1rem;
-    display: none;
-}
-
-.settings-verify-success-icon {
-    width: 1.5rem;
-    height: 1.5rem;
-    display: none;
-}
-
-.settings-verify-indicator[data-state="verifying"] .settings-verify-loader-icon {
-    display: block;
-    animation: settings-verify-spin 0.8s linear infinite;
-}
-
-.settings-verify-indicator[data-state="success"] .settings-verify-success-icon {
-    display: block;
-    color: var(--success-600, #16a34a);
-}
-
-.settings-verify-indicator[data-state="success"] .settings-verify-text {
-    display: none;
-}
-
-@keyframes settings-verify-spin {
-    to { transform: rotate(360deg); }
-}
-
-.settings-field {
-    display: flex;
-    flex-direction: column;
-    gap: var(--space-2);
-}
-
-.settings-label {
-    font-size: var(--text-sm);
-    font-weight: var(--font-medium);
-    color: var(--color-primary-900);
-}
-
-.settings-input {
-    width: 100%;
-    max-width: 25rem;
-    padding: var(--space-2) var(--space-3);
-    background: var(--color-bg-primary);
-    border: 0.0625rem solid var(--color-border);
-    border-radius: var(--rounded-md);
-    font-family: var(--font-sans);
-    font-size: var(--text-sm);
-    color: var(--color-primary-900);
-    outline: none;
-    transition: border-color 0.2s;
-}
-
-.settings-input:focus {
-    border-color: var(--color-blue-button);
-}
-
-.settings-input::placeholder {
-    color: var(--color-text-placeholder);
-}
-
-.settings-textarea {
-    resize: vertical;
-    min-height: 4rem;
-    max-width: 50rem;
-    line-height: var(--leading-3);
-}
-
-
-.settings-helper {
-    font-size: var(--text-xs);
-    color: var(--color-text-muted);
-    margin: 0;
-}
-
-/* Input with a suffix (e.g. $ or %) */
-.settings-input-affix {
-    position: relative;
-    max-width: 25rem;
-}
-
-.settings-input-affix .settings-input {
-    padding-right: 2rem;
-}
-
-.settings-input-suffix {
-    position: absolute;
-    right: var(--space-3);
-    top: 50%;
-    transform: translateY(-50%);
-    color: var(--color-text-muted);
-    font-size: var(--text-sm);
-    pointer-events: none;
-}
-
-/* Select wrapper with chevron */
-.settings-select-wrapper {
-    position: relative;
-    max-width: 25rem;
-}
-
-.settings-select {
-    appearance: none;
-    -webkit-appearance: none;
-    padding-right: 2rem;
-    cursor: pointer;
-}
-
-.settings-select-chevron {
-    position: absolute;
-    right: var(--space-3);
-    top: 50%;
-    transform: translateY(-50%);
-    width: 1rem;
-    height: 1rem;
-    color: var(--color-text-muted);
-    pointer-events: none;
-}
-
-/* Secondary button (e.g. "Edit API Key") */
-.settings-secondary-btn {
-    align-self: flex-start;
-    padding: var(--space-2) var(--space-3);
-    background: var(--color-bg-primary);
-    border: 0.0625rem solid var(--color-border);
-    border-radius: var(--rounded-md);
-    color: var(--color-primary-900);
-    font-family: var(--font-sans);
-    font-size: var(--text-sm);
-    font-weight: var(--font-medium);
-    cursor: pointer;
-    transition: background-color 0.2s, border-color 0.2s;
-}
-
-.settings-secondary-btn:hover {
-    background: var(--neutral-50);
-    border-color: var(--color-border-hover);
-}
-
-/* On the settings page the sticky header just holds the page title */
-.settings-page .opportunities-sticky-header {
-    border-bottom: 0.0625rem solid var(--color-border);
-}
-
-.settings-header-actions {
-    display: flex;
-    align-items: center;
-    gap: var(--space-2);
-}
-
-.settings-cancel-btn,
-.settings-save-btn {
-    height: 2.25rem;
-    padding: 0 var(--space-4);
-    border-radius: var(--radius-md, 0.5rem);
-    font-size: var(--text-sm);
-    font-weight: 500;
-    line-height: 1;
-    cursor: pointer;
-    transition: background-color 0.2s, border-color 0.2s, color 0.2s, opacity 0.2s;
-}
-
-.settings-cancel-btn {
-    background: var(--primary-0);
-    color: var(--neutral-900);
-    border: 0.0625rem solid var(--color-border);
-}
-
-.settings-cancel-btn:hover {
-    background: var(--neutral-50);
-    border-color: var(--color-border-hover);
-}
-
-.settings-save-btn {
-    background: var(--color-blue-button);
-    color: var(--primary-0);
-    border: 0.0625rem solid var(--color-blue-button);
-}
-
-.settings-save-btn:hover:not(:disabled) {
-    background: var(--primary-700, var(--color-blue-button));
-    border-color: var(--primary-700, var(--color-blue-button));
-}
-
-.settings-save-btn:disabled {
-    opacity: 0.5;
-    cursor: not-allowed;
-}
-
-/* ===== TEXTUAL VIEW (AI Agent) ========================================= */
-.textual-page .main-content {
-    background: var(--color-bg-tertiary);
-}
-
-.textual-page .section-title-row {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: var(--space-4);
-}
-
-.textual-header-actions {
-    display: flex;
-    align-items: center;
     gap: var(--space-2);
 }
 
@@ -4081,295 +3727,94 @@ body {
     height: 1.125rem;
 }
 
-/* ===== AI panel chat messages (publish flow) =========================== */
-.ai-panel-messages {
-    display: none;
-    flex-direction: column;
-    gap: var(--space-3);
-    padding: var(--space-4);
+/* ===== PRINT MODE — single automation card =========================== */
+@media print {
+    body.print-mode * {
+        visibility: hidden;
+    }
+    body.print-mode .print-target,
+    body.print-mode .print-target * {
+        visibility: visible;
+    }
+    body.print-mode .print-target {
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100%;
+        margin: 0;
+        padding: 1rem;
+        background: var(--color-bg-primary);
+        box-shadow: none;
+        border: none;
+    }
+    /* Hide the expand/collapse + load-more controls in the printed output */
+    body.print-mode .print-target .opportunity-expand,
+    body.print-mode .print-target .opportunity-load-more,
+    body.print-mode .print-target .opportunity-card-actions {
+        display: none !important;
+    }
 }
 
-.ai-panel.has-messages .ai-panel-empty {
-    display: none;
+/* Brief highlight when a card is opened from a deep link */
+.opportunity-card.card-highlight,
+.opportunity-sub-card.card-highlight,
+.opportunity-sub-sub-card.card-highlight {
+    box-shadow: 0 0 0 0.125rem var(--color-blue-button), 0 0.625rem 1.5rem -0.25rem var(--shadow-lg);
+    transition: box-shadow 0.2s ease;
 }
 
-.ai-panel.has-messages .ai-panel-messages {
+/* ===== CHART VIEW MODAL =============================================== */
+.chart-modal-backdrop {
+    position: fixed;
+    inset: 0;
+    z-index: 100;
+    background: rgba(15, 23, 42, 0.45);
     display: flex;
-}
-
-.ai-message-intent {
-    display: flex;
-    align-items: center;
-    gap: var(--space-2);
-    padding-bottom: var(--space-2);
-}
-
-.ai-message-intent-icon {
-    width: 1rem;
-    height: 1rem;
-    color: var(--color-blue-button);
-    display: inline-flex;
-}
-
-.ai-message-intent-icon svg {
-    width: 1rem;
-    height: 1rem;
-}
-
-.ai-message-intent-title {
-    flex: 1;
-    min-width: 0;
-    font-size: var(--text-md);
-    font-weight: var(--font-semibold);
-    color: var(--color-primary-900);
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-}
-
-.ai-message-intent-new {
-    width: 1.5rem;
-    height: 1.5rem;
-    display: inline-flex;
     align-items: center;
     justify-content: center;
-    background: transparent;
-    border: none;
-    color: var(--color-primary-900);
-    cursor: pointer;
-    border-radius: var(--rounded-md);
+    padding: var(--space-6);
 }
 
-.ai-message-intent-new:hover {
-    background: var(--neutral-50);
+.chart-modal-backdrop[hidden] {
+    display: none;
 }
 
-.ai-message-intent-new svg {
-    width: 1rem;
-    height: 1rem;
-}
-
-.ai-message-user {
-    align-self: flex-end;
-    max-width: 85%;
-    padding: var(--space-3) var(--space-4);
-    background: var(--primary-50);
-    border-radius: 1rem;
-    font-size: var(--text-sm);
-    color: var(--color-primary-900);
-    line-height: 1.4;
-}
-
-.ai-message-assistant {
-    display: flex;
-    gap: var(--space-2);
-    align-items: flex-start;
-}
-
-.ai-message-assistant-icon {
-    flex-shrink: 0;
-    width: 1.25rem;
-    height: 1.25rem;
-    color: var(--color-blue-button);
-    display: inline-flex;
-    margin-top: 0.125rem;
-}
-
-.ai-message-assistant-icon svg {
-    width: 1.25rem;
-    height: 1.25rem;
-}
-
-.ai-message-assistant-body {
-    flex: 1;
-    min-width: 0;
-    display: flex;
-    flex-direction: column;
-    gap: var(--space-2);
-    font-size: var(--text-sm);
-    color: var(--color-primary-900);
-    line-height: 1.4;
-}
-
-.ai-message-assistant-loading {
-    display: flex;
-    align-items: center;
-    gap: var(--space-2);
-}
-
-.ai-message-assistant-label {
-    font-weight: var(--font-medium);
-}
-
-.ai-loader {
-    width: 1rem;
-    height: 1rem;
-    border: 0.125rem solid var(--color-border);
-    border-top-color: var(--color-blue-button);
-    border-radius: 50%;
-    animation: ai-loader-spin 0.8s linear infinite;
-}
-
-@keyframes ai-loader-spin {
-    to { transform: rotate(360deg); }
-}
-
-.ai-reasoning-toggle {
-    align-self: flex-start;
-    display: inline-flex;
-    align-items: center;
-    gap: var(--space-1);
-    padding: 0;
-    background: transparent;
-    border: none;
-    font-size: var(--text-sm);
-    font-weight: var(--font-medium);
-    color: var(--color-primary-900);
-    cursor: pointer;
-}
-
-.ai-reasoning-toggle svg {
-    width: 1rem;
-    height: 1rem;
-}
-
-.ai-reasoning-body {
-    color: var(--color-primary-900);
-}
-
-.ai-reasoning-open-btn {
-    align-self: flex-start;
-    padding: var(--space-2) var(--space-4);
-    background: var(--primary-0);
-    border: 0.0625rem solid var(--color-border);
-    border-radius: var(--rounded-md);
-    font-size: var(--text-sm);
-    font-weight: var(--font-medium);
-    color: var(--color-primary-900);
-    cursor: pointer;
-    transition: background-color 0.15s ease, border-color 0.15s ease;
-}
-
-.ai-reasoning-open-btn:hover {
-    background: var(--neutral-50);
-    border-color: var(--color-border-hover);
-}
-
-.ai-message-actions {
-    display: flex;
-    gap: var(--space-2);
-    margin-top: var(--space-1);
-}
-
-.ai-message-actions button {
-    width: 1.5rem;
-    height: 1.5rem;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    background: transparent;
-    border: none;
-    color: var(--color-text-muted);
-    cursor: pointer;
-    border-radius: var(--rounded-md);
-}
-
-.ai-message-actions button:hover {
-    background: var(--neutral-50);
-    color: var(--color-primary-900);
-}
-
-.ai-message-actions svg {
-    width: 1rem;
-    height: 1rem;
-}
-
-.textual-area {
-    flex: 1;
-    overflow-y: auto;
-    padding: var(--space-6) var(--space-7);
-}
-
-.textual-layout {
-    display: grid;
-    grid-template-columns: 14rem 1fr;
-    gap: var(--space-7);
-    max-width: 70rem;
-    margin: 0 auto;
-}
-
-.textual-nav {
-    position: sticky;
-    top: var(--space-6);
-    align-self: start;
-    display: flex;
-    flex-direction: column;
-    gap: var(--space-5);
-}
-
-.textual-nav-group {
-    display: flex;
-    flex-direction: column;
-    gap: var(--space-1);
-}
-
-.textual-nav-title {
-    font-size: var(--text-md);
-    font-weight: var(--font-semibold);
-    color: var(--color-primary-900);
-    margin-bottom: var(--space-2);
-}
-
-.textual-nav-item {
-    padding: var(--space-2) var(--space-3);
-    font-size: var(--text-sm);
-    color: var(--color-text-muted);
-    text-decoration: none;
-    border-radius: var(--rounded-md);
-    transition: background-color 0.15s ease, color 0.15s ease;
-}
-
-.textual-nav-item:hover {
-    background: var(--neutral-50);
-    color: var(--color-primary-900);
-}
-
-.textual-nav-item.active {
-    background: var(--neutral-50);
-    color: var(--color-primary-900);
-    font-weight: var(--font-medium);
-}
-
-.textual-content {
-    display: flex;
-    flex-direction: column;
-    gap: var(--space-5);
-}
-
-.textual-card {
+.chart-modal {
+    width: 100%;
+    max-width: 80rem;
+    max-height: 90vh;
     background: var(--color-bg-primary);
-    border: 0.0625rem solid var(--color-border);
     border-radius: var(--rounded-md);
-    padding: var(--space-5) var(--space-6);
+    box-shadow: 0 1.25rem 3.125rem -0.625rem var(--shadow-2xl);
     display: flex;
     flex-direction: column;
-    gap: var(--space-4);
+    overflow: hidden;
 }
 
-.textual-card-header {
+.chart-modal-header {
     display: flex;
-    align-items: center;
+    align-items: flex-start;
     justify-content: space-between;
+    gap: var(--space-3);
+    padding: var(--space-4) var(--space-5);
+    border-bottom: 0.0625rem solid var(--color-border);
+    flex-shrink: 0;
 }
 
-.textual-card-title {
+.chart-modal-title {
     margin: 0;
-    font-size: var(--text-xl);
+    font-size: var(--text-lg);
     font-weight: var(--font-semibold);
     color: var(--color-primary-900);
 }
 
-.textual-card-action {
+.chart-modal-subtitle {
+    margin: 0.25rem 0 0;
+    font-size: var(--text-xs);
+    color: var(--color-text-muted);
+}
+
+.chart-modal-close {
     width: 2rem;
     height: 2rem;
     display: inline-flex;
@@ -4380,37 +3825,1434 @@ body {
     color: var(--color-primary-900);
     cursor: pointer;
     border-radius: var(--rounded-md);
-    transition: background-color 0.15s ease;
 }
 
-.textual-card-action:hover {
+.chart-modal-close:hover {
     background: var(--neutral-50);
 }
 
-.textual-card-action svg {
+.chart-modal-close svg {
+    width: 1.125rem;
+    height: 1.125rem;
+}
+
+.chart-modal-body {
+    padding: var(--space-5);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-5);
+    overflow-y: auto;
+}
+
+.chart-modal-stats {
+    display: grid;
+    grid-template-columns: auto repeat(3, 1fr);
+    gap: var(--space-4);
+    align-items: center;
+    padding: var(--space-4);
+    background: var(--neutral-50);
+    border-radius: var(--rounded-md);
+}
+
+.chart-donut {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-1);
+}
+
+.chart-donut svg {
+    width: 5rem;
+    height: 5rem;
+}
+
+.chart-donut-text {
+    font-size: 0.15625rem;
+    font-weight: var(--font-semibold);
+    fill: var(--color-primary-900);
+}
+
+.chart-donut-label {
+    font-size: var(--text-xs);
+    color: var(--color-text-muted);
+}
+
+.chart-stat {
+    display: flex;
+    flex-direction: column;
+    gap: 0.125rem;
+}
+
+.chart-stat-value {
+    font-size: var(--text-xl);
+    font-weight: var(--font-semibold);
+    color: var(--color-primary-900);
+}
+
+.chart-stat-value--savings {
+    color: var(--success-border);
+}
+
+.chart-stat-label {
+    font-size: var(--text-xs);
+    color: var(--color-text-muted);
+}
+
+.chart-section-title {
+    margin: 0 0 var(--space-3);
+    font-size: var(--text-sm);
+    font-weight: var(--font-semibold);
+    color: var(--color-primary-900);
+}
+
+.chart-bar-svg {
+    width: 100%;
+    height: auto;
+    display: block;
+    font-family: var(--font-sans);
+}
+
+.chart-bar-label {
+    font-size: 0.0625rem;
+    fill: var(--color-text-muted);
+}
+
+.chart-bar-value {
+    font-size: 0.0625rem;
+    fill: var(--color-primary-900);
+    font-weight: var(--font-medium);
+    dominant-baseline: middle;
+}
+
+.chart-bar-track {
+    fill: var(--neutral-200);
+}
+
+.chart-bar-fill {
+    fill: var(--primary-500);
+}
+
+/* Chart view — sub-card sections (drill-down content from expanded card) */
+.chart-subsection {
+    padding: var(--space-4);
+    background: var(--neutral-50);
+    border-radius: var(--rounded-md);
+    border: 0.0625rem solid var(--color-border);
+}
+
+.chart-subsection-header {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+    margin-bottom: var(--space-3);
+}
+
+.chart-subsection-header > div {
+    flex: 1;
+    min-width: 0;
+}
+
+.chart-subsection-title {
+    margin: 0;
+    font-size: var(--text-md);
+    font-weight: var(--font-semibold);
+    color: var(--color-primary-900);
+}
+
+.chart-subsection-subtitle {
+    margin: 0.125rem 0 0;
+    font-size: var(--text-xs);
+    color: var(--color-text-muted);
+}
+
+.chart-subsection-pct {
+    font-size: var(--text-xs);
+    color: var(--color-text-muted);
+    background: var(--primary-0);
+    padding: var(--space-1) var(--space-2);
+    border-radius: var(--rounded-full, 624.9375rem);
+    border: 0.0625rem solid var(--color-border);
+}
+
+.chart-subsection-h4 {
+    margin: var(--space-3) 0 var(--space-2);
+    font-size: var(--text-sm);
+    font-weight: var(--font-semibold);
+    color: var(--color-primary-900);
+}
+
+.chart-badge {
+    flex-shrink: 0;
+}
+
+.chart-subcard-stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(7rem, 1fr));
+    gap: var(--space-3);
+    margin-bottom: var(--space-2);
+}
+
+.chart-stat--compact .chart-stat-value {
+    font-size: var(--text-md);
+}
+
+/* Chart view — stat-tile header row (matches Analyzed Period tiles) */
+.chart-stat-tiles {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(8rem, 1fr));
+    gap: var(--space-3);
+}
+
+.stat-tile-value--savings {
+    color: var(--success-border);
+}
+
+.chart-actions {
+    margin: 0;
+}
+
+/* Chart view — clickable topics overview + details panel */
+.chart-topics-overview .chart-section-hint {
+    font-size: var(--text-xs);
+    font-weight: var(--font-normal, 400);
+    color: var(--color-text-muted);
+    margin-left: var(--space-2);
+}
+
+.chart-topic-row {
+    width: 100%;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    text-align: left;
+    padding: var(--space-2) var(--space-2);
+    margin: 0 calc(var(--space-2) * -1);
+    border-radius: var(--rounded-md);
+    transition: background-color 0.15s ease;
+}
+
+.chart-topic-row:hover {
+    background: rgba(18, 107, 206, 0.06);
+}
+
+.chart-topic-row.is-active {
+    background: rgba(18, 107, 206, 0.1);
+}
+
+.chart-topic-row.is-active .agent-action-fill {
+    background: var(--primary-500);
+}
+
+.chart-topic-details {
+    border-top: 0.0625rem solid var(--color-border);
+    padding-top: var(--space-4);
+}
+
+/* Chart view — ECharts-style vertical column chart */
+.chart-column-svg {
+    width: 100%;
+    height: 18rem;
+    display: block;
+    margin: 0;
+    font-family: var(--font-sans);
+}
+
+/* The Topics overview uses the chart at a larger size since it stands alone */
+#chartTopicsBars.chart-column-svg {
+    height: 22rem;
+    max-width: 60rem;
+    margin: 0 auto;
+}
+
+.chart-column.is-interactive {
+    cursor: pointer;
+}
+
+.chart-column-axis {
+    stroke: var(--neutral-300);
+    stroke-width: 1;
+}
+
+.chart-column-grid {
+    stroke: var(--neutral-200);
+    stroke-width: 1;
+    stroke-dasharray: 2 3;
+}
+
+.chart-column-tick {
+    font-size: var(--text-xs);
+    fill: var(--neutral-500);
+}
+
+.chart-column-y-label {
+    font-size: var(--text-xs);
+    fill: var(--neutral-500);
+}
+
+.chart-column {
+    outline: none;
+}
+
+.chart-column-hit {
+    fill: transparent;
+}
+
+.chart-column-bar {
+    fill: var(--blue-300);
+    transition: fill 0.15s ease;
+}
+
+.chart-column.is-interactive:hover .chart-column-bar,
+.chart-column.is-interactive:focus-visible .chart-column-bar,
+.chart-column.is-active .chart-column-bar {
+    fill: var(--primary-500);
+}
+
+.chart-column-value {
+    font-size: 0.6875rem;
+    font-weight: var(--font-medium);
+    fill: var(--color-primary-900);
+}
+
+.chart-column-label {
+    font-size: var(--text-xs);
+    fill: var(--color-text-muted);
+}
+
+.chart-column.is-active .chart-column-label {
+    fill: var(--color-primary-900);
+    font-weight: var(--font-medium);
+}
+
+/* Sub-card details split layout: sub-sub-cards on the left, Agent Actions on the right */
+.opportunity-sub-details--split {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 20rem;
+    gap: var(--space-5);
+    align-items: start;
+}
+
+.opportunity-sub-details-main {
+    min-width: 0;
+}
+
+.opportunity-sub-details-side {
+    position: sticky;
+    top: var(--space-4);
+}
+
+.agent-actions-list {
+    background: var(--primary-25);
+    border: 0.0625rem solid var(--color-border);
+    border-radius: var(--rounded-md);
+    padding: var(--space-4);
+}
+
+.agent-actions-list-title {
+    margin: 0 0 var(--space-3);
+    font-size: var(--text-sm);
+    font-weight: var(--font-semibold);
+    color: var(--color-primary-900);
+}
+
+.agent-actions-list-items {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+}
+
+.agent-actions-list-items li {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-3);
+    padding: var(--space-2) 0;
+    font-size: var(--text-sm);
+    color: var(--neutral-500);
+}
+
+.agent-actions-list-items li + li {
+    border-top: 0.0625rem solid var(--color-border);
+}
+
+.agent-actions-list-label {
+    flex: 1;
+    min-width: 0;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.agent-actions-list-value {
+    color: var(--color-primary-900);
+    font-weight: var(--font-medium);
+}
+
+@media (max-width: 60rem) {
+    .opportunity-sub-details--split {
+        grid-template-columns: 1fr;
+    }
+    .opportunity-sub-details-side {
+        position: static;
+    }
+}
+
+/* Chart view — two-column row for Volume breakdown + Top agent actions */
+.chart-two-col {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-4);
+    align-items: start;
+}
+
+.chart-two-col > .chart-section {
+    margin: 0;
+    min-width: 0;
+}
+
+@media (max-width: 48rem) {
+    .chart-two-col {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* ===== SAMPLE INTERACTIONS MODAL (generic .modal-*) =================== */
+.modal-backdrop {
+    position: fixed;
+    inset: 0;
+    z-index: 100;
+    background: rgba(15, 23, 42, 0.45);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: var(--space-6);
+}
+
+.modal-backdrop[hidden] {
+    display: none;
+}
+
+.modal-dialog {
+    width: 100%;
+    max-width: 74rem;
+    height: 80vh;
+    background: var(--color-bg-primary);
+    border-radius: var(--rounded-md);
+    box-shadow: 0 1.25rem 3.125rem -0.625rem var(--shadow-2xl);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+.modal-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: var(--space-3);
+    padding: var(--space-4) var(--space-5);
+    flex-shrink: 0;
+}
+
+.modal-title {
+    margin: 0;
+    font-size: var(--text-lg);
+    font-weight: var(--font-semibold);
+    color: var(--color-primary-900);
+}
+
+.modal-subtitle {
+    margin: 0.25rem 0 0;
+    font-size: var(--text-sm);
+    color: var(--color-text-muted);
+}
+
+.modal-close {
+    width: 2rem;
+    height: 2rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: transparent;
+    border: none;
+    color: var(--color-primary-900);
+    cursor: pointer;
+    border-radius: var(--rounded-md);
+}
+
+.modal-close:hover {
+    background: var(--neutral-50);
+}
+
+.modal-close svg {
+    width: 1.125rem;
+    height: 1.125rem;
+}
+
+.modal-body {
+    padding: var(--space-0) var(--space-5);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4);
+    overflow: hidden;
+    flex: 1;
+    min-height: 0;
+}
+
+.modal-footer {
+    display: flex;
+    justify-content: flex-end;
+    padding: var(--space-4) var(--space-5);
+    flex-shrink: 0;
+}
+
+.modal-close-btn {
+    padding: var(--space-2) var(--space-4);
+    background: var(--primary-0);
+    color: var(--color-primary-900);
+    border: 0.0625rem solid var(--color-border);
+    border-radius: var(--rounded-md);
+    font-size: var(--text-sm);
+    font-weight: var(--font-medium);
+    cursor: pointer;
+    transition: background-color 0.15s ease, border-color 0.15s ease;
+}
+
+.modal-close-btn:hover {
+    background: var(--neutral-50);
+    border-color: var(--color-border-hover);
+}
+
+.modal-filters {
+    flex-shrink: 0;
+}
+
+/* Sample Interactions modal — inner elements */
+.modal-stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(8.5rem, 1fr));
+    gap: var(--space-3);
+}
+
+.modal-table-wrapper {
+    position: relative;
+    overflow-x: auto;
+    overflow-y: auto;
+    border: 0.0625rem solid var(--color-border);
+    border-radius: var(--rounded-md);
+    flex: 1;
+    min-height: 0;
+}
+
+.modal-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: var(--text-sm);
+}
+
+.modal-table thead th {
+    text-align: left;
+    padding: var(--space-3) var(--space-3);
+    background: var(--neutral-50);
+    color: var(--neutral-900);
+    font-size: var(--text-xs);
+    font-weight: var(--font-medium);
+    text-transform: none;
+    letter-spacing: 0;
+    white-space: nowrap;
+    border-bottom: 0.0625rem solid var(--color-border);
+    position: sticky;
+    top: 0;
+    z-index: 1;
+}
+
+.modal-table tbody td {
+    padding: var(--space-3) var(--space-3);
+    color: var(--color-primary-900);
+    white-space: nowrap;
+}
+
+.modal-table tbody tr + tr td {
+    border-top: 0.0625rem solid var(--color-border);
+}
+
+.modal-table .ghost-btn {
+    width: 1.75rem;
+    height: 1.75rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: transparent;
+    border: none;
+    color: var(--color-primary-900);
+    cursor: pointer;
+    border-radius: var(--rounded-md);
+}
+
+.modal-table .ghost-btn:hover {
+    background: var(--neutral-50);
+}
+
+.modal-table .ghost-btn svg {
     width: 1rem;
     height: 1rem;
 }
 
-.textual-card-body {
+.channel-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: transparent;
+    color: var(--color-primary-900);
+}
+
+.channel-icon svg {
+    width: 1rem;
+    height: 1rem;
+}
+
+.modal-empty-state {
+    padding: var(--space-7) var(--space-4);
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-3);
+}
+
+.modal-empty-state[hidden] {
+    display: none;
+}
+
+.modal-empty-state-title {
+    margin: 0;
+    font-size: var(--text-md);
+    font-weight: var(--font-semibold);
+    color: var(--color-primary-900);
+}
+
+.modal-empty-reset {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-2);
+    padding: var(--space-2) var(--space-3);
+    background: var(--primary-0);
+    border: 0.0625rem solid var(--color-border);
+    border-radius: var(--rounded-md);
+    color: var(--color-primary-900);
+    font-size: var(--text-sm);
+    cursor: pointer;
+}
+
+.modal-empty-reset:hover {
+    background: var(--neutral-50);
+    border-color: var(--color-border-hover);
+}
+
+.modal-empty-reset svg {
+    width: 1rem;
+    height: 1rem;
+}
+
+/* Top agent actions chart — stretch full width when standalone */
+.chart-section--full .chart-column-svg {
+    height: 22rem;
+    max-width: none;
+    width: 100%;
+}
+
+/* Chart tooltip — matches the design-system dark tooltip used elsewhere */
+.chart-column-container {
+    position: relative;
+}
+
+.chart-tooltip {
+    position: absolute;
+    transform: translate(-50%, -100%);
+    background: var(--color-primary-900);
+    color: var(--color-text-on-brand);
+    padding: var(--space-2) var(--space-3);
+    border-radius: var(--rounded-md);
+    font-size: var(--text-sm);
+    font-weight: var(--font-regular);
+    line-height: 1.3;
+    text-align: center;
+    width: max-content;
+    max-width: 16rem;
+    box-shadow: 0 0.5rem 1rem -0.25rem rgba(15, 23, 42, 0.25);
+    pointer-events: none;
+    z-index: 20;
+    display: flex;
+    flex-direction: column;
+    gap: 0.125rem;
+}
+
+.chart-tooltip[hidden] {
+    display: none;
+}
+
+.chart-tooltip::after {
+    content: "";
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    border: 0.375rem solid transparent;
+    border-top-color: var(--color-primary-900);
+}
+
+.chart-tooltip-label {
+    opacity: 0.85;
+    font-size: var(--text-xs);
+}
+
+.chart-tooltip-value {
+    font-weight: var(--font-medium);
+    font-size: var(--text-sm);
+}
+
+/* ===== CHART VIEW — POLISHED LOOK ====================================== */
+/* Modal fade-and-scale entrance */
+@keyframes chart-modal-in {
+    from { opacity: 0; transform: scale(0.96) translateY(0.5rem); }
+    to   { opacity: 1; transform: scale(1) translateY(0); }
+}
+
+@keyframes chart-modal-backdrop-in {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+}
+
+.chart-modal-backdrop:not([hidden]) {
+    animation: chart-modal-backdrop-in 0.18s ease-out;
+    backdrop-filter: blur(0.25rem);
+}
+
+.chart-modal-backdrop:not([hidden]) > .chart-modal {
+    animation: chart-modal-in 0.22s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+/* Header band — slightly larger title, no gradient */
+.chart-modal-header {
+    background: var(--color-bg-primary);
+    padding: var(--space-5) var(--space-6);
+}
+
+.chart-modal-title {
+    font-size: var(--text-xl);
+}
+
+.chart-modal-body {
+    padding: var(--space-6);
+    gap: var(--space-6);
+}
+
+/* Stat tiles — slightly elevated tiles with hover lift */
+.chart-stat-tiles {
+    grid-template-columns: repeat(auto-fit, minmax(9rem, 1fr));
+}
+
+.chart-stat-tiles .stat-tile {
+    background: var(--color-bg-primary);
+    border: 0.0625rem solid var(--color-border);
+    box-shadow: 0 0.0625rem 0 rgba(15, 23, 42, 0.03);
+    transition: transform 0.18s ease, box-shadow 0.18s ease, border-color 0.18s ease;
+    padding: var(--space-4);
+}
+
+.chart-stat-tiles .stat-tile:hover {
+    transform: translateY(-0.125rem);
+    box-shadow: 0 0.625rem 1.5rem -0.25rem rgba(15, 23, 42, 0.12);
+    border-color: var(--blue-300);
+}
+
+.chart-stat-tiles .stat-tile-value {
+    font-size: var(--text-2xl);
+    letter-spacing: -0.01em;
+}
+
+.chart-stat-tiles .stat-tile-value--savings {
+    color: var(--success-border);
+}
+
+/* Section headings — accent underline + soft uppercase eyebrow feel */
+.chart-section-title {
+    position: relative;
+    padding-bottom: var(--space-2);
+    margin-bottom: var(--space-3);
+    display: flex;
+    align-items: baseline;
+    gap: var(--space-2);
+    font-size: var(--text-md);
+    color: var(--color-primary-900);
+}
+
+.chart-section-title::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 2rem;
+    height: 0.1875rem;
+    border-radius: 624.9375rem;
+    background: linear-gradient(90deg, var(--color-blue-button), var(--blue-300));
+}
+
+/* Bars — gradient + grow-in animation + soft glow on hover/active */
+.chart-column-bar {
+    transform-box: fill-box;
+    transform-origin: bottom;
+    animation: chart-bar-grow 0.5s cubic-bezier(0.2, 0.8, 0.2, 1) both;
+
+}
+
+@keyframes chart-bar-grow {
+    from { transform: scaleY(0); }
+    to   { transform: scaleY(1); }
+}
+
+.chart-column.is-interactive:hover .chart-column-bar,
+.chart-column.is-interactive:focus-visible .chart-column-bar,
+.chart-column.is-active .chart-column-bar {
+    fill: url(#chartBarGradientActive);
+    filter: drop-shadow(0 0.25rem 0.5rem rgba(18, 107, 206, 0.35));
+}
+
+/* Brighter gridlines + axis spine */
+.chart-column-grid {
+    stroke: var(--neutral-200);
+    stroke-width: 1;
+    stroke-dasharray: 3 4;
+    opacity: 0.7;
+}
+
+.chart-column-axis {
+    stroke: var(--neutral-300);
+    stroke-width: 1.5;
+}
+
+/* Topics overview — wrap card with subtle background to set it apart */
+.chart-topics-overview {
+    background: linear-gradient(180deg, rgba(94, 169, 253, 0.06), rgba(94, 169, 253, 0.0));
+    padding: var(--space-4);
+    border-radius: var(--rounded-md);
+    border: 0.0625rem solid var(--color-border);
+}
+
+/* Topic details — softer divider + a left accent bar */
+.chart-topic-details {
+    border-top: none;
+    padding-top: 0;
+    position: relative;
+    padding-left: var(--space-4);
+}
+
+.chart-topic-details::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 0.1875rem;
+    background: linear-gradient(180deg, var(--color-blue-button), var(--blue-300));
+    border-radius: 624.9375rem;
+}
+
+/* Sub-section cards — softer surface */
+.chart-subsection {
+    background: var(--color-bg-primary);
+    border: 0.0625rem solid var(--color-border);
+    box-shadow: 0 0.0625rem 0 rgba(15, 23, 42, 0.03);
+}
+
+.chart-subsection-header {
+    padding-bottom: var(--space-3);
+    border-bottom: 0.0625rem solid var(--color-border);
+    margin-bottom: var(--space-3);
+}
+
+/* Chart modal — floating close button (header was removed) */
+.chart-modal {
+    position: relative;
+}
+
+.chart-modal-close--floating {
+    position: absolute;
+    top: var(--space-3);
+    right: var(--space-3);
+    z-index: 10;
+    background: var(--color-bg-primary);
+    border: 0.0625rem solid var(--color-border);
+}
+
+.chart-modal-close--floating:hover {
+    background: var(--neutral-50);
+}
+
+/* Wrap the stat-tile row + Top agent actions in one card */
+.chart-overview-card {
+    background: var(--color-bg-primary);
+    border: 0.0625rem solid var(--color-border);
+    border-radius: var(--rounded-md);
+    box-shadow: 0 0.0625rem 0 rgba(15, 23, 42, 0.03);
+    padding: var(--space-5);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-5);
+}
+
+/* Inside the overview card, drop redundant outer styling on the chart section */
+.chart-overview-card .chart-section {
+    margin: 0;
+    padding: 0;
+}
+
+/* Clickable stat tile — selected state highlights with primary border + ring */
+.stat-tile--clickable {
+    text-align: left;
+    cursor: pointer;
+    font-family: inherit;
+    color: inherit;
+}
+
+.stat-tile--clickable.is-active {
+    border-color: var(--color-blue-button);
+    box-shadow: 0 0 0 0.125rem var(--primary-50), 0 0.625rem 1.5rem -0.25rem rgba(18, 107, 206, 0.18);
+}
+
+.chart-section-title .chart-section-hint {
+    font-size: var(--text-sm);
+    font-weight: var(--font-regular);
+    color: var(--color-text-muted);
+    margin-left: var(--space-2);
+}
+
+/* ===== SETTINGS PAGE ===================================================== */
+.settings-page .main-content {
+    background: var(--color-bg-tertiary, var(--neutral-25));
+}
+
+.settings-page .opportunities-sticky-header {
+    background: var(--color-bg-primary);
+    border-bottom: 0.0625rem solid var(--color-border);
+}
+
+.settings-breadcrumb {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    font-size: var(--text-sm);
+    color: var(--color-primary-900);
+}
+
+.breadcrumb-link {
+    color: var(--color-text-muted);
+    text-decoration: none;
+}
+
+.breadcrumb-link:hover {
+    color: var(--color-primary-900);
+}
+
+.breadcrumb-separator {
+    width: 0.875rem;
+    height: 0.875rem;
+    color: var(--color-text-muted);
+}
+
+.breadcrumb-current {
+    color: var(--color-primary-900);
+    font-weight: var(--font-medium);
+}
+
+.settings-header-actions {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+}
+
+.settings-cancel-btn,
+.settings-save-btn {
+    height: 2.25rem;
+    padding: 0 var(--space-4);
+    border-radius: var(--rounded-md);
+    font-size: var(--text-sm);
+    font-weight: 500;
+    line-height: 1;
+    cursor: pointer;
+    transition: background-color 0.2s, border-color 0.2s, opacity 0.2s;
+}
+
+.settings-cancel-btn {
+    background: var(--primary-0);
+    color: var(--neutral-900);
+    border: 0.0625rem solid var(--color-border);
+}
+
+.settings-cancel-btn:hover {
+    background: var(--neutral-50);
+    border-color: var(--color-border-hover);
+}
+
+.settings-save-btn {
+    background: var(--color-blue-button);
+    color: var(--primary-0);
+    border: 0.0625rem solid var(--color-blue-button);
+}
+
+.settings-save-btn:hover:not(:disabled) {
+    background: var(--color-blue-button-hover);
+    border-color: var(--color-blue-button-hover);
+}
+
+.settings-save-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+/* Settings page main area + container */
+.settings-container {
+    width: 80rem;
+    max-width: 100%;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-5);
+    padding: var(--space-5) 0;
+}
+
+.settings-section {
+    width: 100%;
+    background: var(--color-bg-primary);
+    border: 0.0625rem solid var(--color-border);
+    border-radius: var(--rounded-md);
+    padding: var(--space-5) var(--space-6);
     display: flex;
     flex-direction: column;
     gap: var(--space-4);
 }
 
-.textual-field {
+.settings-section-title {
+    margin: 0;
+    font-size: var(--text-xl);
+    font-weight: var(--font-semibold);
+    color: var(--color-primary-900);
+}
+
+.settings-subsection {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4);
+}
+
+.settings-subsection-title {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-1);
+    font-size: var(--text-md);
+    font-weight: var(--font-semibold);
+    color: var(--color-primary-900);
+}
+
+.settings-info {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 0.875rem;
+    height: 0.875rem;
+    color: var(--color-text-muted);
+    cursor: help;
+}
+
+.settings-info svg {
+    width: 0.875rem;
+    height: 0.875rem;
+}
+
+.settings-info[data-tooltip]::before,
+.settings-info[data-tooltip]::after {
+    position: absolute;
+    left: 50%;
+    bottom: calc(100% + 0.5rem);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.15s ease;
+    z-index: 50;
+}
+
+.settings-info[data-tooltip]::before {
+    content: attr(data-tooltip);
+    transform: translateX(-50%);
+    width: max-content;
+    max-width: 18rem;
+    padding: var(--space-2) var(--space-3);
+    background: var(--neutral-900);
+    color: var(--primary-0);
+    font-size: var(--text-xs);
+    font-weight: 400;
+    line-height: 1.4;
+    text-align: left;
+    white-space: normal;
+    border-radius: var(--rounded-md);
+    box-shadow: var(--shadow-md);
+}
+
+.settings-info[data-tooltip]::after {
+    content: "";
+    transform: translateX(-50%);
+    bottom: calc(100% + 0.125rem);
+    border: 0.375rem solid transparent;
+    border-top-color: var(--neutral-900);
+}
+
+.settings-info[data-tooltip]:hover::before,
+.settings-info[data-tooltip]:hover::after,
+.settings-info[data-tooltip]:focus-visible::before,
+.settings-info[data-tooltip]:focus-visible::after {
+    opacity: 1;
+}
+
+.settings-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-4);
+}
+
+.settings-row > .settings-field {
+    width: 25rem;
+}
+
+.settings-field {
     display: flex;
     flex-direction: column;
     gap: var(--space-2);
 }
 
-.textual-label {
+.settings-label {
     font-size: var(--text-sm);
     font-weight: var(--font-medium);
     color: var(--color-primary-900);
 }
 
-.textual-input {
+.settings-input {
+    width: 100%;
+    max-width: 25rem;
+    padding: var(--space-2) var(--space-3);
+    background: var(--color-bg-primary);
+    border: 0.0625rem solid var(--color-border);
+    border-radius: var(--rounded-md);
+    font-family: var(--font-sans);
+    font-size: var(--text-sm);
+    color: var(--color-primary-900);
+    outline: none;
+    transition: border-color 0.2s;
+}
+
+/* Border highlight only while keyboard-navigating with Tab. */
+body.using-keyboard .settings-input:focus-visible {
+    border-color: var(--primary-500);
+}
+
+.settings-input::placeholder {
+    color: var(--color-text-placeholder);
+}
+
+.settings-input:disabled {
+    background: var(--neutral-50);
+    color: var(--color-text-muted);
+    cursor: not-allowed;
+}
+
+.settings-textarea {
+    resize: vertical;
+    min-height: 4rem;
+    max-width: 50rem;
+    line-height: 1.4;
+}
+
+.settings-helper {
+    font-size: var(--text-xs);
+    color: var(--color-text-muted);
+    margin: 0;
+}
+
+.settings-input-affix {
+    position: relative;
+    max-width: 25rem;
+}
+
+.settings-input-affix .settings-input {
+    padding-right: 2rem;
+}
+
+.settings-input-suffix {
+    position: absolute;
+    right: var(--space-3);
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--color-text-muted);
+    font-size: var(--text-sm);
+    pointer-events: none;
+}
+
+.settings-select-wrapper {
+    position: relative;
+    max-width: 25rem;
+}
+
+.settings-select {
+    appearance: none;
+    -webkit-appearance: none;
+    padding-right: 2rem;
+    cursor: pointer;
+}
+
+.settings-select-chevron {
+    position: absolute;
+    right: var(--space-3);
+    top: 50%;
+    transform: translateY(-50%);
+    width: 1rem;
+    height: 1rem;
+    color: var(--color-text-muted);
+    pointer-events: none;
+}
+
+.settings-secondary-btn {
+    align-self: flex-start;
+    padding: var(--space-2) var(--space-3);
+    background: var(--color-bg-primary);
+    border: 0.0625rem solid var(--color-border);
+    border-radius: var(--rounded-md);
+    color: var(--color-primary-900);
+    font-family: var(--font-sans);
+    font-size: var(--text-sm);
+    font-weight: var(--font-medium);
+    cursor: pointer;
+    transition: background-color 0.2s, border-color 0.2s;
+}
+
+.settings-secondary-btn:hover {
+    background: var(--neutral-50);
+    border-color: var(--color-border-hover);
+}
+
+/* Narrow section variant — Automation Opportunities inputs at 15rem */
+.settings-section--narrow .settings-input,
+.settings-section--narrow .settings-input-affix,
+.settings-section--narrow .settings-select-wrapper {
+    max-width: 15rem;
+}
+
+.settings-section--narrow .settings-row > .settings-field {
+    width: 15rem;
+}
+
+.cognigy-edit-api-btn {
+    align-self: flex-start;
+}
+
+/* Verify indicator (API key / Site URL) */
+.settings-verify-row {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+}
+
+.settings-verify-row > .settings-input {
+    flex: 1 1 auto;
+}
+
+.settings-verify-indicator {
+    display: none;
+    align-items: center;
+    gap: var(--space-2);
+    color: var(--color-primary-900);
+    font-size: var(--text-sm);
+    font-weight: 500;
+    white-space: nowrap;
+}
+
+.settings-verify-indicator[data-state="verifying"],
+.settings-verify-indicator[data-state="success"] {
+    display: inline-flex;
+}
+
+.settings-verify-loader-icon {
+    width: 1rem;
+    height: 1rem;
+    display: none;
+}
+
+.settings-verify-success-icon {
+    width: 1.5rem;
+    height: 1.5rem;
+    display: none;
+}
+
+.settings-verify-indicator[data-state="verifying"] .settings-verify-loader-icon {
+    display: block;
+    animation: settings-verify-spin 0.8s linear infinite;
+}
+
+.settings-verify-indicator[data-state="success"] .settings-verify-success-icon {
+    display: block;
+    color: var(--success-border);
+}
+
+.settings-verify-indicator[data-state="success"] .settings-verify-text {
+    display: none;
+}
+
+@keyframes settings-verify-spin {
+    to { transform: rotate(360deg); }
+}
+
+/* Full-screen view — fill the entire screen with the canvas backdrop */
+.flow-container:fullscreen,
+.flow-container:-webkit-full-screen {
+    width: 100%;
+    height: 100%;
+    padding: var(--space-7);
+    background-color: var(--color-bg-tertiary);
+    background-image: radial-gradient(circle at 0.0625rem 0.0625rem, var(--neutral-200) 0.0625rem, transparent 0);
+    background-size: 1rem 1rem;
+    overflow: auto;
+}
+
+/* Keep the same content max-width as the normal view so cards stay the
+   same size; the dotted canvas extends to fill the screen behind it. */
+.flow-container:fullscreen .flow-canvas,
+.flow-container:-webkit-full-screen .flow-canvas {
+    max-width: 80rem;
+    margin: 0 auto;
+    min-height: 100%;
+}
+
+/* Fullscreen-only header for the canvas — title on the left, legend on the right */
+.flow-fullscreen-header {
+    display: none;
+}
+
+.screen-content:fullscreen .flow-fullscreen-header,
+.screen-content:-webkit-full-screen .flow-fullscreen-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-4);
+    padding: var(--space-4) var(--space-6);
+    background: var(--color-bg-primary);
+    border-bottom: 0.0625rem solid var(--color-border);
+    flex-shrink: 0;
+    position: sticky;
+    top: 0;
+    z-index: 20;
+}
+
+.flow-fullscreen-title {
+    margin: 0;
+    font-size: var(--text-3xl);
+    font-weight: var(--font-medium);
+    color: var(--color-primary-900);
+    background: linear-gradient(77deg, #6366F1 18.3%, #A855F7 51.87%, #EC4899 85.44%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+
+}
+
+/* Legend variant when moved into the fullscreen header */
+.flow-controls.flow-controls--in-header {
+    position: static;
+    align-self: auto;
+    margin: 0;
+    border: none;
+    box-shadow: none;
+}
+
+/* In fullscreen, reset the screen-content padding so the header sits flush
+   at the top and the canvas fills the rest. */
+.screen-content:fullscreen,
+.screen-content:-webkit-full-screen {
+    padding: 0;
+    overflow-y: auto;
+}
+
+/* ===== AGENT CARD EDIT MODE ============================================ */
+.agent-edit-form {
+    display: none;
+    flex-direction: column;
+    gap: var(--space-3);
+}
+
+.agent-card.editing .agent-card-view {
+    display: none;
+}
+
+.agent-card.editing .agent-edit-form {
+    display: flex;
+}
+
+.agent-card.editing {
+    background: var(--primary-0);
+    border: 0.125rem solid var(--color-blue-button);
+    padding: var(--space-4);
+}
+
+.agent-edit-header {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--space-3);
+    margin-bottom: var(--space-2);
+}
+
+.agent-edit-header-info {
+    flex: 1;
+    min-width: 0;
+}
+
+.agent-edit-header-info .agent-title {
+    margin: 0 0 0.25rem;
+    font-size: var(--text-xl);
+    color: var(--color-primary-900);
+}
+
+.agent-edit-header-info .agent-subtitle {
+    margin: 0 0 var(--space-2);
+}
+
+.edit-close-btn {
+    flex-shrink: 0;
+    width: 2.25rem;
+    height: 2.25rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: transparent;
+    border: none;
+    color: var(--color-primary-900);
+    cursor: pointer;
+    border-radius: var(--rounded-md);
+}
+
+.edit-close-btn:hover {
+    background: var(--neutral-50);
+}
+
+.agent-edit-field {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+}
+
+.agent-edit-label {
+    font-size: var(--text-sm);
+    font-weight: var(--font-medium);
+    color: var(--color-primary-900);
+}
+
+.agent-edit-input {
     width: 100%;
     padding: var(--space-2) var(--space-3);
     background: var(--color-bg-primary);
@@ -4423,92 +5265,1679 @@ body {
     transition: border-color 0.15s ease;
 }
 
-.textual-input:focus {
-    border-color: var(--color-blue-button);
+/* Border highlight only while keyboard-navigating with Tab. */
+body.using-keyboard .agent-edit-input:focus-visible {
+    border-color: var(--primary-500);
 }
 
-.textual-textarea {
+.agent-edit-input::placeholder {
+    color: var(--color-text-placeholder);
+}
+
+.agent-edit-textarea {
     resize: vertical;
-    min-height: 4.5rem;
+    min-height: 5rem;
     line-height: 1.4;
 }
 
-.textual-helper {
-    margin: 0;
-    font-size: var(--text-xs);
-    color: var(--color-text-muted);
-}
-
-.textual-counter {
+.agent-edit-counter {
     display: flex;
     justify-content: space-between;
     font-size: var(--text-xs);
     color: var(--color-text-muted);
 }
 
-.textual-params {
+.agent-edit-actions {
     display: flex;
-    flex-direction: column;
+    justify-content: flex-end;
     gap: var(--space-2);
+    margin-top: var(--space-2);
 }
 
-.textual-params-label {
+.agent-edit-cancel,
+.agent-edit-save {
+    height: 2.25rem;
+    padding: 0 var(--space-4);
+    border-radius: var(--rounded-md);
+    font-size: var(--text-sm);
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.15s ease, border-color 0.15s ease;
+}
+
+.agent-edit-cancel {
+    background: var(--primary-0);
+    color: var(--color-primary-900);
+    border: 0.0625rem solid var(--color-border);
+}
+
+.agent-edit-cancel:hover {
+    background: var(--neutral-50);
+}
+
+.agent-edit-save {
+    background: var(--color-blue-button);
+    color: var(--primary-0);
+    border: 0.0625rem solid var(--color-blue-button);
+}
+
+.agent-edit-save:hover {
+    background: var(--color-blue-button-hover);
+    border-color: var(--color-blue-button-hover);
+}
+
+/* Warning badge — soft amber background, dark amber text */
+.badge-warning {
+    background: rgba(245, 158, 11, 0.15);
+    color: #92400e;
+}
+
+/* Skill card edit mode — show form, hide view, widen card, white bg */
+.agent-card-small .agent-edit-form {
+    display: none;
+    flex-direction: column;
+    gap: var(--space-3);
+}
+
+.agent-card-small.editing .agent-card-view {
+    display: none;
+}
+
+.agent-card-small.editing .agent-edit-form {
+    display: flex;
+}
+
+.agent-card-small.skill-card.editing {
+    width: 31.25rem;
+    background: var(--primary-0);
+    border: 0.125rem solid var(--color-blue-button);
+    padding: var(--space-4);
+}
+
+/* Tool card edit mode — wider container so the form fields breathe */
+.agent-card-small.tool.editing {
+    width: 37.5rem;
+    height: auto;
+    background: var(--primary-0);
+    padding: var(--space-4);
+}
+
+/* Tool parameters table */
+.tool-params {
+    border: 0.0625rem solid var(--color-border);
+    border-radius: var(--rounded-md);
+    overflow: hidden;
+    background: var(--color-bg-primary);
+}
+
+.tool-params-header {
+    display: grid;
+    grid-template-columns: 1fr 1.6fr;
+    gap: var(--space-3);
+    padding: var(--space-3) var(--space-4);
+    background: var(--neutral-50);
+    border-bottom: 0.0625rem solid var(--color-border);
     font-size: var(--text-sm);
     font-weight: var(--font-medium);
-    color: var(--color-primary-900);
+    color: var(--color-text-primary);
 }
 
-.textual-params-table {
-    border: 0.0625rem solid var(--color-border);
+.tool-param-row {
+    display: grid;
+    grid-template-columns: 1fr 1.6fr;
+    gap: var(--space-3);
+    padding: var(--space-3) var(--space-4);
+    border-bottom: 0.0625rem solid var(--color-border);
+}
+
+.tool-param-row:last-child {
+    border-bottom: none;
+}
+
+.tool-param-row .agent-edit-input {
+    width: 100%;
+    margin: 0;
+}
+
+.agent-edit-helper {
+    margin: 0;
+    font-size: var(--text-xs);
+    color: var(--color-text-muted);
+}
+
+/* Tools row — shown when a skill card is selected */
+.tools-row {
+    margin-top: var(--space-7);
+    position: relative;
+}
+
+.tools-row[hidden] {
+    display: none;
+}
+
+.agent-card-small.tool {
+    width: 18.75rem;
+    height: 12.5rem;
+    border: 0.125rem solid var(--success-default);
+    background: var(--color-bg-primary);
+    color: var(--neutral-500);
+    font-size: var(--text-sm);
+}
+
+.agent-card-small.tool .skill-avatar,
+.agent-card-small.tool .tool-avatar {
+    background: var(--success-default);
+}
+
+.skill-card.is-active {
+    background: var(--primary-50);
+    box-shadow: 0 1.25rem 2.5rem -0.5rem var(--shadow-xl);
+}
+
+.badge-success {
+    background: rgba(32, 131, 55, 0.1);
+    color: var(--success-default);
+    border: 0.0625rem solid var(--success-default);
+}
+
+/* ===== Analyzed Period — rich stat tiles (copy page only) ============== */
+.stats-grid--rich {
+    display: grid;
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+    gap: var(--space-3);
+}
+
+/* Wrap into multiple rows on narrower screens so values + icons don't clip */
+@media (max-width: 75rem) {
+    .stats-grid--rich {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+}
+
+@media (max-width: 40rem) {
+    .stats-grid--rich {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+.stat-tile-rich {
+    position: relative;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    grid-template-areas:
+        "value icon"
+        "label label";
+    align-items: center;
+    column-gap: var(--space-3);
+    
+    padding: var(--space-4);
+    background: var(--accent-bg, var(--color-bg-primary));
+    border: 0.0625rem solid var(--accent-color, var(--color-border));
     border-radius: var(--rounded-md);
     overflow: hidden;
 }
 
-.textual-params-header {
-    display: grid;
-    grid-template-columns: 1fr 2fr;
-    gap: var(--space-3);
-    padding: var(--space-3);
-    background: var(--neutral-50);
+.stat-tile-rich-icon { grid-area: icon; }
+.stat-tile-rich-body { display: contents; }
+.stat-tile-rich-value { grid-area: value; }
+.stat-tile-rich-label { grid-area: label; }
+
+.stat-tile-rich::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 0.15rem;
+/* background: var(--accent-color, var(--color-blue-button)); */
+}
+
+
+.stat-tile-rich-icon {
+    flex-shrink: 0;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: var(--rounded-md);
+    color: var(--accent-color, var(--color-blue-button));
+}
+
+.stat-tile-rich-icon svg {
+    width: 1.5rem;
+    height: 1.5rem;
+}
+
+
+.stat-tile-rich-label {
     font-size: var(--text-sm);
-    font-weight: var(--font-medium);
+    color: var(--neutral-500);
+    font-weight: var(--font-regular);
+    padding-top: var(--space-2);
+}
+
+.stat-tile-rich-value {
+    font-size: var(--text-2xl);
+    font-weight: var(--font-semibold);
     color: var(--color-primary-900);
+    letter-spacing: -0.01em;
+    line-height: 1.1;
 }
 
-.textual-param-row {
+.stat-tile-rich-suffix {
+    font-size: var(--text-md);
+    color: var(--color-text-muted);
+    margin-left: 0.125rem;
+}
+
+.stat-tile-rich-trend {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.25rem;
+    font-size: var(--text-xs);
+    font-weight: var(--font-medium);
+    margin-top: 0.125rem;
+}
+
+.stat-tile-rich-trend svg {
+    width: 0.875rem;
+    height: 0.875rem;
+}
+
+.stat-trend--up   { color: var(--success-default); }
+.stat-trend--down { color: var(--color-red-notification); }
+
+.stat-tile-rich-meta {
+    font-size: var(--text-xs);
+    color: var(--color-text-muted);
+}
+
+.stat-tile-rich-bar {
+    height: 0.375rem;
+    background: var(--neutral-200);
+    border-radius: 624.9375rem;
+    overflow: hidden;
+    margin-top: 0.25rem;
+}
+
+.stat-tile-rich-bar-fill {
+    height: 100%;
+    background: var(--accent-color, var(--color-blue-button));
+    border-radius: 624.9375rem;
+}
+
+/* Accent palette (left stripe + icon tint + hover border) */
+.stat-tile-rich[data-accent="blue"]    { --accent-color: var(--primary-500); --accent-soft: rgba(18, 107, 206, 0.12);  --accent-bg: #ECF3FB; }
+.stat-tile-rich[data-accent="indigo"]  { --accent-color: var(--vis-blue-300); --accent-soft: rgba(85, 108, 214, 0.12);  --accent-bg: #EEF0FB; }
+.stat-tile-rich[data-accent="emerald"] { --accent-color: var(--success-border); --accent-soft: rgba(36, 148, 62, 0.12);   --accent-bg: var(--success-bg); }
+.stat-tile-rich[data-accent="violet"]  { --accent-color: #8630E8; --accent-soft: rgba(134, 48, 232, 0.12);  --accent-bg: #F5EEFD; }
+.stat-tile-rich[data-accent="amber"]   { --accent-color: var(--warning-default); --accent-soft: rgba(255, 184, 0, 0.15);   --accent-bg: var(--warning-bg); }
+.stat-tile-rich[data-accent="teal"]    { --accent-color: #14B8A6; --accent-soft: rgba(20, 184, 166, 0.14);  --accent-bg: #ECF9F8; }
+.stat-tile-rich[data-accent="teal-soft"] { --accent-color: var(--alpha-green-text); --accent-soft: var(--bg-alpha-teal-10); --accent-bg: var(--bg-alpha-teal-10); }
+.stat-tile-rich[data-accent="lime-soft"]    { --accent-color: var(--alpha-lime-text);    --accent-soft: var(--alpha-lime-10);    --accent-bg: var(--primary-0); }
+.stat-tile-rich[data-accent="orange-soft"]  { --accent-color: var(--alpha-orange-100);   --accent-soft: var(--alpha-orange-5);   --accent-bg: var(--primary-0); }
+.stat-tile-rich[data-accent="magenta-soft"] { --accent-color: var(--alpha-magenta-text); --accent-soft: var(--alpha-magenta-5);  --accent-bg: var(--primary-0); }
+.stat-tile-rich[data-accent="green-soft"]   { --accent-color: var(--alpha-green-text);   --accent-soft: var(--alpha-green-5);    --accent-bg: var(--primary-0); }
+.stat-tile-rich[data-accent="primary-soft"] { --accent-color: var(--alpha-primary-100);  --accent-soft: var(--alpha-primary-5);  --accent-bg: var(--primary-0); }
+.stat-tile-rich[data-accent="neutral-soft"] { --accent-color: var(--neutral-500);         --accent-soft: var(--neutral-25);       --accent-bg: var(--primary-0); }
+
+/* Copy page — bigger section titles */
+.automation-opportunities-copy .section-meta-title {
+    font-size: var(--text-xl);
+}
+
+/* =====================================================================
+   Copy page — Sub-topics table
+   ---------------------------------------------------------------------
+   Both the header row and every data row share the SAME 9-column grid
+   defined as a CSS custom property on .opportunity-sub-list, so headers
+   and values line up pixel-perfect.
+
+       col 1   Topic                 → left-aligned, widest
+       col 2   Total Call (CC)       → right-aligned
+       col 3   Category Volume       → right-aligned
+       col 4   Automatable Volume    → right-aligned
+       col 5   Automatable % (CC)    → right-aligned
+       col 6   Duration              → right-aligned
+       col 7   Sentiment             → right-aligned
+       col 8   Annual Savings        → right-aligned (slightly narrower)
+       col 9   Actions               → right-aligned button, fixed width
+   ===================================================================== */
+
+.automation-opportunities-copy .opportunity-sub-list {
+    /* ONE source of truth for the column widths */
+    --sub-grid-cols:
+        minmax(0, 3.5fr)             /* 1. Topic — widest */
+        repeat(6, minmax(0, 1.1fr))  /* 2-7. Six metrics */
+        minmax(0, 1fr)               /* 8. Annual Savings */
+        2.5rem;                      /* 9. Actions (kebab only) */
+    --sub-row-padding-y: 0.875rem;
+    --sub-row-padding-x: 1.25rem;
+    --sub-col-gap: 1.25rem;
+
+    display: block;
+    background: var(--color-bg-primary);
+
+    border-radius: var(--rounded-md);
+    overflow: hidden;
+    padding: 0;
+    gap: 0;
+}
+
+/* Table wrapper inside the sub-list — ONLY this region scrolls horizontally,
+   so the toolbar / title / empty-state / chart-view above and below stay
+   full-width and remain in view while the user scrolls the columns.
+   `overflow-y: hidden` prevents the CSS quirk where `overflow-x: auto` paired
+   with `overflow-y: visible` forces both axes to scroll. */
+.automation-opportunities-copy .opportunity-sub-list-table {
+    display: block;
+    overflow-x: auto;
+    overflow-y: hidden;
+}
+
+/* Topic column stays anchored to the left while the other columns scroll.
+   `align-self: stretch` forces the sticky cell to fill the full row height
+   (parent rows use `align-items: center`, which would otherwise shrink the
+   cell to its content and leave gaps where the scrolling content shows
+   through). Display: flex re-centers the inner content vertically. */
+.automation-opportunities-copy .opportunity-sub-list-header > div[data-col="topic"],
+.automation-opportunities-copy .opportunity-sub-card > .opportunity-sub-card-header,
+.automation-opportunities-copy .opportunity-sub-sub-card > .opportunity-sub-sub-card-header {
+    position: sticky;
+    left: 0;
+    z-index: 3;
+    align-self: stretch;
+    display: flex;
+    align-items: center;
+    background-color: var(--color-bg-primary);
+    background-clip: padding-box;
+}
+
+.automation-opportunities-copy .opportunity-sub-list-header > div[data-col="topic"] {
+    background-color: var(--neutral-50);
+}
+
+/* When the table has scrolled horizontally, drop a subtle shadow on the right
+   edge of the sticky Topic column so it reads as anchored over the rest. */
+.automation-opportunities-copy .opportunity-sub-list-table {
+    scroll-behavior: smooth;
+}
+
+/* On narrow screens, give the rows a minimum width so they actually overflow
+   the wrapper and trigger horizontal scroll. */
+@media (max-width: 75rem) {
+    .automation-opportunities-copy .opportunity-sub-list-header,
+    .automation-opportunities-copy .opportunity-sub-card {
+        min-width: 64rem;
+    }
+}
+
+.automation-opportunities-copy .opportunity-sub-card {
+    background: transparent;
+    border: none;
+    border-radius: 0;
+}
+
+/* Shared grid for both the header row and every data row */
+.automation-opportunities-copy .opportunity-sub-list-header,
+.automation-opportunities-copy .opportunity-sub-card {
     display: grid;
-    grid-template-columns: 1fr 2fr;
-    gap: var(--space-3);
-    padding: var(--space-2) var(--space-3);
+    grid-template-columns: var(--sub-grid-cols);
+    column-gap: var(--sub-col-gap);
+    row-gap: var(--space-3);
+    align-items: center;            /* vertical centering for the whole row */
+    padding: var(--sub-row-padding-y) var(--sub-row-padding-x);
+    border-bottom: 0.0625rem solid var(--color-border);
+    min-height: 4rem;
 }
 
-.textual-param-row + .textual-param-row {
-    border-top: 0.0625rem solid var(--color-border);
+/* Filtered-out rows from the search input — overrides the display:grid above */
+.automation-opportunities-copy .opportunity-sub-card[hidden] {
+    display: none;
 }
 
-.textual-params-toggle {
-    align-self: flex-start;
+
+/* --------------------------- TITLE ROW ------------------------------ */
+.automation-opportunities-copy .opportunity-sub-list-title {
+    
+    font-size: var(--text-md);
+    font-weight: var(--font-medium
+);
+    color: var(--color-text-primary);
+    border-bottom: 0.0625rem solid var(--color-border)פ
+}
+
+/* --------------------------- TOOLBAR ROW ---------------------------- */
+.automation-opportunities-copy .opportunity-sub-list-toolbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-4);
+    padding-bottom: var(--space-3);
+
+}
+
+/* Search input */
+.automation-opportunities-copy .opportunity-sub-list-search {
     display: inline-flex;
     align-items: center;
     gap: var(--space-2);
-    padding: var(--space-2) 0;
-    background: transparent;
+    padding: 0 var(--space-3);
+    height: 2.25rem;
+    background: var(--color-bg-primary);
+    border: 0.0625rem solid var(--color-border);
+    border-radius: var(--rounded-md);
+    color: var(--color-text-muted);
+}
+
+.automation-opportunities-copy .opportunity-sub-list-search:focus-within {
+    border-color: var(--color-blue-button);
+}
+
+.automation-opportunities-copy .opportunity-sub-list-search svg {
+    width: 1rem;
+    height: 1rem;
+    flex-shrink: 0;
+}
+
+.automation-opportunities-copy .opportunity-sub-list-search-input {
     border: none;
+    outline: none;
+    background: transparent;
+    font-family: var(--font-sans);
+    font-size: var(--text-sm);
+    color: var(--color-primary-900);
+    width: 14rem;
+    padding: 0;
+}
+
+.automation-opportunities-copy .opportunity-sub-list-search-input::placeholder {
+    color: var(--color-text-muted);
+}
+
+/* Columns dropdown */
+.automation-opportunities-copy .opportunity-sub-list-cols {
+    position: relative;
+}
+
+.automation-opportunities-copy .opportunity-sub-list-cols-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-2);
+    height: 2.25rem;
+    padding: 0 var(--space-3);
+    background: var(--color-bg-primary);
+    border: 0.0625rem solid var(--color-border);
+    border-radius: var(--rounded-md);
+    font-family: var(--font-sans);
     font-size: var(--text-sm);
     color: var(--color-primary-900);
     cursor: pointer;
 }
 
-.textual-params-chevron {
+.automation-opportunities-copy .opportunity-sub-list-cols-btn:hover,
+.automation-opportunities-copy .opportunity-sub-list-cols-btn[aria-expanded="true"] {
+    background: var(--neutral-50);
+}
+
+.automation-opportunities-copy .opportunity-sub-list-cols-btn svg {
+    width: 1rem;
+    height: 1rem;
+    flex-shrink: 0;
+}
+
+.automation-opportunities-copy .opportunity-sub-list-cols-chevron {
+    color: var(--color-text-muted);
+}
+
+.automation-opportunities-copy .opportunity-sub-list-cols-menu {
+    position: absolute;
+    top: calc(100% + 0.25rem);
+    right: 0;
+    min-width: 14rem;
+    background: var(--color-bg-primary);
+    border: 0.0625rem solid var(--color-border);
+    border-radius: var(--rounded-md);
+    box-shadow: 0 0.5rem 1.5rem -0.25rem var(--shadow-md);
+    padding: var(--space-2);
+    z-index: 100;
+}
+
+.automation-opportunities-copy .opportunity-sub-list-cols-menu[hidden] {
+    display: none;
+}
+
+.automation-opportunities-copy .opportunity-sub-list-cols-item {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+    padding: var(--space-2) var(--space-3);
+    border-radius: var(--rounded-sm);
+    font-size: var(--text-sm);
+    color: var(--color-primary-900);
+    cursor: pointer;
+    user-select: none;
+}
+
+.automation-opportunities-copy .opportunity-sub-list-cols-item:hover {
+    background: var(--neutral-50);
+}
+
+.automation-opportunities-copy .opportunity-sub-list-cols-item input[type="checkbox"] {
+    width: 1rem;
+    height: 1rem;
+    flex-shrink: 0;
+    cursor: pointer;
+    accent-color: var(--color-blue-button);
+}
+
+/* Left- and right-side control clusters in the toolbar */
+.automation-opportunities-copy .opportunity-sub-list-toolbar-left,
+.automation-opportunities-copy .opportunity-sub-list-toolbar-right {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+}
+
+/* The chart metric picker lives in the toolbar; hidden by default,
+   shown only when the list is in chart view. Conversely, search and
+   the Columns button are hidden when the list is in chart view. */
+.automation-opportunities-copy .opportunity-sub-list-toolbar .opportunity-sub-list-chart-controls {
+    display: none;
+}
+
+.automation-opportunities-copy .opportunity-sub-list[data-view="chart"] .opportunity-sub-list-toolbar .opportunity-sub-list-chart-controls {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    margin: 0;
+}
+
+.automation-opportunities-copy .opportunity-sub-list[data-view="chart"] .opportunity-sub-list-search,
+.automation-opportunities-copy .opportunity-sub-list[data-view="chart"] .opportunity-sub-list-cols {
+    display: none;
+}
+
+/* View toggle (Table | Chart) — square icon buttons inside a button-group */
+.automation-opportunities-copy .opportunity-sub-list-view {
+    height: 2.25rem;
+}
+
+.automation-opportunities-copy .opportunity-sub-list-view .button-group-item {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-2);
+    padding: 0 var(--space-3);
+    font-size: var(--text-sm);
+}
+
+.automation-opportunities-copy .opportunity-sub-list-view .button-group-item svg {
     width: 1rem;
     height: 1rem;
 }
 
-@media (max-width: 768px) {
-    .textual-layout {
-        grid-template-columns: 1fr;
-    }
-    .textual-nav {
-        position: static;
+/* Hide cells whose column is currently toggled off */
+.automation-opportunities-copy .opportunity-sub-list [data-col][data-col-hidden] {
+    display: none !important;
+}
+
+/* Chart view — hide the table parts, show the chart container.
+   The header + sub-cards live inside the .opportunity-sub-list-table wrapper
+   now, so the wrapper itself is what needs to be hidden. */
+.automation-opportunities-copy .opportunity-sub-list[data-view="chart"] > .opportunity-sub-list-table,
+.automation-opportunities-copy .opportunity-sub-list[data-view="chart"] > .opportunity-sub-list-empty {
+    display: none !important;
+}
+
+.automation-opportunities-copy .opportunity-sub-list-chart-view {
+    display: none;
+
+}
+
+.automation-opportunities-copy .opportunity-sub-list[data-view="chart"] > .opportunity-sub-list-chart-view {
+    display: block;
+}
+
+/* In chart view the toolbar sits directly above the charts —
+   drop its bottom border so they read as a continuous panel. */
+.automation-opportunities-copy .opportunity-sub-list[data-view="chart"] > .opportunity-sub-list-toolbar {
+    border-bottom: none;
+}
+
+/* Chart-metric & chart-topic dropdowns — checkbox items (multi-select) */
+.automation-opportunities-copy .opportunity-sub-list-chart-metric-menu,
+.automation-opportunities-copy .opportunity-sub-list-chart-topic-menu {
+    min-width: 16rem;
+    max-height: 22rem;
+    overflow-y: auto;
+    padding: var(--space-2);
+}
+
+.automation-opportunities-copy .opportunity-sub-list-chart-metric-item {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+    padding: var(--space-2) var(--space-3);
+    border-radius: var(--rounded-sm);
+    font-size: var(--text-sm);
+    color: var(--color-primary-900);
+    cursor: pointer;
+    user-select: none;
+}
+
+.automation-opportunities-copy .opportunity-sub-list-chart-metric-item:hover {
+    background: var(--primary-25);
+}
+
+.automation-opportunities-copy .opportunity-sub-list-chart-metric-item input[type="checkbox"] {
+    width: 1rem;
+    height: 1rem;
+    flex-shrink: 0;
+    cursor: pointer;
+    accent-color: var(--color-blue-button);
+}
+
+/* Topic dropdown — group header (bold) + indented subtopic rows */
+.automation-opportunities-copy .opportunity-sub-list-chart-topic-group {
+    font-weight: var(--font-semibold);
+}
+
+.automation-opportunities-copy .opportunity-sub-list-chart-topic-sub {
+    padding-left: calc(var(--space-3) + 1.5rem);
+    color: var(--color-text-primary);
+}
+
+/* Separator between topic groups */
+.automation-opportunities-copy .opportunity-sub-list-chart-topic-sep {
+    height: 0.0625rem;
+    background: var(--color-border);
+    margin: var(--space-2) calc(-1 * var(--space-2));
+}
+
+/* Chart body — 2-column grid (1 column on narrow screens) */
+.automation-opportunities-copy .opportunity-sub-list-chart-body {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--space-4);
+}
+
+.automation-opportunities-copy .opportunity-sub-list-chart-body:has(> :only-child) {
+    grid-template-columns: minmax(0, 1fr);
+}
+
+.automation-opportunities-copy .opportunity-sub-list-chart-card {
+    background: var(--color-bg-primary);
+    border: 0.0625rem solid var(--color-border);
+    border-radius: var(--rounded-md);
+    padding: var(--space-4);
+    min-width: 0;
+}
+
+/* Always-on default chart spans the full row */
+.automation-opportunities-copy .opportunity-sub-list-chart-card--full {
+    grid-column: 1 / -1;
+}
+
+.automation-opportunities-copy .opportunity-sub-list-chart-card-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-3);
+    margin-bottom: var(--space-3);
+}
+
+.automation-opportunities-copy .opportunity-sub-list-chart-card-title {
+    font-size: var(--text-md);
+    font-weight: var(--font-font-medium
+);
+    color: var(--color-text-primary);
+}
+
+.automation-opportunities-copy .opportunity-sub-list-chart-card-fs {
+    position: relative;
+    width: 2rem;
+    height: 2rem;
+    padding: 0;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: transparent;
+    border: 0.0625rem solid transparent;
+    border-radius: var(--rounded-md);
+    color: var(--neutral-500);
+    cursor: pointer;
+    transition: background-color 0.15s ease, border-color 0.15s ease, color 0.15s ease;
+}
+
+.automation-opportunities-copy .opportunity-sub-list-chart-card-fs:hover {
+    background: var(--primary-25);
+    color: var(--color-primary-900);
+}
+
+.automation-opportunities-copy .opportunity-sub-list-chart-card-fs svg {
+    width: 1rem;
+    height: 1rem;
+}
+
+/* Total Interactions chart — bars use the lighter blue-300 tone */
+.automation-opportunities-copy .opportunity-sub-list-chart-card[data-chart-key="totalInteractions"] .chart-column-bar {
+    fill: var(--blue-300);
+}
+
+/* Category & Automatable Volume — grouped bars.
+   Category Volume = blue, Automatable Volume = green. */
+.automation-opportunities-copy .opportunity-sub-list-chart-card[data-chart-key="volume"] .chart-column-bar {
+    fill: var(--blue-300);
+}
+
+.automation-opportunities-copy .opportunity-sub-list-chart-card[data-chart-key="volume"] .chart-column-bar--overlay {
+    fill: var(--chart-overlay-green);
+}
+
+/* Legend — centered below the chart with 1rem top padding */
+.automation-opportunities-copy .opportunity-sub-list-chart-legend,
+.chart-card-fullscreen-body .opportunity-sub-list-chart-legend {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-4);
+
+    font-size: var(--text-xs);
+    color: var(--color-text-muted);
+}
+
+.automation-opportunities-copy .opportunity-sub-list-chart-legend-item,
+.chart-card-fullscreen-body .opportunity-sub-list-chart-legend-item {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-2);
+}
+
+.automation-opportunities-copy .opportunity-sub-list-chart-legend-swatch,
+.chart-card-fullscreen-body .opportunity-sub-list-chart-legend-swatch {
+    width: 0.75rem;
+    height: 0.75rem;
+    border-radius: 0.125rem;
+}
+
+.automation-opportunities-copy .opportunity-sub-list-chart-legend-swatch.is-primary,
+.chart-card-fullscreen-body .opportunity-sub-list-chart-legend-swatch.is-primary {
+    background: var(--blue-300);
+}
+
+.automation-opportunities-copy .opportunity-sub-list-chart-legend-swatch.is-overlay,
+.chart-card-fullscreen-body .opportunity-sub-list-chart-legend-swatch.is-overlay {
+    background: var(--chart-overlay-green);
+}
+
+/* Fullscreen view: also color the bars when chart-key="volume" */
+.chart-card-fullscreen-backdrop[data-chart-key="volume"] .chart-column-bar {
+    fill: var(--blue-300);
+}
+
+.chart-card-fullscreen-backdrop[data-chart-key="volume"] .chart-column-bar--overlay {
+    fill: var(--chart-overlay-green);
+}
+
+/* Annual Savings chart — bars use the success-green tone */
+.automation-opportunities-copy .opportunity-sub-list-chart-card[data-chart-key="savings"] .chart-column-bar {
+    fill: var(--success-border);
+}
+
+.automation-opportunities-copy .opportunity-sub-list-chart-card[data-chart-key="savings"] .chart-column.is-interactive:hover .chart-column-bar,
+.automation-opportunities-copy .opportunity-sub-list-chart-card[data-chart-key="savings"] .chart-column.is-interactive:focus-visible .chart-column-bar,
+.automation-opportunities-copy .opportunity-sub-list-chart-card[data-chart-key="savings"] .chart-column.is-active .chart-column-bar {
+    fill: var(--success-default);
+}
+
+/* Body-level tooltip used by the chart-card fullscreen icon. Rendered
+   via JS so it can escape ancestor `overflow: hidden` clipping. */
+.global-tooltip {
+    position: fixed;
+    transform: translate(-50%, 0);
+    padding: var(--space-1) var(--space-2);
+    background: var(--neutral-900);
+    color: var(--primary-0);
+    font-size: var(--text-xs);
+    font-weight: var(--font-medium);
+    line-height: 1.2;
+    white-space: nowrap;
+    border-radius: var(--rounded-sm, 0.25rem);
+    pointer-events: none;
+    z-index: 9999;
+}
+
+.global-tooltip[hidden] {
+    display: none;
+}
+
+.automation-opportunities-copy .opportunity-sub-list-chart-card-fs:hover[data-tooltip]::after,
+.automation-opportunities-copy .opportunity-sub-list-chart-card-fs:focus-visible[data-tooltip]::after {
+    opacity: 1;
+}
+
+/* Fullscreen chart overlay — covers the full viewport */
+.chart-card-fullscreen-backdrop {
+    position: fixed;
+    inset: 0;
+    background: var(--color-bg-primary);
+    z-index: 1000;
+}
+
+.chart-card-fullscreen-backdrop[hidden] {
+    display: none;
+}
+
+.chart-card-fullscreen-panel {
+    background: var(--color-bg-primary);
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+.chart-card-fullscreen-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-3);
+    padding: var(--space-4) var(--space-5);
+    border-bottom: 0.0625rem solid var(--color-border);
+}
+
+.chart-card-fullscreen-title {
+    font-size: var(--text-md);
+    font-weight: var(--font-semibold);
+    color: var(--color-text-primary);
+}
+
+.chart-card-fullscreen-close {
+    width: 2rem;
+    height: 2rem;
+    padding: 0;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: transparent;
+    border: 0.0625rem solid transparent;
+    border-radius: var(--rounded-md);
+    color: var(--neutral-500);
+    cursor: pointer;
+}
+
+.chart-card-fullscreen-close:hover {
+    background: var(--primary-25);
+    color: var(--color-primary-900);
+}
+
+.chart-card-fullscreen-close svg {
+    width: 1rem;
+    height: 1rem;
+}
+
+.chart-card-fullscreen-body {
+    flex: 1 1 auto;
+    min-height: 0;
+    overflow: hidden;
+    padding: var(--space-5);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4);
+}
+
+.chart-card-fullscreen-body .chart-column-container {
+    flex: 1 1 auto;
+    min-height: 0;
+}
+
+.chart-card-fullscreen-body .chart-column-svg,
+.chart-card-fullscreen-body .chart-echart-wrap,
+.chart-card-fullscreen-body .echart-chart {
+    width: 100%;
+    height: 100%;
+}
+
+.automation-opportunities-copy .opportunity-sub-list-chart-empty {
+    padding: var(--space-7) 0;
+    text-align: center;
+    font-size: var(--text-sm);
+    color: var(--color-text-muted);
+}
+
+/* Annual Savings column — green-tinted background on data rows only
+   (not the header). Bleeds through the row padding so the column reads
+   as one continuous strip down all data rows. */
+.automation-opportunities-copy .opportunity-sub-card {
+    position: relative;
+    isolation: isolate;
+}
+
+/* While the row's Agent Actions popover is open, lift the entire card above
+   the sticky Topic header column. Without this, `isolation: isolate` traps
+   the popover's z-index inside the card's stacking context and the sticky
+   header (z-index: 3) ends up painting on top of it. */
+.automation-opportunities-copy .opportunity-sub-card.popover-open,
+.automation-opportunities-copy .opportunity-sub-sub-card.popover-open {
+    z-index: 10;
+}
+
+.automation-opportunities-copy .opportunity-sub-card [data-col="savings"] {
+    position: relative;
+}
+
+.automation-opportunities-copy .opportunity-sub-card [data-col="savings"]::before {
+    content: "";
+    position: absolute;
+    top: calc(-1 * var(--sub-row-padding-y));
+    bottom: calc(-1 * var(--sub-row-padding-y));
+    left: calc(-1 * var(--sub-col-gap) / 2);
+    right: calc(-1 * var(--sub-col-gap) / 2);
+    background: var(--success-bg);
+    z-index: -1;
+}
+
+/* Empty state shown when search filters out every row */
+.automation-opportunities-copy .opportunity-sub-list-empty {
+    padding: var(--space-7) var(--space-4);
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-4);
+}
+
+.automation-opportunities-copy .opportunity-sub-list-empty[hidden] {
+    display: none;
+}
+
+.automation-opportunities-copy .opportunity-sub-list-empty-title {
+    font-size: var(--text-md);
+    font-weight: var(--font-semibold);
+    color: var(--color-blue-button);
+}
+
+.automation-opportunities-copy .opportunity-sub-list-empty-reset {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-2);
+    padding: var(--space-2) var(--space-4);
+    background: var(--color-bg-primary);
+    border: 0.0625rem solid var(--color-border);
+    border-radius: var(--rounded-md);
+    color: var(--color-primary-900);
+    font-size: var(--text-sm);
+    cursor: pointer;
+}
+
+.automation-opportunities-copy .opportunity-sub-list-empty-reset:hover {
+    background: var(--neutral-50);
+}
+
+.automation-opportunities-copy .opportunity-sub-list-empty-reset svg {
+    width: 1rem;
+    height: 1rem;
+}
+
+/* --------------------------- HEADER ROW ----------------------------- */
+.automation-opportunities-copy .opportunity-sub-list-header {
+    background: var(--neutral-50);
+    font-size: var(--text-xs);
+    font-weight: var(--font-medium);
+    color: var(--neutral-500);
+    min-height: 3rem;
+    padding-top: var(--space-2);
+    padding-bottom: var(--space-2);
+}
+
+/* col 1 (Topic) — left-aligned */
+.automation-opportunities-copy .opportunity-sub-list-header > div:nth-child(1) {
+    text-align: left;
+}
+
+/* cols 2-8 (numeric headers) — right-aligned, allow 2-line wrap */
+.automation-opportunities-copy .opportunity-sub-list-header > div:nth-child(n+2):nth-child(-n+8) {
+
+    line-height: 1.25;
+    white-space: normal;
+    word-break: normal;
+    overflow-wrap: break-word;
+}
+
+/* col 9 (Actions) — empty header cell aligned right */
+.automation-opportunities-copy .opportunity-sub-list-header > div:nth-child(9) {
+    text-align: right;
+}
+
+/* --------------------------- DATA ROW ------------------------------- */
+
+/* col 1 — Topic (chevron + title + sub-topics text), left-aligned */
+.automation-opportunities-copy .opportunity-sub-card > .opportunity-sub-card-header {
+    grid-column: 1;
+    display: flex;
+
+    justify-content: flex-start;
+    gap: var(--space-2);
+    margin: 0;
+    padding: 0;
+    min-width: 0;
+    text-align: left;
+}
+
+.automation-opportunities-copy .opportunity-sub-card-info { min-width: 0; }
+
+.automation-opportunities-copy .opportunity-sub-card-title {
+    margin: 0;
+    font-size: var(--text-sm);
+    font-weight: var(--font-regular);
+    color: var(--color-primary-900);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.automation-opportunities-copy .opportunity-sub-card-subtitle {
+    margin: 0.125rem 0 0;
+    font-size: var(--text-xs);
+    font-weight: 400;
+    color: var(--neutral-500);
+}
+
+.automation-opportunities-copy .opportunity-sub-toggle {
+    flex-shrink: 0;
+    width: 1.5rem;
+    height: 1.5rem;
+    padding: 0;
+    border: none;
+    background: transparent;
+    color: var(--color-primary-900);
+    cursor: pointer;
+    border-radius: var(--rounded-md);
+    transition: transform 0.15s ease;
+}
+
+.automation-opportunities-copy .opportunity-sub-toggle svg {
+    width: 1rem;
+    height: 1rem;
+}
+
+.automation-opportunities-copy .opportunity-sub-card.expanded > .opportunity-sub-card-header .opportunity-sub-toggle svg {
+    transform: rotate(180deg);
+}
+
+/* cols 2-8 — Metric values. The wrapper uses display: contents so each
+   .opportunity-metric becomes a direct grid item in column order. */
+.automation-opportunities-copy .opportunity-sub-card .opportunity-metrics.opportunity-sub-metrics {
+    display: contents;
+}
+
+.automation-opportunities-copy .opportunity-sub-card .opportunity-metric {
+    padding: 0 !important;
+    margin: 0;
+    border: none;
+    min-width: 0;
+    display: flex;
+
+    justify-content: flex-end;       /* right-align value in its column */
+
+    font-variant-numeric: tabular-nums;
+}
+
+.automation-opportunities-copy .opportunity-sub-card .opportunity-metric::after,
+.automation-opportunities-copy .opportunity-sub-card .opportunity-metric::before {
+    display: none !important;
+    content: none !important;
+}
+
+.automation-opportunities-copy .opportunity-sub-card .opportunity-metric-value {
+    font-size: var(--text-sm);
+    font-weight: var(--font-regular);
+    color: var(--color-primary-900);
+    line-height: 1;
+}
+
+.automation-opportunities-copy .opportunity-sub-card .opportunity-metric-value.savings {
+    font-weight: var(--font-semibold);
+    color: var(--success-default);
+}
+
+.automation-opportunities-copy .opportunity-sub-card .opportunity-metric-label {
+    display: none;
+}
+
+/* Actions cell — always anchored to the last column (resilient to hidden cols) */
+.automation-opportunities-copy .opportunity-sub-card > .opportunity-card-actions {
+    grid-column: -2;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: var(--space-2);
+    margin: 0;
+    padding: 0;
+}
+
+.automation-opportunities-copy .opportunity-sub-card .opportunity-create-btn {
+    flex-shrink: 0;
+    white-space: nowrap;
+    min-width: 8rem;
+    justify-content: center;
+}
+
+/* Expanded breakdown (Agent Actions + sub-sub-cards) spans the full row */
+.automation-opportunities-copy .opportunity-sub-card .opportunity-sub-details {
+    grid-column: 1 / -1;
+    margin: var(--space-3) 0 0;
+    padding: var(--space-3) 0 0 0;
+    border-top: 0.0625rem dashed var(--color-border);
+}
+
+.automation-opportunities-copy .opportunity-sub-card.expanded {
+    background: var(--color-bg-primary);
+    /* The last sub-sub-row already supplies its own padding-bottom, so
+       dropping the parent row's padding-bottom keeps the gap below row 3
+       identical to the gap between any two collapsed rows. */
+    padding-bottom: 0;
+}
+
+/* =====================================================================
+   Copy page — Sub-sub-topics rendered as FLAT rows of the main table.
+   No nested header, no nested table border. Each .opportunity-sub-sub-card
+   uses the EXACT SAME 9-column grid as the main row, so its values
+   align perfectly under the main column headers.
+   ===================================================================== */
+
+/* The .opportunity-sub-details cell already spans the full row of the
+   main grid. Reset its padding so its children sit flush at the same x
+   offset as the parent row (no inner inset). */
+.automation-opportunities-copy .opportunity-sub-card .opportunity-sub-details {
+    margin: 0;
+    padding: 0;
+    border-top: none;
+    background: transparent;
+}
+
+/* Negate the row padding on the parent (.opportunity-sub-card) so the
+   sub-sub-rows align edge-to-edge with the parent table cells. */
+.automation-opportunities-copy .opportunity-sub-card .opportunity-sub-details {
+    margin-left: calc(-1 * var(--sub-row-padding-x));
+    margin-right: calc(-1 * var(--sub-row-padding-x));
+    width: calc(100% + (2 * var(--sub-row-padding-x)));
+}
+
+.automation-opportunities-copy .opportunity-sub-sub-list {
+    display: flex;
+    flex-direction: column;
+    margin: 0;
+    padding: 0;
+    background: transparent;
+    border: none;
+    border-radius: 0;
+    box-shadow: none;
+    border-top: 0.0625rem solid var(--color-border);
+}
+
+/* Each sub-sub-card is a row that mirrors the main table's grid */
+.automation-opportunities-copy .opportunity-sub-sub-card {
+    display: grid;
+    grid-template-columns: var(--sub-grid-cols);
+    column-gap: var(--sub-col-gap);
+    row-gap: var(--space-3);
+    align-items: center;
+    padding: var(--sub-row-padding-y) var(--sub-row-padding-x);
+    border-top: none;
+    border-bottom: 0.0625rem solid var(--color-border);
+    background: transparent;
+    min-height: 4rem;
+    gap: var(--sub-col-gap);
+}
+
+.automation-opportunities-copy .opportunity-sub-sub-card:last-child {
+    border-bottom: none;
+}
+
+/* col 1 — numbered badge + title, indented slightly to show hierarchy */
+.automation-opportunities-copy .opportunity-sub-sub-card > .opportunity-sub-sub-card-header {
+    grid-column: 1;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: var(--space-2);
+    margin: 0;
+    padding-left: var(--space-6);   /* hierarchy indent */
+    min-width: 0;
+
+}
+
+.automation-opportunities-copy .opportunity-sub-sub-card-title {
+    margin: 0;
+    font-size: var(--text-sm);
+    font-weight: var(--font-regular);
+    color: var(--color-primary-900);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* cols 2-8 — metric values via display: contents */
+.automation-opportunities-copy .opportunity-sub-sub-card > .opportunity-metrics.opportunity-sub-metrics {
+    display: contents;
+}
+
+.automation-opportunities-copy .opportunity-sub-sub-card > .opportunity-metrics .opportunity-metric {
+    padding: 0 !important;
+    margin: 0;
+    border: none;
+    min-width: 0;
+    display: flex;
+
+    justify-content: flex-end;
+
+    font-variant-numeric: tabular-nums;
+}
+
+.automation-opportunities-copy .opportunity-sub-sub-card > .opportunity-metrics .opportunity-metric::before,
+.automation-opportunities-copy .opportunity-sub-sub-card > .opportunity-metrics .opportunity-metric::after {
+    display: none !important;
+    content: none !important;
+}
+
+.automation-opportunities-copy .opportunity-sub-sub-card > .opportunity-metrics .opportunity-metric-label {
+    display: none;
+}
+
+.automation-opportunities-copy .opportunity-sub-sub-card > .opportunity-metrics .opportunity-metric-value {
+    font-size: var(--text-sm);
+    font-weight: var(--font-regular);
+    color: var(--color-primary-900);
+    line-height: 1;
+}
+
+.automation-opportunities-copy .opportunity-sub-sub-card > .opportunity-metrics .opportunity-metric-value.savings {
+    font-weight: var(--font-semibold);
+    color: var(--success-default);
+}
+
+/* Last column — Create Deterministic Process button (resilient to hidden cols) */
+.automation-opportunities-copy .opportunity-sub-sub-card > .deterministic-btn {
+    grid-column: -2;
+    justify-self: end;
+    align-self: center;
+    margin: 0;
+    flex-shrink: 0;
+    white-space: nowrap;
+}
+
+/* Agent Actions section (now hidden by default — opened via popover) */
+.automation-opportunities-copy .opportunity-sub-sub-card > .agent-actions-inline {
+    grid-column: 1 / -1;
+}
+
+/* =====================================================================
+   Copy page — Agent Actions popover
+   The "Agent Actions for This Topic" / "Agent Actions in This Sub-topic"
+   sections are no longer rendered inline. Instead a bar-chart icon sits
+   next to each row title and opens a popover positioned ABOVE the icon
+   when clicked.
+   ===================================================================== */
+
+/* Hide the inline section by default — only shown inside the popover */
+.automation-opportunities-copy .agent-actions-inline {
+    display: none;
+}
+
+/* Anchor for trigger + popover — relatively positioned so the popover
+   can sit above (absolute) the icon */
+.automation-opportunities-copy .agent-actions-anchor {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    margin-left: var(--space-1);
+}
+
+/* Trigger icon button */
+.automation-opportunities-copy .agent-actions-trigger {
+    width: 1.5rem;
+    height: 1.5rem;
+    padding: 0;
+    background: transparent;
+    border: none;
+    color: var(--neutral-500);
+    border-radius: var(--rounded-md);
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.15s ease, color 0.15s ease;
+}
+
+.automation-opportunities-copy .agent-actions-trigger:hover,
+.automation-opportunities-copy .agent-actions-trigger[aria-expanded="true"] {
+    background: var(--neutral-50);
+    color: var(--color-blue-button);
+}
+
+.automation-opportunities-copy .agent-actions-trigger svg {
+    width: 1rem;
+    height: 1rem;
+}
+
+/* Tooltip on the trigger icon (e.g. "View Agent Actions") — appears below
+   the icon. Hidden once the popover is open. */
+.automation-opportunities-copy .agent-actions-trigger[data-tooltip]::after {
+    content: attr(data-tooltip);
+    position: absolute;
+    top: calc(100% + 0.375rem);
+    left: 50%;
+    transform: translateX(-50%);
+    padding: var(--space-1) var(--space-2);
+    background: var(--neutral-900);
+    color: var(--primary-0);
+    font-size: var(--text-xs);
+    font-weight: var(--font-medium);
+    line-height: 1.2;
+    white-space: nowrap;
+    border-radius: var(--rounded-sm, 0.25rem);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.15s ease;
+    z-index: 60;
+}
+
+.automation-opportunities-copy .agent-actions-trigger:hover[data-tooltip]::after,
+.automation-opportunities-copy .agent-actions-trigger:focus-visible[data-tooltip]::after {
+    opacity: 1;
+}
+
+/* Hide tooltip while the popover is open so it doesn't overlap */
+.automation-opportunities-copy .agent-actions-trigger[aria-expanded="true"][data-tooltip]::after {
+    opacity: 0;
+}
+
+/* Popover — positioned via JS in viewport coordinates so it's never
+   clipped by table / card overflow. Highest z-index to sit above all
+   other page content. */
+.automation-opportunities-copy .agent-actions-popover {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 9999;
+    width: 26rem;
+    background: var(--color-bg-primary);
+    border: 0.0625rem solid var(--color-border);
+    border-radius: var(--rounded-md);
+    box-shadow: 0 0.875rem 2rem -0.5rem rgba(15, 23, 42, 0.18);
+    padding: var(--space-4) var(--space-4);
+    box-sizing: border-box;
+}
+
+.automation-opportunities-copy .agent-actions-popover[hidden] {
+    display: none;
+}
+
+/* Arrow tail — JS sets the `left` to align with the trigger icon. */
+.automation-opportunities-copy .agent-actions-popover-arrow {
+    position: absolute;
+    width: 0.75rem;
+    height: 0.75rem;
+    background: var(--color-bg-primary);
+    border-right: 0.0625rem solid var(--color-border);
+    border-bottom: 0.0625rem solid var(--color-border);
+    transform: translateX(-50%) rotate(45deg);
+    pointer-events: none;
+}
+
+/* Default placement (popover above the trigger): arrow on the bottom edge */
+.automation-opportunities-copy .agent-actions-popover[data-placement="top"] .agent-actions-popover-arrow {
+    bottom: -0.4rem;
+}
+
+/* Flipped placement (popover below the trigger): arrow on the top edge */
+.automation-opportunities-copy .agent-actions-popover[data-placement="bottom"] .agent-actions-popover-arrow {
+    top: -0.4rem;
+    transform: translateX(-50%) rotate(225deg);
+}
+
+/* Show the inline content inside the popover */
+.automation-opportunities-copy .agent-actions-popover .agent-actions-inline {
+    display: block;
+    background: transparent;
+    border: none;
+    padding: 0;
+    margin: 0;
+}
+
+.automation-opportunities-copy .agent-actions-popover .agent-actions-inline-title {
+    font-size: var(--text-sm);
+    font-weight: var(--font-medium);
+    color: var(--color-primary-900);
+    margin: 0 0 var(--space-2);
+}
+
+/* Compact, fluid action rows inside the popover so the bar fills the
+   available width instead of overflowing with its 14rem + 31.25rem template */
+.automation-opportunities-copy .agent-actions-popover .agent-action-row {
+    grid-template-columns: minmax(0, 8.5rem) minmax(0, 1fr) auto;
+    gap: var(--space-2);
+    padding: var(--space-1) 0;
+    font-size: var(--text-sm);
+}
+
+.automation-opportunities-copy .agent-actions-popover .agent-action-label {
+    color: var(--neutral-500);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    font-weight: var(--font-regular);
+}
+
+.automation-opportunities-copy .agent-actions-popover .agent-action-bar {
+    width: 100%;
+    height: 0.5rem;
+    min-width: 0;
+}
+
+.automation-opportunities-copy .agent-actions-popover .agent-action-value {
+    font-variant-numeric: tabular-nums;
+    color: var(--neutral-500);
+    font-weight: var(--font-regular);
+}
+
+
+/* =====================================================================
+   Copy page — Row kebab (3-dot) menu
+   Replaces the inline "Create AI Agent" / "Create Deterministic Process"
+   buttons with a 3-dot icon that opens a small menu listing the action.
+   ===================================================================== */
+.automation-opportunities-copy .row-kebab-wrap {
+    display: none;
+}
+
+.automation-opportunities-copy .row-kebab-btn {
+    width: 2rem;
+    height: 2rem;
+    padding: 0;
+    background: transparent;
+    border: 0.0625rem solid transparent;
+    border-radius: var(--rounded-md);
+    color: var(--neutral-500);
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.15s ease, border-color 0.15s ease, color 0.15s ease;
+}
+
+.automation-opportunities-copy .row-kebab-btn:hover,
+.automation-opportunities-copy .row-kebab-btn[aria-expanded="true"] {
+    background: var(--neutral-50);
+    border-color: var(--color-border);
+    color: var(--color-primary-900);
+}
+
+.automation-opportunities-copy .row-kebab-btn svg {
+    width: 1rem;
+    height: 1rem;
+}
+
+.automation-opportunities-copy .row-kebab-menu {
+    position: absolute;
+    top: calc(100% + 0.375rem);
+    right: 0;
+    z-index: 50;
+    min-width: 13rem;
+    background: var(--color-bg-primary);
+    border: 0.0625rem solid var(--color-border);
+    border-radius: var(--rounded-md);
+    box-shadow: 0 0.625rem 1.5rem -0.25rem rgba(15, 23, 42, 0.16);
+    padding: var(--space-1) 0;
+}
+
+.automation-opportunities-copy .row-kebab-menu[hidden] {
+    display: none;
+}
+
+.automation-opportunities-copy .row-kebab-item {
+    width: 100%;
+    text-align: left;
+    padding: var(--space-2) var(--space-3);
+    background: transparent;
+    border: none;
+    font-family: var(--font-sans);
+    font-size: var(--text-sm);
+    color: var(--color-primary-900);
+    cursor: pointer;
+    white-space: nowrap;
+}
+
+.automation-opportunities-copy .row-kebab-item:hover {
+    background: var(--neutral-50);
+}
+
+/* "Agent Actions in This Category" / "Agent Actions for This Topic" /
+   "Agent Actions in This Sub-topic" — show a chart-bar-decreasing icon to
+   the left of the title (lucide). Mask uses currentColor so the icon
+   matches the heading text. */
+.automation-opportunities-copy .agent-actions-title,
+.automation-opportunities-copy .agent-actions-inline-title {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.automation-opportunities-copy .agent-actions-title svg,
+.automation-opportunities-copy .agent-actions-inline-title svg {
+    width: 1rem;
+    height: 1rem;
+    flex-shrink: 0;
+}
+
+
+/* Copy page — Top Opportunities cards hover behavior */
+.automation-opportunities-copy .opportunity-card {
+    transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.automation-opportunities-copy .opportunity-card:hover {
+    box-shadow: 0 0.5rem 1.5rem -0.5rem var(--shadow-md);
+    border-color: var(--primary-500);
+    background: var(--primary-25);
+}
+
+.automation-opportunities-copy .opportunity-card.expanded:hover {
+    box-shadow: none;
+    background: var(--color-bg-primary);
+}
+
+/* P2 sidebar uses the base `.sidebar` rules unchanged — matches
+   automation-opportunities.html exactly (incl. collapsed behavior). */
+
+/* ====================================================================
+   Accessibility — Cognigy / NICE Design System (WCAG 2.1 AA)
+   Sourced from .claude/skills/accessibility/Skill.md
+   ==================================================================== */
+
+/* Screen-reader-only utility — visually hidden but readable by AT. */
+.sr-only {
+    position: absolute;
+    width: 0.0625rem;
+    height: 0.0625rem;
+    padding: 0;
+    margin: -0.0625rem;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border-width: 0;
+}
+
+/* Make .sr-only visible only when it receives keyboard focus (skip link). */
+.sr-only.focusable:focus,
+.sr-only:focus-visible {
+    position: absolute;
+    top: 0.5rem;
+    left: 0.5rem;
+    width: auto;
+    height: auto;
+    margin: 0;
+    padding: var(--space-2) var(--space-3);
+    overflow: visible;
+    clip: auto;
+    white-space: normal;
+    background: var(--primary-500);
+    color: var(--color-text-on-brand);
+    border-radius: var(--rounded-sm);
+    z-index: 9999;
+    box-shadow: 0 0.25rem 0.75rem rgba(0, 0, 0, 0.2);
+}
+
+/* Strict Tab-only focus indication.
+   The blue focus ring only appears when the user is actively navigating
+   with the keyboard. A `using-keyboard` class is added to <body> on Tab
+   keydown and removed on mousedown (see the inline a11y script in each
+   HTML file). Without that class, NO focus ring is shown — including on
+   inputs/textareas the browser would otherwise highlight on mouse click. */
+
+/* Default: suppress focus rings everywhere. */
+:focus,
+:focus-visible {
+    outline: none;
+    box-shadow: none;
+}
+
+/* Universal focus ring — only while keyboard-navigating. */
+body.using-keyboard :focus-visible {
+    outline: 0.125rem solid var(--primary-500);
+    outline-offset: 0.125rem;
+}
+
+/* Inputs / contenteditables — restore via box-shadow (survives `overflow:hidden`). */
+body.using-keyboard input:focus-visible,
+body.using-keyboard textarea:focus-visible,
+body.using-keyboard select:focus-visible,
+body.using-keyboard .opportunity-sub-list-search-input:focus-visible,
+body.using-keyboard .filter-search-input:focus-visible,
+body.using-keyboard [contenteditable="true"]:focus-visible {
+    outline: none;
+    box-shadow: 0 0 0 0.125rem var(--color-bg-primary),
+                0 0 0 0.25rem var(--primary-500);
+}
+
+/* Grid cells / sidebar rows inside scroll-clipped wrappers — use inset
+   shadow so the ring is never cropped at the scroll edge. */
+body.using-keyboard .opportunity-sub-card:focus-visible,
+body.using-keyboard .opportunity-sub-list-header:focus-visible,
+body.using-keyboard .sidebar-item:focus-visible,
+body.using-keyboard .sidebar-nested-item:focus-visible {
+    outline: none;
+    box-shadow: inset 0 0 0 0.125rem var(--primary-500);
+}
+
+/* Honor user motion preferences. */
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
     }
 }
