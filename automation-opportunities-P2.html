@@ -121,9 +121,19 @@
     .topic-trigger + .opportunity-sub-card-subtitle {
       padding-left: calc(1rem + var(--space-2));
     }
+
   </style>
 </head>
 <body class="deployed-dashboard automation-opportunities-page automation-opportunities-copy">
+  <!-- Shared SVG gradient definitions — referenced via url(#ai-icon-gradient) -->
+  <svg aria-hidden="true" focusable="false" style="position:absolute;width:0;height:0;overflow:hidden">
+    <defs>
+      <linearGradient id="ai-icon-gradient" x1="0%" y1="0%" x2="100%" y2="0%">
+        <stop offset="0.01%" stop-color="#3B82F6"/>
+        <stop offset="99.77%" stop-color="#A855F7"/>
+      </linearGradient>
+    </defs>
+  </svg>
   <a href="#main" class="sr-only focusable skip-to-content">Skip to content</a>
   <!-- Shell Top Bar -->
   <header class="shell-top-bar">
@@ -414,38 +424,11 @@
             <button class="ai-insights-toggle" id="aiInsightsToggle" type="button" aria-label="Collapse AI Insights" aria-expanded="true">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m18 15-6-6-6 6"/></svg>
             </button>
-            <svg class="ai-insights-sparkles" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-              <path d="M9.937 15.5A2 2 0 0 0 8.5 14.063l-6.135-1.582a.5.5 0 0 1 0-.962L8.5 9.936A2 2 0 0 0 9.937 8.5l1.582-6.135a.5.5 0 0 1 .963 0L14.063 8.5A2 2 0 0 0 15.5 9.937l6.135 1.581a.5.5 0 0 1 0 .964L15.5 14.063a2 2 0 0 0-1.437 1.437l-1.582 6.135a.5.5 0 0 1-.963 0z"/>
-              <path d="M20 3v4"/><path d="M22 5h-4"/><path d="M4 17v2"/><path d="M5 18H3"/>
-            </svg>
-            <h2 class="ai-insights-title">AI Insights</h2>
-            <span class="ai-insights-meta">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                <circle cx="12" cy="12" r="10"/>
-                <polyline points="12 6 12 12 16 14"/>
-              </svg>
-              Generated 12m ago
-            </span>
-            <button class="ai-insights-refresh" type="button" aria-label="Refresh insights">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                <path d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8"/>
-                <path d="M21 3v5h-5"/>
-                <path d="M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16"/>
-                <path d="M8 16H3v5"/>
-              </svg>
-            </button>
+            <span class="ai-insights-preview">I analyzed 143,000 interactions across 3 major categories and identified opportunities to automate 3% of your workload, saving $39K annually.</span>
           </header>
 
           <div class="ai-insights-content">
             <div class="ai-insights-section">
-              <div class="ai-insights-section-header">
-                <svg class="ai-insights-section-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                  <line x1="8" x2="21" y1="6" y2="6"/><line x1="8" x2="21" y1="12" y2="12"/><line x1="8" x2="21" y1="18" y2="18"/>
-                  <line x1="3" x2="3.01" y1="6" y2="6"/><line x1="3" x2="3.01" y1="12" y2="12"/><line x1="3" x2="3.01" y1="18" y2="18"/>
-                </svg>
-                <h3 class="ai-insights-section-title">Generated Summary</h3>
-              </div>
-              <p class="ai-insights-summary">I analyzed 143,000 interactions across 3 major categories and identified opportunities to automate 3% of your workload, saving $39K annually.<br>Here's what I found:</p>
               <ul class="ai-insights-list">
                 <li>
                   <strong>Billing &amp; Payment Inquiries leads automation potential:</strong> This category accounts for 68% of total automatable volume with $33K in annual savings.<br>
@@ -615,7 +598,7 @@
                 </div>
                 <div class="opportunity-card-actions">
                   <div class="agent-dropdown">
-                    <button class="opportunity-create-btn agent-dropdown-toggle" type="button" aria-haspopup="true" aria-expanded="false">
+                    <button class="components-button--default agent-dropdown-toggle" type="button" aria-haspopup="true" aria-expanded="false">
                       View AI Agent
                       <svg class="agent-dropdown-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
                         <path d="m6 9 6 6 6-6"/>
@@ -696,7 +679,7 @@
                         <p class="opportunity-sub-card-subtitle">3 Sub-topics</p>
                       </div>
                       <div class="opportunity-card-actions">
-                        <button class="opportunity-create-btn" type="button">Create AI Agent</button>
+                        <button class="components-button--default" type="button">Create AI Agent</button>
                       </div>
                     </header>
                     <div class="opportunity-metrics opportunity-sub-metrics">
@@ -840,7 +823,7 @@
                         <p class="opportunity-sub-card-subtitle">3 Sub-topics</p>
                       </div>
                       <div class="opportunity-card-actions">
-                        <button class="opportunity-create-btn" type="button">Create AI Agent</button>
+                        <button class="components-button--default" type="button">Create AI Agent</button>
                       </div>
                     </header>
                     <div class="opportunity-metrics opportunity-sub-metrics">
@@ -984,7 +967,7 @@
                         <p class="opportunity-sub-card-subtitle">2 Sub-topics</p>
                       </div>
                       <div class="opportunity-card-actions">
-                        <button class="opportunity-create-btn" type="button">Create AI Agent</button>
+                        <button class="components-button--default" type="button">Create AI Agent</button>
                       </div>
                     </header>
                     <div class="opportunity-metrics opportunity-sub-metrics">
@@ -1106,7 +1089,7 @@
                   <p class="opportunity-card-subtitle"><span class="stat-pill-wrap"><button class="stat-pill" type="button">2 Topics</button><span class="stat-pill-tooltip" role="tooltip">View related topics &amp; subtopics breakdown</span></span></p>
                 </div>
                 <div class="opportunity-card-actions">
-                  <button class="opportunity-create-btn" type="button">Create AI Agent</button>
+                  <button class="components-button--default" type="button">Create AI Agent</button>
                   <button class="ghost-btn" type="button" aria-label="More options">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="5.01"/><line x1="12" y1="12" x2="12" y2="12.01"/><line x1="12" y1="19" x2="12" y2="19.01"/></svg>
                   </button>
@@ -1141,7 +1124,7 @@
                   <p class="opportunity-card-subtitle"><span class="stat-pill-wrap"><button class="stat-pill" type="button">4 Topics</button><span class="stat-pill-tooltip" role="tooltip">View related topics &amp; subtopics breakdown</span></span></p>
                 </div>
                 <div class="opportunity-card-actions">
-                  <button class="opportunity-create-btn" type="button">Create AI Agent</button>
+                  <button class="components-button--default" type="button">Create AI Agent</button>
                   <button class="ghost-btn" type="button" aria-label="More options">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="5.01"/><line x1="12" y1="12" x2="12" y2="12.01"/><line x1="12" y1="19" x2="12" y2="19.01"/></svg>
                   </button>
@@ -1176,7 +1159,7 @@
                   <p class="opportunity-card-subtitle"><span class="stat-pill-wrap"><button class="stat-pill" type="button">5 Topics</button><span class="stat-pill-tooltip" role="tooltip">View related topics &amp; subtopics breakdown</span></span></p>
                 </div>
                 <div class="opportunity-card-actions">
-                  <button class="opportunity-create-btn" type="button">Create AI Agent</button>
+                  <button class="components-button--default" type="button">Create AI Agent</button>
                   <button class="ghost-btn" type="button" aria-label="More options">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="5.01"/><line x1="12" y1="12" x2="12" y2="12.01"/><line x1="12" y1="19" x2="12" y2="19.01"/></svg>
                   </button>
@@ -1211,7 +1194,7 @@
                   <p class="opportunity-card-subtitle"><span class="stat-pill-wrap"><button class="stat-pill" type="button">2 Topics</button><span class="stat-pill-tooltip" role="tooltip">View related topics &amp; subtopics breakdown</span></span></p>
                 </div>
                 <div class="opportunity-card-actions">
-                  <button class="opportunity-create-btn" type="button">Create AI Agent</button>
+                  <button class="components-button--default" type="button">Create AI Agent</button>
                   <button class="ghost-btn" type="button" aria-label="More options">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="5.01"/><line x1="12" y1="12" x2="12" y2="12.01"/><line x1="12" y1="19" x2="12" y2="19.01"/></svg>
                   </button>
@@ -1246,7 +1229,7 @@
                   <p class="opportunity-card-subtitle"><span class="stat-pill-wrap"><button class="stat-pill" type="button">3 Topics</button><span class="stat-pill-tooltip" role="tooltip">View related topics &amp; subtopics breakdown</span></span></p>
                 </div>
                 <div class="opportunity-card-actions">
-                  <button class="opportunity-create-btn" type="button">Create AI Agent</button>
+                  <button class="components-button--default" type="button">Create AI Agent</button>
                   <button class="ghost-btn" type="button" aria-label="More options">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="5.01"/><line x1="12" y1="12" x2="12" y2="12.01"/><line x1="12" y1="19" x2="12" y2="19.01"/></svg>
                   </button>
@@ -1281,7 +1264,7 @@
                   <p class="opportunity-card-subtitle"><span class="stat-pill-wrap"><button class="stat-pill" type="button">2 Topics</button><span class="stat-pill-tooltip" role="tooltip">View related topics &amp; subtopics breakdown</span></span></p>
                 </div>
                 <div class="opportunity-card-actions">
-                  <button class="opportunity-create-btn" type="button">Create AI Agent</button>
+                  <button class="components-button--default" type="button">Create AI Agent</button>
                   <button class="ghost-btn" type="button" aria-label="More options">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="5.01"/><line x1="12" y1="12" x2="12" y2="12.01"/><line x1="12" y1="19" x2="12" y2="19.01"/></svg>
                   </button>
@@ -1422,7 +1405,7 @@
                     <p class="opportunity-card-subtitle"><span class="stat-pill">Category: Billing &amp; Payment Inquiries</span></p>
                   </div>
                   <div class="opportunity-card-actions">
-                    <button class="opportunity-create-btn" type="button">Create AI Agent</button>
+                    <button class="components-button--default" type="button">Create AI Agent</button>
                     <button class="ghost-btn" type="button" aria-label="More options">
                       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="5.01"/><line x1="12" y1="12" x2="12" y2="12.01"/><line x1="12" y1="19" x2="12" y2="19.01"/></svg>
                     </button>
@@ -1467,7 +1450,7 @@
                           <h4 class="opportunity-sub-card-title">Charge Breakdown</h4>
                         </div>
                         <div class="opportunity-card-actions">
-                          <button class="opportunity-create-btn" type="button">Create AI Agent</button>
+                          <button class="components-button--default" type="button">Create AI Agent</button>
                         </div>
                       </header>
                       <div class="opportunity-metrics opportunity-sub-metrics">
@@ -1491,7 +1474,7 @@
                           <h4 class="opportunity-sub-card-title">Plan &amp; Pricing Inquiry</h4>
                         </div>
                         <div class="opportunity-card-actions">
-                          <button class="opportunity-create-btn" type="button">Create AI Agent</button>
+                          <button class="components-button--default" type="button">Create AI Agent</button>
                         </div>
                       </header>
                       <div class="opportunity-metrics opportunity-sub-metrics">
@@ -1515,7 +1498,7 @@
                           <h4 class="opportunity-sub-card-title">Fees &amp; Adjustments</h4>
                         </div>
                         <div class="opportunity-card-actions">
-                          <button class="opportunity-create-btn" type="button">Create AI Agent</button>
+                          <button class="components-button--default" type="button">Create AI Agent</button>
                         </div>
                       </header>
                       <div class="opportunity-metrics opportunity-sub-metrics">
@@ -1556,7 +1539,7 @@
                     <p class="opportunity-card-subtitle"><span class="stat-pill">Category: Billing &amp; Payment Inquiries</span></p>
                   </div>
                   <div class="opportunity-card-actions">
-                    <button class="opportunity-create-btn" type="button">Create AI Agent</button>
+                    <button class="components-button--default" type="button">Create AI Agent</button>
                     <button class="ghost-btn" type="button" aria-label="More options">
                       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="5.01"/><line x1="12" y1="12" x2="12" y2="12.01"/><line x1="12" y1="19" x2="12" y2="19.01"/></svg>
                     </button>
@@ -1592,7 +1575,7 @@
                     <p class="opportunity-card-subtitle"><span class="stat-pill">Category: Billing &amp; Payment Inquiries</span></p>
                   </div>
                   <div class="opportunity-card-actions">
-                    <button class="opportunity-create-btn" type="button">Create AI Agent</button>
+                    <button class="components-button--default" type="button">Create AI Agent</button>
                     <button class="ghost-btn" type="button" aria-label="More options">
                       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="5.01"/><line x1="12" y1="12" x2="12" y2="12.01"/><line x1="12" y1="19" x2="12" y2="19.01"/></svg>
                     </button>
@@ -1628,7 +1611,7 @@
                     <p class="opportunity-card-subtitle"><span class="stat-pill">Category: Card Services &amp; Management</span></p>
                   </div>
                   <div class="opportunity-card-actions">
-                    <button class="opportunity-create-btn" type="button">Create AI Agent</button>
+                    <button class="components-button--default" type="button">Create AI Agent</button>
                     <button class="ghost-btn" type="button" aria-label="More options">
                       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="5.01"/><line x1="12" y1="12" x2="12" y2="12.01"/><line x1="12" y1="19" x2="12" y2="19.01"/></svg>
                     </button>
@@ -1664,7 +1647,7 @@
                     <p class="opportunity-card-subtitle"><span class="stat-pill">Category: Card Services &amp; Management</span></p>
                   </div>
                   <div class="opportunity-card-actions">
-                    <button class="opportunity-create-btn" type="button">Create AI Agent</button>
+                    <button class="components-button--default" type="button">Create AI Agent</button>
                     <button class="ghost-btn" type="button" aria-label="More options">
                       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="5.01"/><line x1="12" y1="12" x2="12" y2="12.01"/><line x1="12" y1="19" x2="12" y2="19.01"/></svg>
                     </button>
@@ -1700,7 +1683,7 @@
                     <p class="opportunity-card-subtitle"><span class="stat-pill">Category: Account Management &amp; Support</span></p>
                   </div>
                   <div class="opportunity-card-actions">
-                    <button class="opportunity-create-btn" type="button">Create AI Agent</button>
+                    <button class="components-button--default" type="button">Create AI Agent</button>
                     <button class="ghost-btn" type="button" aria-label="More options">
                       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="5.01"/><line x1="12" y1="12" x2="12" y2="12.01"/><line x1="12" y1="19" x2="12" y2="19.01"/></svg>
                     </button>
@@ -1736,7 +1719,7 @@
                     <p class="opportunity-card-subtitle"><span class="stat-pill">Category: Account Management &amp; Support</span></p>
                   </div>
                   <div class="opportunity-card-actions">
-                    <button class="opportunity-create-btn" type="button">Create AI Agent</button>
+                    <button class="components-button--default" type="button">Create AI Agent</button>
                     <button class="ghost-btn" type="button" aria-label="More options">
                       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="5.01"/><line x1="12" y1="12" x2="12" y2="12.01"/><line x1="12" y1="19" x2="12" y2="19.01"/></svg>
                     </button>
@@ -1772,7 +1755,7 @@
                     <p class="opportunity-card-subtitle"><span class="stat-pill">Category: Account Management &amp; Support</span></p>
                   </div>
                   <div class="opportunity-card-actions">
-                    <button class="opportunity-create-btn" type="button">Create AI Agent</button>
+                    <button class="components-button--default" type="button">Create AI Agent</button>
                     <button class="ghost-btn" type="button" aria-label="More options">
                       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="5.01"/><line x1="12" y1="12" x2="12" y2="12.01"/><line x1="12" y1="19" x2="12" y2="19.01"/></svg>
                     </button>
@@ -2897,7 +2880,7 @@
               <h4 class="opportunity-sub-card-title">${s.name}</h4>
             </div>
             <div class="opportunity-card-actions">
-              <button class="opportunity-create-btn" type="button">Create AI Agent</button>
+              <button class="components-button--default" type="button">Create AI Agent</button>
             </div>
           </header>
           <div class="opportunity-metrics opportunity-sub-metrics">
@@ -3130,7 +3113,7 @@
               <p class="opportunity-sub-card-subtitle">${successBadgeHtml(s.m[6])}${s.subtopics} Sub-topics</p>
             </div>
             <div class="opportunity-card-actions">
-              <button class="opportunity-create-btn" type="button">Create AI Agent</button>
+              <button class="components-button--default" type="button">Create AI Agent</button>
             </div>
           </header>
           <div class="opportunity-metrics opportunity-sub-metrics">
@@ -3288,7 +3271,7 @@
             <p class="opportunity-card-subtitle">${successBadgeHtml(o.m[6])}<span class="stat-pill-wrap"><button class="stat-pill" type="button">${o.topics} Topics</button><span class="stat-pill-tooltip" role="tooltip">View related topics &amp; subtopics breakdown</span></span></p>
           </div>
           <div class="opportunity-card-actions">
-            <button class="opportunity-create-btn" type="button">Create AI Agent</button>
+            <button class="components-button--default" type="button">Create AI Agent</button>
             <button class="ghost-btn" type="button" aria-label="More options">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="5.01"/><line x1="12" y1="12" x2="12" y2="12.01"/><line x1="12" y1="19" x2="12" y2="19.01"/></svg>
             </button>
@@ -4703,6 +4686,200 @@
       document.body.style.overflow = 'hidden';
     }
 
+    // ── Auto % of Total insight popover ────────────────────────────────────
+    // Set your Anthropic API key here to enable AI insights.
+    const ANTHROPIC_API_KEY = '';
+
+    let _autoPctEl = null;          // singleton popover DOM node (lazy)
+    let _autoPctActiveBar = null;   // currently-open bar element
+    const _autoPctCache = new Map();// insight cache keyed by topic+data
+
+    function _escAttr(str) {
+      return String(str).replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+    }
+
+    function _ensureAutoPctPopover() {
+      if (_autoPctEl) return;
+      _autoPctEl = document.createElement('div');
+      _autoPctEl.className = 'auto-pct-popover automation-opportunities-copy';
+      _autoPctEl.hidden = true;
+      _autoPctEl.innerHTML =
+        '<span class="auto-pct-popover-arrow"></span>' +
+        '<p class="auto-pct-topic-name"></p>' +
+        '<div class="auto-pct-breakdown">' +
+          '<span class="auto-pct-breakdown-label">Total Interactions</span>' +
+          '<span class="auto-pct-breakdown-val" data-f="total"></span>' +
+          '<span class="auto-pct-breakdown-label">Category Volume</span>' +
+          '<span class="auto-pct-breakdown-val" data-f="cat"></span>' +
+          '<span class="auto-pct-breakdown-label">Automatable Volume</span>' +
+          '<span class="auto-pct-breakdown-val" data-f="auto"></span>' +
+          '<span class="auto-pct-breakdown-label">Auto % of Total</span>' +
+          '<span class="auto-pct-breakdown-val is-pct" data-f="pct"></span>' +
+        '</div>' +
+        '<div class="ai-briefing auto-pct-ai-briefing">' +
+          '<div class="auto-pct-insight-header">' +
+            '<svg class="auto-pct-insight-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' +
+              '<path d="M9.937 15.5A2 2 0 0 0 8.5 14.063l-6.135-1.582a.5.5 0 0 1 0-.962L8.5 9.936A2 2 0 0 0 9.937 8.5l1.582-6.135a.5.5 0 0 1 .963 0L14.063 8.5A2 2 0 0 0 15.5 9.937l6.135 1.581a.5.5 0 0 1 0 .964L15.5 14.063a2 2 0 0 0-1.437 1.437l-1.582 6.135a.5.5 0 0 1-.963 0z"/>' +
+            '</svg>' +
+            'AI Briefing' +
+          '</div>' +
+          '<div class="auto-pct-insight-text"></div>' +
+        '</div>';
+      document.body.appendChild(_autoPctEl);
+
+      // Tooltip delegation for .auto-percent-bar (reuses the existing global-tooltip element)
+      document.addEventListener('mouseover', e => {
+        const bar = e.target.closest('.auto-percent-bar[data-tooltip]');
+        if (bar) showGlobalTooltip(bar);
+      });
+      document.addEventListener('mouseout', e => {
+        const bar = e.target.closest('.auto-percent-bar[data-tooltip]');
+        if (bar) hideGlobalTooltip();
+      });
+
+      // Close on outside click
+      document.addEventListener('click', e => {
+        if (!_autoPctEl.hidden && !_autoPctEl.contains(e.target) && !e.target.closest('.auto-percent-bar')) {
+          _closeAutoPctPopover();
+        }
+      });
+      window.addEventListener('scroll', () => {
+        if (!_autoPctEl.hidden && _autoPctActiveBar) _positionAutoPctPopover(_autoPctActiveBar);
+      }, true);
+      window.addEventListener('resize', () => {
+        if (!_autoPctEl.hidden && _autoPctActiveBar) _positionAutoPctPopover(_autoPctActiveBar);
+      });
+    }
+
+    function _positionAutoPctPopover(barEl) {
+      const rect = barEl.getBoundingClientRect();
+      const popW = _autoPctEl.offsetWidth || 352;
+      const popH = _autoPctEl.offsetHeight || 220;
+      const margin = 8;
+      const barCX = rect.left + rect.width / 2;
+
+      // Prefer above; fall back to below
+      let top, placement;
+      if (rect.top - margin - popH >= margin) {
+        top = rect.top - popH - margin;
+        placement = 'top';
+      } else {
+        top = rect.bottom + margin;
+        placement = 'bottom';
+      }
+
+      // Center horizontally on the bar, clamped to viewport
+      let left = barCX - popW / 2;
+      left = Math.max(margin, Math.min(left, window.innerWidth - popW - margin));
+
+      _autoPctEl.style.left = left + 'px';
+      _autoPctEl.style.top  = top  + 'px';
+      _autoPctEl.dataset.placement = placement;
+
+      // Arrow — horizontal centering relative to bar
+      const arrow = _autoPctEl.querySelector('.auto-pct-popover-arrow');
+      const arrowLeft = Math.max(16, Math.min(barCX - left, popW - 16));
+      arrow.style.left = arrowLeft + 'px';
+      arrow.style.top  = '';
+    }
+
+    function _getAutoPctInsight(topic, auto) {
+      return auto + ' "' + topic + '" interactions can be automated, freeing your team from repetitive tasks.';
+    }
+
+    function _openAutoPctPopover(barEl) {
+      _ensureAutoPctPopover();
+      const { topic, cat, auto, pct, total } = barEl.dataset;
+      _autoPctEl.querySelector('.auto-pct-topic-name').textContent = topic || 'Topic';
+      _autoPctEl.querySelector('[data-f="total"]').textContent = total || '—';
+      _autoPctEl.querySelector('[data-f="cat"]').textContent  = cat  || '—';
+      _autoPctEl.querySelector('[data-f="auto"]').textContent = auto || '—';
+      _autoPctEl.querySelector('[data-f="pct"]').textContent  = pct ? pct + '%' : '—';
+      _autoPctEl.querySelector('.auto-pct-insight-text').textContent = _getAutoPctInsight(topic, auto);
+
+      _autoPctEl.hidden = false;
+      _positionAutoPctPopover(barEl);
+    }
+
+    function _closeAutoPctPopover() {
+      if (_autoPctEl) _autoPctEl.hidden = true;
+      if (_autoPctActiveBar) { _autoPctActiveBar.classList.remove('auto-pct-active'); _autoPctActiveBar = null; }
+    }
+
+    function _handleAutoPctClick(barEl, e) {
+      e.stopPropagation();
+      // Toggle: second click on same bar closes
+      if (_autoPctActiveBar === barEl && _autoPctEl && !_autoPctEl.hidden) {
+        _closeAutoPctPopover(); return;
+      }
+      closeAllPopovers();        // close agent-actions popovers
+      if (_autoPctActiveBar) { _autoPctActiveBar.classList.remove('auto-pct-active'); }
+      _autoPctActiveBar = barEl;
+      barEl.classList.add('auto-pct-active');
+      _openAutoPctPopover(barEl);
+    }
+
+    // Auto % of Total — replace the plain text cell with a horizontal bar + value.
+    // Bars within a group are scaled relative to the maximum value in that group.
+    function applyAutoPctBars(cards, metricsSelector) {
+      const items = [];
+      cards.forEach(card => {
+        const metricsEl = card.querySelector(metricsSelector);
+        if (!metricsEl) return;
+
+        // Extract row data for the popover
+        const titleEl = card.querySelector('.opportunity-sub-card-title, .opportunity-sub-sub-card-title');
+        const topic = titleEl ? titleEl.textContent.trim() : '';
+        let catVol = '', autoVol = '';
+        metricsEl.querySelectorAll('.opportunity-metric').forEach(m => {
+          const lbl = m.querySelector('.opportunity-metric-label');
+          const val = m.querySelector('.opportunity-metric-value');
+          if (!lbl || !val) return;
+          const label = lbl.textContent.trim();
+          if (label === 'Category Volume')    catVol  = val.textContent.trim();
+          if (label === 'Automatable Volume') autoVol = val.textContent.trim();
+        });
+
+        metricsEl.querySelectorAll('.opportunity-metric').forEach(m => {
+          if (m.classList.contains('auto-percent-metric')) return;
+          const lbl = m.querySelector('.opportunity-metric-label');
+          if (!lbl || lbl.textContent.trim() !== 'Auto % of Total') return;
+          const valEl = m.querySelector('.opportunity-metric-value');
+          if (!valEl) return;
+          const pct = parseFloat(valEl.textContent.replace('%', ''));
+          if (!isNaN(pct)) items.push({ el: m, pct, topic, catVol, autoVol });
+        });
+      });
+      if (!items.length) return;
+      const max = Math.max(...items.map(i => i.pct));
+      items.forEach(({ el, pct, topic, catVol, autoVol }) => {
+        const barW = max > 0 ? (pct / max) * 100 : 0;
+        el.classList.add('auto-percent-metric');
+        el.innerHTML =
+          '<div class="opportunity-metric-label">Auto % of Total</div>' +
+          '<div class="auto-percent-bar-wrap">' +
+            '<div class="auto-percent-bar" role="button" tabindex="0"' +
+              ' aria-label="' + pct + '% — click for breakdown"' +
+              ' data-tooltip="View Breakdown"' +
+              ' data-topic="' + _escAttr(topic) + '"' +
+              ' data-cat="'   + _escAttr(catVol)  + '"' +
+              ' data-auto="'  + _escAttr(autoVol) + '"' +
+              ' data-pct="'   + pct + '"' +
+              ' data-total="' + (pct > 0 ? Number(Math.round(parseFloat(autoVol.replace(/,/g,'')) / (pct / 100))).toLocaleString() : '—') + '">' +
+              '<div class="auto-percent-fill" style="width:' + barW.toFixed(1) + '%"></div>' +
+            '</div>' +
+            '<span class="auto-percent-value">' + pct + '%</span>' +
+          '</div>';
+
+        const barTrack = el.querySelector('.auto-percent-bar');
+        barTrack.addEventListener('click', e => _handleAutoPctClick(barTrack, e));
+        barTrack.addEventListener('keydown', e => {
+          if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); barTrack.click(); }
+          if (e.key === 'Escape') _closeAutoPctPopover();
+        });
+      });
+    }
+
     // The sub-list table (header + data rows) lives inside a scroll wrapper
     // so it can scroll horizontally on narrow screens while the toolbar,
     // title, empty-state, and chart view above/below stay full-width.
@@ -5185,6 +5362,11 @@
           card.appendChild(actions);
         }
       });
+      // Apply Auto % of Total bar visualization to all sub-card rows in this list.
+      applyAutoPctBars(
+        [...getRowsRoot(list).querySelectorAll(':scope > .opportunity-sub-card')],
+        ':scope > .opportunity-sub-metrics'
+      );
     }
 
     // Transform a sub-sub-list (Bill Explanation drill-down) so each row
@@ -5205,6 +5387,11 @@
           card.insertBefore(btn, actions);
         }
       });
+      // Apply Auto % of Total bar visualization to all sub-sub-card rows.
+      applyAutoPctBars(
+        [...list.querySelectorAll(':scope > .opportunity-sub-sub-card')],
+        ':scope > .opportunity-metrics'
+      );
     }
 
     // ----- Agent Actions popover ---------------------------------------
@@ -5350,7 +5537,7 @@
       let host = null;     // where to mount the kebab
       let promoteToGrid = false;
       if (actionsContainer) {
-        originalBtn = actionsContainer.querySelector('.opportunity-create-btn');
+        originalBtn = actionsContainer.querySelector('.components-button--default');
         actionLabel = originalBtn?.textContent.trim() || 'Create AI Agent';
         host = actionsContainer;
       } else if (determBtn) {

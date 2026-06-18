@@ -607,6 +607,27 @@
             // Initialize send button state
             aiPanelSend.disabled = true;
 
+            // ===== CONNECTOR LINE POSITIONING =====
+            // Measures each flow-row and sets the horizontal line to span exactly
+            // from the center of the first card to the center of the last card.
+            function updateConnectors() {
+                document.querySelectorAll('.flow-row').forEach(row => {
+                    const columns = Array.from(row.querySelectorAll(':scope > .agent-column'));
+                    if (columns.length < 1) return;
+                    const rowRect = row.getBoundingClientRect();
+                    const firstCard = columns[0].querySelector('.agent-card-small');
+                    const lastCard = columns[columns.length - 1].querySelector('.agent-card-small');
+                    if (!firstCard || !lastCard) return;
+                    const firstRect = firstCard.getBoundingClientRect();
+                    const lastRect = lastCard.getBoundingClientRect();
+                    const lineLeft = firstRect.left + firstRect.width / 2 - rowRect.left;
+                    const lineRight = lastRect.left + lastRect.width / 2 - rowRect.left;
+                    const lineWidth = Math.max(0, lineRight - lineLeft);
+                    row.style.setProperty('--hline-left', lineLeft + 'px');
+                    row.style.setProperty('--hline-width', lineWidth + 'px');
+                });
+            }
+
             // Flow zoom + pan
             const screenContent = document.querySelector('.screen-content');
             const flowContainer = document.querySelector('.flow-container');
@@ -630,9 +651,9 @@
                 zoomInBtn.disabled = zoomLevel >= ZOOM_MAX;
                 applyTransform();
             }
-            zoomOutBtn.addEventListener('click', () => { zoomLevel -= ZOOM_STEP; applyZoom(); });
-            zoomInBtn.addEventListener('click', () => { zoomLevel += ZOOM_STEP; applyZoom(); });
-            zoomResetBtn.addEventListener('click', () => { zoomLevel = 100; panX = 0; panY = 0; applyZoom(); });
+            zoomOutBtn.addEventListener('click', () => { zoomLevel -= ZOOM_STEP; applyZoom(); requestAnimationFrame(updateConnectors); });
+            zoomInBtn.addEventListener('click', () => { zoomLevel += ZOOM_STEP; applyZoom(); requestAnimationFrame(updateConnectors); });
+            zoomResetBtn.addEventListener('click', () => { zoomLevel = 100; panX = 0; panY = 0; applyZoom(); requestAnimationFrame(updateConnectors); });
             applyZoom();
 
             // Drag to pan
@@ -782,14 +803,21 @@
                     const padLeft = Math.max(0, skillCenterInCanvas - toolsWidth / 2);
                     toolsRow.style.paddingLeft = padLeft + 'px';
                     positionToolsTrunk(skillCard);
+                    // Update horizontal connector lines after tools row is positioned
+                    updateConnectors();
                 });
             }
 
             document.querySelectorAll('.skill-card').forEach(card => {
                 card.addEventListener('click', e => {
-                    // Don't trigger when clicking the edit button or while in edit mode
+                    // Don't trigger when clicking the edit button or form controls
                     if (e.target.closest('.edit-btn, .agent-edit-form')) return;
+                    // If this card is already in edit mode, do nothing
                     if (card.classList.contains('editing')) return;
+                    // Close any other skill card that is currently in edit mode
+                    document.querySelectorAll('.skill-card.editing').forEach(other => {
+                        if (other !== card) closeEdit(other);
+                    });
                     showToolsFor(card);
                 });
             });
@@ -923,6 +951,17 @@
                 document.querySelectorAll('.agent-card.editing, .agent-card-small.editing').forEach(other => {
                     if (other !== card) other.classList.remove('editing');
                 });
+                // If a different skill card is active (showing tools), deactivate it
+                if (card.classList.contains('skill-card')) {
+                    document.querySelectorAll('.skill-card.is-active').forEach(active => {
+                        if (active !== card) {
+                            active.classList.remove('is-active');
+                            setToolsVisible(false);
+                            toolsRow.innerHTML = '';
+                            hideToolsTrunk();
+                        }
+                    });
+                }
                 // Skill / tool cards build their edit form lazily on first open
                 if (!card.querySelector('.agent-edit-form')) {
                     if (card.classList.contains('skill-card')) {
@@ -935,8 +974,35 @@
                 card.classList.add('editing');
             }
 
+            function panToCard(card) {
+                // The page uses overflow:hidden throughout — there is no window scroll.
+                // Movement is done via CSS transform (panX/panY) on .flow-canvas.
+                // Adjust pan so the card is centered in screenContent.
+                const screenRect = screenContent.getBoundingClientRect();
+                const cardRect  = card.getBoundingClientRect();
+                const cardCenterX = cardRect.left + cardRect.width  / 2 - screenRect.left;
+                const cardCenterY = cardRect.top  + cardRect.height / 2 - screenRect.top;
+                const deltaX = screenRect.width  / 2 - cardCenterX;
+                const deltaY = screenRect.height / 2 - cardCenterY;
+                const startX = panX, startY = panY;
+                const targetX = panX + deltaX, targetY = panY + deltaY;
+                const duration = 380;
+                const t0 = performance.now();
+                function ease(t) { return t < 0.5 ? 2*t*t : -1+(4-2*t)*t; }
+                (function step(now) {
+                    const p = Math.min((now - t0) / duration, 1);
+                    panX = startX + (targetX - startX) * ease(p);
+                    panY = startY + (targetY - startY) * ease(p);
+                    applyTransform();
+                    if (p < 1) requestAnimationFrame(step);
+                })(t0);
+            }
+
             function closeEdit(card) {
                 card.classList.remove('editing');
+                // Wait two frames for layout to settle after .editing is removed,
+                // then pan the canvas so the card is centered in the viewport.
+                requestAnimationFrame(() => requestAnimationFrame(() => panToCard(card)));
             }
 
             function saveEdit(card) {
@@ -1025,6 +1091,10 @@
                 <line x1="14" y1="10" x2="21" y2="3"/>
                 <line x1="3" y1="21" x2="10" y2="14"/>
             </svg>`;
+
+            // Initial connector positioning + resize listener
+            requestAnimationFrame(updateConnectors);
+            window.addEventListener('resize', updateConnectors);
 
             // On fullscreen change, move the zoom legend into the header (right side) and back,
             // and swap the icon: expand → minimize-2 when entering, back to expand on exit.

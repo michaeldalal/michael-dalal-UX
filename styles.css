@@ -1047,6 +1047,7 @@ body {
 .flow-canvas {
     transform-origin: 0 0;
     will-change: transform;
+    position: relative;
 }
 
 .flow-container {
@@ -1066,11 +1067,10 @@ body {
 .flow-header {
     display: flex;
     justify-content: center;
-  
 }
 
 .agent-card {
-    background: var(--primary-50);
+    background: var(--primary-0);
     border: 0.125rem solid var(--primary-500);
     border-radius: var(--rounded-md);
     padding: var(--space-4);
@@ -1235,12 +1235,20 @@ body {
     content: '';
     position: absolute;
     top: 0;
-    left: 50%;
-    transform: translateX(-50%);
-    /* 4 cards × 16rem + 3 gaps × 1rem − 16rem (half-card pad on each side) */
-    width: 51rem;
+    left: var(--hline-left, 50%);
+    width: var(--hline-width, 0);
+    transform: none;
     height: 0.0625rem;
     background: var(--neutral-400);
+}
+
+/* Vertical trunk line from an active skill card down to the tools row */
+.tools-trunk {
+    position: absolute;
+    width: 0.0625rem;
+    background: var(--neutral-400);
+    pointer-events: none;
+    display: none;
 }
 
 .agent-card-small {
@@ -1260,9 +1268,16 @@ body {
     background: var(--color-bg-primary);
     border: 0.125rem solid var(--primary-500);
     transition: box-shadow 0.2s ease;
+    cursor: pointer;
+}
+
+.agent-card:hover,
+.agent-card-small:hover {
+    background: var(--primary-25);
 }
 
 .agent-card-small.skill-card:hover {
+    background: var(--primary-25);
     box-shadow: 0 1.25rem 2.5rem -0.5rem var(--shadow-xl);
 }
 
@@ -1544,7 +1559,10 @@ body {
 .ai-panel-greeting {
     font-size: var(--text-md);
     font-weight: var(--font-medium);
-    color: var(--color-blue-button);
+    background: linear-gradient(90deg, #3B82F6 0.01%, #A855F7 99.77%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
     margin-bottom: var(--space-1);
     text-align: center;
 }
@@ -1911,18 +1929,33 @@ body {
 
 .ai-insights-header {
     display: flex;
-    align-items: center;
+    align-items: flex-start;
     gap: var(--space-2);
     margin-bottom: var(--space-5);
     transition: margin-bottom 0.2s;
 }
 
 .ai-insights.collapsed .ai-insights-header {
+    align-items: center;
     margin-bottom: 0;
 }
 
 .ai-insights.collapsed .ai-insights-content {
     display: none;
+}
+
+.ai-insights-preview {
+    flex: 1;
+    min-width: 0;
+    font-size: var(--text-sm);
+    color: var(--color-text-primary);
+    white-space: normal;
+    overflow: hidden;
+}
+
+.ai-insights.collapsed .ai-insights-preview {
+    white-space: nowrap;
+    text-overflow: ellipsis;
 }
 
 .ai-insights-toggle {
@@ -1982,7 +2015,9 @@ body {
 }
 
 .ai-insights-bolt {
-    color: var(--color-amber-warning);
+    width: 1.25rem;
+    height: 1.25rem;
+    color: var(--warning-default);
 }
 
 .ai-insights-section-title {
@@ -2283,7 +2318,7 @@ body {
 /* Multi-select variant — searchable list with a select-all + search header */
 .filter-dropdown-multi {
     min-width: 18rem;
-    padding: 0;
+    padding: var(--space-2);
     box-shadow: 0 0.0625rem 0.1875rem var(--shadow-sm);
     overflow: hidden;
 }
@@ -2329,6 +2364,7 @@ body {
 .filter-dropdown-list {
     max-height: 16rem;
     overflow-y: auto;
+    overflow-x: hidden;
     padding: var(--space-2) var(--space-1);
 }
 
@@ -2490,15 +2526,6 @@ body {
     max-width: 11.25rem;
 }
 
-.impact-cell::before {
-    content: "";
-    display: inline-block;
-    width: 0.875rem;
-    height: 0.875rem;
-    margin-right: var(--space-2);
-    vertical-align: -0.1875rem;
-    background: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2310b981' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><polyline points='22 7 13.5 15.5 8.5 10.5 2 17'/><polyline points='16 7 22 7 22 13'/></svg>") no-repeat center / contain;
-}
 
 /* Action menu popover */
 .action-menu-popover {
@@ -2946,21 +2973,23 @@ body {
     align-items: center;
 }
 
+.components-button--default,
 .opportunity-create-btn {
     padding: var(--space-2) var(--space-3);
-    background: var(--color-bg-primary);
-    border: 0.0625rem solid var(--color-border);
+    background: var(--primary-500);
+    border: 0rem solid;
     border-radius: var(--rounded-md);
-    color: var(--color-primary-900);
+    color: var(--primary-0);
     font-family: var(--font-sans);
     font-size: var(--text-sm);
-    font-weight: var(--font-medium);
+    font-weight: var(--font-regular);
     cursor: pointer;
     transition: background-color 0.2s, border-color 0.2s;
 }
 
+.components-button--default:hover,
 .opportunity-create-btn:hover {
-    background: var(--color-bg-secondary);
+    background: var(--primary-600);
     border-color: var(--color-border-hover);
 }
 
@@ -4813,13 +4842,12 @@ body {
 
 /* Settings page main area + container */
 .settings-container {
-    width: 80rem;
+    width: 86rem;
     max-width: 100%;
     margin: 0 auto;
     display: flex;
     flex-direction: column;
     gap: var(--space-5);
-    padding: var(--space-5) 0;
 }
 
 .settings-section {
@@ -5424,6 +5452,15 @@ body.using-keyboard .agent-edit-input:focus-visible {
     font-size: var(--text-sm);
 }
 
+.agent-card-small.tool:hover {
+    background: var(--primary-25);
+}
+
+.agent-card-small.tool.editing,
+.agent-card-small.tool.editing:hover {
+    background: var(--color-bg-primary);
+}
+
 .agent-card-small.tool .skill-avatar,
 .agent-card-small.tool .tool-avatar {
     background: var(--success-default);
@@ -5435,8 +5472,8 @@ body.using-keyboard .agent-edit-input:focus-visible {
 }
 
 .badge-success {
-    background: rgba(32, 131, 55, 0.1);
-    color: var(--success-default);
+    background:var(--success-bg);
+    color: var(--success-secondary);
     border: 0.0625rem solid var(--success-default);
 }
 
@@ -5488,8 +5525,8 @@ body.using-keyboard .agent-edit-input:focus-visible {
     left: 0;
     right: 0;
     bottom: 0;
-    height: 0.15rem;
-/* background: var(--accent-color, var(--color-blue-button)); */
+    height: 0.10rem;
+background: var(--accent-color, var(--color-blue-button));
 }
 
 
@@ -6415,6 +6452,7 @@ body.using-keyboard .agent-edit-input:focus-visible {
     padding: 0;
 }
 
+.automation-opportunities-copy .opportunity-sub-card .components-button--default,
 .automation-opportunities-copy .opportunity-sub-card .opportunity-create-btn {
     flex-shrink: 0;
     white-space: nowrap;
@@ -6940,4 +6978,228 @@ body.using-keyboard .sidebar-nested-item:focus-visible {
         transition-duration: 0.01ms !important;
         scroll-behavior: auto !important;
     }
+}
+
+/* =====================================================================
+   Auto % of Total — bar cell + insight popover
+   (automation-opportunities-P2.html)
+   ===================================================================== */
+
+/* ── Bar cell ── */
+.auto-percent-metric {
+    min-width: 8rem;
+    width: 10rem;
+    flex: 0 0 10rem;
+}
+
+.auto-percent-bar-wrap {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    width: 100%;
+    margin-top: var(--space-1);
+}
+
+.auto-percent-bar {
+    flex: 1 1 0;
+    min-width: 2.5rem;
+    height: 0.5rem;
+    background: var(--neutral-100);
+    border-radius: var(--rounded-full);
+    overflow: hidden;
+    cursor: pointer;
+    position: relative;
+}
+
+.auto-percent-fill {
+    height: 100%;
+    background: var(--blue-500);
+    border-radius: var(--rounded-full);
+    transition: width 0.35s ease;
+}
+
+.auto-percent-bar:hover .auto-percent-fill,
+.auto-percent-bar.auto-pct-active .auto-percent-fill {
+    filter: brightness(0.88);
+}
+
+.auto-percent-value {
+    font-size: var(--text-sm);
+    font-weight: var(--font-regular);
+    color: var(--color-primary-900);
+    white-space: nowrap;
+    min-width: 2.25rem;
+    text-align: right;
+}
+
+/* Sub-card / sub-sub-card: override right-align, fill the grid cell */
+.automation-opportunities-copy .opportunity-sub-card .auto-percent-metric,
+.automation-opportunities-copy .opportunity-sub-sub-card .auto-percent-metric {
+    justify-content: flex-start;
+    width: 100%;
+    min-width: 0;
+    flex: unset;
+    padding-right: var(--space-4);
+}
+
+.automation-opportunities-copy .opportunity-sub-card .auto-percent-metric .auto-percent-bar-wrap,
+.automation-opportunities-copy .opportunity-sub-sub-card .auto-percent-metric .auto-percent-bar-wrap {
+    margin-top: 0;
+}
+
+@media (max-width: 640px) {
+    .auto-percent-metric {
+        flex: 1 1 100%;
+        width: 100%;
+    }
+}
+
+/* ── Insight popover ── */
+.auto-pct-popover {
+    position: fixed;
+    z-index: 10000;
+    width: 18rem;
+    background: var(--color-bg-primary);
+    border: 0.0625rem solid var(--color-border);
+    border-radius: var(--rounded-md);
+    box-shadow: 0 1.25rem 2.5rem -0.5rem var(--shadow-xl);
+    padding: var(--space-4);
+    box-sizing: border-box;
+}
+
+.auto-pct-popover[hidden] {
+    display: none;
+}
+
+.auto-pct-popover-arrow {
+    position: absolute;
+    width: 0.75rem;
+    height: 0.75rem;
+    background: var(--color-bg-primary);
+    pointer-events: none;
+}
+
+/* Popover above trigger: arrow on the bottom edge */
+.auto-pct-popover[data-placement="top"] .auto-pct-popover-arrow {
+    bottom: -0.43rem;
+    border-right: 0.0625rem solid var(--color-border);
+    border-bottom: 0.0625rem solid var(--color-border);
+    transform: translateX(-50%) rotate(45deg);
+}
+
+/* Popover below trigger: arrow on the top edge */
+.auto-pct-popover[data-placement="bottom"] .auto-pct-popover-arrow {
+    top: -0.43rem;
+    border-left: 0.0625rem solid var(--color-border);
+    border-top: 0.0625rem solid var(--color-border);
+    transform: translateX(-50%) rotate(45deg);
+}
+
+.auto-pct-topic-name {
+    font-size: var(--text-sm);
+    font-weight: var(--font-semibold);
+    color: var(--color-primary-900);
+    margin: 0 0 var(--space-3);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.auto-pct-breakdown {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: var(--space-1) var(--space-3);
+    font-size: var(--text-sm);
+    padding-bottom: var(--space-3);
+}
+
+.auto-pct-breakdown-label {
+    color: var(--color-primary-900);
+}
+
+.auto-pct-breakdown-val {
+    font-weight: var(--font-regular);
+    color: var(--color-primary-900);
+    text-align: right;
+    font-variant-numeric: tabular-nums;
+}
+
+.auto-pct-breakdown-val.is-pct {
+    color: var(--success-secondary);
+}
+
+/* Override .ai-briefing defaults inside the popover so spacing and font size stay compact */
+.auto-pct-ai-briefing.ai-briefing {
+    margin-bottom: 0;
+    padding: var(--space-3);
+}
+
+.auto-pct-ai-briefing .auto-pct-insight-text {
+    font-size: var(--text-sm);
+}
+
+.auto-pct-insight-header {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    font-size: var(--text-xs);
+    font-weight: var(--font-semibold);
+    color: var(--neutral-500);
+    letter-spacing: 0.05em;
+    margin-bottom: var(--space-2);
+}
+
+.auto-pct-insight-text {
+    font-size: var(--text-sm);
+    color: var(--color-text-primary);
+    line-height: 1.55;
+}
+
+.auto-pct-loading {
+    display: flex;
+    gap: 0.3rem;
+    align-items: center;
+    height: 1.25rem;
+}
+
+.auto-pct-dot {
+    width: 0.375rem;
+    height: 0.375rem;
+    background: var(--primary-500);
+    border-radius: 50%;
+    animation: autoPctPulse 1.2s ease-in-out infinite;
+}
+
+.auto-pct-dot:nth-child(2) { animation-delay: 0.2s; }
+.auto-pct-dot:nth-child(3) { animation-delay: 0.4s; }
+
+@keyframes autoPctPulse {
+    0%, 80%, 100% { opacity: 0.2; transform: scale(0.75); }
+    40%            { opacity: 1;   transform: scale(1);    }
+}
+
+/* =====================================================================
+   AI icon gradient — solid filled style
+   Uses the #ai-icon-gradient linearGradient defined in the HTML body.
+   ===================================================================== */
+
+.topbar-ask-ai-btn svg path,
+.ai-briefing-avatar svg path,
+.ai-insights-sparkles path,
+.ai-insights-section-icon:not(.ai-insights-bolt) path,
+.ai-panel-icon path,
+.auto-pct-insight-icon path {
+    fill:   url(#ai-icon-gradient);
+    stroke: none;
+}
+
+.ai-insights-bolt path {
+    fill: var(--warning-default);
+    stroke: none;
+}
+
+.auto-pct-insight-icon {
+    width: 1.25rem;
+    height: 1.25rem;
+    flex-shrink: 0;
 }

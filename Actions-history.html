@@ -179,32 +179,40 @@
 
         <div class="filters">
           <div class="search-box">
-            <svg class="search-box-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <circle cx="11" cy="11" r="8"></circle>
-              <path d="m21 21-4.35-4.35"></path>
+            <svg class="search-box-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/>
             </svg>
             <input type="text" class="search-box-input" placeholder="Search actions...">
           </div>
-          <button class="filter-btn">
-            Date range: <span class="filter-btn-value">01/07/25 – 31/07/25</span>
-            <span style="margin-left: 0.25rem;">⌄</span>
+          <button class="filter-btn" type="button">
+            Date range: <span class="filter-btn-value">01/07/25 &ndash; 31/07/25</span>
+            <svg class="filter-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
           </button>
           <div class="filter-wrapper">
-            <button class="filter-btn" id="status-filter-btn">
+            <button class="filter-btn" type="button" id="status-filter-btn">
               Status: <span class="filter-btn-value" id="status-value">All</span>
-              <span style="margin-left: 0.25rem;">⌄</span>
+              <svg class="filter-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
             </button>
-            <div class="filter-dropdown" id="status-dropdown">
-              <button class="filter-dropdown-item" data-value="All">All</button>
-              <button class="filter-dropdown-item" data-value="Draft">Draft</button>
-              <button class="filter-dropdown-item" data-value="Published">Published</button>
+            <div class="filter-dropdown filter-dropdown-multi" id="status-dropdown">
+              <div class="filter-dropdown-title">Status</div>
+              <label class="filter-checkbox-item"><input type="checkbox"><span>All</span></label>
+              <label class="filter-checkbox-item"><input type="checkbox"><span>Draft</span></label>
+              <label class="filter-checkbox-item"><input type="checkbox"><span>Published</span></label>
             </div>
           </div>
-          <button class="filter-btn">
-            Type: <span class="filter-btn-value">All</span>
-            <span style="margin-left: 0.25rem;">⌄</span>
-          </button>
-          <button class="reset-filters-btn">↻ Reset Filters</button>
+          <div class="filter-wrapper">
+            <button class="filter-btn" type="button">
+              Type: <span class="filter-btn-value">All</span>
+              <svg class="filter-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
+            </button>
+            <div class="filter-dropdown filter-dropdown-multi">
+              <div class="filter-dropdown-title">Type</div>
+              <label class="filter-checkbox-item"><input type="checkbox"><span>All</span></label>
+              <label class="filter-checkbox-item"><input type="checkbox"><span>AI Agent</span></label>
+              <label class="filter-checkbox-item"><input type="checkbox"><span>Deterministic Process</span></label>
+            </div>
+          </div>
+          <button class="reset-filters-btn" type="button">↻ Reset Filters</button>
         </div>
       </div>
 
@@ -214,69 +222,22 @@
             <button class="ai-insights-toggle" id="aiInsightsToggle" type="button" aria-label="Collapse AI Insights" aria-expanded="true">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m18 15-6-6-6 6"/></svg>
             </button>
-            <svg class="ai-insights-sparkles" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-              <path d="M9.937 15.5A2 2 0 0 0 8.5 14.063l-6.135-1.582a.5.5 0 0 1 0-.962L8.5 9.936A2 2 0 0 0 9.937 8.5l1.582-6.135a.5.5 0 0 1 .963 0L14.063 8.5A2 2 0 0 0 15.5 9.937l6.135 1.581a.5.5 0 0 1 0 .964L15.5 14.063a2 2 0 0 0-1.437 1.437l-1.582 6.135a.5.5 0 0 1-.963 0z"/>
-              <path d="M20 3v4"/><path d="M22 5h-4"/><path d="M4 17v2"/><path d="M5 18H3"/>
-            </svg>
-            <h2 class="ai-insights-title">AI Insights</h2>
+            <span class="ai-insights-preview">The portfolio represents $10.8M in projected annual savings across 183 actions, but 85% of actions remain in draft status, holding $7.3M in unrealised projected value.</span>
           </header>
 
           <div class="ai-insights-content">
             <div class="ai-insights-section">
-              <div class="ai-insights-section-header">
-                <svg class="ai-insights-section-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                  <line x1="8" x2="21" y1="6" y2="6"/><line x1="8" x2="21" y1="12" y2="12"/><line x1="8" x2="21" y1="18" y2="18"/>
-                  <line x1="3" x2="3.01" y1="6" y2="6"/><line x1="3" x2="3.01" y1="12" y2="12"/><line x1="3" x2="3.01" y1="18" y2="18"/>
-                </svg>
-                <h3 class="ai-insights-section-title">Generated Summary</h3>
-              </div>
-              <p class="ai-insights-summary">I analyzed 143,000 interactions across 3 major categories and identified opportunities to automate 3% of your workload, saving $38K annually.</p>
-              <p class="ai-insights-summary">Here's what I found:</p>
               <ul class="ai-insights-list">
                 <li>
-                  <strong>Billing &amp; Payment Inquiries leads automation potential:</strong> This category accounts for 68% of total automatable volume with $33K in annual savings.<br>
-                  This category includes high-volume topics like Bill Explanation, Payment Arrangement, and Refund Requests.
+                  <strong>Draft concentration:</strong> 156 actions in draft status represent 67% of total projected savings and 82% of projected interactions, indicating substantial estimated value not yet in published status.
                 </li>
                 <li>
-                  <strong>Card Services &amp; Management shows high efficiency:</strong> With a 90% automation rate and 4.2/5 sentiment score, this category demonstrates that card-related inquiries are well-suited for AI automation with positive customer experiences.
+                  <strong>Billing focus:</strong> Billing-related intents account for the majority of actions in the portfolio, with Billing Charges as the single most frequently occurring intent across both draft and published statuses.
                 </li>
                 <li>
-                  <strong>Account Management &amp; Support offers steady opportunity:</strong> While smaller in volume, this category maintains consistent automation rates and handles critical account operations with 6m average handle times.
+                  <strong>High-value outliers:</strong> Two published actions for Deposit and Billing intents each represent over $600K in projected savings, collectively accounting for approximately 20% of the portfolio's total projected value.
                 </li>
               </ul>
-            </div>
-
-            <div class="ai-insights-section">
-              <div class="ai-insights-section-header">
-                <svg class="ai-insights-section-icon ai-insights-bolt" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                  <path d="M4 14a1 1 0 0 1-.78-1.63l9.9-10.2a.5.5 0 0 1 .86.46l-1.92 6.02A1 1 0 0 0 13 10h7a1 1 0 0 1 .78 1.63l-9.9 10.2a.5.5 0 0 1-.86-.46l1.92-6.02A1 1 0 0 0 11 14z"/>
-                </svg>
-                <h3 class="ai-insights-section-title">Recommended actions</h3>
-                <button class="ai-insights-dismiss" type="button">
-                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                    <path d="M10.268 21a2 2 0 0 0 3.464 0"/>
-                    <path d="M3.262 15.326A1 1 0 0 0 4 17h16a1 1 0 0 0 .74-1.673C19.41 13.956 18 12.499 18 8A6 6 0 0 0 6 8c0 4.499-1.411 5.956-2.738 7.326"/>
-                  </svg>
-                  Dismiss
-                </button>
-              </div>
-              <div class="ai-recommendations">
-                <article class="ai-recommendation">
-                  <h4 class="ai-recommendation-title">Prioritize Billing &amp; Payment Inquiries category</h4>
-                  <p class="ai-recommendation-text">Automating this category will deliver $33K annual savings (63% of total ROI) and handle the majority of high-volume customer inquiries across billing topics.</p>
-                  <span class="ai-recommendation-pill">$33K annual savings</span>
-                </article>
-                <article class="ai-recommendation">
-                  <h4 class="ai-recommendation-title">Prioritize Billing &amp; Payment Inquiries category</h4>
-                  <p class="ai-recommendation-text">Automating this category will deliver $33K annual savings (63% of total ROI) and handle the majority of high-volume customer inquiries across billing topics.</p>
-                  <span class="ai-recommendation-pill">$33K annual savings</span>
-                </article>
-                <article class="ai-recommendation">
-                  <h4 class="ai-recommendation-title">Prioritize Billing &amp; Payment Inquiries category</h4>
-                  <p class="ai-recommendation-text">Automating this category will deliver $33K annual savings (63% of total ROI) and handle the majority of high-volume customer inquiries across billing topics.</p>
-                  <span class="ai-recommendation-pill">$33K annual savings</span>
-                </article>
-              </div>
             </div>
           </div>
         </section>
@@ -444,29 +405,62 @@
       visibleCountEl.textContent = visible;
     }
 
-    // Status filter dropdown
-    const statusFilterBtn = document.getElementById('status-filter-btn');
-    const statusDropdown = document.getElementById('status-dropdown');
-    const statusValue = document.getElementById('status-value');
-    const statusDropdownItems = statusDropdown.querySelectorAll('.filter-dropdown-item');
+    // Filter wrappers — open/close dropdowns on button click
+    const filtersEl = document.querySelector('.filters');
+    const resetBtn = filtersEl.querySelector('.reset-filters-btn');
 
-    statusFilterBtn.addEventListener('click', (e) => {
-      e.stopPropagation();
-      statusDropdown.classList.toggle('visible');
-    });
+    // Hide reset button until filters are dirty
+    resetBtn.hidden = true;
 
-    statusDropdownItems.forEach(item => {
-      item.addEventListener('click', (e) => {
+    function isFiltersDirty() {
+      const anyChecked = [...filtersEl.querySelectorAll('.filter-dropdown input[type="checkbox"]')]
+        .some(cb => cb.checked);
+      const hasSearch = searchInput.value.trim().length > 0;
+      return anyChecked || hasSearch;
+    }
+
+    function updateResetVisibility() {
+      resetBtn.hidden = !isFiltersDirty();
+    }
+
+    // Wire each filter-wrapper: toggle dropdown on btn click, close on outside click
+    filtersEl.querySelectorAll('.filter-wrapper').forEach(wrapper => {
+      const btn = wrapper.querySelector('.filter-btn');
+      const dropdown = wrapper.querySelector('.filter-dropdown');
+      if (!btn || !dropdown) return;
+
+      btn.addEventListener('click', e => {
         e.stopPropagation();
-        const value = item.getAttribute('data-value');
-        statusValue.textContent = value;
-        statusDropdown.classList.remove('visible');
+        const isOpen = dropdown.classList.contains('visible');
+        // Close all other dropdowns first
+        filtersEl.querySelectorAll('.filter-dropdown.visible').forEach(d => d.classList.remove('visible'));
+        if (!isOpen) dropdown.classList.add('visible');
+      });
+
+      // Update label and reset visibility on checkbox change
+      dropdown.querySelectorAll('input[type="checkbox"]').forEach(cb => {
+        cb.addEventListener('change', () => {
+          const checked = [...dropdown.querySelectorAll('input[type="checkbox"]:checked')].map(c => c.nextElementSibling.textContent);
+          const label = wrapper.querySelector('.filter-btn-value');
+          if (label) label.textContent = checked.length ? checked.join(', ') : 'All';
+          updateResetVisibility();
+        });
       });
     });
 
-    // Close dropdown when clicking outside
     document.addEventListener('click', () => {
-      statusDropdown.classList.remove('visible');
+      filtersEl.querySelectorAll('.filter-dropdown.visible').forEach(d => d.classList.remove('visible'));
+    });
+
+    searchInput.addEventListener('input', updateResetVisibility);
+
+    // Reset button
+    resetBtn.addEventListener('click', () => {
+      filtersEl.querySelectorAll('input[type="checkbox"]').forEach(cb => { cb.checked = false; });
+      filtersEl.querySelectorAll('.filter-btn-value').forEach(el => { el.textContent = 'All'; });
+      searchInput.value = '';
+      filterTableRows();
+      resetBtn.hidden = true;
     });
 
     function filterTableRows() {
@@ -480,7 +474,7 @@
       updateRowCount();
     }
 
-    searchInput.addEventListener('input', filterTableRows);
+    searchInput.addEventListener('input', () => { filterTableRows(); updateResetVisibility(); });
 
     const moreRows = [
       {
