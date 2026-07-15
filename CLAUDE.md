@@ -68,7 +68,7 @@ The report must include:
 - Fix recommendation for each finding
 
 ## Session Summaries
-After each session, save a summary markdown file here:
+At the end of every session, automatically save a summary markdown file here:
 /Users/michaelda/Documents/Claude/Projects/Agentic Analytics/Sessions/
 
 File naming: session-[YYYY-MM-DD]-[topic].md

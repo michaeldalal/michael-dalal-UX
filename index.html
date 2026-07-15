@@ -8,7 +8,23 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
   </head>
   <body>
+  <a href="#main" class="sr-only focusable skip-to-content">Skip to content</a>
     <div id="root"></div>
     <script type="module" src="/main.jsx"></script>
-  </body>
+    <!-- A11y: track whether the user is navigating via Tab so the focus
+       ring only shows during keyboard navigation, not on mouse clicks. -->
+  <script>
+    (function () {
+      const body = document.body;
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'Tab') body.classList.add('using-keyboard');
+      });
+      const drop = () => body.classList.remove('using-keyboard');
+      document.addEventListener('mousedown', drop, true);
+      document.addEventListener('pointerdown', drop, true);
+      document.addEventListener('touchstart', drop, { capture: true, passive: true });
+    })();
+  </script>
+<script src="/js/filter-keyboard.js"></script>
+</body>
 </html>

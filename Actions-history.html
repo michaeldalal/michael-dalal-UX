@@ -5,6 +5,54 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Auto Insight - Actions History</title>
   <link rel="stylesheet" href="styles.css">
+  <style>
+    .lat-live-pill {
+      display: inline-flex; align-items: center; gap: 5px;
+      background: #e6f4ea; color: #22863a;
+      font-size: var(--text-xs); border-radius: 999px;
+      padding: 2px 8px 2px 6px; min-width: 42px;
+      transition: background 0.3s ease;
+    }
+    .lat-live-pill.flash { background: #bbf7d0; }
+    .lat-dot { width: 7px; height: 7px; border-radius: 50%; background: #22863a; flex-shrink: 0; }
+    .lat-headset { width: 12px; height: 12px; flex-shrink: 0; stroke: #22863a; }
+    #ahLiveBody tr { will-change: transform; }
+    .live-agent-table td { color: var(--color-text-primary); font-size: 0.8125rem; }
+    .live-agent-table td.cell-agent { font-weight: var(--font-medium); }
+    .live-agent-table td.cell-resolved { color: #22863a; font-weight: var(--font-medium); }
+    .live-agent-table td.cell-saved { color: #22863a; font-weight: var(--font-medium); }
+    .live-agent-table td.cell-handle { color: var(--color-text-muted); }
+    .live-agent-table tbody tr:hover td { background: var(--color-bg-tertiary); }
+    .live-agent-table td:last-child { text-align: left; }
+    .live-agent-table td.cell-money { color: #22863a; font-weight: var(--font-medium); }
+
+    /* Live-agent tab fills remaining viewport height — no page scroll */
+    .main-area.live-agent-active {
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      padding-bottom: 0;
+    }
+    .main-area.live-agent-active [data-view="live-agent"] {
+      display: flex;
+      flex-direction: column;
+      flex: 1;
+      min-height: 0;
+      width: 100%;
+      max-width: 86rem;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    .main-area.live-agent-active .live-table-container {
+      flex: 1;
+      min-height: 0;
+      height: 0;
+      max-height: none;
+    }
+    .main-area.live-agent-active .stats-grid--4col {
+      margin-bottom: var(--space-4);
+    }
+  </style>
 </head>
 <body class="deployed-dashboard">
   <a href="#main" class="sr-only focusable skip-to-content">Skip to content</a>
@@ -174,10 +222,10 @@
         </button>
       </div>
 
-      <div class="main-sticky-header">
+      <div class="main-sticky-header opportunities-sticky-header">
         <h1 class="main-title">Actions History</h1>
 
-        <div class="filters">
+        <div class="filters opportunities-filters">
           <div class="search-box">
             <svg class="search-box-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
               <circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/>
@@ -214,9 +262,15 @@
           </div>
           <button class="reset-filters-btn" type="button">↻ Reset Filters</button>
         </div>
+        <!-- Tabs -->
+        <div class="opportunities-tabs" role="tablist" id="historyTabs">
+          <button class="opportunities-tab active" role="tab" aria-selected="true" data-tab="history">History</button>
+          <button class="opportunities-tab" role="tab" aria-selected="false" data-tab="live-agent">Live Agent</button>
+        </div>
       </div>
 
       <div class="main-area">
+        <div data-view="history">
         <section class="ai-insights" id="aiInsights" aria-label="AI Insights">
           <header class="ai-insights-header">
             <button class="ai-insights-toggle" id="aiInsightsToggle" type="button" aria-label="Collapse AI Insights" aria-expanded="true">
@@ -241,6 +295,69 @@
             </div>
           </div>
         </section>
+
+        <!-- Summary KPIs -->
+        <section class="opportunities-section analyzed-period" aria-label="Summary">
+          <div class="stats-grid stats-grid--rich stats-grid--4col stats-grid--neutral-border">
+
+            <div class="stat-tile-rich" data-accent="green-soft">
+              <div class="stat-tile-rich-label">Total Projected Savings</div>
+              <div class="stat-tile-rich-top">
+                <span class="stat-tile-rich-icon" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/>
+                  </svg>
+                </span>
+                <div class="stat-tile-rich-value">$4.3B</div>
+              </div>
+              <div class="stat-tile-rich-meta">across 274 actions</div>
+            </div>
+
+            <div class="stat-tile-rich" data-accent="primary-soft">
+              <div class="stat-tile-rich-label">Total Projected Interactions</div>
+              <div class="stat-tile-rich-top">
+                <span class="stat-tile-rich-icon" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M3 11h3a1 1 0 0 1 1 1v5a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1z"/>
+                    <path d="M21 11h-3a1 1 0 0 0-1 1v5a1 1 0 0 0 1 1h2a1 1 0 0 0 1-1z"/>
+                    <path d="M3 11a9 9 0 0 1 18 0"/>
+                    <path d="M21 16v2a4 4 0 0 1-4 4h-5"/>
+                  </svg>
+                </span>
+                <div class="stat-tile-rich-value">466M</div>
+              </div>
+              <div class="stat-tile-rich-meta">annually</div>
+            </div>
+
+            <div class="stat-tile-rich" data-accent="warning-soft">
+              <div class="stat-tile-rich-label">Total Actions</div>
+              <div class="stat-tile-rich-top">
+                <span class="stat-tile-rich-icon" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" fill="currentColor" stroke="none">
+                    <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/>
+                  </svg>
+                </span>
+                <div class="stat-tile-rich-value">274</div>
+              </div>
+              <div class="stat-tile-rich-meta">89% draft, 11% published</div>
+            </div>
+
+            <div class="stat-tile-rich" data-accent="neutral-soft">
+              <div class="stat-tile-rich-label">Draft Share of Savings</div>
+              <div class="stat-tile-rich-top">
+                <span class="stat-tile-rich-icon" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/>
+                  </svg>
+                </span>
+                <div class="stat-tile-rich-value">96%</div>
+              </div>
+              <div class="stat-tile-rich-meta">$4.2B in draft status</div>
+            </div>
+
+          </div>
+        </section>
+
         <p class="main-description">Track your actions and their projected impact</p>
         <p class="table-row-count">Showing <span id="visible-count">10</span> of <span id="total-count">20</span> actions</p>
         <div class="table-container">
@@ -327,6 +444,85 @@
             <a class="action-menu-item" href="AI Agent.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 8V4H8"/><rect width="16" height="12" x="4" y="8" rx="2"/><path d="M2 14h2"/><path d="M20 14h2"/><path d="M15 13v2"/><path d="M9 13v2"/></svg>View AI Agent</a>
           </div>
         </div>
+        </div><!-- /data-view="history" -->
+
+        <div data-view="live-agent" hidden>
+          <div class="stats-grid stats-grid--rich stats-grid--4col stats-grid--neutral-border">
+
+            <div class="stat-tile-rich" data-accent="primary-soft">
+              <div class="stat-tile-rich-label">Calls Handled Today</div>
+              <div class="stat-tile-rich-top">
+                <span class="stat-tile-rich-icon" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6A19.79 19.79 0 0 1 2.12 4.18 2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/>
+                  </svg>
+                </span>
+                <div class="stat-tile-rich-value" id="ahTotalCalls">—</div>
+              </div>
+              <div class="stat-tile-rich-meta">across 10 active agents</div>
+            </div>
+
+            <div class="stat-tile-rich" data-accent="green-soft">
+              <div class="stat-tile-rich-label">On Call Now</div>
+              <div class="stat-tile-rich-top">
+                <span class="stat-tile-rich-icon" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M3 11h3a1 1 0 0 1 1 1v5a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1z"/>
+                    <path d="M21 11h-3a1 1 0 0 0-1 1v5a1 1 0 0 0 1 1h2a1 1 0 0 0 1-1z"/>
+                    <path d="M3 11a9 9 0 0 1 18 0"/>
+                    <path d="M21 16v2a4 4 0 0 1-4 4h-5"/>
+                  </svg>
+                </span>
+                <div class="stat-tile-rich-value" id="ahTotalLive">—</div>
+              </div>
+              <div class="stat-tile-rich-meta">live conversations right now</div>
+            </div>
+
+            <div class="stat-tile-rich" data-accent="warning-soft">
+              <div class="stat-tile-rich-label">Time Saved Today</div>
+              <div class="stat-tile-rich-top">
+                <span class="stat-tile-rich-icon" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/>
+                  </svg>
+                </span>
+                <div class="stat-tile-rich-value" id="ahTotalSaved">—</div>
+              </div>
+              <div class="stat-tile-rich-meta">vs. human handle time</div>
+            </div>
+
+            <div class="stat-tile-rich" data-accent="neutral-soft">
+              <div class="stat-tile-rich-label">Avg Resolution Rate</div>
+              <div class="stat-tile-rich-top">
+                <span class="stat-tile-rich-icon" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/>
+                  </svg>
+                </span>
+                <div class="stat-tile-rich-value" id="ahAvgResolved">—</div>
+              </div>
+              <div class="stat-tile-rich-meta">containment without escalation</div>
+            </div>
+
+          </div>
+
+          <div class="table-container live-table-container" style="margin-top: 0;">
+            <table class="sb-argstableBlock live-agent-table" aria-label="Live agents">
+              <thead class="sb-argstableBlock-head">
+                <tr>
+                  <th style="width: 26%;">AI Agent</th>
+                  <th style="width: 11%;">Calls</th>
+                  <th style="width: 11%;">Live</th>
+                  <th style="width: 11%;">Resolved</th>
+                  <th style="width: 11%;">Handle</th>
+                  <th style="width: 15%;">Time Saved</th>
+                  <th style="width: 15%;">$ Saved</th>
+                </tr>
+              </thead>
+              <tbody id="ahLiveBody" class="sb-argstableBlock-body"></tbody>
+            </table>
+          </div>
+        </div><!-- /data-view="live-agent" -->
       </div>
     </div>
 
@@ -955,5 +1151,138 @@
     })();
   </script>
 <script src="/js/filter-keyboard.js"></script>
+<script>
+  (function () {
+    const agents = [
+      { name: 'Balance Inquiry',   calls: 412, live: 18, resolved: 91, handle: '1:48', saved: 14.7, money: 559  },
+      { name: 'Card Activation',   calls: 287, live: 9,  resolved: 88, handle: '2:05', saved: 9.8,  money: 372  },
+      { name: 'Fraud Alert',       calls: 154, live: 6,  resolved: 76, handle: '3:12', saved: 6.1,  money: 232  },
+      { name: 'Password Reset',    calls: 531, live: 22, resolved: 95, handle: '1:20', saved: 16.2, money: 616  },
+      { name: 'Loan Status',       calls: 98,  live: 3,  resolved: 82, handle: '2:40', saved: 3.9,  money: 148  },
+      { name: 'Statement Request', calls: 203, live: 7,  resolved: 93, handle: '1:35', saved: 7.4,  money: 281  },
+      { name: 'Dispute Filing',    calls: 67,  live: 4,  resolved: 68, handle: '4:02', saved: 2.1,  money: 80   },
+      { name: 'Branch Locator',    calls: 319, live: 11, resolved: 97, handle: '0:58', saved: 11.6, money: 441  },
+      { name: 'Interest Rate',     calls: 142, live: 5,  resolved: 90, handle: '1:52', saved: 5.3,  money: 201  },
+      { name: 'Account Closure',   calls: 45,  live: 2,  resolved: 71, handle: '3:44', saved: 1.4,  money: 53   },
+    ];
+
+    function ranked() { return [...agents].sort((a, b) => b.live - a.live); }
+
+    const body = document.getElementById('ahLiveBody');
+
+    function getOrCreateRow(name) {
+      let tr = body.querySelector(`[data-agent="${CSS.escape(name)}"]`);
+      if (!tr) {
+        tr = document.createElement('tr');
+        tr.dataset.agent = name;
+        tr.innerHTML = `
+          <td class="cell-agent" style="padding-left:0.9375rem;"></td>
+          <td class="cell-calls"></td>
+          <td class="cell-live"></td>
+          <td class="cell-resolved"></td>
+          <td class="cell-handle"></td>
+          <td class="cell-saved"></td>
+          <td class="cell-money"></td>`;
+      }
+      return tr;
+    }
+
+    function renderLive(flashId) {
+      const tCalls     = document.getElementById('ahTotalCalls');
+      const tLive      = document.getElementById('ahTotalLive');
+      const tSaved     = document.getElementById('ahTotalSaved');
+      const tResolved  = document.getElementById('ahAvgResolved');
+      if (!body) return;
+
+      const sorted     = ranked();
+      const sumCalls   = agents.reduce((s, a) => s + a.calls, 0);
+      const sumLive    = agents.reduce((s, a) => s + a.live,  0);
+      const sumSaved   = agents.reduce((s, a) => s + a.saved, 0);
+      const avgResolved= agents.reduce((s, a) => s + a.resolved, 0) / agents.length;
+      if (tCalls)    tCalls.textContent    = sumCalls.toLocaleString();
+      if (tLive)     tLive.textContent     = sumLive;
+      if (tSaved)    tSaved.textContent    = '~' + sumSaved.toFixed(1) + ' hrs';
+      if (tResolved) tResolved.textContent = avgResolved.toFixed(1) + '%';
+
+      // FLIP — snapshot positions before DOM changes
+      const before = {};
+      body.querySelectorAll('[data-agent]').forEach(r => {
+        before[r.dataset.agent] = r.getBoundingClientRect().top;
+      });
+
+      // Update cells and re-append in sorted order
+      sorted.forEach(agent => {
+        const tr = getOrCreateRow(agent.name);
+        const cells = tr.querySelectorAll('td');
+        cells[0].textContent = agent.name + ' Bot';
+        cells[1].textContent = agent.calls.toLocaleString();
+
+        let pill = cells[2].querySelector('.lat-live-pill');
+        if (!pill) {
+          pill = document.createElement('span');
+          pill.className = 'lat-live-pill';
+          pill.innerHTML = `<svg class="lat-headset" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11h3a1 1 0 0 1 1 1v5a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1z"/><path d="M21 11h-3a1 1 0 0 0-1 1v5a1 1 0 0 0 1 1h2a1 1 0 0 0 1-1z"/><path d="M3 11a9 9 0 0 1 18 0"/><path d="M21 16v2a4 4 0 0 1-4 4h-5"/></svg><span class="lat-live-num"></span>`;
+          cells[2].innerHTML = '';
+          cells[2].appendChild(pill);
+        }
+        const numEl = pill.querySelector('.lat-live-num');
+        if (numEl.textContent !== String(agent.live)) {
+          numEl.textContent = agent.live;
+          if (agent.name === flashId) {
+            pill.classList.add('flash');
+            setTimeout(() => pill.classList.remove('flash'), 600);
+          }
+        }
+
+        cells[3].textContent = agent.resolved + '%';
+        cells[4].textContent = agent.handle;
+        cells[5].textContent = agent.saved + 'h';
+        cells[6].textContent = '$' + agent.money.toLocaleString();
+        body.appendChild(tr);
+      });
+
+      // FLIP — animate rows that moved
+      body.querySelectorAll('[data-agent]').forEach(tr => {
+        const name = tr.dataset.agent;
+        if (!(name in before)) return;
+        const dy = before[name] - tr.getBoundingClientRect().top;
+        if (Math.abs(dy) < 1) return;
+        tr.style.transition = 'none';
+        tr.style.transform  = `translateY(${dy}px)`;
+        requestAnimationFrame(() => {
+          tr.style.transition = 'transform 0.45s cubic-bezier(0.4,0,0.2,1)';
+          tr.style.transform  = 'translateY(0)';
+        });
+      });
+    }
+
+    renderLive(null);
+
+    setInterval(() => {
+      const idx = Math.floor(Math.random() * agents.length);
+      agents[idx].live  = Math.max(0, agents[idx].live + (Math.random() < 0.5 ? 1 : -1));
+      agents[idx].calls += Math.floor(Math.random() * 3);
+      renderLive(agents[idx].name);
+    }, 3000);
+  })();
+</script>
+<script>
+  document.getElementById('historyTabs')?.querySelectorAll('.opportunities-tab').forEach(tab => {
+    tab.addEventListener('click', () => {
+      document.querySelectorAll('#historyTabs .opportunities-tab').forEach(t => {
+        t.classList.remove('active');
+        t.setAttribute('aria-selected', 'false');
+      });
+      tab.classList.add('active');
+      tab.setAttribute('aria-selected', 'true');
+      const target = tab.dataset.tab;
+      const mainArea = document.querySelector('.main-area');
+      mainArea?.classList.toggle('live-agent-active', target === 'live-agent');
+      document.querySelectorAll('.main-area [data-view]').forEach(v => {
+        v.hidden = v.dataset.view !== target;
+      });
+    });
+  });
+</script>
 </body>
 </html>

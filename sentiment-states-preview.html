@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sentiment States Preview</title>
+  <link rel="stylesheet" href="styles.css">
+  <script src="https://cdn.jsdelivr.net/npm/echarts@5.5.0/dist/echarts.min.js" defer></script>
+  <style>
+    .sentiment-preview-page {
+      max-width: 28rem;
+      margin: var(--space-8) auto;
+      padding: 0 var(--space-5);
+    }
+    .sentiment-preview-title {
+      font-size: var(--text-xl);
+      font-weight: var(--font-semibold);
+      color: var(--color-primary-900);
+      margin: 0 0 var(--space-5);
+    }
+    .sentiment-preview-table {
+      width: 100%;
+      border-collapse: collapse;
+      background: var(--color-bg-primary);
+      border: 0.0625rem solid var(--color-border);
+      border-radius: var(--rounded-md);
+      overflow: hidden;
+    }
+    .sentiment-preview-table caption {
+      text-align: left;
+      font-size: var(--text-sm);
+      color: var(--neutral-500);
+      margin-bottom: var(--space-3);
+    }
+    .sentiment-preview-table th {
+      text-align: left;
+      font-size: var(--text-sm);
+      font-weight: var(--font-medium);
+      color: var(--neutral-500);
+      padding: var(--space-3) var(--space-4);
+      border-bottom: 0.0625rem solid var(--color-border);
+    }
+    .sentiment-preview-table td {
+      padding: var(--space-3) var(--space-4);
+      border-bottom: 0.0625rem solid var(--color-border);
+      font-size: var(--text-md);
+      color: var(--color-primary-900);
+    }
+    .sentiment-preview-table tr:last-child td {
+      border-bottom: none;
+    }
+  </style>
+</head>
+<body>
+  <main class="sentiment-preview-page">
+    <h1 class="sentiment-preview-title">Sentiment states preview</h1>
+    <table class="sentiment-preview-table">
+      <caption>All 6 Avg. Sentiment states</caption>
+      <thead>
+        <tr>
+          <th scope="col">Avg. Sentiment</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>
+            <span class="sentiment-val">
+              <img class="sentiment-icon-img sentiment-icon-img--24" src="images/Strongly%20Negative%20Sentiment%20-%2016px.svg" alt="" aria-hidden="true">
+              0.8
+            </span>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <span class="sentiment-val">
+              <img class="sentiment-icon-img sentiment-icon-img--24" src="images/Moderately%20Negative%20Sentiment%20-%2016px.svg" alt="" aria-hidden="true">
+              1.6
+            </span>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <span class="sentiment-val">
+              <img class="sentiment-icon-img sentiment-icon-img--24" src="images/Mixed%20Sentiment%20-%2016px.svg" alt="" aria-hidden="true">
+              2.5
+            </span>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <span class="sentiment-val">
+              <img class="sentiment-icon-img sentiment-icon-img--24" src="images/Neutral%20Sentiment%20-%2016px.svg" alt="" aria-hidden="true">
+              3.2
+            </span>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <span class="sentiment-val">
+              <img class="sentiment-icon-img sentiment-icon-img--24" src="images/Moderately%20Positive%2016px.svg" alt="" aria-hidden="true">
+              3.9
+            </span>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <span class="sentiment-val">
+              <img class="sentiment-icon-img sentiment-icon-img--24" src="images/Strongly%20Positive%20Sentiment%20-%2016px.svg" alt="" aria-hidden="true">
+              4.8
+            </span>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </main>
+
+  <script src="/js/filter-keyboard.js"></script>
+</body>
+</html>

@@ -151,7 +151,7 @@
                         <line x1="15" y1="3" x2="15" y2="21"></line>
                     </svg>
                 </button>
-                <div class="topbar-breadcrumb">Ava Smith &rsaquo; Textual View</div>
+                <a class="topbar-breadcrumb" href="automation-opportunities.html">Automation Opportunities</a>
                 <button class="topbar-ask-ai-btn" type="button" aria-haspopup="dialog" aria-controls="aiPanel" aria-expanded="false">
                     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                         <path d="M9.937 15.5A2 2 0 0 0 8.5 14.063l-6.135-1.582a.5.5 0 0 1 0-.962L8.5 9.936A2 2 0 0 0 9.937 8.5l1.582-6.135a.5.5 0 0 1 .963 0L14.063 8.5A2 2 0 0 0 15.5 9.937l6.135 1.581a.5.5 0 0 1 0 .964L15.5 14.063a2 2 0 0 0-1.437 1.437l-1.582 6.135a.5.5 0 0 1-.963 0z"/>
@@ -179,28 +179,47 @@
                         </select>
                     </div>
 
-                    <button class="publish-btn" id="publishAiBtn">Publish AI Agent</button>
+                    <button class="settings-cancel-btn" id="publishAiBtn">Publish AI Agent</button>
                 </div>
 
                 <div class="metadata-row">
                     <div class="metadata-group">
                         <div class="metadata-item">
-                            <span class="metadata-label">Created By:</span>
+                            <span class="icon-tooltip" data-tooltip="Created By" tabindex="0">
+                                <svg class="metadata-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" role="img" aria-label="Created By"><circle cx="12" cy="8" r="5"/><path d="M20 21a8 8 0 0 0-16 0"/></svg>
+                            </span>
                             <span class="metadata-value">Michael Ofeal</span>
                         </div>
                         <div class="metadata-item">
-                            <span class="metadata-label">Creation Date:</span>
+                            <span class="icon-tooltip" data-tooltip="Creation date" tabindex="0">
+                                <svg class="metadata-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" role="img" aria-label="Creation date"><path d="M8 2v4"/><path d="M16 2v4"/><rect width="18" height="18" x="3" y="4" rx="2"/><path d="M3 10h18"/><path d="M8 14h.01"/><path d="M12 14h.01"/><path d="M16 14h.01"/><path d="M8 18h.01"/><path d="M12 18h.01"/><path d="M16 18h.01"/></svg>
+                            </span>
                             <span class="metadata-value">Oct 30, 2025, 4:29 PM</span>
                         </div>
                         <div class="metadata-item">
-                            <span class="metadata-label">Status:</span>
-                            <span class="badge badge-draft">Draft</span>
+                            <span class="badge badge-secondary" id="statusBadge">Published</span>
+                            <span class="metadata-value" id="publishedDate">Jun 22, 2026 4:26 PM</span>
+                        </div>
+                        <div class="metadata-item agent-dropdown" id="openPublishedItem">
+                            <button class="open-published-btn" id="openPublishedBtn" type="button" aria-haspopup="true" aria-expanded="false">
+                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 0 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+                                <span>Open published AI agent</span>
+                                <svg class="open-published-chevron" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
+                            </button>
+                            <div class="agent-dropdown-menu" id="publishedVersionsDropdown" role="menu" style="left:0;">
+                                <div class="agent-dropdown-header" id="publishedVersionsHeader">Published Versions (0)</div>
+                                <ul class="published-versions-list" id="publishedVersionsList" style="list-style:none;margin:0;padding:0;"></ul>
+                            </div>
                         </div>
                     </div>
 
-                    <div class="button-group">
-                        <button class="button-group-item active">Textual View</button>
-                        <a class="button-group-item" href="AI Agent.html">Flow View</a>
+                    <div class="sort-toggle-group" role="group" aria-label="View">
+                        <button type="button" class="sort-toggle-btn active" aria-pressed="true" aria-label="Textual view" data-tooltip="Textual view">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect width="18" height="18" x="3" y="3" rx="2"/><path d="M21 9H3"/><path d="M21 15H3"/></svg>
+                        </button>
+                        <a class="sort-toggle-btn" href="AI Agent.html" aria-label="Visual view" data-tooltip="Visual view">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect width="8" height="8" x="3" y="3" rx="2"/><path d="M7 11v4a2 2 0 0 0 2 2h4"/><rect width="8" height="8" x="13" y="13" rx="2"/></svg>
+                        </a>
                     </div>
                 </div>
             </section>
@@ -211,218 +230,288 @@
                     <aside class="textual-nav">
                         <div class="textual-nav-group">
                             <div class="textual-nav-title">Agent Details</div>
-                            <a class="textual-nav-item" href="#agent-overview">Agent Overview</a>
+                            <a class="textual-nav-item active" href="#" data-target="section-agent-overview">Agent Overview</a>
                         </div>
                         <div class="textual-nav-group">
                             <div class="textual-nav-title">Skills</div>
-                            <a class="textual-nav-item" href="#skill-routing">Routing AI Agent</a>
-                            <a class="textual-nav-item active" href="#skill-charge-refund">Charge &amp; Refund Specialist</a>
-                            <a class="textual-nav-item" href="#skill-payment-arrangement">Payment Arrangement Agent</a>
-                            <a class="textual-nav-item" href="#skill-invoice-statement">Invoice &amp; Statement Agent</a>
+                            <a class="textual-nav-item" href="#" data-target="section-identity-verification">identity-verification</a>
+                            <a class="textual-nav-item" href="#" data-target="section-billing-charge-inquiry">billing-charge-inquiry</a>
+                            <a class="textual-nav-item" href="#" data-target="section-charge-dispute-resolution">charge-dispute-resolution</a>
                         </div>
                     </aside>
 
                     <!-- Content -->
                     <div class="textual-content">
-                        <!-- Skill card -->
-                        <section class="textual-card" id="skill-charge-refund">
-                            <div class="textual-card-header">
-                                <h2 class="textual-card-title">Skill</h2>
-                                <button class="textual-card-action" type="button" aria-label="AI assist">
-                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                                        <path d="M9.937 15.5A2 2 0 0 0 8.5 14.063l-6.135-1.582a.5.5 0 0 1 0-.962L8.5 9.936A2 2 0 0 0 9.937 8.5l1.582-6.135a.5.5 0 0 1 .963 0L14.063 8.5A2 2 0 0 0 15.5 9.937l6.135 1.581a.5.5 0 0 1 0 .964L15.5 14.063a2 2 0 0 0-1.437 1.437l-1.582 6.135a.5.5 0 0 1-.963 0z"/>
-                                        <path d="M20 3v4"/><path d="M22 5h-4"/><path d="M4 17v2"/><path d="M5 18H3"/>
-                                    </svg>
-                                </button>
-                            </div>
-                            <div class="textual-card-body">
-                                <div class="textual-field">
-                                    <label class="textual-label" for="t-skill-name">Skill Name:</label>
-                                    <input class="textual-input" id="t-skill-name" type="text" value="charge-dispute">
-                                    <p class="textual-helper">Must contain only lowercase alphanumeric characters and hyphens</p>
-                                </div>
-                                <div class="textual-field">
-                                    <label class="textual-label" for="t-skill-desc">Description</label>
-                                    <textarea class="textual-input textual-textarea" id="t-skill-desc" rows="3" maxlength="300" data-counter="true">Investigates disputed charges, validates transactions, initiates refunds.</textarea>
-                                    <div class="textual-counter">
-                                        <span class="textual-chars">0 characters</span>
-                                        <span class="textual-remaining">300 remaining</span>
-                                    </div>
-                                </div>
-                                <div class="textual-field">
-                                    <label class="textual-label" for="t-skill-instruction">Instruction</label>
-                                    <textarea class="textual-input textual-textarea" id="t-skill-instruction" rows="3" maxlength="300" data-counter="true">Use this skill when a customer disputes a charge or requests a refund. Validate the charge before initiating any refund or dispute process.</textarea>
-                                    <div class="textual-counter">
-                                        <span class="textual-chars">0 characters</span>
-                                        <span class="textual-remaining">300 remaining</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </section>
 
-                        <!-- Tools 1 -->
-                        <section class="textual-card">
-                            <div class="textual-card-header">
-                                <h2 class="textual-card-title">Tools 1:</h2>
-                                <button class="textual-card-action" type="button" aria-label="AI assist">
-                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                                        <path d="M9.937 15.5A2 2 0 0 0 8.5 14.063l-6.135-1.582a.5.5 0 0 1 0-.962L8.5 9.936A2 2 0 0 0 9.937 8.5l1.582-6.135a.5.5 0 0 1 .963 0L14.063 8.5A2 2 0 0 0 15.5 9.937l6.135 1.581a.5.5 0 0 1 0 .964L15.5 14.063a2 2 0 0 0-1.437 1.437l-1.582 6.135a.5.5 0 0 1-.963 0z"/>
-                                        <path d="M20 3v4"/><path d="M22 5h-4"/><path d="M4 17v2"/><path d="M5 18H3"/>
-                                    </svg>
-                                </button>
-                            </div>
-                            <div class="textual-card-body">
-                                <div class="textual-field">
-                                    <label class="textual-label">Tool Name:</label>
-                                    <input class="textual-input" type="text" value="validate_charge">
-                                </div>
-                                <div class="textual-field">
-                                    <label class="textual-label">Tool Description:</label>
-                                    <textarea class="textual-input textual-textarea" rows="3" maxlength="300" data-counter="true">Cross-references a disputed charge against transaction records to determine its legitimacy.</textarea>
-                                    <div class="textual-counter">
-                                        <span class="textual-chars">0 characters</span>
-                                        <span class="textual-remaining">300 remaining</span>
+                        <!-- ── Agent Overview ── -->
+                        <div class="textual-section" id="section-agent-overview">
+                            <section class="textual-card">
+                                <div class="textual-card-body">
+                                    <div class="textual-field">
+                                        <label class="textual-label" for="t-persona-name">Persona Name</label>
+                                        <input class="textual-input" id="t-persona-name" type="text" value="Ava Smith" maxlength="100" data-counter="true">
+                                        <div class="textual-counter"><span class="textual-chars">0 / 100</span><span class="textual-remaining"></span></div>
+                                    </div>
+                                    <div class="textual-field">
+                                        <label class="textual-label" for="t-agent-name">Agent Name</label>
+                                        <input class="textual-input" id="t-agent-name" type="text" value="Billing &amp; Payment AI Agent" maxlength="100" data-counter="true">
+                                        <div class="textual-counter"><span class="textual-chars">0 / 100</span><span class="textual-remaining"></span></div>
+                                    </div>
+                                    <div class="textual-field">
+                                        <label class="textual-label" for="t-agent-instructions">Agent Instructions:</label>
+                                        <textarea class="textual-input textual-textarea" id="t-agent-instructions" rows="7" maxlength="2000" data-counter="true">You are a billing support agent for Member Travel Privileges. Greet customers warmly by name, verify identity before accessing any account details, then route to the appropriate skill based on the customer's billing concern. Always set clear expectations for resolution timelines. Never waive system-applied fees unless authorized. Maintain a calm, professional, and empathetic tone throughout. Do not speculate about charges — always verify in the system before responding. Escalate to a live agent if the issue cannot be resolved through available tools.</textarea>
+                                        <div class="textual-counter"><span class="textual-chars">0 / 2000</span><span class="textual-remaining"></span></div>
                                     </div>
                                 </div>
-                                <div class="textual-params" data-open="true">
-                                    <div class="textual-params-label">Parameters (3):</div>
-                                    <div class="textual-params-table">
-                                        <div class="textual-params-header">
-                                            <span>Parameter Name</span>
-                                            <span>Description</span>
-                                        </div>
-                                        <div class="textual-param-row">
-                                            <input class="textual-input" type="text" value="accountNumber">
-                                            <input class="textual-input" type="text" value="Customer&rsquo;s unique account identifier">
-                                        </div>
-                                        <div class="textual-param-row">
-                                            <input class="textual-input" type="text" value="chargeId">
-                                            <input class="textual-input" type="text" value="Start of the billing period to retrieve">
-                                        </div>
-                                        <div class="textual-param-row">
-                                            <input class="textual-input" type="text" value="refundAmount">
-                                            <input class="textual-input" type="text" value="End of the billing period to retrieve">
+                            </section>
+                        </div>
+
+                        <!-- ── identity-verification ── -->
+                        <div class="textual-section" id="section-identity-verification" hidden>
+                            <h2 class="textual-nav-title">identity-verification</h2>
+                            <section class="textual-card">
+                                <div class="textual-card-body">
+                                    <div class="textual-field">
+                                        <label class="textual-label">Skill Name:</label>
+                                        <input class="textual-input" type="text" value="identity-verification" maxlength="50" data-counter="true">
+                                        <div class="textual-field-footer">
+                                            <p class="textual-helper">Must contain only lowercase alphanumeric characters and hyphens</p>
+                                            <span class="textual-chars">0 / 50</span>
                                         </div>
                                     </div>
-                                    <button class="textual-params-toggle" type="button" data-action="toggle-params">
-                                        <svg class="textual-params-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                                            <path d="m18 15-6-6-6 6"/>
-                                        </svg>
-                                        <span class="textual-params-toggle-text">Hide Parameters (3)</span>
+                                    <div class="textual-field">
+                                        <label class="textual-label">Description</label>
+                                        <textarea class="textual-input textual-textarea" rows="3" maxlength="300" data-counter="true">Greets the customer, collects their name and account phone number, and verifies identity with email and mailing address before accessing any account details.</textarea>
+                                        <div class="textual-counter"><span class="textual-chars">0 / 300</span><span class="textual-remaining"></span></div>
+                                    </div>
+                                    <div class="textual-field">
+                                        <label class="textual-label">Instruction</label>
+                                        <textarea class="textual-input textual-textarea" rows="6" maxlength="2000" data-counter="true">## Identity Verification
+
+Greet the customer by name. Ask for their account phone number, then verify with email address or mailing address on file. Do not proceed to any account details until identity is confirmed. If identity cannot be verified after 2 attempts, escalate to a live agent.</textarea>
+                                        <div class="textual-counter"><span class="textual-chars">0 / 2000</span><span class="textual-remaining"></span></div>
+                                    </div>
+                                </div>
+                            </section>
+                        </div>
+
+                        <!-- ── billing-charge-inquiry ── -->
+                        <div class="textual-section" id="section-billing-charge-inquiry" hidden>
+                            <h2 class="textual-nav-title">billing-charge-inquiry</h2>
+                            <section class="textual-card">
+                                <div class="textual-card-body">
+                                    <div class="textual-field">
+                                        <label class="textual-label">Skill Name:</label>
+                                        <input class="textual-input" type="text" value="billing-charge-inquiry" maxlength="50" data-counter="true">
+                                        <div class="textual-field-footer">
+                                            <p class="textual-helper">Must contain only lowercase alphanumeric characters and hyphens</p>
+                                            <span class="textual-chars">0 / 50</span>
+                                        </div>
+                                    </div>
+                                    <div class="textual-field">
+                                        <label class="textual-label">Description</label>
+                                        <textarea class="textual-input textual-textarea" rows="3" maxlength="300" data-counter="true">Handles customer questions about charges, billing statements, and payment history. Retrieves billing details and explains fees, taxes, and billing cycles clearly.</textarea>
+                                        <div class="textual-counter"><span class="textual-chars">0 / 300</span><span class="textual-remaining"></span></div>
+                                    </div>
+                                    <div class="textual-field">
+                                        <label class="textual-label">Instruction</label>
+                                        <textarea class="textual-input textual-textarea" rows="6" maxlength="2000" data-counter="true">## Billing Charge Inquiry
+
+Retrieve the customer's most recent billing statement. Explain each line item clearly — including service charges, taxes, and any one-time fees. If the customer questions a specific charge, validate it against the account record before responding. Never speculate about the reason for a charge.</textarea>
+                                        <div class="textual-counter"><span class="textual-chars">0 / 2000</span><span class="textual-remaining"></span></div>
+                                    </div>
+                                </div>
+                            </section>
+                        </div>
+
+                        <!-- ── charge-dispute-resolution ── -->
+                        <div class="textual-section" id="section-charge-dispute-resolution" hidden>
+                            <h2 class="textual-nav-title">charge-dispute-resolution</h2>
+                            <section class="textual-card">
+                                <div class="textual-card-body">
+                                    <div class="textual-field">
+                                        <label class="textual-label">Skill Name:</label>
+                                        <input class="textual-input" type="text" value="charge-dispute-resolution" maxlength="50" data-counter="true">
+                                        <div class="textual-field-footer">
+                                            <p class="textual-helper">Must contain only lowercase alphanumeric characters and hyphens</p>
+                                            <span class="textual-chars">0 / 50</span>
+                                        </div>
+                                    </div>
+                                    <div class="textual-field">
+                                        <label class="textual-label">Description</label>
+                                        <textarea class="textual-input textual-textarea" rows="3" maxlength="300" data-counter="true">Investigates disputed charges, validates transactions against account records, and initiates refunds or formal dispute cases when warranted.</textarea>
+                                        <div class="textual-counter"><span class="textual-chars">0 / 300</span><span class="textual-remaining"></span></div>
+                                    </div>
+                                    <div class="textual-field">
+                                        <label class="textual-label">Instruction</label>
+                                        <textarea class="textual-input textual-textarea" rows="6" maxlength="2000" data-counter="true">## Charge Dispute Resolution
+
+Ask the customer to identify the charge they are disputing. Validate the charge against transaction records using the validate_charge tool. If the charge is confirmed as an error, initiate a refund using initiate_refund. If the disputed status is unclear, open a formal dispute case using submit_dispute_case and provide the customer with a case number.</textarea>
+                                        <div class="textual-counter"><span class="textual-chars">0 / 2000</span><span class="textual-remaining"></span></div>
+                                    </div>
+                                </div>
+                            </section>
+
+                            <!-- Tool 1: validate_charge -->
+                            <section class="textual-card">
+                                <div class="textual-card-header">
+                                    <h2 class="textual-card-title">Tool 1</h2>
+                                    <button class="textual-card-action" type="button" aria-label="AI assist">
+                                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9.937 15.5A2 2 0 0 0 8.5 14.063l-6.135-1.582a.5.5 0 0 1 0-.962L8.5 9.936A2 2 0 0 0 9.937 8.5l1.582-6.135a.5.5 0 0 1 .963 0L14.063 8.5A2 2 0 0 0 15.5 9.937l6.135 1.581a.5.5 0 0 1 0 .964L15.5 14.063a2 2 0 0 0-1.437 1.437l-1.582 6.135a.5.5 0 0 1-.963 0z"/><path d="M20 3v4"/><path d="M22 5h-4"/><path d="M4 17v2"/><path d="M5 18H3"/></svg>
                                     </button>
                                 </div>
-                            </div>
-                        </section>
+                                <div class="textual-card-body">
+                                    <div class="textual-field">
+                                        <label class="textual-label">Tool Name:</label>
+                                        <input class="textual-input" type="text" value="validate_charge">
+                                    </div>
+                                    <div class="textual-field">
+                                        <label class="textual-label">Tool Description:</label>
+                                        <textarea class="textual-input textual-textarea" rows="2" maxlength="300" data-counter="true">Validates a charged transaction against the customer account.</textarea>
+                                        <div class="textual-counter"><span class="textual-chars">0 / 300</span><span class="textual-remaining"></span></div>
+                                    </div>
+                                    <div class="textual-params" data-open="false">
+                                        <button class="opportunity-expand" type="button" data-action="toggle-params">
+                                            <svg class="opportunity-expand-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
+                                            <span class="expand-label">View Parameters (3)</span>
+                                        </button>
+                                        <div class="textual-params-table" hidden>
+                                            <div class="textual-params-header"><span>Parameter Name</span><span>Description</span><span></span></div>
+                                            <div class="textual-param-row">
+                                                <input class="textual-input" type="text" value="accountNumber">
+                                                <input class="textual-input" type="text" value="Customer&rsquo;s unique account identifier" maxlength="200" data-counter="true">
+                                                <span class="textual-param-counter textual-chars">0 / 200</span>
+                                            </div>
+                                            <div class="textual-param-row">
+                                                <input class="textual-input" type="text" value="chargeId">
+                                                <input class="textual-input" type="text" value="ID of the charge to validate" maxlength="200" data-counter="true">
+                                                <span class="textual-param-counter textual-chars">0 / 200</span>
+                                            </div>
+                                            <div class="textual-param-row">
+                                                <input class="textual-input" type="text" value="transactionDate">
+                                                <input class="textual-input" type="text" value="Date of the transaction to cross-reference" maxlength="200" data-counter="true">
+                                                <span class="textual-param-counter textual-chars">0 / 200</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </section>
 
-                        <!-- Tools 2 -->
-                        <section class="textual-card">
-                            <div class="textual-card-header">
-                                <h2 class="textual-card-title">Tools 2:</h2>
-                                <button class="textual-card-action" type="button" aria-label="AI assist">
-                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                                        <path d="M9.937 15.5A2 2 0 0 0 8.5 14.063l-6.135-1.582a.5.5 0 0 1 0-.962L8.5 9.936A2 2 0 0 0 9.937 8.5l1.582-6.135a.5.5 0 0 1 .963 0L14.063 8.5A2 2 0 0 0 15.5 9.937l6.135 1.581a.5.5 0 0 1 0 .964L15.5 14.063a2 2 0 0 0-1.437 1.437l-1.582 6.135a.5.5 0 0 1-.963 0z"/>
-                                        <path d="M20 3v4"/><path d="M22 5h-4"/><path d="M4 17v2"/><path d="M5 18H3"/>
-                                    </svg>
-                                </button>
-                            </div>
-                            <div class="textual-card-body">
-                                <div class="textual-field">
-                                    <label class="textual-label">Tool Name:</label>
-                                    <input class="textual-input" type="text" value="initiate_refund">
-                                </div>
-                                <div class="textual-field">
-                                    <label class="textual-label">Tool Description:</label>
-                                    <textarea class="textual-input textual-textarea" rows="3" maxlength="300" data-counter="true">Submits a refund request to the payment gateway for an approved credit back to the customer.</textarea>
-                                    <div class="textual-counter">
-                                        <span class="textual-chars">0 characters</span>
-                                        <span class="textual-remaining">300 remaining</span>
-                                    </div>
-                                </div>
-                                <div class="textual-params" data-open="false">
-                                    <div class="textual-params-table" hidden>
-                                        <div class="textual-params-header">
-                                            <span>Parameter Name</span>
-                                            <span>Description</span>
-                                        </div>
-                                        <div class="textual-param-row">
-                                            <input class="textual-input" type="text" value="accountNumber">
-                                            <input class="textual-input" type="text" value="Customer&rsquo;s unique account identifier">
-                                        </div>
-                                        <div class="textual-param-row">
-                                            <input class="textual-input" type="text" value="refundAmount">
-                                            <input class="textual-input" type="text" value="Amount to refund to the customer">
-                                        </div>
-                                        <div class="textual-param-row">
-                                            <input class="textual-input" type="text" value="reason">
-                                            <input class="textual-input" type="text" value="Reason code for the refund">
-                                        </div>
-                                    </div>
-                                    <button class="textual-params-toggle" type="button" data-action="toggle-params">
-                                        <svg class="textual-params-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                                            <path d="m6 9 6 6 6-6"/>
-                                        </svg>
-                                        <span class="textual-params-toggle-text">View Parameters (3)</span>
+                            <!-- Tool 2: open_dispute -->
+                            <section class="textual-card">
+                                <div class="textual-card-header">
+                                    <h2 class="textual-card-title">Tool 2</h2>
+                                    <button class="textual-card-action" type="button" aria-label="AI assist">
+                                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9.937 15.5A2 2 0 0 0 8.5 14.063l-6.135-1.582a.5.5 0 0 1 0-.962L8.5 9.936A2 2 0 0 0 9.937 8.5l1.582-6.135a.5.5 0 0 1 .963 0L14.063 8.5A2 2 0 0 0 15.5 9.937l6.135 1.581a.5.5 0 0 1 0 .964L15.5 14.063a2 2 0 0 0-1.437 1.437l-1.582 6.135a.5.5 0 0 1-.963 0z"/><path d="M20 3v4"/><path d="M22 5h-4"/><path d="M4 17v2"/><path d="M5 18H3"/></svg>
                                     </button>
                                 </div>
-                            </div>
-                        </section>
+                                <div class="textual-card-body">
+                                    <div class="textual-field">
+                                        <label class="textual-label">Tool Name:</label>
+                                        <input class="textual-input" type="text" value="open_dispute">
+                                    </div>
+                                    <div class="textual-field">
+                                        <label class="textual-label">Tool Description:</label>
+                                        <textarea class="textual-input textual-textarea" rows="2" maxlength="300" data-counter="true">Opens a formal dispute case for a contested charge.</textarea>
+                                        <div class="textual-counter"><span class="textual-chars">0 / 300</span><span class="textual-remaining"></span></div>
+                                    </div>
+                                    <div class="textual-params" data-open="false">
+                                        <button class="opportunity-expand" type="button" data-action="toggle-params">
+                                            <svg class="opportunity-expand-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
+                                            <span class="expand-label">View Parameters (4)</span>
+                                        </button>
+                                        <div class="textual-params-table" hidden>
+                                            <div class="textual-params-header"><span>Parameter Name</span><span>Description</span><span></span></div>
+                                            <div class="textual-param-row">
+                                                <input class="textual-input" type="text" value="accountNumber">
+                                                <input class="textual-input" type="text" value="Customer&rsquo;s unique account identifier" maxlength="200" data-counter="true">
+                                                <span class="textual-param-counter textual-chars">0 / 200</span>
+                                            </div>
+                                            <div class="textual-param-row">
+                                                <input class="textual-input" type="text" value="chargeId">
+                                                <input class="textual-input" type="text" value="ID of the contested charge" maxlength="200" data-counter="true">
+                                                <span class="textual-param-counter textual-chars">0 / 200</span>
+                                            </div>
+                                            <div class="textual-param-row">
+                                                <input class="textual-input" type="text" value="disputeReason">
+                                                <input class="textual-input" type="text" value="Customer&rsquo;s stated reason for the dispute" maxlength="200" data-counter="true">
+                                                <span class="textual-param-counter textual-chars">0 / 200</span>
+                                            </div>
+                                            <div class="textual-param-row">
+                                                <input class="textual-input" type="text" value="caseNotes">
+                                                <input class="textual-input" type="text" value="Additional context or notes for the dispute case" maxlength="200" data-counter="true">
+                                                <span class="textual-param-counter textual-chars">0 / 200</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </section>
 
-                        <!-- Tools 3 -->
-                        <section class="textual-card">
-                            <div class="textual-card-header">
-                                <h2 class="textual-card-title">Tools 3:</h2>
-                                <button class="textual-card-action" type="button" aria-label="AI assist">
-                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                                        <path d="M9.937 15.5A2 2 0 0 0 8.5 14.063l-6.135-1.582a.5.5 0 0 1 0-.962L8.5 9.936A2 2 0 0 0 9.937 8.5l1.582-6.135a.5.5 0 0 1 .963 0L14.063 8.5A2 2 0 0 0 15.5 9.937l6.135 1.581a.5.5 0 0 1 0 .964L15.5 14.063a2 2 0 0 0-1.437 1.437l-1.582 6.135a.5.5 0 0 1-.963 0z"/>
-                                        <path d="M20 3v4"/><path d="M22 5h-4"/><path d="M4 17v2"/><path d="M5 18H3"/>
-                                    </svg>
-                                </button>
-                            </div>
-                            <div class="textual-card-body">
-                                <div class="textual-field">
-                                    <label class="textual-label">Tool Name:</label>
-                                    <input class="textual-input" type="text" value="submit_dispute_case">
-                                </div>
-                                <div class="textual-field">
-                                    <label class="textual-label">Tool Description:</label>
-                                    <textarea class="textual-input textual-textarea" rows="3" maxlength="300" data-counter="true">Opens a formal dispute case in the billing system and assigns it a case number for tracking.</textarea>
-                                    <div class="textual-counter">
-                                        <span class="textual-chars">0 characters</span>
-                                        <span class="textual-remaining">300 remaining</span>
-                                    </div>
-                                </div>
-                                <div class="textual-params" data-open="false">
-                                    <div class="textual-params-table" hidden>
-                                        <div class="textual-params-header">
-                                            <span>Parameter Name</span>
-                                            <span>Description</span>
-                                        </div>
-                                        <div class="textual-param-row">
-                                            <input class="textual-input" type="text" value="customerId">
-                                            <input class="textual-input" type="text" value="Customer record identifier">
-                                        </div>
-                                        <div class="textual-param-row">
-                                            <input class="textual-input" type="text" value="chargeId">
-                                            <input class="textual-input" type="text" value="ID of the disputed charge">
-                                        </div>
-                                        <div class="textual-param-row">
-                                            <input class="textual-input" type="text" value="caseNotes">
-                                            <input class="textual-input" type="text" value="Free-text notes describing the dispute">
-                                        </div>
-                                    </div>
-                                    <button class="textual-params-toggle" type="button" data-action="toggle-params">
-                                        <svg class="textual-params-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                                            <path d="m6 9 6 6 6-6"/>
-                                        </svg>
-                                        <span class="textual-params-toggle-text">View Parameters (3)</span>
+                            <!-- Tool 3: log_refund -->
+                            <section class="textual-card">
+                                <div class="textual-card-header">
+                                    <h2 class="textual-card-title">Tool 3</h2>
+                                    <button class="textual-card-action" type="button" aria-label="AI assist">
+                                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9.937 15.5A2 2 0 0 0 8.5 14.063l-6.135-1.582a.5.5 0 0 1 0-.962L8.5 9.936A2 2 0 0 0 9.937 8.5l1.582-6.135a.5.5 0 0 1 .963 0L14.063 8.5A2 2 0 0 0 15.5 9.937l6.135 1.581a.5.5 0 0 1 0 .964L15.5 14.063a2 2 0 0 0-1.437 1.437l-1.582 6.135a.5.5 0 0 1-.963 0z"/><path d="M20 3v4"/><path d="M22 5h-4"/><path d="M4 17v2"/><path d="M5 18H3"/></svg>
                                     </button>
                                 </div>
-                            </div>
-                        </section>
+                                <div class="textual-card-body">
+                                    <div class="textual-field">
+                                        <label class="textual-label">Tool Name:</label>
+                                        <input class="textual-input" type="text" value="log_refund">
+                                    </div>
+                                    <div class="textual-field">
+                                        <label class="textual-label">Tool Description:</label>
+                                        <textarea class="textual-input textual-textarea" rows="2" maxlength="300" data-counter="true">Records a refund decision against the disputed charge.</textarea>
+                                        <div class="textual-counter"><span class="textual-chars">0 / 300</span><span class="textual-remaining"></span></div>
+                                    </div>
+                                    <div class="textual-params" data-open="false">
+                                        <button class="opportunity-expand" type="button" data-action="toggle-params">
+                                            <svg class="opportunity-expand-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
+                                            <span class="expand-label">View Parameters (3)</span>
+                                        </button>
+                                        <div class="textual-params-table" hidden>
+                                            <div class="textual-params-header"><span>Parameter Name</span><span>Description</span><span></span></div>
+                                            <div class="textual-param-row">
+                                                <input class="textual-input" type="text" value="accountNumber">
+                                                <input class="textual-input" type="text" value="Customer&rsquo;s unique account identifier" maxlength="200" data-counter="true">
+                                                <span class="textual-param-counter textual-chars">0 / 200</span>
+                                            </div>
+                                            <div class="textual-param-row">
+                                                <input class="textual-input" type="text" value="disputeCaseId">
+                                                <input class="textual-input" type="text" value="ID of the approved dispute case" maxlength="200" data-counter="true">
+                                                <span class="textual-param-counter textual-chars">0 / 200</span>
+                                            </div>
+                                            <div class="textual-param-row">
+                                                <input class="textual-input" type="text" value="refundAmount">
+                                                <input class="textual-input" type="text" value="Amount to be refunded to the customer" maxlength="200" data-counter="true">
+                                                <span class="textual-param-counter textual-chars">0 / 200</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </section>
+                        </div>
                     </div>
                 </div>
             </div>
         </main>
+
+        <!-- Cancel confirm modal -->
+        <div class="share-modal-backdrop" id="cancelConfirmBackdrop" hidden role="dialog" aria-modal="true" aria-labelledby="cancelConfirmTitle">
+            <div class="share-modal confirm-modal">
+                <div class="share-modal-header">
+                    <h2 class="share-modal-title" id="cancelConfirmTitle">Cancel changes?</h2>
+                </div>
+                <div class="confirm-modal-body">
+                    <p class="confirm-modal-text">All changes will be lost.</p>
+                    <div class="confirm-modal-actions">
+                        <button class="settings-cancel-btn" type="button" id="cancelConfirmStay">Stay</button>
+                        <button class="components-button--default" type="button" id="cancelConfirmDiscard">Cancel changes</button>
+                    </div>
+                </div>
+            </div>
+        </div>
 
         <!-- AI Panel -->
         <div class="ai-panel" id="aiPanel" role="dialog" aria-modal="true" aria-labelledby="aiPanelTitle" aria-hidden="true">
@@ -452,11 +541,14 @@
             </div>
           </div>
           <div class="ai-panel-content">
-            <svg class="ai-panel-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M9.937 15.5A2 2 0 0 0 8.5 14.063l-6.135-1.582a.5.5 0 0 1 0-.962L8.5 9.936A2 2 0 0 0 9.937 8.5l1.582-6.135a.5.5 0 0 1 .963 0L14.063 8.5A2 2 0 0 0 15.5 9.937l6.135 1.581a.5.5 0 0 1 0 .964L15.5 14.063a2 2 0 0 0-1.437 1.437l-1.582 6.135a.5.5 0 0 1-.963 0z"/><path d="M20 3v4"/><path d="M22 5h-4"/><path d="M4 17v2"/><path d="M5 18H3"/>
-            </svg>
-            <div class="ai-panel-greeting">How can I help you today?</div>
-            <div class="ai-panel-subtitle">Ask anything about your&hellip;</div>
+            <div class="ai-panel-empty">
+              <svg class="ai-panel-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M9.937 15.5A2 2 0 0 0 8.5 14.063l-6.135-1.582a.5.5 0 0 1 0-.962L8.5 9.936A2 2 0 0 0 9.937 8.5l1.582-6.135a.5.5 0 0 1 .963 0L14.063 8.5A2 2 0 0 0 15.5 9.937l6.135 1.581a.5.5 0 0 1 0 .964L15.5 14.063a2 2 0 0 0-1.437 1.437l-1.582 6.135a.5.5 0 0 1-.963 0z"/><path d="M20 3v4"/><path d="M22 5h-4"/><path d="M4 17v2"/><path d="M5 18H3"/>
+              </svg>
+              <div class="ai-panel-greeting">How can I help you today?</div>
+              <div class="ai-panel-subtitle">Ask anything about your&hellip;</div>
+            </div>
+            <div class="ai-panel-messages" id="aiPanelMessages" aria-live="polite" aria-label="AI conversation"></div>
           </div>
           <div class="ai-panel-input-wrapper">
             <div class="ai-panel-input-container">
@@ -525,17 +617,15 @@
             }
 
             // Character counters
-            function updateCounter(textarea) {
-                const wrap = textarea.parentElement;
-                const chars = wrap.querySelector('.textual-chars');
-                const remaining = wrap.querySelector('.textual-remaining');
-                if (!chars || !remaining) return;
-                const max = parseInt(textarea.getAttribute('maxlength') || '0', 10);
-                const len = textarea.value.length;
-                chars.textContent = `${len} characters`;
-                remaining.textContent = `${Math.max(0, max - len)} remaining`;
+            function updateCounter(el) {
+                const field = el.closest('.textual-field') || el.closest('.textual-param-row');
+                const chars = field && field.querySelector('.textual-chars');
+                if (!chars) return;
+                const max = parseInt(el.getAttribute('maxlength') || '0', 10);
+                const len = el.value.length;
+                chars.textContent = `${len} / ${max}`;
             }
-            document.querySelectorAll('textarea[data-counter="true"]').forEach(t => {
+            document.querySelectorAll('[data-counter="true"]').forEach(t => {
                 updateCounter(t);
                 t.addEventListener('input', () => updateCounter(t));
             });
@@ -545,8 +635,8 @@
                 btn.addEventListener('click', () => {
                     const wrap = btn.closest('.textual-params');
                     const table = wrap.querySelector('.textual-params-table');
-                    const text = btn.querySelector('.textual-params-toggle-text');
-                    const chevron = btn.querySelector('.textual-params-chevron path');
+                    const text = btn.querySelector('.expand-label');
+                    const chevron = btn.querySelector('.opportunity-expand-chevron path');
                     const rowCount = wrap.querySelectorAll('.textual-param-row').length;
                     const open = wrap.dataset.open !== 'true';
                     wrap.dataset.open = open ? 'true' : 'false';
@@ -648,6 +738,69 @@
                     toggle.querySelector('svg path').setAttribute('d', open ? 'm6 9 6 6 6-6' : 'm9 18 6-6-6-6');
                 });
             }
+            // Published versions state
+            const statusBadge = document.getElementById('statusBadge');
+            const publishedDateEl = document.getElementById('publishedDate');
+            const openPublishedItem = document.getElementById('openPublishedItem');
+            const openPublishedBtn = document.getElementById('openPublishedBtn');
+            const openPublishedChevron = document.querySelector('.open-published-chevron');
+            const publishedVersionsDropdown = document.getElementById('publishedVersionsDropdown');
+            const publishedVersionsHeader = document.getElementById('publishedVersionsHeader');
+            const publishedVersionsList = document.getElementById('publishedVersionsList');
+            const publishedAgents = [{ date: 'Jun 22, 2026 4:26 PM' }];
+
+            function renderVersions() {
+                publishedVersionsHeader.textContent = `Published Versions (${publishedAgents.length})`;
+                publishedVersionsList.innerHTML = '';
+                publishedAgents.forEach(({ date }) => {
+                    const li = document.createElement('li');
+                    li.innerHTML = `<a class="agent-dropdown-item" role="menuitem" href="AI Agent.html">
+                        <span class="agent-dropdown-item-label">${date}</span>
+                        <svg class="agent-dropdown-item-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7z"/><circle cx="12" cy="12" r="3"/></svg>
+                    </a>`;
+                    publishedVersionsList.prepend(li);
+                });
+            }
+
+            function closePublishedDropdown() {
+                openPublishedItem.classList.remove('open');
+                openPublishedBtn.setAttribute('aria-expanded', 'false');
+                openPublishedChevron.querySelector('path').setAttribute('d', 'm6 9 6 6 6-6');
+            }
+
+            function markPublished() {
+                const now = new Date();
+                const dateStr = now.toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' })
+                    + ' ' + now.toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit' });
+                publishedAgents.push({ date: dateStr });
+                statusBadge.textContent = 'Published';
+                statusBadge.className = 'badge badge-secondary';
+                publishedDateEl.textContent = dateStr;
+                publishedDateEl.hidden = false;
+                renderVersions();
+            }
+
+            renderVersions();
+
+            if (openPublishedBtn) {
+                openPublishedBtn.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    const isOpen = openPublishedItem.classList.contains('open');
+                    if (isOpen) {
+                        closePublishedDropdown();
+                    } else {
+                        openPublishedItem.classList.add('open');
+                        openPublishedBtn.setAttribute('aria-expanded', 'true');
+                        openPublishedChevron.querySelector('path').setAttribute('d', 'm18 15-6-6-6 6');
+                    }
+                });
+                document.addEventListener('click', (e) => {
+                    if (!openPublishedItem.contains(e.target)) {
+                        closePublishedDropdown();
+                    }
+                });
+            }
+
             if (publishBtn) {
                 publishBtn.addEventListener('click', () => {
                     openPanel();
@@ -657,9 +810,53 @@
                     setTimeout(() => {
                         replaceWithReasoning(loading,
                             'The AI Agent &ldquo;Ava Smith&rdquo; for intent &ldquo;Billing &amp; Payment Inquiries&rdquo; has been published to Cognigy AI under project &ldquo;Project Alpha&rdquo;');
+                        markPublished();
                     }, 1800);
                 });
             }
+
+            // Textual nav — section switching
+            const allSections = document.querySelectorAll('.textual-section');
+
+            function navigateTo(targetId) {
+                document.querySelectorAll('.textual-nav-item').forEach(l => l.classList.remove('active'));
+                const link = document.querySelector(`.textual-nav-item[data-target="${targetId}"]`);
+                if (link) link.classList.add('active');
+                allSections.forEach(s => { s.hidden = s.id !== targetId; });
+                document.getElementById(targetId).querySelectorAll('[data-counter="true"]').forEach(updateCounter);
+            }
+
+            document.querySelectorAll('.textual-nav-item[data-target]').forEach(link => {
+                link.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    const targetId = link.dataset.target;
+                    if (!saveBtn.disabled) {
+                        openConfirmModal({
+                            title: 'Discard changes?',
+                            text: 'All changes will be lost.',
+                            stayLabel: 'Cancel',
+                            discardLabel: 'Discard',
+                            onDiscard: () => { discardChanges(); navigateTo(targetId); }
+                        });
+                    } else {
+                        navigateTo(targetId);
+                    }
+                });
+            });
+
+            // Live sync skill name → nav tab + section heading
+            document.querySelectorAll('.textual-section[id^="section-"]:not(#section-agent-overview)').forEach(section => {
+                const skillInput = section.querySelector('input[maxlength="50"]');
+                if (!skillInput) return;
+                const sectionId = section.id;
+                const navLink = document.querySelector(`.textual-nav-item[data-target="${sectionId}"]`);
+                const sectionHeading = section.querySelector('h2.textual-nav-title');
+                skillInput.addEventListener('input', () => {
+                    const newName = skillInput.value.trim() || sectionId.replace('section-', '');
+                    if (navLink) { navLink.textContent = newName; navLink.title = newName; }
+                    if (sectionHeading) { sectionHeading.textContent = newName; }
+                });
+            });
 
             // Save / Cancel — enable Save on any input change
             const saveBtn = document.getElementById('textualSave');
@@ -671,15 +868,98 @@
                 const eventName = el.tagName === 'SELECT' ? 'change' : 'input';
                 el.addEventListener(eventName, () => { saveBtn.disabled = false; });
             });
-            cancelBtn.addEventListener('click', () => {
+            const cancelConfirmBackdrop = document.getElementById('cancelConfirmBackdrop');
+            const cancelConfirmTitle = document.getElementById('cancelConfirmTitle');
+            const cancelConfirmText = cancelConfirmBackdrop.querySelector('.confirm-modal-text');
+            const cancelConfirmStay = document.getElementById('cancelConfirmStay');
+            const cancelConfirmDiscard = document.getElementById('cancelConfirmDiscard');
+            let confirmOnDiscard = null;
+
+            function openConfirmModal({ title, text, stayLabel, discardLabel, onDiscard }) {
+                cancelConfirmTitle.textContent = title;
+                cancelConfirmText.textContent = text;
+                cancelConfirmStay.textContent = stayLabel;
+                cancelConfirmDiscard.textContent = discardLabel;
+                confirmOnDiscard = onDiscard;
+                cancelConfirmBackdrop.hidden = false;
+            }
+
+            function discardChanges() {
                 initialValues.forEach((value, el) => { el.value = value; });
-                textualArea.querySelectorAll('textarea[data-counter="true"]').forEach(updateCounter);
+                textualArea.querySelectorAll('[data-counter="true"]').forEach(updateCounter);
+                document.querySelectorAll('.textual-section[id^="section-"]:not(#section-agent-overview)').forEach(section => {
+                    const skillInput = section.querySelector('input[maxlength="50"]');
+                    if (!skillInput) return;
+                    const sectionId = section.id;
+                    const navLink = document.querySelector(`.textual-nav-item[data-target="${sectionId}"]`);
+                    const sectionHeading = section.querySelector('h2.textual-nav-title');
+                    const name = skillInput.value.trim() || sectionId.replace('section-', '');
+                    if (navLink) { navLink.textContent = name; navLink.title = name; }
+                    if (sectionHeading) { sectionHeading.textContent = name; }
+                });
                 saveBtn.disabled = true;
+            }
+
+            cancelBtn.addEventListener('click', () => {
+                if (saveBtn.disabled) return;
+                openConfirmModal({
+                    title: 'Cancel changes?',
+                    text: 'All changes will be lost.',
+                    stayLabel: 'Stay',
+                    discardLabel: 'Cancel changes',
+                    onDiscard: discardChanges
+                });
             });
+
+            cancelConfirmStay.addEventListener('click', () => {
+                cancelConfirmBackdrop.hidden = true;
+            });
+
+            cancelConfirmDiscard.addEventListener('click', () => {
+                cancelConfirmBackdrop.hidden = true;
+                if (confirmOnDiscard) confirmOnDiscard();
+            });
+
+            cancelConfirmBackdrop.addEventListener('click', (e) => {
+                if (e.target === cancelConfirmBackdrop) cancelConfirmBackdrop.hidden = true;
+            });
+
+            // Intercept page-navigation links when there are unsaved changes
+            document.querySelectorAll('a[href]:not([data-target])').forEach(link => {
+                const href = link.getAttribute('href');
+                if (!href || href.startsWith('#') || href.startsWith('javascript')) return;
+                link.addEventListener('click', (e) => {
+                    if (saveBtn.disabled) return;
+                    e.preventDefault();
+                    openConfirmModal({
+                        title: 'Discard changes?',
+                        text: 'All changes will be lost.',
+                        stayLabel: 'Stay',
+                        discardLabel: 'Discard',
+                        onDiscard: () => { window.location.href = href; }
+                    });
+                });
+            });
+
             saveBtn.addEventListener('click', () => {
                 textualArea.querySelectorAll('input, textarea, select').forEach(el => {
                     initialValues.set(el, el.value);
                 });
+
+                // Sync skill name → nav tab + section heading for the active section
+                const activeSection = textualArea.querySelector('.textual-section:not([hidden])');
+                if (activeSection) {
+                    const skillNameInput = activeSection.querySelector('input[maxlength="50"]');
+                    const sectionId = activeSection.id;
+                    const navLink = document.querySelector(`.textual-nav-item[data-target="${sectionId}"]`);
+                    const sectionHeading = activeSection.querySelector('h2.textual-nav-title');
+                    if (skillNameInput) {
+                        const newName = skillNameInput.value.trim() || sectionId.replace('section-', '');
+                        if (navLink) { navLink.textContent = newName; navLink.title = newName; }
+                        if (sectionHeading) { sectionHeading.textContent = newName; }
+                    }
+                }
+
                 saveBtn.disabled = true;
             });
         });
