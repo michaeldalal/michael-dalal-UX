@@ -36,6 +36,9 @@
       <button class="topbar-demo-empty-btn" type="button" id="demoNoActBtn" title="Demo only — refresh the page to restore results">
         Opportunity analysis - with act
       </button>
+      <button class="topbar-demo-empty-btn" type="button" id="demoLowVolumeBtn" title="Demo only — click again to restore the full list">
+        Less than 100
+      </button>
       <button class="shell-icon-btn" type="button" aria-label="Help">
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
           <circle cx="12" cy="12" r="10"></circle>
@@ -297,20 +300,24 @@
           <div class="ai-brief-layout">
             <div class="ai-brief-left">
               <header class="ai-briefing-header">
-                <span class="ai-briefing-tag">Opportunity analysis</span>
+                <span class="ai-briefing-tag">Opportunity Analysis</span>
                 <span class="ai-brief-live" aria-label="Live data"><span class="ai-brief-live-dot" aria-hidden="true"></span>LIVE</span>
               </header>
               <p class="ai-brief-narrative">
-                Across this period, automating these opportunities could unlock
-                <strong>$151K a year</strong> — up <strong>21%</strong> vs. last scan.
-                That's <strong>33,000</strong> interactions (<strong>74%</strong> of total volume)
-                deflected, freeing <strong>2.4 agents'</strong> worth of capacity for complex work.
-                <strong>Technical Support</strong> alone is <strong>21%</strong> of it.
+                Your strongest categories combine <strong>high interaction volume</strong> with
+                <strong>solid automation rates</strong>, making them low-risk, high-return candidates.<br>
+                <strong>Just three categories — Technical Support, Card Services, and Billing &amp; Payment —</strong>
+                <strong>drive most of your projected savings</strong>, so a focused effort captures the majority of the value.
               </p>
               <div class="ai-brief-hero" aria-label="$151K per year in potential annual savings">
                 <span class="ai-brief-hero-num">
                   <span class="ai-brief-hero-currency">$</span><span class="ai-brief-hero-amount">151K</span>
-                  <span class="ai-brief-hero-unit">/ year</span>
+                </span>
+                <span class="ai-brief-hero-unit">
+                  <span class="ai-brief-hero-caption-text">PROJECTED ANNUAL SAVINGS</span>
+                  <button type="button" class="ai-brief-hero-info tooltip-above tooltip-wrap" aria-label="About Projected Annual Savings" data-tooltip="&lt;strong&gt;Projected annual savings&lt;/strong&gt; estimates what you could save over the next 12 months by automating these interactions.&#10;&#10;We take your interactions from the analyzed period, project them across a full year, identify how many are automatable, and value them as automatable volume &#215; average handle time &#215; cost per minute (cost rate is set in Settings).">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg>
+                  </button>
                 </span>
                 <div class="ai-brief-badge">↑ 21% vs. last scan</div>
               </div>
@@ -351,7 +358,7 @@
 
           <!-- Analyzed Period (compact) -->
           <div class="analyzed-period-compact ai-brief-footer" aria-label="Analyzed period summary">
-            <span class="analyzed-period-compact-label">Analyzed period <span class="section-meta-sub">/ Apr 8, 2026 &ndash; Jul 7, 2026</span></span>
+            <span class="analyzed-period-compact-label">Based on interactions from Apr 8, 2026 &ndash; Jul 7, 2026:</span>
             <div class="analyzed-period-compact-stats">
               <span class="stat-inline">
                 <span class="stat-inline-top">
@@ -526,31 +533,33 @@
         <!-- Top Opportunities -->
         <section class="opportunities-section">
           <div class="section-meta-row">
-            <h2 class="section-meta-title">Top Opportunities</h2>
+            <h2 class="section-meta-title">Opportunities</h2>
             <span class="section-meta-sub">/ Yearly Impact Projection: Aug 2025 &ndash; Jul 2026</span>
-            <div class="filter-wrapper opportunity-viewby-wrapper">
-              <button type="button" class="filter-btn" aria-haspopup="true" aria-expanded="false">
-                View by: <span class="filter-btn-value">Annual Savings</span>
-                <svg class="filter-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
-              </button>
-              <div class="filter-dropdown opportunity-viewby-menu" role="menu">
-                <div class="filter-checkbox-item filter-single-item active" role="menuitemradio" aria-checked="true" data-view="savings" tabindex="0"><span>Annual Savings</span></div>
-                <div class="filter-checkbox-item filter-single-item" role="menuitemradio" aria-checked="false" data-view="autoPctTotal" tabindex="0"><span>Automatable %</span></div>
-                <div class="filter-checkbox-item filter-single-item" role="menuitemradio" aria-checked="false" data-view="automatableVolume" tabindex="0"><span>Automatable Volume</span></div>
-                <div class="filter-checkbox-item filter-single-item" role="menuitemradio" aria-checked="false" data-view="avgDuration" tabindex="0"><span>Avg. Duration</span></div>
-                <div class="filter-checkbox-item filter-single-item" role="menuitemradio" aria-checked="false" data-view="avgSentiment" tabindex="0"><span>Avg. Sentiment</span></div>
-                <div class="filter-checkbox-item filter-single-item" role="menuitemradio" aria-checked="false" data-view="categoryVolume" tabindex="0"><span>Category Volume</span></div>
+            <div class="opportunity-viewby-sort-group">
+              <div class="filter-wrapper opportunity-viewby-wrapper">
+                <button type="button" class="filter-btn" aria-haspopup="true" aria-expanded="false">
+                  View by: <span class="filter-btn-value">Annual Savings</span>
+                  <svg class="filter-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
+                </button>
+                <div class="filter-dropdown opportunity-viewby-menu" role="menu">
+                  <div class="filter-checkbox-item filter-single-item active" role="menuitemradio" aria-checked="true" data-view="savings" tabindex="0"><span>Annual Savings</span></div>
+                  <div class="filter-checkbox-item filter-single-item" role="menuitemradio" aria-checked="false" data-view="autoPctTotal" tabindex="0"><span>Automatable %</span></div>
+                  <div class="filter-checkbox-item filter-single-item" role="menuitemradio" aria-checked="false" data-view="automatableVolume" tabindex="0"><span>Automatable Volume</span></div>
+                  <div class="filter-checkbox-item filter-single-item" role="menuitemradio" aria-checked="false" data-view="avgDuration" tabindex="0"><span>Avg. Duration</span></div>
+                  <div class="filter-checkbox-item filter-single-item" role="menuitemradio" aria-checked="false" data-view="avgSentiment" tabindex="0"><span>Avg. Sentiment</span></div>
+                  <div class="filter-checkbox-item filter-single-item" role="menuitemradio" aria-checked="false" data-view="categoryVolume" tabindex="0"><span>Category Volume</span></div>
+                </div>
               </div>
-            </div>
-            <div class="opportunity-sort-wrapper sort-toggle-group" role="group" aria-label="Sort direction">
-              <button type="button" class="sort-toggle-btn active" data-sort="desc" aria-pressed="true" aria-label="Highest to Lowest" data-tooltip="Highest to Lowest">
-                <i data-lucide="arrow-up-1-0" class="sort-toggle-icon-inactive" aria-hidden="true"></i>
-                <i data-lucide="arrow-down-1-0" class="sort-toggle-icon-active" aria-hidden="true"></i>
-              </button>
-              <button type="button" class="sort-toggle-btn" data-sort="asc" aria-pressed="false" aria-label="Lowest to Highest" data-tooltip="Lowest to Highest">
-                <i data-lucide="arrow-up-0-1" class="sort-toggle-icon-inactive" aria-hidden="true"></i>
-                <i data-lucide="arrow-down-0-1" class="sort-toggle-icon-active" aria-hidden="true"></i>
-              </button>
+              <div class="opportunity-sort-wrapper sort-toggle-group" role="group" aria-label="Sort direction">
+                <button type="button" class="sort-toggle-btn active" data-sort="desc" aria-pressed="true" aria-label="Highest to Lowest" data-tooltip="Highest to Lowest">
+                  <i data-lucide="arrow-up-1-0" class="sort-toggle-icon-inactive" aria-hidden="true"></i>
+                  <i data-lucide="arrow-down-1-0" class="sort-toggle-icon-active" aria-hidden="true"></i>
+                </button>
+                <button type="button" class="sort-toggle-btn" data-sort="asc" aria-pressed="false" aria-label="Lowest to Highest" data-tooltip="Lowest to Highest">
+                  <i data-lucide="arrow-up-0-1" class="sort-toggle-icon-inactive" aria-hidden="true"></i>
+                  <i data-lucide="arrow-down-0-1" class="sort-toggle-icon-active" aria-hidden="true"></i>
+                </button>
+              </div>
             </div>
           </div>
           <div class="opportunities-content-row">
@@ -622,7 +631,7 @@
               <!-- Breakdown details (visible when parent has .expanded) -->
               <div class="opportunity-details">
                 <section class="agent-actions">
-                  <h4 class="agent-actions-title"><i data-lucide="chart-bar"></i> Agent Actions in This Category <span class="section-meta-sub">(Up to 10 Topics, 5 Sub-topics)</span></h4>
+                  <h4 class="agent-actions-title"><i data-lucide="chart-bar"></i> Agent Actions in This Category</h4>
                   <div class="agent-action-row">
                     <span class="agent-action-label">Caller Was Authenticated</span>
                     <div class="agent-action-bar"><div class="agent-action-fill" style="width: 100%"></div></div>
@@ -1454,8 +1463,12 @@
 
           <aside class="opportunities-sidebar" aria-label="Top 5 by Annual Savings">
             <div class="savings-card">
-              <h2 class="savings-card-title">Top 5 by Annual Savings</h2>
-              <p class="savings-card-subtitle">Where the <strong>$151K</strong> opportunity concentrates</p>
+              <div class="savings-card-title-row">
+                <svg class="opportunity-card-chevron savings-card-chevron" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
+                <h2 class="savings-card-title">Top 5 by Annual Savings</h2>
+              </div>
+              <div class="savings-card-collapse">
+              <p class="savings-card-subtitle">Ranked by highest projected savings</p>
               <div class="savings-card-body">
               <div class="savings-chart-wrap" id="savingsDonut" role="img" aria-label="Donut chart: savings by category"></div>
               <ul class="savings-list" aria-label="Category breakdown">
@@ -1501,6 +1514,7 @@
                 </li>
               </ul>
               </div><!-- /savings-card-body -->
+              </div><!-- /savings-card-collapse -->
             </div>
 
             <!-- Live AI Agents -->
@@ -1562,19 +1576,23 @@
             <div class="ai-brief-layout">
               <div class="ai-brief-left">
                 <header class="ai-briefing-header">
-                  <span class="ai-briefing-tag">Opportunity analysis</span>
+                  <span class="ai-briefing-tag">Opportunity Analysis</span>
                   <span class="ai-brief-live" aria-label="Live data"><span class="ai-brief-live-dot" aria-hidden="true"></span>LIVE</span>
                 </header>
                 <p class="ai-brief-narrative">
-                  Across <strong>8 high-volume topics</strong>, I identified <strong>22 sub-topics</strong>
-                  ready for automation, unlocking <strong>$151K a year</strong> — up <strong>21%</strong> vs. last scan.
-                  <strong>Bill Explanation</strong> leads with <strong>$13K</strong> in savings,
-                  deflecting <strong>1,800</strong> monthly interactions from your queues.
+                  Your strongest topics combine <strong>high automation rates</strong> with
+                  <strong>strong customer acceptance</strong>, making them low-risk, high-return candidates.<br>
+                  <strong>Just three topics — Bill Explanation, Payment Methods, and Card Replacement — drive most of your projected savings</strong>, so a focused effort captures the majority of the value.
                 </p>
                 <div class="ai-brief-hero" aria-label="$151K per year in potential annual savings">
                   <span class="ai-brief-hero-num">
                     <span class="ai-brief-hero-currency">$</span><span class="ai-brief-hero-amount">151K</span>
-                    <span class="ai-brief-hero-unit">/ year</span>
+                  </span>
+                  <span class="ai-brief-hero-unit">
+                    <span class="ai-brief-hero-caption-text">PROJECTED ANNUAL SAVINGS</span>
+                    <button type="button" class="ai-brief-hero-info tooltip-above tooltip-wrap" aria-label="About Projected Annual Savings" data-tooltip="&lt;strong&gt;Projected annual savings&lt;/strong&gt; estimates what you could save over the next 12 months by automating these interactions.&#10;&#10;We take your interactions from the analyzed period, project them across a full year, identify how many are automatable, and value them as automatable volume &#215; average handle time &#215; cost per minute (cost rate is set in Settings).">
+                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg>
+                    </button>
                   </span>
                   <div class="ai-brief-badge">↑ 21% vs. last scan</div>
                 </div>
@@ -1615,7 +1633,7 @@
 
             <!-- Analyzed Period (compact) -->
             <div class="analyzed-period-compact ai-brief-footer" aria-label="Analyzed period summary">
-              <span class="analyzed-period-compact-label">Analyzed period <span class="section-meta-sub">/ Apr 8, 2026 &ndash; Jul 7, 2026</span></span>
+              <span class="analyzed-period-compact-label">Based on interactions from Apr 8, 2026 &ndash; Jul 7, 2026:</span>
               <div class="analyzed-period-compact-stats">
                 <span class="stat-inline">
                   <span class="stat-inline-top">
@@ -1666,31 +1684,33 @@
           <!-- Top Topics -->
           <section class="opportunities-section">
             <div class="section-meta-row">
-              <h2 class="section-meta-title">Top Opportunities</h2>
+              <h2 class="section-meta-title">Opportunities</h2>
               <span class="section-meta-sub">/ Yearly Impact Projection: Aug 2025 &ndash; Jul 2026</span>
-              <div class="filter-wrapper opportunity-viewby-wrapper">
-                <button type="button" class="filter-btn" aria-haspopup="true" aria-expanded="false">
-                  View by: <span class="filter-btn-value">Annual Savings</span>
-                  <svg class="filter-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
-                </button>
-                <div class="filter-dropdown opportunity-viewby-menu" role="menu">
-                  <div class="filter-checkbox-item filter-single-item active" role="menuitemradio" aria-checked="true" data-view="savings" tabindex="0"><span>Annual Savings</span></div>
-                  <div class="filter-checkbox-item filter-single-item" role="menuitemradio" aria-checked="false" data-view="autoPctTotal" tabindex="0"><span>Automatable %</span></div>
-                  <div class="filter-checkbox-item filter-single-item" role="menuitemradio" aria-checked="false" data-view="automatableVolume" tabindex="0"><span>Automatable Volume</span></div>
-                  <div class="filter-checkbox-item filter-single-item" role="menuitemradio" aria-checked="false" data-view="avgDuration" tabindex="0"><span>Avg. Duration</span></div>
-                  <div class="filter-checkbox-item filter-single-item" role="menuitemradio" aria-checked="false" data-view="avgSentiment" tabindex="0"><span>Avg. Sentiment</span></div>
-                  <div class="filter-checkbox-item filter-single-item" role="menuitemradio" aria-checked="false" data-view="categoryVolume" tabindex="0"><span>Topic Volume</span></div>
+              <div class="opportunity-viewby-sort-group">
+                <div class="filter-wrapper opportunity-viewby-wrapper">
+                  <button type="button" class="filter-btn" aria-haspopup="true" aria-expanded="false">
+                    View by: <span class="filter-btn-value">Annual Savings</span>
+                    <svg class="filter-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
+                  </button>
+                  <div class="filter-dropdown opportunity-viewby-menu" role="menu">
+                    <div class="filter-checkbox-item filter-single-item active" role="menuitemradio" aria-checked="true" data-view="savings" tabindex="0"><span>Annual Savings</span></div>
+                    <div class="filter-checkbox-item filter-single-item" role="menuitemradio" aria-checked="false" data-view="autoPctTotal" tabindex="0"><span>Automatable %</span></div>
+                    <div class="filter-checkbox-item filter-single-item" role="menuitemradio" aria-checked="false" data-view="automatableVolume" tabindex="0"><span>Automatable Volume</span></div>
+                    <div class="filter-checkbox-item filter-single-item" role="menuitemradio" aria-checked="false" data-view="avgDuration" tabindex="0"><span>Avg. Duration</span></div>
+                    <div class="filter-checkbox-item filter-single-item" role="menuitemradio" aria-checked="false" data-view="avgSentiment" tabindex="0"><span>Avg. Sentiment</span></div>
+                    <div class="filter-checkbox-item filter-single-item" role="menuitemradio" aria-checked="false" data-view="categoryVolume" tabindex="0"><span>Topic Volume</span></div>
+                  </div>
                 </div>
-              </div>
-              <div class="opportunity-sort-wrapper sort-toggle-group" role="group" aria-label="Sort direction">
-                <button type="button" class="sort-toggle-btn active" data-sort="desc" aria-pressed="true" aria-label="Highest to Lowest" data-tooltip="Highest to Lowest">
-                  <i data-lucide="arrow-up-1-0" class="sort-toggle-icon-inactive" aria-hidden="true"></i>
-                  <i data-lucide="arrow-down-1-0" class="sort-toggle-icon-active" aria-hidden="true"></i>
-                </button>
-                <button type="button" class="sort-toggle-btn" data-sort="asc" aria-pressed="false" aria-label="Lowest to Highest" data-tooltip="Lowest to Highest">
-                  <i data-lucide="arrow-up-0-1" class="sort-toggle-icon-inactive" aria-hidden="true"></i>
-                  <i data-lucide="arrow-down-0-1" class="sort-toggle-icon-active" aria-hidden="true"></i>
-                </button>
+                <div class="opportunity-sort-wrapper sort-toggle-group" role="group" aria-label="Sort direction">
+                  <button type="button" class="sort-toggle-btn active" data-sort="desc" aria-pressed="true" aria-label="Highest to Lowest" data-tooltip="Highest to Lowest">
+                    <i data-lucide="arrow-up-1-0" class="sort-toggle-icon-inactive" aria-hidden="true"></i>
+                    <i data-lucide="arrow-down-1-0" class="sort-toggle-icon-active" aria-hidden="true"></i>
+                  </button>
+                  <button type="button" class="sort-toggle-btn" data-sort="asc" aria-pressed="false" aria-label="Lowest to Highest" data-tooltip="Lowest to Highest">
+                    <i data-lucide="arrow-up-0-1" class="sort-toggle-icon-inactive" aria-hidden="true"></i>
+                    <i data-lucide="arrow-down-0-1" class="sort-toggle-icon-active" aria-hidden="true"></i>
+                  </button>
+                </div>
               </div>
             </div>
             <div class="opportunities-content-row">
@@ -1737,7 +1757,7 @@
                 </div>
                 <div class="opportunity-details">
                   <section class="agent-actions">
-                    <h4 class="agent-actions-title"><i data-lucide="chart-bar"></i> Agent Actions for this topic <span class="section-meta-sub">(Up to 10 Sub-topics)</span></h4>
+                    <h4 class="agent-actions-title"><i data-lucide="chart-bar"></i> Agent Actions for this topic</h4>
                     <div class="agent-action-row">
                       <span class="agent-action-label">Billing Was Discussed</span>
                       <div class="agent-action-bar"><div class="agent-action-fill" style="width: 100%"></div></div>
@@ -1777,7 +1797,7 @@
                         <div class="opportunity-metric"><div class="opportunity-metric-value savings">$7K</div><div class="opportunity-metric-label">Annual Savings</div></div>
                       </div>
                       <section class="agent-actions-inline">
-                        <h5 class="agent-actions-inline-title">Agent Actions for this topic</h5>
+                        <h5 class="agent-actions-inline-title">Agent Actions for this topic <span class="section-meta-sub">(Up to 10 Sub-topics)</span></h5>
                         <div class="agent-action-row"><span class="agent-action-label">Billing Was Discussed</span><div class="agent-action-bar"><div class="agent-action-fill" style="width: 100%"></div></div><span class="agent-action-value">812</span></div>
                         <div class="agent-action-row"><span class="agent-action-label">Agent Provided Information About&hellip;</span><div class="agent-action-bar"><div class="agent-action-fill" style="width: 82%"></div></div><span class="agent-action-value">667</span></div>
                         <div class="agent-action-row"><span class="agent-action-label">Account Was Reviewed</span><div class="agent-action-bar"><div class="agent-action-fill" style="width: 65%"></div></div><span class="agent-action-value">530</span></div>
@@ -1801,7 +1821,7 @@
                         <div class="opportunity-metric"><div class="opportunity-metric-value savings">$4K</div><div class="opportunity-metric-label">Annual Savings</div></div>
                       </div>
                       <section class="agent-actions-inline">
-                        <h5 class="agent-actions-inline-title">Agent Actions for this topic</h5>
+                        <h5 class="agent-actions-inline-title">Agent Actions for this topic <span class="section-meta-sub">(Up to 10 Sub-topics)</span></h5>
                         <div class="agent-action-row"><span class="agent-action-label">Plan Details Discussed</span><div class="agent-action-bar"><div class="agent-action-fill" style="width: 100%"></div></div><span class="agent-action-value">496</span></div>
                         <div class="agent-action-row"><span class="agent-action-label">Agent Provided Information About&hellip;</span><div class="agent-action-bar"><div class="agent-action-fill" style="width: 82%"></div></div><span class="agent-action-value">407</span></div>
                         <div class="agent-action-row"><span class="agent-action-label">Account Was Reviewed</span><div class="agent-action-bar"><div class="agent-action-fill" style="width: 65%"></div></div><span class="agent-action-value">323</span></div>
@@ -1825,7 +1845,7 @@
                         <div class="opportunity-metric"><div class="opportunity-metric-value savings">$2K</div><div class="opportunity-metric-label">Annual Savings</div></div>
                       </div>
                       <section class="agent-actions-inline">
-                        <h5 class="agent-actions-inline-title">Agent Actions for this topic</h5>
+                        <h5 class="agent-actions-inline-title">Agent Actions for this topic <span class="section-meta-sub">(Up to 10 Sub-topics)</span></h5>
                         <div class="agent-action-row"><span class="agent-action-label">Billing Was Discussed</span><div class="agent-action-bar"><div class="agent-action-fill" style="width: 100%"></div></div><span class="agent-action-value">239</span></div>
                         <div class="agent-action-row"><span class="agent-action-label">Agent Explained Billing Cycle</span><div class="agent-action-bar"><div class="agent-action-fill" style="width: 82%"></div></div><span class="agent-action-value">197</span></div>
                         <div class="agent-action-row"><span class="agent-action-label">Fee Was Reviewed</span><div class="agent-action-bar"><div class="agent-action-fill" style="width: 65%"></div></div><span class="agent-action-value">156</span></div>
@@ -2290,8 +2310,12 @@
 
             <aside class="opportunities-sidebar" aria-label="Top 5 by Annual Savings">
             <div class="savings-card">
-              <h2 class="savings-card-title">Top 5 by Annual Savings</h2>
-              <p class="savings-card-subtitle">Where the <strong>$74K</strong> opportunity concentrates</p>
+              <div class="savings-card-title-row">
+                <svg class="opportunity-card-chevron savings-card-chevron" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
+                <h2 class="savings-card-title">Top 5 by Annual Savings</h2>
+              </div>
+              <div class="savings-card-collapse">
+              <p class="savings-card-subtitle">Ranked by highest projected savings</p>
               <div class="savings-card-body">
                 <div class="savings-chart-wrap" id="savingsDonutTopics" role="img" aria-label="Donut chart: savings by topics"></div>
                 <ul class="savings-list" aria-label="Topics breakdown">
@@ -2337,6 +2361,7 @@
                   </li>
                 </ul>
               </div><!-- /savings-card-body -->
+              </div><!-- /savings-card-collapse -->
             </div>
             </aside>
 
@@ -2357,19 +2382,23 @@
             <div class="ai-brief-layout">
               <div class="ai-brief-left">
                 <header class="ai-briefing-header">
-                  <span class="ai-briefing-tag">Opportunity analysis</span>
+                  <span class="ai-briefing-tag">Opportunity Analysis</span>
                   <span class="ai-brief-live" aria-label="Live data"><span class="ai-brief-live-dot" aria-hidden="true"></span>LIVE</span>
                 </header>
                 <p class="ai-brief-narrative">
-                  Across <strong>22 automatable sub-topics</strong>, I identified <strong>granular intent clusters</strong>
-                  projecting <strong>$74K a year</strong> in savings — up <strong>18%</strong> vs. last scan.
-                  <strong>Activation Request</strong> leads with <strong>$9K</strong> in savings,
-                  deflecting <strong>1,200</strong> monthly interactions from your queues.
+                  Your strongest sub-topics combine <strong>narrow intent scope</strong> with
+                  <strong>high automation confidence</strong>, making them low-risk, high-return candidates.<br>
+                  <strong>Just three sub-topics — Activation Request, Identity Verification, and Lost Card Request — drive most of your projected savings</strong>, so a focused effort captures the majority of the value.
                 </p>
                 <div class="ai-brief-hero" aria-label="$74K per year in potential annual savings">
                   <span class="ai-brief-hero-num">
                     <span class="ai-brief-hero-currency">$</span><span class="ai-brief-hero-amount">74K</span>
-                    <span class="ai-brief-hero-unit">/ year</span>
+                  </span>
+                  <span class="ai-brief-hero-unit">
+                    <span class="ai-brief-hero-caption-text">PROJECTED ANNUAL SAVINGS</span>
+                    <button type="button" class="ai-brief-hero-info tooltip-above tooltip-wrap" aria-label="About Projected Annual Savings" data-tooltip="&lt;strong&gt;Projected annual savings&lt;/strong&gt; estimates what you could save over the next 12 months by automating these interactions.&#10;&#10;We take your interactions from the analyzed period, project them across a full year, identify how many are automatable, and value them as automatable volume &#215; average handle time &#215; cost per minute (cost rate is set in Settings).">
+                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg>
+                    </button>
                   </span>
                   <div class="ai-brief-badge">↑ 18% vs. last scan</div>
                 </div>
@@ -2410,7 +2439,7 @@
 
             <!-- Analyzed Period (compact) -->
             <div class="analyzed-period-compact ai-brief-footer" aria-label="Analyzed period summary">
-              <span class="analyzed-period-compact-label">Analyzed period <span class="section-meta-sub">/ Apr 8, 2026 &ndash; Jul 7, 2026</span></span>
+              <span class="analyzed-period-compact-label">Based on interactions from Apr 8, 2026 &ndash; Jul 7, 2026:</span>
               <div class="analyzed-period-compact-stats">
                 <span class="stat-inline">
                   <span class="stat-inline-top">
@@ -2461,31 +2490,33 @@
           <!-- Top Sub-topic Opportunities -->
           <section class="opportunities-section">
             <div class="section-meta-row">
-              <h2 class="section-meta-title">Top Opportunities</h2>
+              <h2 class="section-meta-title">Opportunities</h2>
               <span class="section-meta-sub">/ Yearly Impact Projection: Aug 2025 &ndash; Jul 2026</span>
-              <div class="filter-wrapper opportunity-viewby-wrapper">
-                <button type="button" class="filter-btn" aria-haspopup="true" aria-expanded="false">
-                  View by: <span class="filter-btn-value">Annual Savings</span>
-                  <svg class="filter-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
-                </button>
-                <div class="filter-dropdown opportunity-viewby-menu" role="menu">
-                  <div class="filter-checkbox-item filter-single-item active" role="menuitemradio" aria-checked="true" data-view="savings" tabindex="0"><span>Annual Savings</span></div>
-                  <div class="filter-checkbox-item filter-single-item" role="menuitemradio" aria-checked="false" data-view="autoPctTotal" tabindex="0"><span>Automatable %</span></div>
-                  <div class="filter-checkbox-item filter-single-item" role="menuitemradio" aria-checked="false" data-view="automatableVolume" tabindex="0"><span>Automatable Volume</span></div>
-                  <div class="filter-checkbox-item filter-single-item" role="menuitemradio" aria-checked="false" data-view="avgDuration" tabindex="0"><span>Avg. Duration</span></div>
-                  <div class="filter-checkbox-item filter-single-item" role="menuitemradio" aria-checked="false" data-view="avgSentiment" tabindex="0"><span>Avg. Sentiment</span></div>
-                  <div class="filter-checkbox-item filter-single-item" role="menuitemradio" aria-checked="false" data-view="categoryVolume" tabindex="0"><span>Category Volume</span></div>
+              <div class="opportunity-viewby-sort-group">
+                <div class="filter-wrapper opportunity-viewby-wrapper">
+                  <button type="button" class="filter-btn" aria-haspopup="true" aria-expanded="false">
+                    View by: <span class="filter-btn-value">Annual Savings</span>
+                    <svg class="filter-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
+                  </button>
+                  <div class="filter-dropdown opportunity-viewby-menu" role="menu">
+                    <div class="filter-checkbox-item filter-single-item active" role="menuitemradio" aria-checked="true" data-view="savings" tabindex="0"><span>Annual Savings</span></div>
+                    <div class="filter-checkbox-item filter-single-item" role="menuitemradio" aria-checked="false" data-view="autoPctTotal" tabindex="0"><span>Automatable %</span></div>
+                    <div class="filter-checkbox-item filter-single-item" role="menuitemradio" aria-checked="false" data-view="automatableVolume" tabindex="0"><span>Automatable Volume</span></div>
+                    <div class="filter-checkbox-item filter-single-item" role="menuitemradio" aria-checked="false" data-view="avgDuration" tabindex="0"><span>Avg. Duration</span></div>
+                    <div class="filter-checkbox-item filter-single-item" role="menuitemradio" aria-checked="false" data-view="avgSentiment" tabindex="0"><span>Avg. Sentiment</span></div>
+                    <div class="filter-checkbox-item filter-single-item" role="menuitemradio" aria-checked="false" data-view="categoryVolume" tabindex="0"><span>Category Volume</span></div>
+                  </div>
                 </div>
-              </div>
-              <div class="opportunity-sort-wrapper sort-toggle-group" role="group" aria-label="Sort direction">
-                <button type="button" class="sort-toggle-btn active" data-sort="desc" aria-pressed="true" aria-label="Highest to Lowest" data-tooltip="Highest to Lowest">
-                  <i data-lucide="arrow-up-1-0" class="sort-toggle-icon-inactive" aria-hidden="true"></i>
-                  <i data-lucide="arrow-down-1-0" class="sort-toggle-icon-active" aria-hidden="true"></i>
-                </button>
-                <button type="button" class="sort-toggle-btn" data-sort="asc" aria-pressed="false" aria-label="Lowest to Highest" data-tooltip="Lowest to Highest">
-                  <i data-lucide="arrow-up-0-1" class="sort-toggle-icon-inactive" aria-hidden="true"></i>
-                  <i data-lucide="arrow-down-0-1" class="sort-toggle-icon-active" aria-hidden="true"></i>
-                </button>
+                <div class="opportunity-sort-wrapper sort-toggle-group" role="group" aria-label="Sort direction">
+                  <button type="button" class="sort-toggle-btn active" data-sort="desc" aria-pressed="true" aria-label="Highest to Lowest" data-tooltip="Highest to Lowest">
+                    <i data-lucide="arrow-up-1-0" class="sort-toggle-icon-inactive" aria-hidden="true"></i>
+                    <i data-lucide="arrow-down-1-0" class="sort-toggle-icon-active" aria-hidden="true"></i>
+                  </button>
+                  <button type="button" class="sort-toggle-btn" data-sort="asc" aria-pressed="false" aria-label="Lowest to Highest" data-tooltip="Lowest to Highest">
+                    <i data-lucide="arrow-up-0-1" class="sort-toggle-icon-inactive" aria-hidden="true"></i>
+                    <i data-lucide="arrow-down-0-1" class="sort-toggle-icon-active" aria-hidden="true"></i>
+                  </button>
+                </div>
               </div>
             </div>
             <div class="opportunities-content-row">
@@ -2915,8 +2946,12 @@
 
             <aside class="opportunities-sidebar" aria-label="Top 5 by Annual Savings">
               <div class="savings-card">
-                <h2 class="savings-card-title">Top 5 by Annual Savings</h2>
-                <p class="savings-card-subtitle">Where the <strong>$74K</strong> opportunity concentrates</p>
+                <div class="savings-card-title-row">
+                  <svg class="opportunity-card-chevron savings-card-chevron" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
+                  <h2 class="savings-card-title">Top 5 by Annual Savings</h2>
+                </div>
+                <div class="savings-card-collapse">
+                <p class="savings-card-subtitle">Ranked by highest projected savings</p>
                 <div class="savings-card-body">
                   <div class="savings-chart-wrap" id="savingsDonutSubTopics" role="img" aria-label="Donut chart: savings by sub-topics"></div>
                   <ul class="savings-list" aria-label="Sub-topics breakdown">
@@ -2927,6 +2962,7 @@
                     <li><div class="savings-item-top"><span class="savings-name">Application Crash</span><span class="savings-amount">$6K</span><span class="savings-pct">8%</span></div><div class="savings-bar-track"><div class="savings-bar-fill" style="width:67%;background:#00897B"></div></div></li>
                   </ul>
                 </div><!-- /savings-card-body -->
+                </div><!-- /savings-card-collapse -->
               </div>
             </aside>
 
@@ -3108,7 +3144,7 @@
               <div class="stat-tile-rich-value">24</div>
             </div>
           </div>
-          <div class="stat-tile-rich" data-accent="green-soft">
+          <div class="stat-tile-rich" data-accent="neutral-soft">
             <div class="stat-tile-rich-label">Avg. Sentiment</div>
             <div class="stat-tile-rich-top">
               <span class="stat-tile-rich-icon" aria-hidden="true">
@@ -3665,44 +3701,44 @@
       savings: {
         key: 'annualSavings', label: 'Annual Savings', showPct: false,
         format: v => `$${Math.round(v / 1000)}K`,
-        subtitle: total => ({ before: 'Where the ', strong: `$${Math.round(total / 1000)}K`, after: ' opportunity concentrates' }),
+        subtitle: () => ({ before: 'Ranked by highest projected savings', strong: '', after: '' }),
         donutCenter: sum => ({ main: `$${Math.round(sum / 1000)}K`, sub: 'per year' }),
       },
       totalInteractions: {
         key: 'totalInteractions', label: 'Total Interactions', showPct: false,
         format: v => v.toLocaleString('en-US'),
-        subtitle: total => ({ before: 'Where the ', strong: total.toLocaleString('en-US'), after: ' interactions concentrate' }),
+        subtitle: () => ({ before: 'Ranked by highest volume', strong: '', after: '' }),
         donutCenter: sum => ({ main: sum.toLocaleString('en-US'), sub: 'top 5 total' }),
       },
       categoryVolume: {
         key: 'categoryVolume', label: 'Category Volume', showPct: false,
         format: v => v.toLocaleString('en-US'),
-        subtitle: total => ({ before: 'Where the ', strong: total.toLocaleString('en-US'), after: ' category volume concentrates' }),
+        subtitle: () => ({ before: 'Ranked by highest volume', strong: '', after: '' }),
         donutCenter: sum => ({ main: sum.toLocaleString('en-US'), sub: 'top 5 total' }),
       },
       automatableVolume: {
         key: 'automatableVolume', label: 'Automatable Volume', showPct: false,
         format: v => v.toLocaleString('en-US'),
-        subtitle: total => ({ before: 'Where the ', strong: total.toLocaleString('en-US'), after: ' automatable volume concentrates' }),
+        subtitle: () => ({ before: 'Ranked by highest automatable volume', strong: '', after: '' }),
         donutCenter: sum => ({ main: sum.toLocaleString('en-US'), sub: 'top 5 total' }),
       },
       autoPctTotal: {
         valueFn: m => (m.categoryVolume ? m.automatableVolume / m.categoryVolume * 100 : 0),
         label: 'Automatable %', showPct: false,
         format: v => `${v.toFixed(1)}%`,
-        subtitle: () => ({ before: '', strong: 'Highest automation rate', after: ' by category' }),
+        subtitle: () => ({ before: 'Ranked by highest automation rate', strong: '', after: '' }),
         donutCenter: (sum, avg) => ({ main: `${avg.toFixed(1)}%`, sub: 'avg (top 5)' }),
       },
       avgDuration: {
-        key: 'avgDuration', label: 'Avg. Duration', showPct: false,
+        key: 'avgDuration', label: 'Avg. Duration', showPct: false, sortAsc: true,
         format: v => `${Math.round(v)} min`,
-        subtitle: () => ({ before: '', strong: 'Longest average handle time', after: ' by category' }),
+        subtitle: () => ({ before: 'Ranked by lowest average duration', strong: '', after: '' }),
         donutCenter: (sum, avg) => ({ main: `${Math.round(avg)} min`, sub: 'avg (top 5)' }),
       },
       avgSentiment: {
         key: 'avgSentiment', label: 'Avg. Sentiment', showPct: false,
         format: v => v.toFixed(1),
-        subtitle: () => ({ before: '', strong: 'Sentiment score', after: ' by category' }),
+        subtitle: () => ({ before: 'Ranked by highest sentiment score', strong: '', after: '' }),
         donutCenter: (sum, avg) => ({ main: avg.toFixed(1), sub: 'avg (top 5)' }),
       },
     };
@@ -3721,8 +3757,9 @@
 
       const rows = Object.entries(data).map(([name, m]) => ({ name, value: cfg.valueFn ? cfg.valueFn(m) : m[cfg.key], raw: m }));
       const total = rows.reduce((sum, r) => sum + r.value, 0);
-      const top5 = [...rows].sort((a, b) => b.value - a.value).slice(0, 5);
-      const maxVal = top5[0]?.value || 1;
+      const ranked = [...rows].sort((a, b) => b.value - a.value).slice(0, 5);
+      const top5 = cfg.sortAsc ? [...ranked].sort((a, b) => a.value - b.value) : ranked;
+      const maxVal = Math.max(...top5.map(r => r.value), 1);
 
       const titleEl = card.querySelector('.savings-card-title');
       if (titleEl) titleEl.textContent = `Top 5 by ${cfg.label}`;
@@ -3741,7 +3778,7 @@
           const color = CATEGORY_RANK_COLORS[i % CATEGORY_RANK_COLORS.length];
           return `<li>
             <div class="savings-item-top">
-              <span class="savings-name">${r.name}</span>
+              <span class="savings-name" title="${r.name}">${r.name}</span>
               <span class="savings-amount">${cfg.format(r.value, r.raw)}</span>
               ${cfg.showPct ? `<span class="savings-pct">${pct}%</span>` : ''}
             </div>
@@ -4035,6 +4072,41 @@
           });
         });
       });
+    })();
+
+    // ===== Relocate "View by" + sort group when the Top 5 sidebar stacks
+    // above the cards (narrow viewport, or the AI chat panel open at wide
+    // ones — both drive .opportunities-content-row's column-reverse). Moves
+    // the SAME node (not a clone) so its click listeners above stay intact —
+    // no re-binding needed. At that width it sits between the sidebar and
+    // the card list in DOM order, which column-reverse displays as
+    // Top 5 → sort group → cards. =====
+    (function () {
+      const stackedQuery = window.matchMedia('(max-width: 80rem)');
+      function isStacked() {
+        return stackedQuery.matches || document.querySelector('.content-wrapper')?.classList.contains('ai-open');
+      }
+      function relocate() {
+        const stacked = isStacked();
+        document.querySelectorAll('.opportunities-section').forEach(section => {
+          const group = section.querySelector('.opportunity-viewby-sort-group');
+          const headerRow = section.querySelector('.section-meta-row');
+          const contentRow = section.querySelector('.opportunities-content-row');
+          const sidebar = section.querySelector('.opportunities-sidebar');
+          if (!group || !headerRow || !contentRow || !sidebar) return;
+          if (stacked && group.parentElement !== contentRow) {
+            contentRow.insertBefore(group, sidebar);
+          } else if (!stacked && group.parentElement !== headerRow) {
+            headerRow.appendChild(group);
+          }
+        });
+      }
+      relocate();
+      stackedQuery.addEventListener('change', relocate);
+      const contentWrapper = document.querySelector('.content-wrapper');
+      if (contentWrapper) {
+        new MutationObserver(relocate).observe(contentWrapper, { attributes: true, attributeFilter: ['class'] });
+      }
     })();
 
     // ===== "Automation Opportunity And KPI" bubble chart =====
@@ -4767,7 +4839,7 @@
       return `
         <div class="opportunity-details">
           <section class="agent-actions">
-            <h4 class="agent-actions-title"><i data-lucide="chart-bar"></i> Agent Actions in This Category <span class="section-meta-sub">(Up to 10 Topics, 5 Sub-topics)</span></h4>
+            <h4 class="agent-actions-title"><i data-lucide="chart-bar"></i> Agent Actions in This Category</h4>
             ${actionRows}
           </section>
           <div class="opportunity-sub-list">
@@ -4928,7 +5000,7 @@
             <div class="opportunity-metric"><div class="opportunity-metric-value savings"><span class="badge badge-success"><span class="badge-success-content">${s.m[6]}</span></span></div><div class="opportunity-metric-label">Annual Savings</div></div>
           </div>
           <section class="agent-actions-inline">
-            <h5 class="agent-actions-inline-title">Agent Actions for this topic</h5>
+            <h5 class="agent-actions-inline-title">Agent Actions for this topic <span class="section-meta-sub">(Up to 10 Sub-topics)</span></h5>
             <div class="agent-action-row"><span class="agent-action-label">Action Was Discussed</span><div class="agent-action-bar"><div class="agent-action-fill" style="width: 100%"></div></div><span class="agent-action-value">${a1.toLocaleString()}</span></div>
             <div class="agent-action-row"><span class="agent-action-label">Agent Provided Information About&hellip;</span><div class="agent-action-bar"><div class="agent-action-fill" style="width: 82%"></div></div><span class="agent-action-value">${a2.toLocaleString()}</span></div>
             <div class="agent-action-row"><span class="agent-action-label">Account Was Reviewed</span><div class="agent-action-bar"><div class="agent-action-fill" style="width: 65%"></div></div><span class="agent-action-value">${a3.toLocaleString()}</span></div>
@@ -4951,7 +5023,7 @@
       return `
         <div class="opportunity-details">
           <section class="agent-actions">
-            <h4 class="agent-actions-title"><i data-lucide="chart-bar"></i> Agent Actions for this topic <span class="section-meta-sub">(Up to 10 Sub-topics)</span></h4>
+            <h4 class="agent-actions-title"><i data-lucide="chart-bar"></i> Agent Actions for this topic</h4>
             ${actionRows}
           </section>
           <div class="opportunity-sub-list">
@@ -4987,6 +5059,16 @@
       });
     }
     addAutomatablePctInfo(document);
+
+    // Native title tooltip for truncated Top-5 sidebar names — covers the
+    // static markup; dynamic rebuilds (buildTopicBreakdownHtml, etc.) set
+    // the title attribute inline when they generate the markup.
+    function addSavingsNameTitles(root) {
+      (root || document).querySelectorAll('.savings-name:not([title])').forEach(el => {
+        el.title = el.textContent.trim();
+      });
+    }
+    addSavingsNameTitles(document);
 
     function ensureBreakdown(card) {
       if (card.querySelector('.opportunity-details')) return;
@@ -5050,6 +5132,36 @@
       });
     }
     document.querySelectorAll('.opportunity-card > header .opportunity-card-title-row').forEach(bindTitleRow);
+
+    // "Top 5 by Annual Savings" sidebar card — collapsible only at ≤80rem,
+    // where .opportunities-content-row's column-reverse stacks it above the
+    // results (see automation-opportunities-P4.css). Starts collapsed there
+    // since it's no longer the primary thing on screen; at wider viewports
+    // the CSS above forces it open regardless of this state.
+    function initSavingsCardCollapse(card, index) {
+      const titleRow = card.querySelector('.savings-card-title-row');
+      const collapse = card.querySelector('.savings-card-collapse');
+      if (!titleRow || !collapse) return;
+      if (!collapse.id) collapse.id = `savingsCardCollapse-${index}`;
+      titleRow.setAttribute('role', 'button');
+      titleRow.setAttribute('tabindex', '0');
+      titleRow.setAttribute('aria-controls', collapse.id);
+      const setExpanded = (expanded) => {
+        card.classList.toggle('expanded', expanded);
+        titleRow.setAttribute('aria-expanded', String(expanded));
+        collapse.style.maxHeight = expanded ? `${collapse.scrollHeight}px` : '0px';
+      };
+      const toggle = () => setExpanded(!card.classList.contains('expanded'));
+      titleRow.addEventListener('click', toggle);
+      titleRow.addEventListener('keydown', e => {
+        if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); toggle(); }
+      });
+      window.addEventListener('resize', () => {
+        if (card.classList.contains('expanded')) collapse.style.maxHeight = `${collapse.scrollHeight}px`;
+      });
+      setExpanded(false);
+    }
+    document.querySelectorAll('.savings-card').forEach((card, i) => initSavingsCardCollapse(card, i));
 
     function bindViewSamples(btn) {
       if (!btn) return;
@@ -5613,6 +5725,23 @@
       if (this.classList.contains('is-active')) { location.reload(); return; }
       this.classList.add('is-active');
       document.querySelectorAll('.ai-brief-right').forEach(el => { el.hidden = false; });
+    });
+
+    // Demo-only button — filters every tab's card list down to just the
+    // low-volume cards (the ones carrying the "Less than 100 automatable
+    // interactions" badge). Unlike the two demo buttons above, this one is a
+    // real toggle: clicking it again un-hides everything and restores the
+    // normal list, no page reload needed.
+    document.getElementById('demoLowVolumeBtn')?.addEventListener('click', function () {
+      const active = this.classList.toggle('is-active');
+      document.querySelectorAll(
+        '[data-view="categories"] .opportunity-list > .opportunity-card, ' +
+        '[data-view="topics"] .opportunity-list > .opportunity-card, ' +
+        '[data-view="sub-topics"] .opportunity-list > .opportunity-card'
+      ).forEach(card => {
+        const hasBadge = !!card.querySelector(':scope > header .opportunity-card-subtitle .badge-warning');
+        card.hidden = active && !hasBadge;
+      });
     });
 
     const askAiBtn = document.querySelector('.topbar-ask-ai-btn');
@@ -7087,15 +7216,19 @@
     function showGlobalTooltip(trigger) {
       const text = trigger.getAttribute('data-tooltip');
       if (!text) return;
-      globalTooltipEl.textContent = text;
+      const isWrap = trigger.classList.contains('tooltip-wrap');
+      if (isWrap) globalTooltipEl.innerHTML = text; else globalTooltipEl.textContent = text;
       globalTooltipEl.hidden = false;
+      const above = trigger.classList.contains('tooltip-above');
+      globalTooltipEl.classList.toggle('global-tooltip--above', above);
+      globalTooltipEl.classList.toggle('global-tooltip--wrap', isWrap);
       const rect = trigger.getBoundingClientRect();
       globalTooltipEl.style.left = `${rect.left + rect.width / 2}px`;
-      globalTooltipEl.style.top = `${rect.bottom + 6}px`;
+      globalTooltipEl.style.top = above ? `${rect.top - 6}px` : `${rect.bottom + 6}px`;
     }
     function hideGlobalTooltip() { globalTooltipEl.hidden = true; }
 
-    const GLOBAL_TOOLTIP_SELECTOR = '.opportunity-sub-list-chart-card-fs[data-tooltip], .chart-card-fullscreen-close[data-tooltip], .sort-toggle-btn[data-tooltip]';
+    const GLOBAL_TOOLTIP_SELECTOR = '.opportunity-sub-list-chart-card-fs[data-tooltip], .chart-card-fullscreen-close[data-tooltip], .sort-toggle-btn[data-tooltip], .automatable-volume-info[data-tooltip], .ai-brief-hero-info[data-tooltip]';
     document.addEventListener('mouseover', e => {
       const trigger = e.target.closest(GLOBAL_TOOLTIP_SELECTOR);
       if (trigger) showGlobalTooltip(trigger);
@@ -7595,7 +7728,15 @@
         const header = document.createElement('div');
         header.className = 'opportunity-sub-list-header';
         header.innerHTML = SUB_LIST_COLUMNS
-          .map(c => `<div data-col="${c.key}">${c.key === 'topic' && isTopicsView ? 'Sub-topic' : c.label}</div>`)
+          .map(c => {
+            const text = c.key === 'topic' && isTopicsView ? 'Sub-topic' : c.label;
+            if (c.key === 'automatableVolume') return `<div data-col="${c.key}">Automatable<br>Volume</div>`;
+            if (c.key !== 'autoPct') return `<div data-col="${c.key}">${text}</div>`;
+            return `<div data-col="${c.key}">Automatable<br>%` +
+              '<button type="button" class="opportunities-settings automatable-volume-info tooltip-above" aria-label="About Automatable %" data-tooltip="Automatable Volume &#247; Volume &#215; 100">' +
+                '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg>' +
+              '</button></div>';
+          })
           .join('');
         rowsRoot.prepend(header);
       }
@@ -7626,7 +7767,7 @@
         ];
         const sectionTitle = document.createElement('div');
         sectionTitle.className = 'agent-actions-title';
-        sectionTitle.innerHTML = `<i data-lucide="workflow"></i> ${isTopicsView ? 'Sub-topics breakdown' : 'Topics &amp; Sub-topics breakdown'}`;
+        sectionTitle.innerHTML = `<i data-lucide="workflow"></i> ${isTopicsView ? 'Sub-topics breakdown <span class="section-meta-sub">(Up to 10 Sub-topics)</span>' : 'Topics &amp; Sub-topics breakdown <span class="section-meta-sub">(Up to 10 Topics, 5 Sub-topics)</span>'}`;
 
         const toolbar = document.createElement('div');
         toolbar.className = 'opportunity-sub-list-toolbar';

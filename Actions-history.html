@@ -262,11 +262,6 @@
           </div>
           <button class="reset-filters-btn" type="button">↻ Reset Filters</button>
         </div>
-        <!-- Tabs -->
-        <div class="opportunities-tabs" role="tablist" id="historyTabs">
-          <button class="opportunities-tab active" role="tab" aria-selected="true" data-tab="history">History</button>
-          <button class="opportunities-tab" role="tab" aria-selected="false" data-tab="live-agent">Live Agent</button>
-        </div>
       </div>
 
       <div class="main-area">
@@ -1266,23 +1261,6 @@
     }, 3000);
   })();
 </script>
-<script>
-  document.getElementById('historyTabs')?.querySelectorAll('.opportunities-tab').forEach(tab => {
-    tab.addEventListener('click', () => {
-      document.querySelectorAll('#historyTabs .opportunities-tab').forEach(t => {
-        t.classList.remove('active');
-        t.setAttribute('aria-selected', 'false');
-      });
-      tab.classList.add('active');
-      tab.setAttribute('aria-selected', 'true');
-      const target = tab.dataset.tab;
-      const mainArea = document.querySelector('.main-area');
-      mainArea?.classList.toggle('live-agent-active', target === 'live-agent');
-      document.querySelectorAll('.main-area [data-view]').forEach(v => {
-        v.hidden = v.dataset.view !== target;
-      });
-    });
-  });
-</script>
+
 </body>
 </html>

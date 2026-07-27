@@ -2,7 +2,7 @@
 .badge-success {
   background: var(--success-bg);
   color: var(--alpha-green-text);
-  border: 0.5px solid var(--success-border);
+  border: 0.03125rem solid var(--success-border);
   border-radius: var(--rounded-sm);
   padding: var(--space-1) var(--space-2);
   gap: var(--space-1);
@@ -83,12 +83,12 @@
   visibility: visible;
   opacity: 1;
 }
-@media (max-width: 1024px) {
+@media (max-width: 64rem) {
   .action-btn-tooltip {
     max-width: min(11rem, calc(100vw - var(--space-4)));
   }
 }
-@media (max-width: 480px) {
+@media (max-width: 30rem) {
   .action-btn-tooltip {
     max-width: min(9rem, calc(100vw - var(--space-4)));
   }
@@ -199,17 +199,17 @@
 .echart-kb-overlay {
   position: absolute;
   pointer-events: none;
-  border: 2px solid var(--primary-500, #5EA9FD);
-  border-radius: 3px;
-  box-shadow: 0 0 0 3px rgba(94, 169, 253, 0.3);
+  border: 0.125rem solid var(--primary-500, #5EA9FD);
+  border-radius: 0.1875rem;
+  box-shadow: 0 0 0 0.1875rem rgba(94, 169, 253, 0.3);
   background: rgba(94, 169, 253, 0.1);
   z-index: 10;
   transition: left 80ms ease, top 80ms ease, width 80ms ease, height 80ms ease;
 }
 .echart-kb-overlay--line {
   border-radius: 50%;
-  width: 10px !important;
-  height: 10px !important;
+  width: 0.625rem !important;
+  height: 0.625rem !important;
 }
 /* No outer focus outline on the chart canvas — the inner bar-group overlay
    serves as the sole focus indicator.
@@ -223,14 +223,14 @@
 /* Fullscreen chart — controls area in header */
 .chart-card-fullscreen-controls {
   margin-left: auto;
-  margin-right: var(--space-3, 12px);
+  margin-right: var(--space-3, 0.75rem);
 }
 .chart-fs-topic-menu {
   display: none;
   right: 0;
   left: auto;
-  min-width: 220px;
-  max-height: 320px;
+  min-width: 13.75rem;
+  max-height: 20rem;
   overflow-y: auto;
 }
 .chart-fs-topic-menu.is-open { display: block; }
@@ -238,9 +238,9 @@
   font-weight: 600;
 }
 .filter-dropdown-sep {
-  height: 1px;
+  height: 0.0625rem;
   background: var(--color-border, #e2e4e9);
-  margin: 4px 0;
+  margin: 0.25rem 0;
 }
 .filter-single-item { cursor: pointer; }
 .filter-single-item.active { background: var(--color-surface-hover, #f3f4f6); }
@@ -252,12 +252,20 @@ body.using-keyboard .echart-chart:focus-visible {
   box-shadow: none !important;
 }
 
+.opportunities-section .section-meta-row {
+  align-items: flex-end;
+  /* Match .opportunities-left's actual width (row width minus the fixed
+     sidebar + gap) so "View by" + sort land flush with the card column's
+     right edge, not the far edge of the Top 5 sidebar below it. Only valid
+     while the sidebar sits beside the cards — narrow/ai-open widths (where
+     .opportunities-sidebar itself goes to width:100%) restore full width. */
+  max-width: calc(100% - 21.1rem - var(--space-4));
+}
 
-/* ── Savings by category sidebar ── */
 /* ── Savings by category sidebar ── */
 .opportunities-content-row {
   display: flex;
-  gap: 16px;
+  gap: var(--space-4);
   align-items: flex-start;
 }
 .opportunities-left {
@@ -293,20 +301,27 @@ body.using-keyboard .echart-chart:focus-visible {
   background-color: var(--neutral-50);
 }
 .opportunities-sidebar {
-  max-width: 300px;
+  width: 21.1rem;
+  max-width: 25rem;
   flex-shrink: 0;
 }
+.savings-subtitle-break {
+  display: none;
+}
 
-/* ── Wide (≥1281px): column — donut top centered, bars below ── */
-@media (min-width: 1281px) {
+/* ── Wide (≥80.0625rem): column — donut top centered, bars below ── */
+@media (min-width: 80.0625rem) {
   .savings-card-body {
     flex-direction: column;
     align-items: center;
     gap: var(--space-6);
   }
+  .savings-subtitle-break {
+    display: block;
+  }
   .savings-chart-wrap {
-    width: 220px;
-    height: 220px;
+    width: 13.75rem;
+    height: 13.75rem;
     flex-shrink: 0;
     margin: 0 auto;
     border-right: none;
@@ -319,11 +334,26 @@ body.using-keyboard .echart-chart:focus-visible {
   }
 }
 
-/* ── Narrow (≤1280px): row — donut left, bars right ── */
-@media (max-width: 1280px) {
-  .opportunities-content-row  { flex-direction: column-reverse; }
+/* ── Narrow (≤80rem): row — donut left, bars right ── */
+@media (max-width: 80rem) {
+  /* gap now separates Top 5 / sort-group / cards (stacked column-reverse
+     order) instead of Top 5 / cards side-by-side — smaller than the
+     side-by-side gap since the sort-group sits between two closely related
+     pieces of the same list, not two separate panels. */
+  .opportunities-content-row  { flex-direction: column-reverse; gap: var(--space-2); }
   .opportunities-sidebar      { max-width: 100%; width: 100%; }
   .opportunities-left         { width: 100%; }
+  .opportunities-section .section-meta-row { max-width: 100%; }
+
+  /* "View by" + sort — relocated by JS into .opportunities-content-row
+     (between the sidebar and card list) once the Top 5 panel stacks above
+     the cards. margin-left:auto (from the header-row layout) no longer
+     applies here since it's now a normal column flex item. */
+  .opportunities-content-row > .opportunity-viewby-sort-group {
+    margin-left: 0;
+    width: 100%;
+    justify-content: flex-start;
+  }
 
   /* Card header — actions stay top-right, don't wrap */
   .opportunity-card-header {
@@ -341,11 +371,11 @@ body.using-keyboard .echart-chart:focus-visible {
     flex-direction: row;
     align-items: center;
     gap: 0;
-    padding-right: var(--space-10);
+  
   }
   .savings-chart-wrap {
-    width: 260px;
-    height: 260px;
+    width: 16.25rem;
+    height: 16.25rem;
     flex-shrink: 0;
     padding-right: var(--space-6);
     border-right: none;
@@ -358,17 +388,17 @@ body.using-keyboard .echart-chart:focus-visible {
   }
 }
 
-@media (max-width: 700px) {
+@media (max-width: 43.75rem) {
   .opportunities-left .opportunity-sub-list-header,
   .opportunities-left .opportunity-sub-card {
     min-width: 42rem;
   }
 }
 
-@media (max-width: 480px) {
+@media (max-width: 30rem) {
   .savings-chart-wrap {
-    width: 140px;
-    height: 140px;
+    width: 8.75rem;
+    height: 8.75rem;
   }
   .ai-briefing .ai-brief-footer {
     border-top: none;
@@ -376,9 +406,10 @@ body.using-keyboard .echart-chart:focus-visible {
 }
 
 /* When the chat panel is open at wide viewports — stack sidebar above cards */
-@media (min-width: 1281px) {
+@media (min-width: 80.0625rem) {
   .content-wrapper.ai-open .opportunities-content-row {
     flex-direction: column-reverse;
+    gap: var(--space-2);
   }
   .content-wrapper.ai-open .opportunities-sidebar {
     max-width: 100%;
@@ -387,6 +418,14 @@ body.using-keyboard .echart-chart:focus-visible {
   .content-wrapper.ai-open .opportunities-left {
     width: 100%;
   }
+  .content-wrapper.ai-open .opportunities-section .section-meta-row {
+    max-width: 100%;
+  }
+  .content-wrapper.ai-open .opportunities-content-row > .opportunity-viewby-sort-group {
+    margin-left: 0;
+    width: 100%;
+    justify-content: flex-start;
+  }
   .content-wrapper.ai-open .savings-card-body {
     flex-direction: row;
     align-items: center;
@@ -394,8 +433,8 @@ body.using-keyboard .echart-chart:focus-visible {
     padding-right: var(--space-10);
   }
   .content-wrapper.ai-open .savings-chart-wrap {
-    width: 260px;
-    height: 260px;
+    width: 16.25rem;
+    height: 16.25rem;
     flex-shrink: 0;
     padding-right: var(--space-6);
     border-right: none;
@@ -404,21 +443,77 @@ body.using-keyboard .echart-chart:focus-visible {
   .content-wrapper.ai-open .savings-list {
     flex: 1;
     min-width: 0;
-    padding-left: var(--space-6);
+   
   }
 }
+/* ── Collapsible title row (only interactive/collapsible at ≤80rem, where
+   .opportunities-content-row's column-reverse puts this card above the
+   results — see the ≤80rem block below) ── */
+.savings-card-title-row {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+}
+.savings-card-chevron {
+  flex-shrink: 0;
+  color: var(--neutral-400);
+  transition: transform 0.2s ease;
+}
+.savings-card.expanded .savings-card-chevron {
+  transform: rotate(180deg);
+}
+/* Explicit keyboard-focus indicator on the toggle row + chevron — belt and
+   suspenders on top of the universal body.using-keyboard :focus-visible
+   rule in styles.css, since this row is a div with role="button", not a
+   native button. */
+body.using-keyboard .savings-card-title-row:focus-visible {
+  outline: 0.125rem solid var(--primary-500);
+  outline-offset: 0.125rem;
+  border-radius: var(--rounded-sm);
+}
+.savings-card-collapse {
+  overflow: hidden;
+  transition: max-height 0.22s ease;
+}
+@media (min-width: 80.0625rem) {
+  /* Sidebar sits beside the results here, not above them — always show
+     its content and drop the toggle affordance entirely. */
+  .savings-card-title-row {
+    cursor: default;
+  }
+  .savings-card-chevron {
+    display: none;
+  }
+  .savings-card-collapse {
+    max-height: none !important;
+    overflow: visible;
+  }
+}
+@media (max-width: 80rem) {
+  .savings-card-title-row {
+    cursor: pointer;
+    user-select: none;
+  }
+  /* Align with the title text after the chevron + gap — same formula as
+     .opportunity-card-subtitle's alignment under its own chevron title. */
+  .savings-card-subtitle {
+    padding-left: calc(1.125rem + var(--space-3));
+  }
+}
+
 .savings-card {
   background:var(--primary-0);
-  border: 1px solid var(--neutral-100);
+  border: 0.0625rem solid var(--neutral-100);
   border-radius: var(--rounded-md);
-  padding: var(--space-4);
+  padding: var(--space-6);
+  min-width: 21.1rem;
 
 }
 .savings-card-title {
   display: flex;
   align-items: center;
   gap: var(--space-2);
-  padding-bottom: var(--space-2);
+  padding-bottom: var(--space-1);
   font-size: var(--text-md);
   font-weight: var(--font-medium);
   color: var(--primary-900);
@@ -427,11 +522,17 @@ body.using-keyboard .echart-chart:focus-visible {
 .savings-card-subtitle {
   font-size: var(--text-sm);
   color: var(--neutral-500);
+  padding-bottom: var(--space-3);
+  overflow-wrap: break-word;
 }
 /* ── Base: shared savings-card-body structure ── */
 .savings-card-body {
   display: flex;
   margin-top: var(--space-2);
+}
+/* Donut hidden for now — bar list only */
+.savings-chart-wrap {
+  display: none;
 }
 .savings-list {
   list-style: none;
@@ -439,13 +540,13 @@ body.using-keyboard .echart-chart:focus-visible {
   padding: 0;
   display: flex;
   flex-direction: column;
-  gap: var(--space-5);
+  gap: var(--space-6);
 }
 .savings-item-top {
   display: flex;
   align-items: center;
-  gap: 6px;
-  margin-bottom: 3px;
+  gap: 0.375rem;
+  margin-bottom: 0.1875rem;
 }
 .savings-name {
   flex: 1;
@@ -465,7 +566,7 @@ body.using-keyboard .echart-chart:focus-visible {
   font-size: var(--text-sm);
   color: var(--neutral-500);
   flex-shrink: 0;
-  width: 26px;
+  width: 1.625rem;
   text-align: right;
 }
 .savings-bar-track {
@@ -483,7 +584,7 @@ body.using-keyboard .echart-chart:focus-visible {
 /* ── Live AI Agents card ── */
 .live-agents-card {
   background: var(--primary-0);
-  border: 1px solid var(--neutral-100);
+  border: 0.0625rem solid var(--neutral-100);
   border-radius: var(--rounded-md);
   padding: var(--space-4);
   margin-top: var(--space-3);
@@ -506,26 +607,26 @@ body.using-keyboard .echart-chart:focus-visible {
 .live-agents-pulse {
   display: flex;
   align-items: center;
-  gap: 5px;
+  gap: 0.3125rem;
   font-size: var(--text-xs);
   color: var(--neutral-500);
 }
 .live-agents-pulse-dot {
-  width: 8px;
-  height: 8px;
+  width: var(--space-2);
+  height: var(--space-2);
   border-radius: 50%;
   background: var(--color-action-primary);
   animation: pulse-ring 1.8s ease-out infinite;
 }
 @keyframes pulse-ring {
   0%   { box-shadow: 0 0 0 0 color-mix(in srgb, var(--color-action-primary) 55%, transparent); }
-  70%  { box-shadow: 0 0 0 6px transparent; }
+  70%  { box-shadow: 0 0 0 0.375rem transparent; }
   100% { box-shadow: 0 0 0 0 transparent; }
 }
 .live-agents-subtitle {
   font-size: var(--text-sm);
   color: var(--neutral-500);
-  margin: 2px 0 0;
+  margin: 0.125rem 0 0;
 }
 /* Fullscreen modal */
 .lat-modal {
@@ -548,7 +649,7 @@ body.using-keyboard .echart-chart:focus-visible {
   align-items: center;
   justify-content: space-between;
   padding: var(--space-4) var(--space-6);
-  border-bottom: 1px solid var(--neutral-100);
+  border-bottom: 0.0625rem solid var(--neutral-100);
   flex-shrink: 0;
 }
 .lat-modal-title {
@@ -567,7 +668,7 @@ body.using-keyboard .echart-chart:focus-visible {
   width: 2rem;
   height: 2rem;
   border-radius: var(--rounded-full);
-  border: 1px solid var(--neutral-100);
+  border: 0.0625rem solid var(--neutral-100);
   background: transparent;
   color: var(--neutral-500);
   cursor: pointer;
@@ -590,7 +691,7 @@ body.using-keyboard .echart-chart:focus-visible {
 }
 .lat-modal-head {
   padding: 0 var(--space-3) var(--space-3);
-  border-bottom: 1px solid var(--neutral-100);
+  border-bottom: 0.0625rem solid var(--neutral-100);
 }
 .lat-modal-hcell {
   font-size: var(--text-sm);
@@ -600,7 +701,7 @@ body.using-keyboard .echart-chart:focus-visible {
 .lat-modal-hcell { text-align: left; }
 .lat-modal-row {
   padding: var(--space-3) var(--space-3);
-  border-bottom: 1px solid var(--neutral-100);
+  border-bottom: 0.0625rem solid var(--neutral-100);
   transition: background 0.15s;
 }
 .lat-modal-row:last-child { border-bottom: none; }
@@ -614,14 +715,14 @@ body.using-keyboard .echart-chart:focus-visible {
   display: flex;
   gap: var(--space-6);
   padding: var(--space-4) var(--space-6);
-  border-top: 1px solid var(--neutral-100);
+  border-top: 0.0625rem solid var(--neutral-100);
   background: var(--neutral-50);
   flex-shrink: 0;
 }
 .lat-modal-footer-label {
   font-size: var(--text-xs);
   color: var(--neutral-500);
-  margin-bottom: 2px;
+  margin-bottom: 0.125rem;
 }
 .lat-modal-footer-value {
   font-size: var(--text-xl);
@@ -631,7 +732,7 @@ body.using-keyboard .echart-chart:focus-visible {
 .lat-modal-footer-value.green { color: #22863a; }
 .live-agent-item {
   background: var(--color-bg-primary);
-  border: 1px solid var(--neutral-100);
+  border: 0.0625rem solid var(--neutral-100);
   border-radius: var(--rounded-sm);
   padding: var(--space-3);
   margin-bottom: var(--space-2);
@@ -678,7 +779,7 @@ body.using-keyboard .echart-chart:focus-visible {
 .live-agent-metric-label {
   font-size: var(--text-xs);
   color: var(--neutral-500);
-  margin-bottom: 2px;
+  margin-bottom: 0.125rem;
 }
 .live-agent-metric-value {
   font-size: var(--text-base);
@@ -702,7 +803,7 @@ body.using-keyboard .echart-chart:focus-visible {
 .live-agent-metric-value .oncall-dot::before {
   content: '';
   position: absolute;
-  inset: -4px;
+  inset: -0.25rem;
   border-radius: 50%;
   background: var(--success-default);
   opacity: 0.35;
@@ -711,7 +812,7 @@ body.using-keyboard .echart-chart:focus-visible {
 .live-agent-metric-value .oncall-dot::after {
   content: '';
   position: absolute;
-  inset: -8px;
+  inset: -0.5rem;
   border-radius: 50%;
   background: var(--success-default);
   opacity: 0.15;
@@ -727,7 +828,7 @@ body.using-keyboard .echart-chart:focus-visible {
   align-items: center;
   justify-content: space-between;
   padding-top: var(--space-2);
-  border-top: 1px solid var(--neutral-100);
+  border-top: 0.0625rem solid var(--neutral-100);
   font-size: var(--text-xs);
   color: var(--neutral-500);
 }
@@ -738,12 +839,12 @@ body.using-keyboard .echart-chart:focus-visible {
 }
 .lat-head, .lat-row {
   display: grid;
-  grid-template-columns: 1fr 52px 52px;
+  grid-template-columns: 1fr 3.25rem 3.25rem;
   align-items: center;
 }
 .lat-head {
   padding: 0 var(--space-2) var(--space-2);
-  border-bottom: 1px solid var(--neutral-100);
+  border-bottom: 0.0625rem solid var(--neutral-100);
 }
 .lat-hcell {
   font-size: var(--text-xs);
@@ -754,7 +855,7 @@ body.using-keyboard .echart-chart:focus-visible {
 .lat-body { display: flex; flex-direction: column; }
 .lat-row {
   padding: var(--space-2) var(--space-2);
-  border-bottom: 1px solid var(--neutral-100);
+  border-bottom: 0.0625rem solid var(--neutral-100);
   will-change: transform;
   transition: background 0.2s;
 }
@@ -774,21 +875,21 @@ body.using-keyboard .echart-chart:focus-visible {
 .lat-live-pill {
   display: inline-flex;
   align-items: center;
-  gap: 5px;
+  gap: 0.3125rem;
   background: #e6f4ea;
   color: #22863a;
   font-weight: var(--font-regular);
   font-size: var(--text-xs);
   border-radius: var(--rounded-full);
-  padding: 2px 8px 2px 6px;
-  min-width: 42px;
+  padding: 0.125rem 0.5rem 0.125rem 0.375rem;
+  min-width: 2.625rem;
   justify-content: flex-end;
   transition: background 0.3s;
 }
 .lat-live-pill.flash { background: #bbf7d0; }
 .lat-dot {
-  width: 7px;
-  height: 7px;
+  width: 0.4375rem;
+  height: 0.4375rem;
   border-radius: 50%;
   background: #22863a;
   flex-shrink: 0;
@@ -800,7 +901,7 @@ body.using-keyboard .echart-chart:focus-visible {
   gap: var(--space-4);
   margin-top: var(--space-3);
   padding-top: var(--space-3);
-  border-top: 1px solid var(--neutral-100);
+  border-top: 0.0625rem solid var(--neutral-100);
 }
 .live-agents-summary-item {
   flex: 1;
@@ -808,7 +909,7 @@ body.using-keyboard .echart-chart:focus-visible {
 .live-agents-summary-label {
   font-size: var(--text-xs);
   color: var(--neutral-500);
-  margin-bottom: 2px;
+  margin-bottom: 0.125rem;
 }
 .live-agents-summary-value {
   font-size: var(--text-lg);
@@ -833,7 +934,7 @@ body.using-keyboard .echart-chart:focus-visible {
 .opportunity-card > header .opportunity-ai-summary,
 .opportunity-card > .opportunity-metrics,
 .opportunity-card > .opportunity-details {
-  padding-left: calc(18px + var(--space-2));
+  padding-left: calc(1.125rem + var(--space-2));
 }
 
 /* ── Collapsible title row ── */
@@ -933,12 +1034,12 @@ body.using-keyboard .echart-chart:focus-visible {
   display: flex;
   flex-direction: column;
   align-items: flex-end;
-  gap: 2px;
+  gap: var(--space-0-5);
 }
 .oc-key-savings {
   display: flex;
   align-items: baseline;
-  gap: 3px;
+  gap: 0.1875rem;
 }
 .oc-key-savings-value {
   font-size: var(--text-xl);
@@ -1079,8 +1180,8 @@ body.using-keyboard .echart-chart:focus-visible {
 }
 .ai-brief-dot {
   position: absolute;
-  width: 3px;
-  height: 3px;
+  width: 0.1875rem;
+  height: 0.1875rem;
   border-radius: 50%;
   background: rgba(180,196,224,0.18);
   opacity: 0.18;
@@ -1110,17 +1211,11 @@ body.using-keyboard .echart-chart:focus-visible {
 .ai-briefing .ai-brief-footer {
   position: relative;
   z-index: 1;
-  margin-top: var(--space-6);
   padding: var(--space-5) 0 0;
   background: none;
   border: none;
-  border-top: 0.0625rem solid rgba(255,255,255,0.12);
   border-radius: 0;
 }
-.ai-briefing .analyzed-period-compact-label,
-.ai-briefing .section-meta-sub,
-.ai-briefing .stat-inline-top,
-.ai-briefing .stat-inline-label { color: rgba(255,255,255,0.55); }
 .ai-briefing .stat-inline svg { color: rgba(255,255,255,0.55); }
 .ai-briefing .ai-brief-right { border-left-color: rgba(255,255,255,0.12); }
 .ai-briefing .ai-brief-right-title { color: rgba(255,255,255,0.42); letter-spacing: 0.14em; }
@@ -1131,7 +1226,7 @@ body.using-keyboard .echart-chart:focus-visible {
   border-color: rgba(255,255,255,0.5);
   outline: none;
   transform: scale(1.03);
-  box-shadow: 0 8px 24px rgba(0,0,0,0.25);
+  box-shadow: 0 0.5rem 1.5rem rgba(0,0,0,0.25);
 }
 .ai-briefing .ai-brief-action-label { color: rgba(255,255,255,0.42); font-size: 0.6rem; letter-spacing: 0.12em; }
 .ai-briefing .ai-brief-action-name { color: var(--neutral-0); font-size: var(--text-base); }
@@ -1142,8 +1237,8 @@ body.using-keyboard .echart-chart:focus-visible {
 .ai-briefing .ai-brief-action-icon i[data-lucide] { width: 1.5rem; height: 1.5rem; }
 .ai-brief-action-chevron { display: none; }
 
-/* ── When sidebar opens at ≤1024px: stack ai-brief-layout to column ── */
-@media (max-width: 1024px) {
+/* ── When sidebar opens at ≤64rem: stack ai-brief-layout to column ── */
+@media (max-width: 64rem) {
   body.sidebar-nav-open .ai-brief-layout {
     flex-direction: column;
   }
@@ -1156,8 +1251,8 @@ body.using-keyboard .echart-chart:focus-visible {
   }
 }
 
-/* ── Sidebar: collapsed by default at ≤1024px, opens on toggle ── */
-@media (max-width: 1024px) {
+/* ── Sidebar: collapsed by default at ≤64rem, opens on toggle ── */
+@media (max-width: 64rem) {
   .sidebar:not(.sidebar-open) {
     width: 3.5rem;
     padding: var(--space-3) var(--space-2);
@@ -1179,7 +1274,4 @@ body.using-keyboard .echart-chart:focus-visible {
    Not deleted: remove this rule to bring the Table/Chart toggle back. */
 .opportunity-sub-list-view,
 .opportunity-sub-list-chart-controls { display: none; }
-
-/* Savings sidebar subtitle — hidden for now. Not deleted: remove this rule to bring it back. */
-.savings-card-subtitle { display: none; }
 

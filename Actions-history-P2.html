@@ -1,0 +1,4156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Auto Insight - Actions History</title>
+  <link rel="stylesheet" href="styles.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/echarts/5.5.0/echarts.min.js" defer></script>
+  <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js" defer></script>
+  <style>
+    /* "Live" status badge — solid pill instead of the shared soft-tint
+       badge-success style, matching the standalone Success component. */
+    .badge-success {
+      background: var(--success-default);
+      color: var(--success-foreground, #ffffff);
+      border: none;
+      border-radius: var(--rounded-full);
+      font-weight: var(--font-medium);
+    }
+    .lat-live-pill {
+      display: inline-flex; align-items: center; gap: 5px;
+      background: #e6f4ea; color: #22863a;
+      font-size: var(--text-xs); border-radius: 999px;
+      padding: 2px 8px 2px 6px; min-width: 42px;
+      transition: background 0.3s ease;
+    }
+    .lat-live-pill.flash { background: #bbf7d0; }
+    .lat-dot { width: 7px; height: 7px; border-radius: 50%; background: #22863a; flex-shrink: 0; }
+    .lat-headset { width: 12px; height: 12px; flex-shrink: 0; stroke: #22863a; }
+    #ahLiveBody tr { will-change: transform; }
+    .live-agent-table td { color: var(--color-text-primary); font-size: 0.8125rem; }
+    .live-agent-table td.cell-agent { font-weight: var(--font-medium); }
+    .live-agent-table td.cell-resolved { color: #22863a; font-weight: var(--font-medium); }
+    .live-agent-table td.cell-saved { color: #22863a; font-weight: var(--font-medium); }
+    .live-agent-table td.cell-handle { color: var(--color-text-muted); }
+    .live-agent-table tbody tr:hover td { background: var(--color-bg-tertiary); }
+    .live-agent-table td:last-child { text-align: left; }
+    .live-agent-table td.cell-money { color: #22863a; font-weight: var(--font-medium); }
+
+    /* Live-agent tab fills remaining viewport height — no page scroll */
+    .main-area.live-agent-active {
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      padding-bottom: 0;
+    }
+    .main-area.live-agent-active [data-view="live-agent"] {
+      display: flex;
+      flex-direction: column;
+      flex: 1;
+      min-height: 0;
+      width: 100%;
+      max-width: 86rem;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    .main-area.live-agent-active .live-table-container {
+      flex: 1;
+      min-height: 0;
+      height: 0;
+      max-height: none;
+    }
+    .main-area.live-agent-active .stats-grid--4col {
+      margin-bottom: var(--space-4);
+    }
+
+    .opportunity-card-title-block {
+      display: flex;
+      align-items: center;
+      gap: var(--space-3);
+    }
+    .opportunity-card-title-icon {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      width: 2.75rem;
+      height: 2.75rem;
+      border-radius: var(--rounded-sm);
+       background: var(--blue-500);
+       color: var(--primary-0);
+    }
+    .opportunity-card-title-icon svg {
+      width: 1.5rem;
+      height: 1.5rem;
+    }
+
+    /* Action cards — same look as automation-opportunities-P4 opportunity cards */
+    .opportunity-card-header {
+      margin-bottom: 0;
+    }
+    .opportunity-card {
+      transition: border-color 0.15s ease, box-shadow 0.15s ease;
+    }
+    .opportunity-card:hover {
+      box-shadow: 0 0.5rem 1.5rem -0.5rem var(--shadow-md);
+      border-color: var(--primary-500);
+      background: var(--primary-25);
+    }
+    .opportunity-card.expanded:hover {
+      box-shadow: none;
+      background: var(--color-bg-primary);
+    }
+    .subtitle-sep {
+      margin: 0 var(--space-2);
+    }
+    .opportunity-ai-summary {
+      display: flex;
+      flex-direction: column;
+      padding-top: var(--space-3);
+      margin: 0;
+    }
+    .opportunity-ai-summary-line {
+      font-size: var(--text-sm);
+      color: var(--neutral-600);
+      line-height: 1.5;
+      margin: 0;
+    }
+    .opportunity-card > header > .opportunity-card-actions {
+      flex-direction: column;
+      align-items: flex-end;
+      gap: var(--space-2);
+      margin-top: var(--space-3);
+    }
+    .opportunity-action-btns {
+      display: flex;
+      gap: var(--space-2);
+      align-items: center;
+      flex-wrap: nowrap;
+      flex-shrink: 0;
+    }
+    .opportunity-card-key-stats {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: var(--space-0-5);
+    }
+    .oc-key-savings {
+      display: flex;
+      align-items: baseline;
+      gap: 0.1875rem;
+    }
+    .oc-key-savings-value {
+      font-size: var(--text-xl);
+      font-weight: var(--font-bold);
+      color: var(--primary-900);
+      line-height: 1.1;
+    }
+    .oc-key-savings-unit {
+      font-size: var(--text-sm);
+      font-weight: var(--font-regular);
+      color: var(--neutral-500);
+    }
+    .oc-key-auto {
+      font-size: var(--text-xs);
+      color: var(--neutral-500);
+    }
+
+    /* Expand / collapse each action card, click the title row to reveal metrics */
+    .opportunity-card-title-row {
+      display: flex;
+      align-items: center;
+      gap: var(--space-3);
+      user-select: none;
+      width: fit-content;
+    }
+    .opportunity-card-chevron {
+      flex-shrink: 0;
+      color: var(--neutral-400);
+      transition: transform 0.2s ease;
+    }
+    .opportunity-card.expanded .opportunity-card-chevron {
+      transform: rotate(180deg);
+    }
+
+    /* Expand/collapse hidden for now — chevron hidden, metrics always shown */
+    .opportunity-card-chevron {
+      display: none;
+    }
+
+    /* Per-card AI agent breakdown */
+    .agents-list {
+      padding-top: var(--space-2);
+    }
+    .agents-table-toggle[aria-expanded="true"] .opportunity-expand-chevron {
+      transform: rotate(180deg);
+    }
+    .agents-table-toggle {
+      margin-top: var(--space-2);
+    }
+    .agents-table-collapse {
+      margin-top: var(--space-2);
+    }
+    .actions-section-title {
+      margin-bottom: var(--space-0);
+    }
+    .agents-table-title {
+      font-size: var(--text-md);
+      font-weight: var(--font-medium);
+      color: var(--color-primary-900);
+      margin: 0 0 var(--space-1);
+    }
+    .agents-table-header-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: var(--space-3);
+    }
+    .agents-table-search {
+      min-width: 0;
+      width: 28rem;
+    }
+    .agents-table-empty {
+      padding: var(--space-7) var(--space-4);
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: var(--space-4);
+    }
+    .agents-table-empty[hidden] {
+      display: none;
+    }
+    .agents-table-empty-title {
+      font-size: var(--text-md);
+      font-weight: var(--font-semibold);
+      color: var(--color-blue-button);
+    }
+    .agents-table-empty-reset {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--space-2);
+      padding: var(--space-2) var(--space-4);
+      background: var(--color-bg-primary);
+      border: 0.0625rem solid var(--color-border);
+      border-radius: var(--rounded-md);
+      color: var(--color-primary-900);
+      font-size: var(--text-sm);
+      cursor: pointer;
+    }
+    .agents-table-empty-reset:hover {
+      background: var(--neutral-50);
+    }
+    .agents-table-empty-reset svg {
+      width: 1rem;
+      height: 1rem;
+    }
+    .agents-list-caption {
+      display: none;
+      font-size: var(--text-xs);
+      color: var(--neutral-500);
+      margin: var(--space-3) 0 0;
+    }
+
+    /* Agents table — same grid/header look as automation-opportunities-P4's
+       .opportunity-sub-list-table, with its own column set. */
+    .agents-table {
+      border: 0.0625rem solid var(--color-border);
+      border-radius: var(--rounded-md);
+      overflow: hidden;
+    }
+    .agents-table-header,
+    .agents-table-row {
+      display: grid;
+      grid-template-columns: minmax(0, 3fr) minmax(0, 1fr) minmax(0, 1.2fr) minmax(0, 1fr) minmax(0, 1fr) 2.5rem;
+      column-gap: var(--space-4);
+      align-items: center;
+      padding: var(--space-3) var(--space-4);
+    }
+    .agents-table-header {
+      background: var(--neutral-50);
+      font-size: var(--text-xs);
+      font-weight: var(--font-medium);
+      color: var(--neutral-500);
+      min-height: 2.5rem;
+    }
+    .agents-table-row {
+      border-top: 0.0625rem solid var(--color-border);
+      min-height: 3.5rem;
+    }
+    .agents-table-row[hidden] {
+      display: none;
+    }
+    .agents-table-row > div:nth-child(n+2):nth-child(-n+5) {
+      font-size: var(--text-sm);
+      color: var(--color-text-primary);
+    }
+    .agents-table-name-main {
+      font-size: var(--text-sm);
+      font-weight: var(--font-medium);
+      color: var(--color-primary-900);
+    }
+    .agents-table-name-sub {
+      font-size: var(--text-xs);
+      color: var(--neutral-500);
+    }
+    .agents-table-value {
+      font-weight: var(--font-medium);
+      color: #22863a;
+    }
+    .agents-table-actions {
+      display: flex;
+      justify-content: flex-end;
+    }
+    .agents-table-status {
+      display: flex;
+      justify-content: flex-start;
+    }
+
+    /* Actions list header — title left, grouping toggle right. The toggle
+       only appears when the Type filter is narrowed to "AI Agent" alone,
+       since grouping by Intent vs. Agent only makes sense for that subset. */
+    .actions-list-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: var(--space-4);
+      margin-bottom: var(--space-3);
+    }
+    .actions-group-toggle {
+      display: flex;
+      align-items: center;
+      gap: var(--space-2);
+    }
+    .actions-group-toggle[hidden] {
+      display: none;
+    }
+    .actions-group-toggle-label {
+      font-size: 0.75rem;
+      color: var(--neutral-500);
+    }
+    .actions-group-toggle-group {
+      display: inline-flex;
+      height: 2.25rem;
+      box-sizing: border-box;
+      border: 0.0625rem solid var(--color-border);
+      border-radius: var(--rounded-md);
+    }
+    .actions-group-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      height: 100%;
+      padding: 0 var(--space-4);
+      border: none;
+      background: var(--color-bg-primary);
+      color: var(--neutral-400);
+      font-family: var(--font-sans);
+      font-size: var(--text-sm);
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .actions-group-btn:first-child {
+      border-top-left-radius: var(--rounded-md);
+      border-bottom-left-radius: var(--rounded-md);
+    }
+    .actions-group-btn:last-child {
+      border-top-right-radius: var(--rounded-md);
+      border-bottom-right-radius: var(--rounded-md);
+    }
+    .actions-group-btn + .actions-group-btn {
+      border-left: 0.0625rem solid var(--color-border);
+    }
+    .actions-group-btn:hover {
+      color: var(--color-primary-900);
+      background: var(--neutral-25);
+    }
+    .actions-group-btn.active {
+      background: var(--primary-50);
+      color: var(--primary-500);
+      font-weight: var(--font-medium);
+    }
+
+    /* Flat "Agent" grouping view — every agent across every automation as
+       its own card (same card language as the Intent view), with the
+       automation it belongs to shown as context in the subtitle. */
+    .opportunity-list[hidden] {
+      display: none;
+    }
+    /* Keep the status badge and the menu button on one row, right-aligned —
+       overrides the stacked layout the generic opportunity-card-actions
+       rule uses for cards with multiple stacked action buttons. */
+    .opportunity-card.actions-agent-card > header > .opportunity-card-actions {
+      flex-direction: row;
+      align-items: center;
+    }
+    /* Pace badge, status badge, and menu button all sit on one row, flush
+       with the title's top edge — not stacked/pushed down by the generic
+       opportunity-card-actions rule meant for stacked action buttons. */
+    .opportunity-card.actions-demo-card > header > .opportunity-card-actions {
+      flex-direction: row;
+      align-items: center;
+      margin-top: 0;
+    }
+
+    /* ROI journey — projected vs. realized value, replaces the metrics grid */
+    .roi-journey {
+      margin-top: var(--space-4);
+      border: 0.0625rem solid var(--color-border);
+      border-radius: var(--rounded-md);
+      padding: var(--space-4);
+      background: var(--color-bg-primary);
+    }
+    .roi-journey-top {
+      display: flex;
+      align-items: center;
+      gap: var(--space-5);
+    }
+    .roi-journey-top-right {
+      display: flex;
+      align-items: center;
+      gap: var(--space-4);
+      margin-left: auto;
+      min-width: 0;
+    }
+    .roi-journey-agents-badge {
+      align-self: flex-start;
+    }
+    /* Avg/day + Tracked mini stats sit beside ROI/Realized down to 880px;
+       below that they no longer fit without crowding, so they move to their
+       own row (.roi-journey-mini-row) under the progress bar instead. The
+       sparkline chart itself only earns its place once the viewport is wide
+       enough to show it without crowding the ROI/Realized stats. */
+    .roi-journey-wide-extra {
+      display: flex;
+      align-items: center;
+      gap: var(--space-6);
+      min-width: 0;
+    }
+    @media (max-width: 55rem) {
+      .roi-journey-wide-extra {
+        display: none;
+      }
+    }
+    .roi-journey-mini-row {
+      display: none;
+    }
+    @media (max-width: 55rem) {
+      .roi-journey-mini-row {
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+        gap: var(--space-6);
+        margin-top: var(--space-3);
+      }
+      .roi-journey-mini-row .roi-journey-mini-stat {
+        flex-direction: row;
+        align-items: baseline;
+        gap: var(--space-1);
+      }
+      .roi-journey-mini-row .roi-journey-mini-stat ~ .roi-journey-mini-stat {
+        padding-left: 0;
+        border-left: none;
+      }
+    }
+    .roi-sparkline {
+      display: none;
+    }
+    @media (min-width: 64rem) {
+      .roi-sparkline {
+        display: block;
+        width: 22rem;
+        max-width: 22rem;
+        min-width: 4rem;
+        flex: 1 1 auto;
+        height: 2.75rem;
+        cursor: pointer;
+        opacity: 1;
+        transition: opacity 0.2s ease, max-width 0.2s ease, min-width 0.2s ease, margin 0.2s ease;
+      }
+      .roi-sparkline ~ .roi-journey-mini-stat {
+        padding-left: var(--space-6);
+        border-left: 0.0625rem solid var(--color-border);
+      }
+    }
+    /* Collapsed once the full chart is open below — same data at a glance
+       already, so the sparkline becomes redundant visual noise. */
+    .roi-sparkline.roi-sparkline-collapsed {
+      opacity: 0;
+      max-width: 0;
+      min-width: 0;
+      margin: 0;
+      pointer-events: none;
+    }
+    .roi-journey-mini-stat {
+      display: flex;
+      flex-direction: column;
+      gap: 0.125rem;
+      flex-shrink: 0;
+      white-space: nowrap;
+    }
+    .roi-journey-mini-stat ~ .roi-journey-mini-stat {
+      padding-left: var(--space-6);
+      border-left: 0.0625rem solid var(--color-border);
+    }
+    .roi-journey-mini-label {
+      font-size: var(--text-xs);
+      color: var(--neutral-500);
+      text-transform: uppercase;
+      letter-spacing: 0.02em;
+    }
+    .roi-journey-mini-value {
+      font-size: var(--text-sm);
+      font-weight: var(--font-medium);
+      color: var(--color-primary-900);
+    }
+    .roi-journey-stat {
+      display: flex;
+      flex-direction: column;
+      flex-shrink: 0;
+      white-space: nowrap;
+    }
+    .roi-journey-label {
+      font-size: var(--text-xs);
+
+      color: var(--neutral-500);
+      text-transform: uppercase;
+      letter-spacing: 0.03em;
+    }
+    .roi-journey-value {
+      font-size: var(--text-lg);
+      font-weight: var(--font-bold);
+      color: var(--color-primary-900);
+    }
+    .roi-journey-unit {
+      font-size: var(--text-sm);
+      font-weight: var(--font-regular);
+      color: var(--neutral-500);
+      margin-left: var(--space-1);
+    }
+    .roi-journey-value-realized {
+      color: #22863a;
+    }
+    .roi-journey-value-muted {
+      color: var(--neutral-500);
+    }
+    /* Hidden for now */
+    .roi-journey-note {
+      display: none;
+      font-size: var(--text-sm);
+      font-weight: var(--font-regular);
+      color: var(--neutral-500);
+      margin-left: var(--space-1);
+    }
+    .roi-journey-arrow {
+      color: var(--neutral-400);
+      font-size: var(--text-lg);
+    }
+    .roi-journey-pct {
+      margin-left: var(--space-1);
+      font-size: var(--text-sm);
+      font-weight: var(--font-bold);
+      color: var(--color-text-primary);
+    }
+    .roi-journey-bar {
+      margin-top: var(--space-3);
+      height: 0.375rem;
+      border-radius: var(--rounded-full);
+      background: var(--neutral-100);
+      overflow: hidden;
+    }
+    .roi-journey-bar-fill {
+      height: 100%;
+      border-radius: var(--rounded-full);
+      background: var(--success-default, #208337);
+    }
+    /* "Target exceeded" fill — diagonal stripes instead of a flat color, so
+       a 100%-full bar still reads as "past the edge" rather than just done. */
+    .roi-bar-fill-exceeded {
+      background: repeating-linear-gradient(
+        45deg,
+        var(--success-default, #208337) 0 0.5rem,
+        var(--success-secondary, #186329) 0.5rem 1rem
+      );
+    }
+    /* Pace-comparison progress bar — thin tick marks the expected-pace
+       position so the gap to the actual fill reads visually, not just
+       through the caption text below. */
+    .roi-pace-bar {
+      position: relative;
+    }
+    .roi-pace-tick {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      width: 0.125rem;
+      background: var(--neutral-700, #374151);
+      transform: translateX(-50%);
+    }
+    .pace-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--space-1);
+      padding: var(--space-1) var(--space-3);
+      border-radius: var(--rounded-full);
+      font-size: var(--text-xs);
+      font-weight: var(--font-medium);
+      white-space: nowrap;
+    }
+    .pace-badge svg {
+      width: 0.875rem;
+      height: 0.875rem;
+      flex-shrink: 0;
+    }
+    .pace-badge-ahead {
+      background: var(--success-bg, #effbf1);
+      color: var(--success-secondary, #186329);
+    }
+    .pace-badge-on-track {
+      background: var(--primary-50);
+      color: var(--primary-500);
+    }
+    .pace-badge-behind-slight {
+      background: var(--warning-bg, #fff6e0);
+      color: var(--warning-secondary, #7a5800);
+    }
+    .pace-badge-behind {
+      background: var(--error-bg, #fdeaea);
+      color: var(--error-secondary, #c71d1a);
+    }
+    .pace-badge-exceeded {
+      background: linear-gradient(135deg, #ffe9b0, #ffc24b);
+      color: #5a3b00;
+    }
+
+    .actions-demo-cards {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-4);
+      margin-bottom: var(--space-5);
+    }
+
+    #rightSidePanel {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-4);
+      margin-bottom: var(--space-4);
+    }
+    #rightSidePanel[hidden] {
+      display: none;
+    }
+    #rightSidePanel .opportunity-card {
+      cursor: pointer;
+    }
+    /* While Right Side Panel mode is on, the real Actions list below it
+       (both its already-rendered cards and anything loadMoreRows() appends
+       while scrolling) gets the same treatment as the panel's own
+       duplicated cards — the inline toggles are redundant once the drawer
+       is available, and the card itself becomes the click target. */
+    body.right-panel-mode #actionsList .opportunity-card .roi-journey-pace,
+    body.right-panel-mode #actionsList .opportunity-card .agents-table-toggle {
+      display: none;
+    }
+    body.right-panel-mode #actionsList .opportunity-card {
+      cursor: pointer;
+    }
+
+    /* Card Drawer — demo sketch, opened by clicking the duplicated card in
+       Right Side Panel mode. Same slide-in-from-right pattern as the
+       screenshot reference, but scoped to a single card's own content. */
+    .card-drawer-backdrop {
+      position: fixed;
+      inset: 0;
+      background: rgba(15, 23, 42, 0.45);
+      z-index: 200;
+    }
+    .card-drawer-backdrop[hidden] {
+      display: none;
+    }
+    .card-drawer {
+      position: fixed;
+      top: 0;
+      right: 0;
+      height: 100%;
+      width: 60%;
+      max-width: 90vw;
+      background: var(--color-bg-primary);
+      box-shadow: -0.5rem 0 1.5rem -0.5rem var(--shadow-md);
+      z-index: 201;
+      display: flex;
+      flex-direction: column;
+      transform: translateX(100%);
+      transition: transform 0.25s ease;
+    }
+    .card-drawer.open {
+      transform: translateX(0);
+    }
+    .card-drawer-header {
+      display: flex;
+      align-items: flex-start;
+
+      padding: var(--space-5) var(--space-6) 0;
+      border-bottom: 0.0625rem solid var(--color-border);
+    }
+    /* No tabs → nothing to carry the header's bottom spacing anymore, so
+       restore it here instead. */
+    .card-drawer-header:has(.card-drawer-tabs[hidden]) {
+      padding-bottom: var(--space-5);
+    }
+    .card-drawer-avatar {
+      flex-shrink: 0;
+    }
+    .card-drawer-header-text {
+      flex: 1;
+      min-width: 0;
+    }
+    .card-drawer-title {
+      font-size: var(--text-lg);
+      font-weight: var(--font-medium);
+      color: var(--color-primary-900);
+    }
+    .card-drawer-subtitle {
+      font-size: var(--text-xs);
+      color: var(--neutral-500);
+      margin-top: var(--space-1);
+    }
+    .card-drawer-badge {
+      display: flex;
+      align-items: center;
+      gap: var(--space-2);
+      flex-shrink: 0;
+      margin: 0 var(--space-2);
+    }
+    .card-drawer-close {
+      flex-shrink: 0;
+      background: none;
+      border: none;
+      cursor: pointer;
+      color: var(--neutral-500);
+      padding: var(--space-1);
+    }
+    .card-drawer-close:hover {
+      color: var(--color-primary-900);
+    }
+    .card-drawer-tabs {
+      display: flex;
+      gap: var(--space-4);
+      margin-top: var(--space-3);
+    }
+    .card-drawer-tabs[hidden] {
+      display: none;
+    }
+    .card-drawer-tab {
+      padding: var(--space-2) 0;
+      background: none;
+      border: none;
+      border-bottom: 0.125rem solid transparent;
+      font-size: var(--text-sm);
+      font-weight: var(--font-medium);
+      color: var(--neutral-500);
+      cursor: pointer;
+      font-family: var(--font-sans);
+    }
+    .card-drawer-tab.active {
+      color: var(--primary-500);
+      border-bottom-color: var(--primary-500);
+    }
+    .card-drawer-body {
+      flex: 1 1 auto;
+      overflow-y: auto;
+      padding: var(--space-5) var(--space-6);
+    }
+    .card-drawer-journey .roi-journey {
+      margin-top: 0;
+      margin-bottom: var(--space-4);
+    }
+    .card-drawer-panel[hidden] {
+      display: none;
+    }
+    /* The moved-in Daily Breakdown content is normally collapsed via
+       max-height:0 — force it open once it lives inside the drawer tab. */
+    .card-drawer-panel .roi-chart-collapse {
+      max-height: none !important;
+      overflow: visible;
+    }
+
+
+    .roi-journey-pace {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: var(--space-2);
+      font-size: var(--text-xs);
+      color: var(--neutral-500);
+    }
+    .roi-avg-toggle {
+      display: flex;
+      align-items: center;
+      gap: var(--space-1);
+      background: transparent;
+      border: none;
+      padding: 0;
+      font-size: var(--text-xs);
+      font-family: var(--font-sans);
+      color: var(--neutral-500);
+      cursor: pointer;
+    }
+    .roi-avg-toggle:hover {
+      color: var(--color-primary-900);
+    }
+    .roi-avg-chevron {
+      flex-shrink: 0;
+      transition: transform 0.2s ease;
+    }
+    .roi-avg-toggle[aria-expanded="true"] .roi-avg-chevron {
+      transform: rotate(180deg);
+    }
+    .roi-avg-label-open {
+      display: none;
+    }
+    .roi-avg-toggle[aria-expanded="true"] .roi-avg-label-default {
+      display: none;
+    }
+    .roi-avg-toggle[aria-expanded="true"] .roi-avg-label-open {
+      display: inline;
+    }
+    .roi-chart-collapse {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.22s ease;
+    }
+    .roi-chart-collapse .roi-chart {
+      height: 16rem;
+      margin-top: var(--space-4);
+    }
+    .roi-chart-agent-filter {
+      display: flex;
+      align-items: center;
+      gap: var(--space-2);
+      margin-top: var(--space-4);
+      flex-wrap: wrap;
+    }
+    .card-drawer .roi-chart-agent-filter {
+      margin-top: 0;
+    }
+    /* Sized off the actual flex container's available width (e.g. a wide
+       card vs. the 28rem card drawer), not the viewport — flex-basis lets
+       it shrink below 16rem instead of forcing an overflow, and the parent's
+       flex-wrap above sends it to its own line once it can't shrink further. */
+    .roi-chart-agent-wrapper .filter-btn {
+      flex: 1 1 22rem;
+      min-width: 0;
+      max-width: 22rem;
+    }
+    .roi-chart-agent-wrapper .filter-btn-value {
+      flex: 1;
+      min-width: 0;
+      text-align: left;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+    .roi-granularity-group {
+      display: inline-flex;
+      height: 2.25rem;
+      box-sizing: border-box;
+      border: 0.0625rem solid var(--color-border);
+      border-radius: var(--rounded-md);
+    }
+    .roi-granularity-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      height: 100%;
+      padding: 0 var(--space-4);
+      border: none;
+      background: var(--color-bg-primary);
+      color: var(--neutral-400);
+      font-family: var(--font-sans);
+      font-size: var(--text-sm);
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .roi-granularity-btn:first-child {
+      border-top-left-radius: var(--rounded-md);
+      border-bottom-left-radius: var(--rounded-md);
+    }
+    .roi-granularity-btn:last-child {
+      border-top-right-radius: var(--rounded-md);
+      border-bottom-right-radius: var(--rounded-md);
+    }
+    .roi-granularity-btn + .roi-granularity-btn {
+      border-left: 0.0625rem solid var(--color-border);
+    }
+    .roi-granularity-btn:hover {
+      color: var(--color-primary-900);
+      background: var(--neutral-25);
+    }
+    .roi-granularity-btn.active {
+      background: var(--primary-50);
+      color: var(--primary-500);
+      font-weight: var(--font-medium);
+    }
+
+    /* Calendar-app-style granularity dropdown — replaces the Daily/Weekly/
+       Monthly segmented toggle everywhere. */
+    .roi-granularity-select-btn {
+      gap: var(--space-2);
+    }
+    .roi-granularity-select-icon,
+    .roi-granularity-option-icon {
+      display: inline-flex;
+      flex-shrink: 0;
+      width: 1rem;
+      height: 1rem;
+      color: var(--neutral-400);
+    }
+    .roi-granularity-select-icon svg,
+    .roi-granularity-option-icon svg {
+      width: 100%;
+      height: 100%;
+    }
+    .roi-granularity-select-label {
+      color: var(--color-text-primary);
+    }
+    .roi-granularity-dropdown-menu {
+      min-width: 12rem;
+      padding: var(--space-2);
+    }
+    /* Reuses .filter-checkbox-item (same look as the AI Agent dropdown's
+       list items) for layout/hover/color — these just undo button-element
+       defaults it wasn't written to reset. */
+    .roi-granularity-option {
+      display: flex;
+      width: 100%;
+      background: none;
+      border: none;
+      font-family: var(--font-sans);
+      text-align: left;
+    }
+
+    .roi-view-toggle .sort-toggle-btn svg {
+      width: 1rem;
+      height: 1rem;
+    }
+    .roi-chart-table {
+      margin-top: var(--space-4);
+      border: 0.0625rem solid var(--color-border);
+      border-radius: var(--rounded-md);
+      overflow: hidden;
+      max-height: 16rem;
+      overflow-y: auto;
+    }
+    .roi-chart-table[hidden] {
+      display: none;
+    }
+    .roi-chart-table-header,
+    .roi-chart-table-row {
+      display: grid;
+      grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr) minmax(0, 1fr);
+      column-gap: var(--space-4);
+      align-items: center;
+      padding: var(--space-2) var(--space-4);
+    }
+    .roi-chart-table-header {
+      position: sticky;
+      top: 0;
+      background: var(--neutral-50);
+      font-size: var(--text-xs);
+      font-weight: var(--font-medium);
+      color: var(--neutral-500);
+      min-height: 2.25rem;
+    }
+    .roi-chart-table-row {
+      border-top: 0.0625rem solid var(--color-border);
+      font-size: var(--text-sm);
+      color: var(--color-text-primary);
+      min-height: 2.5rem;
+    }
+    .roi-chart-table-value {
+      font-weight: var(--font-medium);
+      color: #22863a;
+    }
+    .roi-chart-insight {
+      display: flex;
+      align-items: flex-start;
+      gap: var(--space-2);
+      margin-top: var(--space-4);
+      padding: var(--space-3) var(--space-4);
+      border-radius: var(--rounded-md);
+      background: var(--neutral-50);
+    }
+    .roi-chart-insight-icon {
+      flex-shrink: 0;
+      margin-top: 0.125rem;
+      color: #8630E8;
+    }
+    .roi-chart-insight-text {
+      margin: 0;
+      font-size: var(--text-sm);
+      color: var(--color-text-primary);
+      line-height: 1.5;
+    }
+    .roi-ask-ai-link {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--space-1);
+      background: none;
+      border: none;
+      padding: 0;
+      margin: 0;
+      font: inherit;
+      font-weight: var(--font-bold);
+      text-decoration: underline;
+      color: var(--color-blue-button);
+      cursor: pointer;
+      vertical-align: middle;
+    }
+    .roi-ask-ai-link:hover {
+      color: var(--color-blue-button-hover);
+    }
+    .roi-ask-ai-link:focus-visible {
+      outline: 2px solid var(--color-focus, #005FCC);
+      outline-offset: 2px;
+      border-radius: 2px;
+    }
+    .roi-chart:focus-visible {
+      outline: 2px solid var(--color-focus, #005FCC);
+      outline-offset: 2px;
+      border-radius: 4px;
+    }
+
+    /* Live KPI row — simple ratio progress bar under each tile (except
+       Total AI Agents, which has no meaningful ratio). Track color is
+       fixed regardless of the tile's accent theme; fill color matches the
+       tile's own accent (Ahead of Target's fill is set inline in JS since
+       it switches between success/error based on the actual percentage). */
+    .kpi-progress-bar {
+      height: 0.5rem;
+      border-radius: 0.25rem;
+      background: var(--neutral-100);
+      overflow: hidden;
+      margin-top: var(--space-2);
+    }
+    .kpi-progress-bar-fill {
+      height: 100%;
+      width: 0%;
+      background: var(--accent-color);
+      border-radius: 0.25rem;
+      transition: width 0.3s ease;
+    }
+    /* Brief accent-colored flash on the value itself when the server's
+       number actually changes — not a permanent style, just a pulse. */
+    .stat-tile-rich-value.kpi-flash {
+      animation: kpiFlash 0.3s ease;
+    }
+    @keyframes kpiFlash {
+      0% { color: var(--accent-color); }
+      100% { color: inherit; }
+    }
+    /* Total agent-hours run — no natural ratio, so it gets a daily-delta
+       indicator instead of a progress bar (same reasoning as before). */
+    .kpi-delta {
+      display: flex;
+      align-items: center;
+      gap: 0.25rem;
+      margin-top: var(--space-2);
+      color: var(--success-default);
+      font-size: 0.75rem;
+      font-weight: var(--font-medium);
+    }
+    .kpi-delta svg {
+      width: 0.875rem;
+      height: 0.875rem;
+      flex-shrink: 0;
+    }
+    .kpi-delta[hidden] {
+      display: none;
+    }
+  </style>
+</head>
+<body class="deployed-dashboard">
+  <a href="#main" class="sr-only focusable skip-to-content">Skip to content</a>
+  <!-- Shell Top Bar -->
+  <header class="shell-top-bar">
+    <div class="shell-top-bar-left">
+      <div class="shell-app-logo">
+        <img src="https://new-analytics-ten.vercel.app/app-icon.svg" alt="Analytics" class="shell-app-icon">
+        <span class="shell-app-name">Analytics</span>
+      </div>
+    </div>
+    <div class="shell-top-bar-right">
+      <button class="topbar-demo-empty-btn" type="button" id="demoRightPanelBtn" title="Demo only — duplicates all results into this mode">
+        Right side panel
+      </button>
+      <button class="shell-icon-btn" type="button" aria-label="Help">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <circle cx="12" cy="12" r="10"></circle>
+          <path d="M12 16v-4m0-4h.01"></path>
+        </svg>
+      </button>
+      <button class="shell-icon-btn" type="button" aria-label="Notifications">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path>
+          <path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
+        </svg>
+        <span style="position: absolute; top: 0.125rem; right: 0.125rem; width: 1rem; height: 1rem; background: var(--color-red-notification); border-radius: 0.5rem; font-size: 0.6875rem; color: var(--color-bg-primary); display: flex; align-items: center; justify-content: center; border: 0.0625rem solid var(--color-bg-primary);">5</span>
+      </button>
+      <div class="shell-profile">
+        <div class="shell-profile-avatar">JS</div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Body Container -->
+  <div class="body-container">
+    <div class="content-wrapper">
+    <div class="app-container">
+      <div class="app-shell">
+    <!-- ===== SIDEBAR ===== -->
+    <aside class="sidebar" aria-label="Main navigation">
+      <button class="sidebar-item">
+        <svg class="sidebar-item-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
+          <polyline points="9 22 9 12 15 12 15 22"/>
+        </svg>
+        <span class="sidebar-item-label">New Session</span>
+      </button>
+
+      <a href="automation-opportunities.html" class="sidebar-item">
+        <svg class="sidebar-item-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M12 8V4H8"/>
+          <rect width="16" height="12" x="4" y="8" rx="2"/>
+          <path d="M2 14h2"/>
+          <path d="M20 14h2"/>
+          <path d="M15 13v2"/>
+          <path d="M9 13v2"/>
+        </svg>
+        <span class="sidebar-item-label">Automation Opportunities</span>
+      </a>
+
+      <a href="AI Agent.html" class="sidebar-item">
+        <svg class="sidebar-item-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M12 6V2H8"/>
+          <path d="m16 18 4 4V8a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h10z"/>
+          <path d="M2 12h2"/>
+          <path d="M20 12h2"/>
+          <path d="M9 11v2"/>
+          <path d="M15 11v2"/>
+        </svg>
+        <span class="sidebar-item-label">AI Agent</span>
+      </a>
+
+      <button class="sidebar-item">
+        <svg class="sidebar-item-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M3 14h3a2 2 0 0 1 2 2v3a2 2 0 0 1-2 2H4a1 1 0 0 1-1-1z"/>
+          <path d="M21 14h-3a2 2 0 0 0-2 2v3a2 2 0 0 0 2 2h2a1 1 0 0 0 1-1z"/>
+          <path d="M21 14a9 9 0 0 0-18 0"/>
+        </svg>
+        <span class="sidebar-item-label">Agent</span>
+      </button>
+
+      <button class="sidebar-item active" aria-current="page">
+        <svg class="sidebar-item-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M16 22h2a2 2 0 0 0 2-2V7l-5-5H6a2 2 0 0 0-2 2v3"/>
+          <path d="M14 2v4a2 2 0 0 0 2 2h4"/>
+          <circle cx="8" cy="16" r="6"/>
+          <path d="M9.5 17.5 8 16.25V14"/>
+        </svg>
+        <span class="sidebar-item-label">Action History</span>
+      </button>
+
+      <div class="sidebar-section">
+        <button class="sidebar-item">
+          <svg class="sidebar-item-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="m19 21-7-4-7 4V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/>
+          </svg>
+          <span class="sidebar-item-label">Saved Dashboards</span>
+          <svg class="sidebar-item-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <line x1="12" y1="5" x2="12" y2="19"></line>
+            <line x1="5" y1="12" x2="19" y2="12"></line>
+          </svg>
+        </button>
+        <div class="sidebar-nested">
+          <button class="sidebar-nested-item">
+            <svg class="sidebar-item-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M20 20a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-7.9a2 2 0 0 1-1.69-.9L9.6 3.9A2 2 0 0 0 7.93 3H4a2 2 0 0 0-2 2v13a2 2 0 0 0 2 2Z"/>
+            </svg>
+            Customer Support Anal&hellip;
+          </button>
+          <div class="sidebar-nested">
+            <button class="sidebar-nested-item">Customer Support Det&hellip;</button>
+          </div>
+          <button class="sidebar-nested-item">
+            <svg class="sidebar-item-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M20 20a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-7.9a2 2 0 0 1-1.69-.9L9.6 3.9A2 2 0 0 0 7.93 3H4a2 2 0 0 0-2 2v13a2 2 0 0 0 2 2Z"/>
+            </svg>
+            Product Insights
+          </button>
+          <button class="sidebar-nested-item">Weekly KPI Summary</button>
+          <button class="sidebar-nested-item">Quarterly Board Deck Metrics</button>
+          <button class="sidebar-nested-item">Monthly Business Review</button>
+        </div>
+      </div>
+
+      <div class="sidebar-section">
+        <button class="sidebar-item">
+          <svg class="sidebar-item-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/>
+            <path d="M3 3v5h5"/>
+            <path d="M12 7v5l4 2"/>
+          </svg>
+          <span class="sidebar-item-label">Recent</span>
+        </button>
+        <div class="sidebar-nested">
+          <button class="sidebar-nested-item">Why are users dropping off a&hellip;</button>
+          <button class="sidebar-nested-item">Agent escalation trends this&hellip;</button>
+          <button class="sidebar-nested-item">Knowledge Performance</button>
+        </div>
+      </div>
+    </aside>
+
+    <!-- ===== NARROW RIGHT PANEL ===== -->
+    <div class="narrow-panel" id="narrow-panel">
+      <div style="padding: 1.25rem; border-bottom: 0.0625rem solid var(--color-border);">
+        <h3 style="margin: 0 0 0.75rem 0; font-size: 0.875rem; font-weight: 600;">Panel</h3>
+      </div>
+      <div style="padding: 1.25rem;">
+        <p style="margin: 0; font-size: 0.8125rem; color: var(--color-text-secondary);">Additional details and options will appear here.</p>
+      </div>
+    </div>
+
+    <!-- ===== MAIN CONTENT ===== -->
+    <div class="main-content" id="main">
+      <!-- Topbar Navigation -->
+      <div class="topbar-navigation">
+        <button class="topbar-back-btn" type="button" aria-label="Toggle sidebar" aria-expanded="true">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+            <line x1="15" y1="3" x2="15" y2="21"></line>
+          </svg>
+        </button>
+        <div class="topbar-breadcrumb">History</div>
+        <div class="topbar-spacer"></div>
+        <button class="topbar-ask-ai-btn" type="button" aria-haspopup="dialog" aria-controls="aiPanel" aria-expanded="false">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M9.937 15.5A2 2 0 0 0 8.5 14.063l-6.135-1.582a.5.5 0 0 1 0-.962L8.5 9.936A2 2 0 0 0 9.937 8.5l1.582-6.135a.5.5 0 0 1 .963 0L14.063 8.5A2 2 0 0 0 15.5 9.937l6.135 1.581a.5.5 0 0 1 0 .964L15.5 14.063a2 2 0 0 0-1.437 1.437l-1.582 6.135a.5.5 0 0 1-.963 0z"/><path d="M20 3v4"/><path d="M22 5h-4"/><path d="M4 17v2"/><path d="M5 18H3"/>
+          </svg>
+          Ask AI
+        </button>
+      </div>
+
+      <div class="main-sticky-header opportunities-sticky-header">
+        <h1 class="main-title">Actions History</h1>
+
+        <div class="filters opportunities-filters">
+          <div class="search-box">
+            <svg class="search-box-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/>
+            </svg>
+            <input type="text" class="search-box-input" placeholder="Search actions...">
+          </div>
+          <button class="filter-btn" type="button">
+            Date range: <span class="filter-btn-value">01/07/25 &ndash; 31/07/25</span>
+            <svg class="filter-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
+          </button>
+          <div class="filter-wrapper">
+            <button class="filter-btn" type="button">
+              Type: <span class="filter-btn-value">All</span>
+              <svg class="filter-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
+            </button>
+            <div class="filter-dropdown filter-dropdown-multi">
+              <div class="filter-dropdown-title">Type</div>
+              <label class="filter-checkbox-item"><input type="checkbox"><span>All</span></label>
+              <label class="filter-checkbox-item"><input type="checkbox"><span>AI Agent</span></label>
+              <label class="filter-checkbox-item"><input type="checkbox"><span>Knowledge</span></label>
+              <label class="filter-checkbox-item"><input type="checkbox"><span>Coaching</span></label>
+            </div>
+          </div>
+          <div class="filter-wrapper">
+            <button class="filter-btn" type="button">
+              Value: <span class="filter-btn-value">All</span>
+              <svg class="filter-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
+            </button>
+            <div class="filter-dropdown filter-dropdown-multi">
+              <div class="filter-dropdown-title">Value</div>
+              <label class="filter-checkbox-item"><input type="checkbox"><span>All</span></label>
+              <label class="filter-checkbox-item"><input type="checkbox"><span>Realizing</span></label>
+              <label class="filter-checkbox-item"><input type="checkbox"><span>Not live yet</span></label>
+            </div>
+          </div>
+          <div class="filter-wrapper">
+            <button class="filter-btn" type="button">
+              User Name: <span class="filter-btn-value">All</span>
+              <svg class="filter-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
+            </button>
+            <div class="filter-dropdown filter-dropdown-multi">
+              <div class="filter-dropdown-title">User Name</div>
+              <label class="filter-checkbox-item"><input type="checkbox"><span>All</span></label>
+              <label class="filter-checkbox-item"><input type="checkbox"><span>Me</span></label>
+              <label class="filter-checkbox-item"><input type="checkbox"><span>John Doe</span></label>
+              <label class="filter-checkbox-item"><input type="checkbox"><span>Emily Rodriguez</span></label>
+              <label class="filter-checkbox-item"><input type="checkbox"><span>Sarah Johnson</span></label>
+            </div>
+          </div>
+          <button class="reset-filters-btn" type="button">↻ Reset Filters</button>
+        </div>
+      </div>
+
+      <div class="main-area">
+        <div data-view="history">
+        <section class="ai-insights" id="aiInsights" aria-label="AI Insights">
+          <header class="ai-insights-header">
+            <button class="ai-insights-toggle" id="aiInsightsToggle" type="button" aria-label="Collapse AI Insights" aria-expanded="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m18 15-6-6-6 6"/></svg>
+            </button>
+            <span class="ai-insights-preview">The portfolio represents $10.8M in projected annual savings across 183 actions, but 85% of actions remain in draft status, holding $7.3M in unrealised projected value.</span>
+          </header>
+
+          <div class="ai-insights-content">
+            <div class="ai-insights-section">
+              <ul class="ai-insights-list">
+                <li>
+                  <strong>Draft concentration:</strong> 156 actions in draft status represent 67% of total projected savings and 82% of projected interactions, indicating substantial estimated value not yet in published status.
+                </li>
+                <li>
+                  <strong>Billing focus:</strong> Billing-related intents account for the majority of actions in the portfolio, with Billing Charges as the single most frequently occurring intent across both draft and published statuses.
+                </li>
+                <li>
+                  <strong>High-value outliers:</strong> Two published actions for Deposit and Billing intents each represent over $600K in projected savings, collectively accounting for approximately 20% of the portfolio's total projected value.
+                </li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        <!-- Summary KPIs -->
+        <section class="opportunities-section analyzed-period" aria-label="Summary">
+          <div class="stats-grid stats-grid--rich stats-grid--4col stats-grid--neutral-border">
+
+            <div class="stat-tile-rich" data-accent="primary-soft">
+              <div class="stat-tile-rich-label">Total agent-hours run</div>
+              <div class="stat-tile-rich-top">
+                <span class="stat-tile-rich-icon" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/>
+                  </svg>
+                </span>
+                <div class="stat-tile-rich-value" id="kpiTotalAgentHours">—</div>
+              </div>
+              <div class="kpi-delta" id="kpiTotalAgentHoursDelta" hidden>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="7 17 17 7"/><polyline points="7 7 17 7 17 17"/></svg>
+                <span id="kpiTotalAgentHoursDeltaText">—</span>
+              </div>
+            </div>
+
+            <div class="stat-tile-rich" data-accent="primary-soft">
+              <div class="stat-tile-rich-label">Live vs Draft Agents</div>
+              <div class="stat-tile-rich-top">
+                <span class="stat-tile-rich-icon" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/>
+                  </svg>
+                </span>
+                <div class="stat-tile-rich-value" id="kpiLiveDraft">—</div>
+              </div>
+              <div class="stat-tile-rich-meta" id="kpiLiveDraftMeta">—</div>
+              <div class="kpi-progress-bar" role="img" aria-label="Live agents percentage">
+                <div class="kpi-progress-bar-fill" id="kpiLiveDraftProgress"></div>
+              </div>
+            </div>
+
+            <div class="stat-tile-rich" data-accent="green-soft">
+              <div class="stat-tile-rich-label">Realized Value</div>
+              <div class="stat-tile-rich-top">
+                <span class="stat-tile-rich-icon" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/>
+                  </svg>
+                </span>
+                <div class="stat-tile-rich-value" id="kpiRealizedValue">—</div>
+              </div>
+              <div class="stat-tile-rich-meta" id="kpiRealizedValueMeta">—</div>
+              <div class="kpi-progress-bar" role="img" aria-label="Realized value percentage of projected ROI">
+                <div class="kpi-progress-bar-fill" id="kpiRealizedValueProgress"></div>
+              </div>
+            </div>
+
+            <div class="stat-tile-rich" data-accent="neutral-soft">
+              <div class="stat-tile-rich-label">Ahead of Target</div>
+              <div class="stat-tile-rich-top">
+                <span class="stat-tile-rich-icon" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/>
+                  </svg>
+                </span>
+                <div class="stat-tile-rich-value" id="kpiAheadTarget">—</div>
+              </div>
+              <div class="stat-tile-rich-meta" id="kpiAheadTargetMeta">—</div>
+              <div class="kpi-progress-bar" role="img" aria-label="Actions ahead of target percentage">
+                <div class="kpi-progress-bar-fill" id="kpiAheadTargetProgress"></div>
+              </div>
+            </div>
+
+          </div>
+        </section>
+
+        <div class="actions-list-header">
+          <p class="section-meta-title actions-section-title">Actions (<span id="total-count">17</span>)</p>
+          <div class="actions-group-toggle" id="actionsGroupToggle" hidden>
+            <span class="actions-group-toggle-label">View by:</span>
+            <div class="actions-group-toggle-group" role="group" aria-label="Group actions by">
+              <button type="button" class="actions-group-btn active" data-group="intent" aria-pressed="true">Intent</button>
+              <button type="button" class="actions-group-btn" data-group="agent" aria-pressed="false">Agent</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right Side Panel — demo-only sketch. Clicking the "Right side
+             panel" topbar button duplicates the real "Automate Bill
+             Payment" card into here, right under the Actions heading. -->
+        <div id="rightSidePanel" hidden></div>
+
+        <!-- Demo-only reference cards for the pace-comparison badge and
+             target-exceeded state — not real automations, excluded from
+             the Actions count / search / grouping toggle by living outside
+             #actionsList. Populated by renderDemoCards() so they share the
+             exact same card markup/behavior as real automations. Remove
+             once the real states are wired to data. -->
+        <div class="actions-demo-cards" id="actionsDemoCards"></div>
+
+        <span id="visible-count" class="sr-only">10</span>
+        <div class="opportunity-list" id="actionsList"></div>
+        <div class="opportunity-list actions-flat-list" id="actionsFlatList" hidden></div>
+        <div class="load-indicator" id="load-indicator" hidden>
+          <span class="loader-icon" aria-hidden="true"></span>
+          <span>Loading more data</span>
+        </div>
+        <div class="action-menu-popover" id="action-menu-popover" role="menu" aria-label="Row actions">
+          <a class="action-menu-item" href="AI Agent.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 8V4H8"/><rect width="16" height="12" x="4" y="8" rx="2"/><path d="M2 14h2"/><path d="M20 14h2"/><path d="M15 13v2"/><path d="M9 13v2"/></svg>View AI Agent</a>
+        </div>
+        </div><!-- /data-view="history" -->
+
+        <div data-view="live-agent" hidden>
+          <div class="stats-grid stats-grid--rich stats-grid--4col stats-grid--neutral-border">
+
+            <div class="stat-tile-rich" data-accent="primary-soft">
+              <div class="stat-tile-rich-label">Calls Handled Today</div>
+              <div class="stat-tile-rich-top">
+                <span class="stat-tile-rich-icon" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6A19.79 19.79 0 0 1 2.12 4.18 2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/>
+                  </svg>
+                </span>
+                <div class="stat-tile-rich-value" id="ahTotalCalls">—</div>
+              </div>
+              <div class="stat-tile-rich-meta">across 10 active agents</div>
+            </div>
+
+            <div class="stat-tile-rich" data-accent="green-soft">
+              <div class="stat-tile-rich-label">On Call Now</div>
+              <div class="stat-tile-rich-top">
+                <span class="stat-tile-rich-icon" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M3 11h3a1 1 0 0 1 1 1v5a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1z"/>
+                    <path d="M21 11h-3a1 1 0 0 0-1 1v5a1 1 0 0 0 1 1h2a1 1 0 0 0 1-1z"/>
+                    <path d="M3 11a9 9 0 0 1 18 0"/>
+                    <path d="M21 16v2a4 4 0 0 1-4 4h-5"/>
+                  </svg>
+                </span>
+                <div class="stat-tile-rich-value" id="ahTotalLive">—</div>
+              </div>
+              <div class="stat-tile-rich-meta">live conversations right now</div>
+            </div>
+
+            <div class="stat-tile-rich" data-accent="warning-soft">
+              <div class="stat-tile-rich-label">Time Saved Today</div>
+              <div class="stat-tile-rich-top">
+                <span class="stat-tile-rich-icon" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/>
+                  </svg>
+                </span>
+                <div class="stat-tile-rich-value" id="ahTotalSaved">—</div>
+              </div>
+              <div class="stat-tile-rich-meta">vs. human handle time</div>
+            </div>
+
+            <div class="stat-tile-rich" data-accent="neutral-soft">
+              <div class="stat-tile-rich-label">Avg Resolution Rate</div>
+              <div class="stat-tile-rich-top">
+                <span class="stat-tile-rich-icon" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/>
+                  </svg>
+                </span>
+                <div class="stat-tile-rich-value" id="ahAvgResolved">—</div>
+              </div>
+              <div class="stat-tile-rich-meta">containment without escalation</div>
+            </div>
+
+          </div>
+
+          <div class="table-container live-table-container" style="margin-top: 0;">
+            <table class="sb-argstableBlock live-agent-table" aria-label="Live agents">
+              <thead class="sb-argstableBlock-head">
+                <tr>
+                  <th style="width: 26%;">AI Agent</th>
+                  <th style="width: 11%;">Calls</th>
+                  <th style="width: 11%;">Live</th>
+                  <th style="width: 11%;">Resolved</th>
+                  <th style="width: 11%;">Handle</th>
+                  <th style="width: 15%;">Time Saved</th>
+                  <th style="width: 15%;">$ Saved</th>
+                </tr>
+              </thead>
+              <tbody id="ahLiveBody" class="sb-argstableBlock-body"></tbody>
+            </table>
+          </div>
+        </div><!-- /data-view="live-agent" -->
+      </div>
+    </div>
+
+    <!-- AI Panel -->
+    <div class="ai-panel" id="aiPanel" role="dialog" aria-modal="true" aria-labelledby="aiPanelTitle" aria-hidden="true">
+      <div class="ai-panel-header">
+        <div class="ai-panel-title" id="aiPanelTitle">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M9.937 15.5A2 2 0 0 0 8.5 14.063l-6.135-1.582a.5.5 0 0 1 0-.962L8.5 9.936A2 2 0 0 0 9.937 8.5l1.582-6.135a.5.5 0 0 1 .963 0L14.063 8.5A2 2 0 0 0 15.5 9.937l6.135 1.581a.5.5 0 0 1 0 .964L15.5 14.063a2 2 0 0 0-1.437 1.437l-1.582 6.135a.5.5 0 0 1-.963 0z"/><path d="M20 3v4"/><path d="M22 5h-4"/><path d="M4 17v2"/><path d="M5 18H3"/>
+          </svg>
+          Ask AI
+        </div>
+        <div class="ai-panel-header-actions">
+          <button class="ai-panel-header-btn" type="button" aria-label="New chat">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M5 12h14"/><path d="M12 5v14"/>
+            </svg>
+          </button>
+          <button class="ai-panel-header-btn" type="button" aria-label="History">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M3 12a9 9 0 1 0 3-6.7L3 8"/><path d="M3 3v5h5"/><path d="M12 7v5l4 2"/>
+            </svg>
+          </button>
+          <button class="ai-panel-close-btn" id="aiPanelClose" type="button" aria-label="Close">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M18 6 6 18"/><path d="m6 6 12 12"/>
+            </svg>
+          </button>
+        </div>
+      </div>
+      <div class="ai-panel-content">
+        <svg class="ai-panel-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M9.937 15.5A2 2 0 0 0 8.5 14.063l-6.135-1.582a.5.5 0 0 1 0-.962L8.5 9.936A2 2 0 0 0 9.937 8.5l1.582-6.135a.5.5 0 0 1 .963 0L14.063 8.5A2 2 0 0 0 15.5 9.937l6.135 1.581a.5.5 0 0 1 0 .964L15.5 14.063a2 2 0 0 0-1.437 1.437l-1.582 6.135a.5.5 0 0 1-.963 0z"/><path d="M20 3v4"/><path d="M22 5h-4"/><path d="M4 17v2"/><path d="M5 18H3"/>
+        </svg>
+        <div class="ai-panel-greeting">How can I help you today?</div>
+        <div class="ai-panel-subtitle">Ask anything about your&hellip;</div>
+      </div>
+      <div class="ai-panel-input-wrapper">
+        <div class="ai-panel-input-container">
+          <button class="ai-panel-attach-btn" type="button" aria-label="Attach file">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="m21.44 11.05-9.19 9.19a6 6 0 0 1-8.49-8.49l8.57-8.57A4 4 0 1 1 17.93 8.83l-8.59 8.57a2 2 0 0 1-2.83-2.83l8.49-8.48"/>
+            </svg>
+          </button>
+          <textarea class="ai-panel-input" placeholder="Ask a question..." id="aiPanelInput" rows="1"></textarea>
+          <button class="ai-panel-send-btn" id="aiPanelSend" type="button" aria-label="Send">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="m22 2-7 20-4-9-9-4Z"/><path d="M22 2 11 13"/>
+            </svg>
+          </button>
+        </div>
+        <div class="ai-suggestions">
+          <button class="ai-suggestion-btn" type="button">How did my agents perform in the last 2h?</button>
+          <button class="ai-suggestion-btn" type="button">Create a new AI agent</button>
+          <button class="ai-suggestion-btn" type="button">Upload a file to analyze</button>
+        </div>
+      </div>
+    </div>
+
+    </div>
+  </div>
+
+  <!-- Card Drawer — demo-only sketch. Clicking anywhere on the duplicated
+       card in the "Right side panel" mode opens this, with the card's own
+       header (avatar/title/subtitle) repeated up top and its Daily
+       Breakdown content + AI Agents table split into two tabs. -->
+  <div class="card-drawer-backdrop" id="cardDrawerBackdrop" hidden></div>
+  <aside class="card-drawer" id="cardDrawer" role="dialog" aria-modal="true" aria-hidden="true">
+    <div class="card-drawer-header">
+      <span class="card-drawer-avatar" id="cardDrawerAvatar"></span>
+      <div class="card-drawer-header-text">
+        <div class="card-drawer-title" id="cardDrawerTitle"></div>
+        <div class="card-drawer-subtitle" id="cardDrawerSubtitle"></div>
+        <div class="card-drawer-tabs" id="cardDrawerTabs" role="tablist">
+          <button type="button" class="card-drawer-tab active" data-drawer-tab="breakdown" role="tab" aria-selected="true">Breakdown</button>
+          <button type="button" class="card-drawer-tab" data-drawer-tab="agents" role="tab" aria-selected="false">Agents</button>
+        </div>
+      </div>
+      <span class="card-drawer-badge" id="cardDrawerBadge"></span>
+      <button class="card-drawer-close" type="button" id="cardDrawerClose" aria-label="Close">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
+      </button>
+    </div>
+    <div class="card-drawer-body">
+      <div class="card-drawer-journey" id="cardDrawerJourney"></div>
+      <div class="card-drawer-panel" data-drawer-panel="breakdown" id="cardDrawerBreakdown"></div>
+      <div class="card-drawer-panel" data-drawer-panel="agents" id="cardDrawerAgents" hidden></div>
+    </div>
+  </aside>
+
+  <script>
+    const mainArea = document.querySelector('.main-area');
+    const tableBody = document.getElementById('actionsList');
+    const searchInput = document.querySelector('.search-box-input');
+    const loadIndicator = document.getElementById('load-indicator');
+    const actionMenu = document.getElementById('action-menu-popover');
+    const visibleCountEl = document.getElementById('visible-count');
+    const totalCountEl = document.getElementById('total-count');
+    let isLoading = false;
+    let roiChartIdCounter = 0;
+    // Daily series are generated once per card (deterministic, seeded by row
+    // name) and cached here so the always-visible sparkline and the lazily-
+    // expanded full chart both read the same data instead of recomputing it.
+    const roiBaseSeriesCache = {};
+
+    function updateRowCount() {
+      const visible = Array.from(tableBody.querySelectorAll('.opportunity-card')).filter(card => !card.hidden).length;
+      visibleCountEl.textContent = visible;
+    }
+
+    // Filter wrappers — open/close dropdowns on button click
+    const filtersEl = document.querySelector('.filters');
+    const resetBtn = filtersEl.querySelector('.reset-filters-btn');
+
+    // Hide reset button until filters are dirty
+    resetBtn.hidden = true;
+
+    function isFiltersDirty() {
+      const anyChecked = [...filtersEl.querySelectorAll('.filter-dropdown input[type="checkbox"]')]
+        .some(cb => cb.checked);
+      const hasSearch = searchInput.value.trim().length > 0;
+      return anyChecked || hasSearch;
+    }
+
+    function updateResetVisibility() {
+      resetBtn.hidden = !isFiltersDirty();
+    }
+
+    // Wire each filter-wrapper: toggle dropdown on btn click, close on outside click
+    filtersEl.querySelectorAll('.filter-wrapper').forEach(wrapper => {
+      const btn = wrapper.querySelector('.filter-btn');
+      const dropdown = wrapper.querySelector('.filter-dropdown');
+      if (!btn || !dropdown) return;
+
+      btn.addEventListener('click', e => {
+        e.stopPropagation();
+        const isOpen = dropdown.classList.contains('visible');
+        // Close all other dropdowns first
+        filtersEl.querySelectorAll('.filter-dropdown.visible').forEach(d => d.classList.remove('visible'));
+        if (!isOpen) dropdown.classList.add('visible');
+      });
+
+      // Update label and reset visibility on checkbox change — same rule as
+      // automation-opportunities-P4.html: 0 checked → "All", 1 → its label,
+      // 2+ → "N selected".
+      const checkboxes = dropdown.querySelectorAll('input[type="checkbox"]');
+      checkboxes.forEach(cb => {
+        cb.addEventListener('change', () => {
+          const selected = [...checkboxes].filter(c => c.checked);
+          const label = wrapper.querySelector('.filter-btn-value');
+          if (label) {
+            if (!selected.length) {
+              label.textContent = 'All';
+            } else if (selected.length === 1) {
+              label.textContent = selected[0].nextElementSibling.textContent;
+            } else {
+              label.textContent = `${selected.length} selected`;
+            }
+          }
+          updateResetVisibility();
+          updateGroupToggleVisibility();
+        });
+      });
+    });
+
+    document.addEventListener('click', () => {
+      filtersEl.querySelectorAll('.filter-dropdown.visible').forEach(d => d.classList.remove('visible'));
+    });
+
+    searchInput.addEventListener('input', updateResetVisibility);
+
+    // Reset button
+    resetBtn.addEventListener('click', () => {
+      filtersEl.querySelectorAll('input[type="checkbox"]').forEach(cb => { cb.checked = false; });
+      filtersEl.querySelectorAll('.filter-btn-value').forEach(el => { el.textContent = 'All'; });
+      searchInput.value = '';
+      filterTableRows();
+      resetBtn.hidden = true;
+      updateGroupToggleVisibility();
+    });
+
+    // Grouping toggle — only relevant once the Type filter narrows the list
+    // to AI Agent alone, since "group by Intent vs. Agent" is meaningless
+    // when Knowledge/Coaching actions (which have no agents) are mixed in.
+    const groupToggle = document.getElementById('actionsGroupToggle');
+    const actionsFlatList = document.getElementById('actionsFlatList');
+    const typeFilterWrapper = Array.from(filtersEl.querySelectorAll('.filter-wrapper'))
+      .find(w => w.querySelector('.filter-dropdown-title')?.textContent === 'Type');
+    const typeCheckboxes = typeFilterWrapper
+      ? Array.from(typeFilterWrapper.querySelectorAll('input[type="checkbox"]'))
+      : [];
+    let currentGroupMode = 'intent';
+    let rightPanelActive = false;
+
+    function isAiAgentOnlySelected() {
+      const checked = typeCheckboxes.filter(cb => cb.checked);
+      return checked.length === 1 && checked[0].nextElementSibling.textContent.trim() === 'AI Agent';
+    }
+
+    // Same card language as the Intent view's opportunity cards — including
+    // the full ROI-journey block (projected → realized, sparkline, avg/day,
+    // tracked, progress bar, Daily Breakdown) — just one card per agent
+    // instead of per automation, with the parent automation named in the
+    // subtitle for context.
+    function renderFlatAgentList() {
+      if (actionsFlatList.dataset.rendered === '1') return;
+      actionsFlatList.dataset.rendered = '1';
+      actionsFlatList.innerHTML = allRows.map(row => {
+        const { list } = buildAgentsList(row);
+        return list.map(agent => {
+          const roiChartId = `roi-chart-${++roiChartIdCounter}`;
+          const roiJourneyHtml = buildRoiJourneyHtml({
+            roiChartId,
+            name: agent.name,
+            startDate: row.startDate,
+            projected: agent.projected,
+            realizedTotal: agent.rawValue,
+            liveCount: agent.status === 'Live' ? 1 : 0,
+          });
+          return `
+            <article class="opportunity-card actions-agent-card">
+              <header class="opportunity-card-header">
+                <div class="opportunity-card-title-block">
+                  <span class="opportunity-card-title-icon" aria-hidden="true">${BOT_ICON_SVG}</span>
+                  <div>
+                    <div class="opportunity-card-title-row">
+                      <h3 class="opportunity-card-title">${agent.name}</h3>
+                    </div>
+                    <p class="opportunity-card-subtitle">Part of ${row.name}<span class="subtitle-sep">|</span>${agent.by}<span class="subtitle-sep">|</span>Started ${agent.date}</p>
+                  </div>
+                </div>
+                <div class="opportunity-card-actions">
+                  <span class="badge ${agent.status === 'Live' ? 'badge-success' : 'badge-default'}">${agent.status}</span>
+                  <button type="button" class="opportunities-settings agent-menu-btn" data-agent-status="${agent.status}" aria-label="${agent.name} options" aria-haspopup="true">${KEBAB_ICON_SVG}</button>
+                </div>
+              </header>
+              ${roiJourneyHtml}
+            </article>
+          `;
+        }).join('');
+      }).join('');
+      // Regular (non-panel) view — Daily Breakdown stays the same inline
+      // collapse/expand toggle as Intent mode, not the drawer.
+      actionsFlatList.querySelectorAll('.opportunity-card').forEach(replaceGranularityWithDropdown);
+      refreshLucideIcons();
+      initPendingSparklines();
+    }
+
+    function setGroupMode(mode) {
+      currentGroupMode = mode;
+      groupToggle.querySelectorAll('.actions-group-btn').forEach(btn => {
+        const active = btn.dataset.group === mode;
+        btn.classList.toggle('active', active);
+        btn.setAttribute('aria-pressed', String(active));
+      });
+      try {
+        if (mode === 'agent') {
+          renderFlatAgentList();
+          tableBody.hidden = true;
+          actionsFlatList.hidden = false;
+        } else {
+          actionsFlatList.hidden = true;
+          tableBody.hidden = false;
+        }
+      } catch (err) {
+        // Surface the failure on-page — without this, an exception here
+        // leaves the active-state toggle flipped but the view unswitched,
+        // which looks like "the toggle does nothing" with no visible clue.
+        actionsFlatList.hidden = false;
+        tableBody.hidden = true;
+        actionsFlatList.innerHTML = `<div style="padding:1rem;border:0.0625rem solid var(--error-border,#e53935);border-radius:var(--rounded-md);background:var(--error-bg,#fdeaea);color:var(--error-secondary,#c71d1a);font-size:var(--text-sm);">View-by-Agent failed to render: ${err.message}</div>`;
+        console.error('setGroupMode(agent) failed:', err);
+      }
+      renderActionsDemoCards();
+      if (rightPanelActive) renderRightPanel();
+    }
+
+    function updateGroupToggleVisibility() {
+      const show = isAiAgentOnlySelected();
+      groupToggle.hidden = !show;
+      if (!show && currentGroupMode !== 'intent') {
+        setGroupMode('intent');
+      }
+    }
+
+    document.addEventListener('click', (event) => {
+      const btn = event.target.closest('.actions-group-btn');
+      if (!btn) return;
+      setGroupMode(btn.dataset.group);
+    });
+
+    updateGroupToggleVisibility();
+
+    function filterTableRows() {
+      const query = searchInput.value.trim().toLowerCase();
+      const rows = Array.from(tableBody.querySelectorAll('.opportunity-card'));
+
+      rows.forEach(row => {
+        const rowText = row.textContent.toLowerCase();
+        row.hidden = query.length > 0 && !rowText.includes(query);
+      });
+      updateRowCount();
+    }
+
+    searchInput.addEventListener('input', () => { filterTableRows(); updateResetVisibility(); });
+
+    const initialRows = [
+      {
+        name: 'Automate Bill Payment',
+        description: 'Handles one-time bill payments, faster transaction recovery, and payment method updates without agent involvement.',
+        type: 'AI Agent',
+        badgeClass: 'badge-secondary',
+        status: 'Published',
+        statusClass: 'badge-default',
+        triggeredBy: 'John Doe',
+        date: 'Feb 20, 2026',
+        impact: 'Automates 28,080 interactions annually Projected annual savings of $219,800',
+        agents: { total: 3, live: 2, draft: 1 },
+        startDate: 'Jan 15, 2026'
+      },
+      {
+        name: 'Automate Plan Upgrade',
+        description: 'Guides customers through upgrades via compression, eligibility checks, and instant tier charges without requiring a live agent.',
+        type: 'Deterministic Process',
+        badgeClass: 'badge-secondary',
+        status: 'Published',
+        statusClass: 'badge-default',
+        triggeredBy: 'Emily Rodriguez',
+        date: 'Feb 20, 2026',
+        impact: 'Automates 13,440 interactions annually Projected annual savings of $64,480',
+        agents: { total: 2, live: 1, draft: 1 },
+        startDate: 'Feb 3, 2026'
+      },
+      {
+        name: 'Automate Password Reset',
+        description: 'Verifies customer identity via unique SMS and walks them through a secure self-service password reset end-to-end.',
+        type: 'AI Agent',
+        badgeClass: 'badge-secondary',
+        status: 'Published',
+        statusClass: 'badge-default',
+        triggeredBy: 'Sarah Johnson',
+        date: 'Feb 20, 2026',
+        impact: 'Automates 37,440 interactions annually Projected annual savings of $150,280',
+        agents: { total: 4, live: 3, draft: 1 },
+        startDate: 'Jan 28, 2026'
+      },
+      {
+        name: 'Automate Appointment Booking',
+        description: 'Lets customers self-schedule, reschedule, or cancel service appointments using real-time slot availability.',
+        type: 'Deterministic Process',
+        badgeClass: 'badge-secondary',
+        status: 'Published',
+        statusClass: 'badge-default',
+        triggeredBy: 'Michael Chen',
+        date: 'Feb 20, 2026',
+        impact: 'Automates 10,880 interactions annually Projected annual savings of $46,920',
+        agents: { total: 1, live: 1, draft: 0 },
+        startDate: 'Mar 10, 2026'
+      },
+      {
+        name: 'Automate Service Status Check',
+        description: 'Delivers real-time outage info, estimated resolution notifications to customers in affected areas.',
+        type: 'Deterministic Process',
+        badgeClass: 'badge-secondary',
+        status: 'Published',
+        statusClass: 'badge-default',
+        triggeredBy: 'John Doe',
+        date: 'Feb 20, 2026',
+        impact: 'Automates 18,720 interactions annually Projected annual savings of $81,120',
+        agents: { total: 2, live: 0, draft: 2 },
+        startDate: 'Feb 20, 2026'
+      }
+    ];
+
+    const moreRows = [
+      {
+        name: 'Automate Refund Status Check',
+        description: 'Tracks refunds in real-time from payment processing, confirming issuance, fully without handoff.',
+        type: 'AI Agent',
+        badgeClass: 'badge-secondary',
+        status: 'Created',
+        statusClass: 'badge-default',
+        triggeredBy: 'David Kim',
+        date: 'Feb 20, 2026',
+        impact: 'Automates 22,440 interactions annually Projected annual savings of $112,680',
+        agents: { total: 2, live: 1, draft: 1 },
+        startDate: 'Apr 1, 2026'
+      },
+      {
+        name: 'Automate Billing Inquiry',
+        description: 'Provides instant invoice lookups, payment status updates, and next-step guidance.',
+        type: 'AI Agent',
+        badgeClass: 'badge-secondary',
+        status: 'Published',
+        statusClass: 'badge-default',
+        triggeredBy: 'Aisha Patel',
+        date: 'Feb 21, 2026',
+        impact: 'Automates 9,600 interactions annually Projected annual savings of $42,400',
+        agents: { total: 3, live: 2, draft: 1 },
+        startDate: 'Mar 22, 2026'
+      },
+      {
+        name: 'Automate Plan Cancellation',
+        description: 'Handles cancellation requests with eligibility checks, retention options, and confirmation flow.',
+        type: 'Deterministic Process',
+        badgeClass: 'badge-secondary',
+        status: 'Published',
+        statusClass: 'badge-default',
+        triggeredBy: 'Daniel Lee',
+        date: 'Feb 21, 2026',
+        impact: 'Automates 8,320 interactions annually Projected annual savings of $36,720',
+        agents: { total: 1, live: 1, draft: 0 },
+        startDate: 'May 5, 2026'
+      },
+      {
+        name: 'Automate Account Verification',
+        description: 'Verifies customer identity automatically and enables secure account operations.',
+        type: 'AI Agent',
+        badgeClass: 'badge-secondary',
+        status: 'Published',
+        statusClass: 'badge-default',
+        triggeredBy: 'Priya Singh',
+        date: 'Feb 21, 2026',
+        impact: 'Automates 16,700 interactions annually Projected annual savings of $67,200',
+        agents: { total: 4, live: 2, draft: 2 },
+        startDate: 'Feb 14, 2026'
+      },
+      {
+        name: 'Automate Shipping Update',
+        description: 'Notifies customers with tracking updates and expected delivery times automatically.',
+        type: 'Deterministic Process',
+        badgeClass: 'badge-secondary',
+        status: 'Published',
+        statusClass: 'badge-default',
+        triggeredBy: 'Lisa Carter',
+        date: 'Feb 21, 2026',
+        impact: 'Automates 12,200 interactions annually Projected annual savings of $54,880',
+        agents: { total: 2, live: 2, draft: 0 },
+        startDate: 'Apr 18, 2026'
+      },
+      {
+        name: 'Automate Subscription Renewal',
+        description: 'Handles renewal reminders, payment collection, and confirmation without manual follow-up.',
+        type: 'AI Agent',
+        badgeClass: 'badge-secondary',
+        status: 'Created',
+        statusClass: 'badge-default',
+        triggeredBy: 'Marcus Green',
+        date: 'Feb 21, 2026',
+        impact: 'Automates 14,500 interactions annually Projected annual savings of $59,600',
+        agents: { total: 3, live: 1, draft: 2 },
+        startDate: 'Mar 30, 2026'
+      },
+      {
+        name: 'Automate Fraud Check',
+        description: 'Flags suspicious activity and triggers verification workflows with minimal friction.',
+        type: 'Deterministic Process',
+        badgeClass: 'badge-secondary',
+        status: 'Published',
+        statusClass: 'badge-default',
+        triggeredBy: 'Elena Martinez',
+        date: 'Feb 21, 2026',
+        impact: 'Automates 11,960 interactions annually Projected annual savings of $52,780',
+        agents: { total: 1, live: 0, draft: 1 },
+        startDate: 'Jun 1, 2026'
+      },
+      {
+        name: 'Automate Chat Routing',
+        description: 'Directs customers to the right support channel based on intent and queue availability.',
+        type: 'AI Agent',
+        badgeClass: 'badge-secondary',
+        status: 'Published',
+        statusClass: 'badge-default',
+        triggeredBy: 'Jason Wu',
+        date: 'Feb 21, 2026',
+        impact: 'Automates 19,340 interactions annually Projected annual savings of $83,400',
+        agents: { total: 5, live: 3, draft: 2 },
+        startDate: 'Jan 5, 2026'
+      },
+      {
+        name: 'Automate Contact Update',
+        description: 'Updates customer contact details safely through verification and confirmation flows.',
+        type: 'Deterministic Process',
+        badgeClass: 'badge-secondary',
+        status: 'Published',
+        statusClass: 'badge-default',
+        triggeredBy: 'Olivia Banks',
+        date: 'Feb 21, 2026',
+        impact: 'Automates 7,680 interactions annually Projected annual savings of $34,560',
+        agents: { total: 2, live: 1, draft: 1 },
+        startDate: 'May 20, 2026'
+      },
+      {
+        name: 'Automate Policy Escalation',
+        description: 'Escalates policy exceptions with automatic documentation and follow-up actions.',
+        type: 'AI Agent',
+        badgeClass: 'badge-secondary',
+        status: 'Published',
+        statusClass: 'badge-default',
+        triggeredBy: 'Sofia Ivanov',
+        date: 'Feb 21, 2026',
+        impact: 'Automates 9,760 interactions annually Projected annual savings of $45,200',
+        agents: { total: 3, live: 2, draft: 1 },
+        startDate: 'Apr 10, 2026'
+      },
+      {
+        name: 'Automate Feedback Collection',
+        description: 'Collects post-interaction feedback and creates a summarized quality score automatically.',
+        type: 'Deterministic Process',
+        badgeClass: 'badge-secondary',
+        status: 'Created',
+        statusClass: 'badge-default',
+        triggeredBy: 'Noah Kim',
+        date: 'Feb 21, 2026',
+        impact: 'Automates 6,540 interactions annually Projected annual savings of $28,320',
+        agents: { total: 1, live: 0, draft: 1 },
+        startDate: 'Jun 15, 2026'
+      },
+      {
+        name: 'Automate Delivery Confirmation',
+        description: 'Sends delivery confirmations automatically once orders are marked shipped.',
+        type: 'Deterministic Process',
+        badgeClass: 'badge-secondary',
+        status: 'Published',
+        statusClass: 'badge-default',
+        triggeredBy: 'Noah Kim',
+        date: 'Feb 22, 2026',
+        impact: 'Automates 11,200 interactions annually Projected annual savings of $50,320',
+        agents: { total: 2, live: 2, draft: 0 },
+        startDate: 'May 1, 2026'
+      }
+    ];
+
+    // Snapshot of every row, taken before infinite-scroll splices moreRows —
+    // the flat "Agent" grouping view always reflects the full dataset
+    // regardless of how much has been lazily loaded into the Intent view.
+    const allRows = initialRows.concat(moreRows);
+
+    const CHECK_ICON_SVG = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>';
+    const KEBAB_ICON_SVG = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="1"/><circle cx="12" cy="5" r="1"/><circle cx="12" cy="19" r="1"/></svg>';
+    const BOT_ICON_SVG = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 8V4H8"/><rect width="16" height="12" x="4" y="8" rx="2"/><path d="M2 14h2"/><path d="M20 14h2"/><path d="M15 13v2"/><path d="M9 13v2"/></svg>';
+    const OPEN_AGENT_ICON_SVG = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><path d="M15 3h6v6"/><path d="M10 14 21 3"/></svg>';
+    const INSIGHTS_ICON_SVG = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m22 12-4-4-6 6-4-4-4 4"/></svg>';
+    const PUBLISH_ICON_SVG = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12"/><path d="m6 9 6-6 6 6"/><path d="M4 17v3a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1v-3"/></svg>';
+    const SPARKLE_ICON_SVG = '<svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" stroke="none" aria-hidden="true"><path d="M9.937 15.5A2 2 0 0 0 8.5 14.063l-6.135-1.582a.5.5 0 0 1 0-.962L8.5 9.936A2 2 0 0 0 9.937 8.5l1.582-6.135a.5.5 0 0 1 .963 0L14.063 8.5A2 2 0 0 0 15.5 9.937l6.135 1.581a.5.5 0 0 1 0 .964L15.5 14.063a2 2 0 0 0-1.437 1.437l-1.582 6.135a.5.5 0 0 1-.963 0z"/></svg>';
+    // Same target icon as the "Ahead of Target" KPI tile.
+    const TARGET_ICON_SVG = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg>';
+
+    // Calendar-view icons for the granularity dropdown — same visual
+    // language as a calendar app's view switcher.
+    const VIEW_DAY_ICON_SVG = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="4" width="16" height="16" rx="2"/></svg>';
+    const VIEW_THREE_DAY_ICON_SVG = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="4" width="16" height="16" rx="2"/><path d="M9.33 4v16"/><path d="M14.67 4v16"/></svg>';
+    const VIEW_WORK_WEEK_ICON_SVG = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="4" width="16" height="16" rx="2"/><path d="M4 9h16"/></svg>';
+    const VIEW_WEEK_ICON_SVG = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="4" width="16" height="16" rx="2"/></svg>';
+    const VIEW_MONTH_ICON_SVG = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="4" width="16" height="16" rx="2"/><path d="M4 10h16"/><path d="M9.33 10v10"/><path d="M14.67 10v10"/></svg>';
+    const TROPHY_ICON_SVG = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"/><path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"/><path d="M4 22h16"/><path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22"/><path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22"/><path d="M18 2H6v7a6 6 0 0 0 12 0V2Z"/></svg>';
+
+    function formatSavingsShort(amount) {
+      return amount >= 1000 ? `$${Math.round(amount / 1000)}K` : `$${amount}`;
+    }
+
+    const AGENT_CREATORS = ['Maya Patel', 'Alex Morgan', 'Priya Singh', 'David Kim', 'Elena Martinez', 'Jason Wu', 'Sofia Ivanov', 'Daniel Lee'];
+    const AGENT_SUFFIXES = ['Agent', 'Assistant', 'Handler', 'Specialist'];
+    const LIVE_SHARE_WEIGHTS = [0.55, 0.3, 0.1, 0.04, 0.01];
+
+    // Deterministic pseudo-random in [0, 1), seeded by the row name — keeps
+    // the mock "realized so far" fraction stable across re-renders instead
+    // of jumping around on every load-more/filter pass.
+    function seededFraction(seed) {
+      let hash = 0;
+      for (let i = 0; i < seed.length; i++) hash = (hash * 31 + seed.charCodeAt(i)) >>> 0;
+      return (hash % 1000) / 1000;
+    }
+
+    // Mock per-agent breakdown, generated from each row's agents.{live,draft}
+    // counts and its total savings figure — keeps the agent list consistent
+    // with the "N AI Agents | N Live | N Draft" subtitle without hand-authoring
+    // 17 separate arrays. Live agents only earn a fraction of the full annual
+    // projection so far (realizedFraction), leaving a visible gap to the
+    // projected ROI for the journey bar above the table.
+    // Nudges an automation's date by a deterministic, per-agent offset —
+    // agents within the same automation were added a few days apart in
+    // reality, so their "Started" dates shouldn't all print identically.
+    function offsetDate(dateStr, days) {
+      const d = new Date(dateStr);
+      d.setDate(d.getDate() + days);
+      return d.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+    }
+
+    function buildAgentsList(row) {
+      const { live, draft } = row.agents;
+      const projected = Number((row.impact.match(/\$([\d,]+)/) || [, '0'])[1].replace(/,/g, ''));
+      const realizedFraction = live > 0 ? 0.3 + seededFraction(row.name) * 0.35 : 0;
+      const realizedTotal = Math.round(projected * realizedFraction);
+      const shortName = row.name.replace(/^Automate\s+/, '');
+      const list = [];
+      let remaining = realizedTotal;
+      let remainingProjected = projected;
+      for (let i = 0; i < live; i++) {
+        const isLast = i === live - 1;
+        const weight = LIVE_SHARE_WEIGHTS[i] ?? 0.05;
+        const value = isLast ? remaining : Math.round(realizedTotal * weight);
+        remaining -= value;
+        const rawValue = Math.max(value, 0);
+        // Each agent's own projected figure mirrors its realized share of
+        // the automation total, so its individual ROI-journey card shows
+        // the same "projected → realized" ratio as the parent automation.
+        const agentProjected = isLast ? remainingProjected : Math.round(projected * weight);
+        remainingProjected -= agentProjected;
+        list.push({
+          name: `${shortName} ${AGENT_SUFFIXES[i % AGENT_SUFFIXES.length]}`,
+          by: AGENT_CREATORS[i % AGENT_CREATORS.length],
+          covers: i === 0 ? 'core flow, standard cases' : 'edge cases, exceptions',
+          value: formatSavingsShort(rawValue),
+          rawValue,
+          projected: Math.max(agentProjected, 0),
+          status: 'Live',
+          date: offsetDate(row.date, i * 2 + Math.round(seededFraction(`${row.name}-${i}`) * 4)),
+        });
+      }
+      for (let i = 0; i < draft; i++) {
+        list.push({
+          name: `${shortName} ${i === 0 ? 'Draft Handler' : 'Draft Variant'}`,
+          by: AGENT_CREATORS[(live + i) % AGENT_CREATORS.length],
+          covers: 'not yet scoped',
+          value: '',
+          rawValue: 0,
+          projected: Math.round(projected * 0.05),
+          status: 'Draft',
+          date: offsetDate(row.date, (live + i) * 2 + Math.round(seededFraction(`${row.name}-${live + i}`) * 4)),
+        });
+      }
+      return { list, projected, realizedTotal };
+    }
+
+    // Reads a CSS custom property from :root, falling back if unset — mirrors
+    // the tokenColor() helper used for every ECharts option in this app so
+    // chart colors always come from design tokens, never hardcoded hex.
+    function tokenColor(varName, fallback) {
+      const value = getComputedStyle(document.documentElement).getPropertyValue(varName).trim();
+      return value || fallback;
+    }
+
+    // Deterministic mulberry32 PRNG seeded by row name — daily series stay
+    // stable across re-renders instead of reshuffling on every filter pass.
+    function mockDailySeries(row, avgPerDay, daysTracked) {
+      let seed = 0;
+      for (let i = 0; i < row.name.length; i++) seed = (seed * 31 + row.name.charCodeAt(i)) >>> 0;
+      const rand = () => {
+        seed = (seed + 0x6D2B79F5) >>> 0;
+        let t = seed;
+        t = Math.imul(t ^ (t >>> 15), t | 1);
+        t ^= t + Math.imul(t ^ (t >>> 7), t | 61);
+        return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+      };
+      const start = new Date(row.startDate);
+      const dates = [];
+      const values = [];
+      for (let i = 0; i < daysTracked; i++) {
+        const date = new Date(start.getTime() + i * 86400000);
+        const rampUp = Math.min(1, (i + 1) / Math.max(1, Math.round(daysTracked * 0.25)));
+        const noise = 0.55 + rand() * 0.9;
+        dates.push(date);
+        values.push(Math.max(0, Math.round(avgPerDay * rampUp * noise)));
+      }
+      return { dates, values };
+    }
+
+    function rollingAverage(values, windowSize) {
+      return values.map((_, i) => {
+        const start = Math.max(0, i - windowSize + 1);
+        const slice = values.slice(start, i + 1);
+        return Math.round(slice.reduce((a, b) => a + b, 0) / slice.length);
+      });
+    }
+
+    // Plain-language read on the mock daily series: is pace trending up/down
+    // vs. the first 30 days, and are there days that dropped hard below the
+    // rolling average worth flagging.
+    // Reads the CURRENT regime off the 30-day rolling average, not the
+    // ramp-up-vs-now comparison (which almost always reads as "accelerating"
+    // off a near-zero base). Compares the last 30 days of rolling-average
+    // values against the 60-90-day-ago window, classifies the trend, and
+    // measures how long that regime has held — plus a separate call-out for
+    // recurring weekly volatility.
+    // Returns { insight_text, suggested_question } — mirrors the shape an
+    // LLM-generated insight would return. The question is built from the
+    // same structured numbers used for the text (name, range, pattern,
+    // since-when), so nothing needs to be re-parsed out of the sentence.
+    function buildRoiInsight(rowName, dateLabels, values, rolling) {
+      const n = values.length;
+      const avg = arr => arr.reduce((a, b) => a + b, 0) / (arr.length || 1);
+
+      const recentAvg = avg(rolling.slice(Math.max(0, n - 30)));
+      const priorStart = Math.max(0, n - 90);
+      const priorEnd = Math.max(0, n - 60);
+      let priorAvg = null;
+      if (n >= 90) {
+        priorAvg = avg(rolling.slice(priorStart, priorEnd));
+      } else if (n >= 60) {
+        priorAvg = avg(rolling.slice(0, priorStart));
+      }
+
+      let trendWord = 'still ramping up';
+      let changeText = '';
+      if (priorAvg != null && priorAvg > 0) {
+        const change = Math.round((recentAvg - priorAvg) / priorAvg * 100);
+        trendWord = change >= 15 ? 'accelerating' : change <= -15 ? 'slowing down' : 'holding steady';
+        changeText = ` (${change > 0 ? '+' : ''}${change}% vs. 60-90 days ago)`;
+      }
+
+      let durationDays = 0;
+      if (trendWord === 'holding steady') {
+        const band = recentAvg * 0.10;
+        for (let i = n - 1; i >= 0 && Math.abs(rolling[i] - recentAvg) <= band; i--) durationDays++;
+      } else if (trendWord === 'accelerating' || trendWord === 'slowing down') {
+        const lookback = Math.min(n, 120);
+        const windowSlice = rolling.slice(n - lookback);
+        const extremeIdx = trendWord === 'accelerating'
+          ? windowSlice.indexOf(Math.min(...windowSlice))
+          : windowSlice.indexOf(Math.max(...windowSlice));
+        durationDays = lookback - extremeIdx;
+      }
+      const durationText = durationDays >= 60
+        ? `about ${Math.round(durationDays / 30)} months`
+        : durationDays >= 14
+          ? `about ${Math.round(durationDays / 7)} weeks`
+          : `the last ${durationDays} day${durationDays === 1 ? '' : 's'}`;
+
+      let text;
+      if (trendWord === 'still ramping up') {
+        text = 'Daily realized value is still in its early ramp-up period — not enough history yet to call a stable trend.';
+      } else if (trendWord === 'holding steady') {
+        text = `Daily pace has held steady around $${Math.round(recentAvg).toLocaleString('en-US')}/day for ${durationText}${changeText}.`;
+      } else {
+        text = `Daily pace is ${trendWord}${changeText}, a shift that's been building for ${durationText}.`;
+      }
+
+      // Recurring weekly volatility — peak-to-trough swing per 7-day window
+      // vs. that week's own average, checked across most of the period.
+      const weeklySwings = [];
+      for (let i = 0; i + 7 <= n; i += 7) {
+        const week = values.slice(i, i + 7);
+        const weekAvg = avg(week);
+        if (weekAvg > 0) weeklySwings.push((Math.max(...week) - Math.min(...week)) / weekAvg);
+      }
+      const highSwingWeeks = weeklySwings.filter(s => s >= 0.3).length;
+      const hasWeeklyPattern = weeklySwings.length > 0 && highSwingWeeks / weeklySwings.length >= 0.5;
+      let suggestedQuestion;
+      if (hasWeeklyPattern) {
+        const recentValues = values.slice(Math.max(0, n - 30));
+        const lo = Math.round(Math.min(...recentValues));
+        const hi = Math.round(Math.max(...recentValues));
+        text += ` Consistent weekly swings run through most of the period, roughly $${lo.toLocaleString('en-US')}-$${hi.toLocaleString('en-US')} within a typical week — worth checking for a weekly/monthly cycle.`;
+
+        const firstHighSwingWeekIdx = weeklySwings.findIndex(s => s >= 0.3);
+        const patternStartDate = dateLabels[firstHighSwingWeekIdx * 7] ?? dateLabels[0];
+        suggestedQuestion = `I noticed daily realized value for ${rowName} swings between about $${lo.toLocaleString('en-US')} and $${hi.toLocaleString('en-US')} on a repeating weekly pattern since ${patternStartDate}. Is this tied to weekday-vs-weekend interaction volume, agent staffing schedules, or something else — and should we smooth it out?`;
+      } else if (trendWord === 'accelerating' || trendWord === 'slowing down') {
+        suggestedQuestion = `I noticed daily realized value for ${rowName} has been ${trendWord}${changeText}, a shift that's been building for ${durationText}. What's likely driving this, and should we adjust how this automation is staffed or scoped?`;
+      } else {
+        suggestedQuestion = `I noticed daily realized value for ${rowName} has held steady around $${Math.round(recentAvg).toLocaleString('en-US')}/day for ${durationText}. Is this the expected ceiling, or is there room to grow it further?`;
+      }
+
+      return { insight_text: text, suggested_question: suggestedQuestion };
+    }
+
+    function agentMenuItems(status) {
+      if (status === 'Draft') {
+        return [
+          { label: 'Publish AI Agent', icon: PUBLISH_ICON_SVG },
+          { label: 'View AI Agent', icon: BOT_ICON_SVG },
+        ];
+      }
+      return [
+        { label: 'Open AI Agent', icon: OPEN_AGENT_ICON_SVG },
+        { label: 'View AI Agent', icon: BOT_ICON_SVG },
+        { label: 'View insights', icon: INSIGHTS_ICON_SVG },
+      ];
+    }
+
+    // Shared by the Intent view's automation cards and the Agent view's
+    // per-agent cards — same projected/realized/sparkline/daily-breakdown
+    // structure either way, just scoped to a different name + savings figure.
+    function buildRoiJourneyHtml({
+      roiChartId, name, startDate, projected, realizedTotal, liveCount, agentFilterList,
+      // Demo-only extension points (pace-comparison / target-exceeded
+      // reference cards) — every real card leaves these at their defaults
+      // and renders exactly as before.
+      tickPercent = null, barFillClass = '', barWidthOverride = null,
+    }) {
+      const pctRealized = projected ? Math.round(realizedTotal / projected * 100) : 0;
+      const daysTracked = Math.max(0, Math.round((Date.now() - new Date(startDate).getTime()) / 86400000));
+      const avgPerDay = daysTracked ? Math.round(realizedTotal / daysTracked) : 0;
+      const hasLiveAgents = liveCount > 0;
+      if (hasLiveAgents) {
+        const { dates, values } = mockDailySeries({ name, startDate }, avgPerDay, daysTracked);
+        roiBaseSeriesCache[roiChartId] = { dates, values, rowName: name };
+      }
+      const singleAgent = !agentFilterList || agentFilterList.length <= 1;
+      return `
+        <div class="roi-journey" style="--roi-pct: ${pctRealized}%">
+          <div class="roi-journey-top">
+            <div class="roi-journey-stat">
+              <div class="roi-journey-label">Projected ROI</div>
+              <div class="roi-journey-value">${formatSavingsShort(projected)}<span class="roi-journey-unit">/yr</span></div>
+            </div>
+            <div class="roi-journey-arrow" aria-hidden="true">&rarr;</div>
+            <div class="roi-journey-stat">
+              <div class="roi-journey-label">Realized value</div>
+              ${hasLiveAgents
+                ? `<div class="roi-journey-value roi-journey-value-realized">${formatSavingsShort(realizedTotal)}<span class="roi-journey-pct">(${pctRealized}%)</span><span class="roi-journey-note">&middot; summed from ${liveCount} live agent${liveCount === 1 ? '' : 's'}</span></div>`
+                : `<div class="roi-journey-value roi-journey-value-muted">Not live yet</div>`
+              }
+            </div>
+            <div class="roi-journey-top-right">
+              ${hasLiveAgents ? `
+              <div class="roi-journey-wide-extra">
+                <div class="roi-sparkline" id="${roiChartId}-spark" role="img" aria-label="Trend of daily realized value for ${name}"></div>
+                <div class="roi-journey-mini-stat">
+                  <div class="roi-journey-mini-label">Avg/day</div>
+                  <div class="roi-journey-mini-value">$${avgPerDay.toLocaleString('en-US')}</div>
+                </div>
+                <div class="roi-journey-mini-stat">
+                  <div class="roi-journey-mini-label">Tracked</div>
+                  <div class="roi-journey-mini-value">${daysTracked}d</div>
+                </div>
+              </div>
+              ` : ''}
+            </div>
+          </div>
+          ${hasLiveAgents ? `
+          <div class="roi-journey-bar${tickPercent != null ? ' roi-pace-bar' : ''}">
+            <div class="roi-journey-bar-fill ${barFillClass}" style="width:${barWidthOverride != null ? barWidthOverride : pctRealized}%"></div>
+            ${tickPercent != null ? `<div class="roi-pace-tick" style="left:${tickPercent}%" title="Expected pace: ${tickPercent}%"></div>` : ''}
+          </div>
+          <div class="roi-journey-mini-row">
+            <div class="roi-journey-mini-stat">
+              <div class="roi-journey-mini-label">Avg/day</div>
+              <div class="roi-journey-mini-value">$${avgPerDay.toLocaleString('en-US')}</div>
+            </div>
+            <div class="roi-journey-mini-stat">
+              <div class="roi-journey-mini-label">Tracked</div>
+              <div class="roi-journey-mini-value">${daysTracked}d</div>
+            </div>
+          </div>
+          <div class="roi-journey-pace">
+            <button type="button" class="roi-avg-toggle" aria-expanded="false" aria-controls="${roiChartId}-wrap">
+              <svg class="roi-avg-chevron" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
+              <span class="roi-avg-label-default">Daily Breakdown</span>
+              <span class="roi-avg-label-open">Hide Daily Breakdown</span>
+            </button>
+          </div>
+          <div class="roi-chart-collapse" id="${roiChartId}-wrap">
+            <div class="roi-chart-agent-filter">
+              <div class="roi-view-toggle sort-toggle-group" role="group" aria-label="Chart or table view">
+                <button type="button" class="sort-toggle-btn roi-view-btn active" data-view="chart" aria-pressed="true" aria-label="Chart View" data-tooltip="Chart View">
+                  <i data-lucide="chart-line" aria-hidden="true"></i>
+                </button>
+                <button type="button" class="sort-toggle-btn roi-view-btn" data-view="table" aria-pressed="false" aria-label="Table View" data-tooltip="Table View">
+                  <i data-lucide="table" aria-hidden="true"></i>
+                </button>
+              </div>
+              ${singleAgent ? '' : `
+              <div class="filter-wrapper roi-chart-agent-wrapper">
+                <button type="button" class="filter-btn">
+                  AI Agent: <span class="filter-btn-value">All</span>
+                  <svg class="filter-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
+                </button>
+                <div class="filter-dropdown filter-dropdown-multi roi-chart-agent-dropdown">
+                  <div class="filter-dropdown-title">AI Agent</div>
+                  <label class="filter-checkbox-item"><input type="checkbox" class="roi-agent-all-cb" checked><span>All</span></label>
+                  ${agentFilterList.filter(agent => agent.status === 'Live').map(agent => `<label class="filter-checkbox-item"><input type="checkbox" class="roi-agent-cb" data-value="${agent.rawValue || 0}"><span>${agent.name}</span></label>`).join('')}
+                </div>
+              </div>
+              `}
+              <div class="roi-granularity-group" role="group" aria-label="Chart granularity">
+                <button type="button" class="roi-granularity-btn active" data-granularity="daily">Daily</button>
+                <button type="button" class="roi-granularity-btn" data-granularity="weekly">Weekly</button>
+                <button type="button" class="roi-granularity-btn" data-granularity="monthly">Monthly</button>
+              </div>
+            </div>
+            <div
+              class="echart-chart roi-chart"
+              id="${roiChartId}"
+              data-daily-avg="${avgPerDay}"
+              data-days-tracked="${daysTracked}"
+              data-start-date="${startDate}"
+              data-row-name="${name}"
+              tabindex="0"
+              role="application"
+              aria-label="Daily realized value for ${name}, ${daysTracked} days tracked"
+              aria-describedby="${roiChartId}-instructions"
+            >
+              <span id="${roiChartId}-instructions" class="sr-only">Use arrow keys to navigate between data points. Press Enter or Space to open tooltip. Press Escape to close.</span>
+              <div class="sr-only" role="status" aria-live="polite" aria-atomic="true" data-chart-announcer></div>
+            </div>
+            <div class="roi-chart-table" id="${roiChartId}-table" hidden>
+              <div class="roi-chart-table-header">
+                <div>Date</div>
+                <div>Realized value</div>
+                <div>Rolling avg</div>
+              </div>
+              <div class="roi-chart-table-body"></div>
+            </div>
+            <div class="roi-chart-insight" id="${roiChartId}-insight">
+              <span class="roi-chart-insight-icon" aria-hidden="true">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" stroke="none"><path d="M9.937 15.5A2 2 0 0 0 8.5 14.063l-6.135-1.582a.5.5 0 0 1 0-.962L8.5 9.936A2 2 0 0 0 9.937 8.5l1.582-6.135a.5.5 0 0 1 .963 0L14.063 8.5A2 2 0 0 0 15.5 9.937l6.135 1.581a.5.5 0 0 1 0 .964L15.5 14.063a2 2 0 0 0-1.437 1.437l-1.582 6.135a.5.5 0 0 1-.963 0z"/></svg>
+              </span>
+              <p class="roi-chart-insight-text"></p>
+            </div>
+          </div>
+          ` : ''}
+        </div>
+      `;
+    }
+
+    // Pace-comparison badge + progress-bar tick for a single ROI journey,
+    // given where it stands (pctRealized) against a straight-line annual
+    // pace (daysTracked/365). Realized ≥ projected is a distinct "target
+    // exceeded" state, not just the top of the ahead-of-pace range.
+    function buildPaceState(pctRealized, daysTracked) {
+      if (pctRealized >= 100) {
+        return {
+          state: 'exceeded',
+          badgeHtml: `<span class="pace-badge pace-badge-exceeded">${TROPHY_ICON_SVG}Target exceeded</span>`,
+          tickPercent: null,
+          barFillClass: 'roi-bar-fill-exceeded',
+          barWidthOverride: 100,
+        };
+      }
+      const expectedPace = daysTracked / 365;
+      const expectedPacePct = Math.round(expectedPace * 1000) / 10;
+      const ratio = expectedPace > 0 ? (pctRealized / 100) / expectedPace : 1;
+      const deltaPct = Math.round(Math.abs(ratio - 1) * 100);
+      let state, badgeCls, badgeText, icon = '';
+      if (ratio > 1.05) { state = 'ahead'; badgeCls = 'pace-badge-ahead'; badgeText = `${deltaPct}% ahead of target`; icon = TARGET_ICON_SVG; }
+      else if (ratio >= 0.95) { state = 'on-track'; badgeCls = 'pace-badge-on-track'; badgeText = 'On track'; }
+      else if (ratio >= 0.8) { state = 'behind-slight'; badgeCls = 'pace-badge-behind-slight'; badgeText = 'Slightly behind pace'; }
+      else { state = 'behind'; badgeCls = 'pace-badge-behind'; badgeText = 'Behind pace'; }
+      return {
+        state,
+        badgeHtml: `<span class="pace-badge ${badgeCls}">${icon}${badgeText}</span>`,
+        tickPercent: expectedPacePct,
+        barFillClass: '',
+        barWidthOverride: null,
+      };
+    }
+
+    // Demo-only reference cards (see #actionsDemoCards) — built through the
+    // exact same buildRoiJourneyHtml()/agents-table markup as real
+    // automation cards, so they look and behave identically; only the
+    // figures are hand-picked to land in the "ahead of target" and "target
+    // exceeded" states for illustration. Shared by both the aggregate
+    // (Intent) and per-agent (Agent) renderings below, so the two views
+    // never drift out of sync with each other.
+    const DEMO_CARD_CONFIGS = [
+      {
+        name: 'Automate Invoice Reconciliation',
+        startDate: 'Jan 7, 2026',
+        projected: 220000,
+        realizedTotal: 132000,
+        agentsList: [
+          { name: 'Invoice Reconciliation Agent', by: 'Maya Patel', covers: 'core flow, standard cases', value: '$132K', rawValue: 132000, status: 'Live', date: 'Jan 10, 2026' },
+          { name: 'Invoice Reconciliation Draft Handler', by: 'Alex Morgan', covers: 'not yet scoped', value: '', rawValue: 0, status: 'Draft', date: 'Jan 14, 2026' },
+        ],
+      },
+      {
+        name: 'Automate Refund Processing',
+        startDate: 'Sep 4, 2025',
+        projected: 220000,
+        realizedTotal: 251000,
+        agentsList: [
+          { name: 'Refund Processing Agent', by: 'Maya Patel', covers: 'core flow, standard cases', value: '$251K', rawValue: 251000, status: 'Live', date: 'Sep 8, 2025' },
+          { name: 'Refund Processing Draft Handler', by: 'Alex Morgan', covers: 'not yet scoped', value: '', rawValue: 0, status: 'Draft', date: 'Sep 12, 2025' },
+        ],
+      },
+    ];
+
+    function renderDemoCards(container = document.getElementById('actionsDemoCards')) {
+      if (!container) return;
+      container.innerHTML = DEMO_CARD_CONFIGS.map(cfg => {
+        const roiChartId = `roi-chart-${++roiChartIdCounter}`;
+        const pctRealized = Math.round(cfg.realizedTotal / cfg.projected * 100);
+        const daysTracked = Math.max(0, Math.round((Date.now() - new Date(cfg.startDate).getTime()) / 86400000));
+        const pace = buildPaceState(pctRealized, daysTracked);
+        const live = cfg.agentsList.filter(a => a.status === 'Live').length;
+        const draft = cfg.agentsList.length - live;
+        const total = cfg.agentsList.length;
+        const roiJourneyHtml = buildRoiJourneyHtml({
+          roiChartId,
+          name: cfg.name,
+          startDate: cfg.startDate,
+          projected: cfg.projected,
+          realizedTotal: cfg.realizedTotal,
+          liveCount: live,
+          agentFilterList: cfg.agentsList,
+          tickPercent: pace.tickPercent,
+          barFillClass: pace.barFillClass,
+          barWidthOverride: pace.barWidthOverride,
+        });
+        const agentRowsHtml = cfg.agentsList.map(agent => `
+          <div class="agents-table-row" data-value="${agent.rawValue || 0}">
+            <div>
+              <div class="agents-table-name-main">${agent.name}</div>
+              <div class="agents-table-name-sub">covers: ${agent.covers}</div>
+            </div>
+            <div>${agent.by}</div>
+            <div class="agents-table-status"><span class="badge ${agent.status === 'Live' ? 'badge-success' : 'badge-default'}">${agent.status}</span></div>
+            <div class="agents-table-value">${agent.value || '&mdash;'}</div>
+            <div>${agent.date}</div>
+            <div class="agents-table-actions">
+              <button type="button" class="opportunities-settings agent-menu-btn" data-agent-status="${agent.status}" aria-label="${agent.name} options" aria-haspopup="true">${KEBAB_ICON_SVG}</button>
+            </div>
+          </div>
+        `).join('');
+        return `
+          <article class="opportunity-card actions-demo-card">
+            <header class="opportunity-card-header">
+              <div>
+                <div class="opportunity-card-title-block">
+                  <span class="opportunity-card-title-icon" aria-hidden="true">${BOT_ICON_SVG}</span>
+                  <div>
+                    <div class="opportunity-card-title-row">
+                      <svg class="opportunity-card-chevron" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
+                      <h3 class="opportunity-card-title">${cfg.name}</h3>
+                    </div>
+                    <p class="opportunity-card-subtitle">${total} AI Agent${total === 1 ? '' : 's'}<span class="subtitle-sep">|</span>${live} Live<span class="subtitle-sep">|</span>${draft} Draft<span class="subtitle-sep">|</span>Started ${cfg.startDate}</p>
+                  </div>
+                </div>
+              </div>
+              <div class="opportunity-card-actions">
+                ${pace.badgeHtml}
+                <span class="badge ${live > 0 ? 'badge-success' : 'badge-default'}">${live > 0 ? 'Live' : 'Draft'}</span>
+                <button type="button" class="opportunities-settings agent-menu-btn" data-agent-status="${live > 0 ? 'Live' : 'Draft'}" aria-label="${cfg.name} options" aria-haspopup="true">${KEBAB_ICON_SVG}</button>
+              </div>
+            </header>
+            ${roiJourneyHtml}
+            <div class="agents-list">
+              <div class="agents-table-collapse" id="${roiChartId}-agents-wrap" hidden>
+                <h4 class="agents-table-title">AI Agents</h4>
+                <div class="agents-table">
+                  <div class="agents-table-header">
+                    <div>Name</div>
+                    <div>Agent</div>
+                    <div>Status</div>
+                    <div>Realized value</div>
+                    <div>Date</div>
+                    <div></div>
+                  </div>
+                  ${agentRowsHtml}
+                </div>
+              </div>
+              <button type="button" class="opportunity-expand agents-table-toggle" aria-expanded="false" aria-controls="${roiChartId}-agents-wrap" data-view-label="View ${total} AI agent${total === 1 ? '' : 's'}" data-hide-label="Hide AI Agents">
+                <svg class="opportunity-expand-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
+                <span class="expand-label">View ${total} AI agent${total === 1 ? '' : 's'}</span>
+              </button>
+            </div>
+          </article>
+        `;
+      }).join('');
+
+      container.querySelectorAll('.opportunity-card-title-row').forEach(bindTitleRow);
+      container.querySelectorAll('.opportunity-card').forEach(replaceGranularityWithDropdown);
+      refreshLucideIcons();
+      initPendingSparklines();
+    }
+
+    // Same reference cards, split one-per-agent — mirrors what
+    // renderFlatAgentList() does for real automations, so #actionsDemoCards
+    // stays consistent with the rest of the list instead of always showing
+    // its old aggregate form regardless of the View by: Agent toggle. These
+    // demo configs have no per-agent projected figure, so Projected ROI is
+    // duplicated from the parent card; Realized Value/status are genuine
+    // per-agent data already present on each agent.
+    function renderDemoAgentCards(container = document.getElementById('actionsDemoCards')) {
+      if (!container) return;
+      container.innerHTML = DEMO_CARD_CONFIGS.flatMap(cfg => cfg.agentsList.map(agent => {
+        const roiChartId = `roi-chart-${++roiChartIdCounter}`;
+        const roiJourneyHtml = buildRoiJourneyHtml({
+          roiChartId,
+          name: agent.name,
+          startDate: cfg.startDate,
+          projected: cfg.projected,
+          realizedTotal: agent.rawValue,
+          liveCount: agent.status === 'Live' ? 1 : 0,
+        });
+        return `
+          <article class="opportunity-card actions-agent-card" data-single-agent-card="1" data-has-live-agent="${agent.status === 'Live' ? '1' : '0'}">
+            <header class="opportunity-card-header">
+              <div class="opportunity-card-title-block">
+                <span class="opportunity-card-title-icon" aria-hidden="true">${BOT_ICON_SVG}</span>
+                <div>
+                  <div class="opportunity-card-title-row">
+                    <h3 class="opportunity-card-title">${agent.name}</h3>
+                  </div>
+                  <p class="opportunity-card-subtitle">Part of ${cfg.name}<span class="subtitle-sep">|</span>${agent.by}<span class="subtitle-sep">|</span>Started ${agent.date}</p>
+                </div>
+              </div>
+              <div class="opportunity-card-actions">
+                <span class="badge ${agent.status === 'Live' ? 'badge-success' : 'badge-default'}">${agent.status}</span>
+                <button type="button" class="opportunities-settings agent-menu-btn" data-agent-status="${agent.status}" aria-label="${agent.name} options" aria-haspopup="true">${KEBAB_ICON_SVG}</button>
+              </div>
+            </header>
+            ${roiJourneyHtml}
+          </article>
+        `;
+      })).join('');
+      container.querySelectorAll('.opportunity-card').forEach(replaceGranularityWithDropdown);
+      refreshLucideIcons();
+      initPendingSparklines();
+    }
+
+    // Dispatches to whichever of the two renderings above matches the
+    // current Type-filter + View-by state — the single call site every
+    // other piece of code should use instead of calling either directly.
+    function renderActionsDemoCards() {
+      const container = document.getElementById('actionsDemoCards');
+      if (currentGroupMode === 'agent' && isAiAgentOnlySelected()) {
+        renderDemoAgentCards(container);
+      } else {
+        renderDemoCards(container);
+      }
+    }
+
+    function createCard(row) {
+      const article = document.createElement('article');
+      article.className = 'opportunity-card';
+      article.dataset.hasLiveAgent = row.agents.live > 0 ? '1' : '0';
+      const { list: agentsList, projected, realizedTotal } = buildAgentsList(row);
+      const roiChartId = `roi-chart-${++roiChartIdCounter}`;
+      // Count-based UI: search/sort/filter controls only earn their space
+      // when there's more than one item to search, sort, or filter between.
+      const singleAgent = row.agents.total === 1;
+      const roiJourneyHtml = buildRoiJourneyHtml({
+        roiChartId,
+        name: row.name,
+        startDate: row.startDate,
+        projected,
+        realizedTotal,
+        liveCount: row.agents.live,
+        agentFilterList: agentsList,
+      });
+      const agentRowsHtml = agentsList.map(agent => `
+        <div class="agents-table-row" data-value="${agent.rawValue || 0}">
+          <div>
+            <div class="agents-table-name-main">${agent.name}</div>
+            <div class="agents-table-name-sub">covers: ${agent.covers}</div>
+          </div>
+          <div>${agent.by}</div>
+          <div class="agents-table-status"><span class="badge ${agent.status === 'Live' ? 'badge-success' : 'badge-default'}">${agent.status}</span></div>
+          <div class="agents-table-value">${agent.value || '&mdash;'}</div>
+          <div>${agent.date}</div>
+          <div class="agents-table-actions">
+            <button type="button" class="opportunities-settings agent-menu-btn" data-agent-status="${agent.status}" aria-label="${agent.name} options" aria-haspopup="true">${KEBAB_ICON_SVG}</button>
+          </div>
+        </div>
+      `).join('');
+      article.innerHTML = `
+        <header class="opportunity-card-header">
+          <div>
+            <div class="opportunity-card-title-block">
+              <span class="opportunity-card-title-icon" aria-hidden="true">${BOT_ICON_SVG}</span>
+              <div>
+                <div class="opportunity-card-title-row">
+                  <svg class="opportunity-card-chevron" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
+                  <h3 class="opportunity-card-title">${row.name}</h3>
+                </div>
+                <p class="opportunity-card-subtitle">${row.agents.total} AI Agent${row.agents.total === 1 ? '' : 's'}<span class="subtitle-sep">|</span>${row.agents.live} Live<span class="subtitle-sep">|</span>${row.agents.draft} Draft<span class="subtitle-sep">|</span>Started ${row.startDate}</p>
+              </div>
+            </div>
+          </div>
+        </header>
+        ${roiJourneyHtml}
+        <div class="agents-list">
+          <div class="agents-table-collapse" id="${roiChartId}-agents-wrap" hidden>
+            <h4 class="agents-table-title">AI Agents</h4>
+            ${singleAgent ? '' : `
+            <div class="agents-table-header-row">
+              <div class="search-box agents-table-search">
+                <svg class="search-box-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+                <input type="text" class="search-box-input" placeholder="Search agents..." aria-label="Search agents">
+              </div>
+              <div class="opportunity-sort-wrapper sort-toggle-group" role="group" aria-label="Sort by realized value">
+                <button type="button" class="sort-toggle-btn agents-sort-btn active" data-sort="desc" aria-pressed="true" aria-label="Highest to Lowest" data-tooltip="Highest to Lowest">
+                  <i data-lucide="arrow-up-1-0" class="sort-toggle-icon-inactive" aria-hidden="true"></i>
+                  <i data-lucide="arrow-down-1-0" class="sort-toggle-icon-active" aria-hidden="true"></i>
+                </button>
+                <button type="button" class="sort-toggle-btn agents-sort-btn" data-sort="asc" aria-pressed="false" aria-label="Lowest to Highest" data-tooltip="Lowest to Highest">
+                  <i data-lucide="arrow-up-0-1" class="sort-toggle-icon-inactive" aria-hidden="true"></i>
+                  <i data-lucide="arrow-down-0-1" class="sort-toggle-icon-active" aria-hidden="true"></i>
+                </button>
+              </div>
+            </div>
+            `}
+            <div class="agents-table">
+              <div class="agents-table-header">
+                <div>Name</div>
+                <div>Agent</div>
+                <div>Status</div>
+                <div>Realized value</div>
+                <div>Date</div>
+                <div></div>
+              </div>
+              ${agentRowsHtml}
+              <div class="agents-table-empty" hidden>
+                <div class="agents-table-empty-title">No Results Found</div>
+                <button type="button" class="agents-table-empty-reset">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"/></svg>
+                  Clear Search
+                </button>
+              </div>
+            </div>
+            <p class="agents-list-caption">Deploying a published candidate makes it active. Several can be live at once if they cover different slices &mdash; realized value sums across them; overlaps are flagged above.</p>
+          </div>
+          <button type="button" class="opportunity-expand agents-table-toggle" aria-expanded="false" aria-controls="${roiChartId}-agents-wrap" data-view-label="View ${row.agents.total} AI agent${row.agents.total === 1 ? '' : 's'}" data-hide-label="Hide AI Agents">
+            <svg class="opportunity-expand-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
+            <span class="expand-label">View ${row.agents.total} AI agent${row.agents.total === 1 ? '' : 's'}</span>
+          </button>
+        </div>
+      `;
+      bindTitleRow(article.querySelector('.opportunity-card-title-row'));
+      replaceGranularityWithDropdown(article);
+      return article;
+    }
+
+    function bindTitleRow(titleRow) {
+      if (!titleRow) return;
+      const card = titleRow.closest('.opportunity-card');
+      titleRow.setAttribute('role', 'button');
+      titleRow.setAttribute('tabindex', '0');
+      titleRow.setAttribute('aria-expanded', 'false');
+      const toggle = () => {
+        const expanded = card.classList.toggle('expanded');
+        titleRow.setAttribute('aria-expanded', String(expanded));
+      };
+      titleRow.addEventListener('click', toggle);
+      titleRow.addEventListener('keydown', e => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          toggle();
+        }
+      });
+    }
+
+    // ===== ROI daily chart — lazy-built line chart of daily realized value
+    // + 30-day rolling average, expanded from the "AVG per day" toggle =====
+    // Rebuilds the insight text + Ask AI link for the currently-shown series
+    // (full aggregate or a filtered subset of agents).
+    function updateRoiChartInsight(container, dateLabels, values, rolling, rowName) {
+      const insightEl = container.parentElement.querySelector('.roi-chart-insight-text');
+      if (!insightEl) return;
+      const { insight_text, suggested_question } = buildRoiInsight(rowName, dateLabels, values, rolling);
+      insightEl.textContent = `${insight_text} `;
+      const askAiBtn = document.createElement('button');
+      askAiBtn.type = 'button';
+      askAiBtn.className = 'roi-ask-ai-link';
+      askAiBtn.innerHTML = `${SPARKLE_ICON_SVG} Ask AI`;
+      askAiBtn.setAttribute('aria-label', `Ask AI about this insight for ${rowName}`);
+      askAiBtn.dataset.question = suggested_question;
+      insightEl.appendChild(askAiBtn);
+    }
+
+    // Buckets a daily {dates, values} series into weekly or monthly points
+    // (summed per bucket) for the chart's granularity toggle. Daily is a
+    // passthrough. Rolling-average window scales down with the bucket size
+    // (30 days / 4 weeks / 3 months) since a 30-period average makes no
+    // sense once each point already spans a week or month.
+    function aggregateSeries(dates, values, granularity) {
+      if (granularity === 'daily') {
+        const labels = dates.map(d => d.toLocaleDateString('en-US', { month: 'short', day: 'numeric' }));
+        return { labels, values, rollingWindow: 30 };
+      }
+      const buckets = new Map();
+      const order = [];
+      dates.forEach((d, i) => {
+        const key = granularity === 'weekly'
+          ? (() => { const s = new Date(d); s.setDate(d.getDate() - d.getDay()); return s.toISOString().slice(0, 10); })()
+          : `${d.getFullYear()}-${d.getMonth()}`;
+        if (!buckets.has(key)) { buckets.set(key, { sum: 0, date: d }); order.push(key); }
+        buckets.get(key).sum += values[i];
+      });
+      const labels = order.map(k => {
+        const d = buckets.get(k).date;
+        return granularity === 'weekly'
+          ? d.toLocaleDateString('en-US', { month: 'short', day: 'numeric' })
+          : d.toLocaleDateString('en-US', { month: 'short', year: '2-digit' });
+      });
+      const aggValues = order.map(k => Math.round(buckets.get(k).sum));
+      return { labels, values: aggValues, rollingWindow: granularity === 'weekly' ? 4 : 3 };
+    }
+
+    // Renders the same {labels, values, rolling} the chart is showing into
+    // the sibling table view, kept in sync even while hidden so switching
+    // to Table View never shows stale data.
+    function renderRoiTable(container, labels, values, rolling) {
+      const table = document.getElementById(`${container.id}-table`);
+      if (!table) return;
+      const body = table.querySelector('.roi-chart-table-body');
+      body.innerHTML = labels.map((label, i) => `
+        <div class="roi-chart-table-row">
+          <div>${label}</div>
+          <div class="roi-chart-table-value">$${values[i].toLocaleString('en-US')}</div>
+          <div>${rolling[i] == null ? '&mdash;' : `$${Math.round(rolling[i]).toLocaleString('en-US')}`}</div>
+        </div>
+      `).join('');
+    }
+
+    // Rebuilds the chart + insight from the cached base series, applying the
+    // current agent-filter fraction and display granularity.
+    function updateRoiChartView(container) {
+      if (!container._baseSeries) return;
+      const { dates, values: baseValues, rowName } = container._baseSeries;
+      const fraction = container._fraction ?? 1;
+      const granularity = container._granularity ?? 'daily';
+      const dailyValues = baseValues.map(v => Math.round(v * fraction));
+
+      // Insight always reads off the daily series regardless of the chart's
+      // display granularity — "held steady for 5 months" shouldn't change
+      // just because the chart is showing monthly bars.
+      const dailyLabels = dates.map(d => d.toLocaleDateString('en-US', { month: 'short', day: 'numeric' }));
+      updateRoiChartInsight(container, dailyLabels, dailyValues, rollingAverage(dailyValues, 30), rowName);
+
+      const { labels, values, rollingWindow } = aggregateSeries(dates, dailyValues, granularity);
+      const rolling = rollingAverage(values, rollingWindow);
+      if (container._echartsInstance) {
+        container._echartsInstance.setOption({
+          xAxis: { data: labels, axisLabel: { interval: Math.ceil(labels.length / 10) } },
+          series: [
+            { name: granularity === 'daily' ? 'Daily realized value' : granularity === 'weekly' ? 'Weekly realized value' : 'Monthly realized value', data: values },
+            { name: `${rollingWindow}-period rolling avg`, data: rolling },
+          ],
+        });
+      }
+      renderRoiTable(container, labels, values, rolling);
+    }
+
+    function applyRoiAgentFilter(container, fraction) {
+      container._fraction = fraction;
+      updateRoiChartView(container);
+    }
+
+    function applyRoiGranularity(container, granularity) {
+      container._granularity = granularity;
+      updateRoiChartView(container);
+    }
+
+    function renderRoiChart(container) {
+      if (container.dataset.rendered === '1' || typeof echarts === 'undefined') return;
+      container.dataset.rendered = '1';
+
+      const avgPerDay = Number(container.dataset.dailyAvg);
+      const daysTracked = Number(container.dataset.daysTracked);
+      const rowName = container.dataset.rowName;
+      const startDate = container.dataset.startDate;
+      // Reuse the same daily series already generated for the sparkline
+      // (cached at card-creation time) instead of regenerating it.
+      const cached = roiBaseSeriesCache[container.id];
+      const { dates, values } = cached || mockDailySeries({ name: rowName, startDate }, avgPerDay, daysTracked);
+      const rolling = rollingAverage(values, 30);
+      const dateLabels = dates.map(d => d.toLocaleDateString('en-US', { month: 'short', day: 'numeric' }));
+      container._baseSeries = { dates, values, rowName };
+      container._fraction = 1;
+      container._granularity = 'daily';
+
+      updateRoiChartInsight(container, dateLabels, values, rolling, rowName);
+
+      const dailyColor = tokenColor('--primary-500', '#126BCE');
+      const avgColor = tokenColor('--success-default', '#208337');
+      const textMuted = tokenColor('--color-text-muted', '#4B5563');
+      const gridLine = tokenColor('--neutral-100', '#E5E7EB');
+      const axisLine = tokenColor('--neutral-200', '#D1D5DB');
+
+      const option = {
+        tooltip: {
+          trigger: 'axis',
+          backgroundColor: tokenColor('--color-bg-primary', '#ffffff'),
+          borderColor: tokenColor('--neutral-100', '#E5E7EB'),
+          textStyle: { color: tokenColor('--color-text-primary', '#1F2937') },
+          valueFormatter: v => `$${Number(v).toLocaleString('en-US')}`,
+        },
+        legend: {
+          data: ['Daily realized value', '30-day rolling avg'],
+          top: 0,
+          textStyle: { color: textMuted, fontSize: 12 },
+        },
+        grid: { left: 48, right: 16, top: 36, bottom: 28 },
+        xAxis: {
+          type: 'category',
+          data: dateLabels,
+          axisLine: { lineStyle: { color: axisLine } },
+          axisLabel: { color: textMuted, fontSize: 11, interval: Math.ceil(dateLabels.length / 10) },
+        },
+        yAxis: {
+          type: 'value',
+          axisLabel: { color: textMuted, fontSize: 11, formatter: v => `$${v}` },
+          splitLine: { lineStyle: { color: gridLine, type: 'dashed' } },
+        },
+        series: [
+          {
+            name: 'Daily realized value',
+            type: 'line',
+            data: values,
+            showSymbol: false,
+            smooth: 0.2,
+            lineStyle: { color: dailyColor, width: 1.5 },
+            itemStyle: { color: dailyColor },
+          },
+          {
+            name: '30-day rolling avg',
+            type: 'line',
+            data: rolling,
+            showSymbol: false,
+            lineStyle: { color: avgColor, width: 2, type: 'dashed' },
+            itemStyle: { color: avgColor },
+          },
+        ],
+      };
+
+      const instance = echarts.init(container);
+      instance.setOption(option);
+      container._echartsInstance = instance;
+      initRoiChartKeyboardNav(instance, container, dateLabels, values);
+      renderRoiTable(container, dateLabels, values, rolling);
+
+      new ResizeObserver(() => instance.resize()).observe(container);
+    }
+
+    // Mini "peek" line chart next to Avg/day + Tracked in the wide-layout
+    // row — no axes, no legend, no tooltip. Reads the same cached daily
+    // series as the full chart, so opening the full chart later doesn't
+    // regenerate anything. Only initialized once the ≥80rem breakpoint is
+    // actually active, since an ECharts instance can't size itself inside a
+    // display:none container.
+    const roiWideLayoutQuery = window.matchMedia('(min-width: 64rem)');
+
+    function renderSparkline(el) {
+      if (!el || el.dataset.rendered === '1' || typeof echarts === 'undefined') return;
+      const chartId = el.id.replace(/-spark$/, '');
+      const cached = roiBaseSeriesCache[chartId];
+      if (!cached) return;
+      el.dataset.rendered = '1';
+      const color = tokenColor('--primary-500', '#126BCE');
+      const dateLabels = cached.dates.map(d => d.toLocaleDateString('en-US', { month: 'short', day: 'numeric' }));
+      const instance = echarts.init(el);
+      instance.setOption({
+        grid: { left: 0, right: 0, top: 2, bottom: 2 },
+        xAxis: { type: 'category', show: false, data: dateLabels },
+        yAxis: { type: 'value', show: false },
+        series: [{
+          type: 'line',
+          data: cached.values,
+          showSymbol: false,
+          smooth: 0.3,
+          lineStyle: { color, width: 1.5 },
+        }],
+        tooltip: {
+          trigger: 'axis',
+          confine: true,
+          backgroundColor: tokenColor('--color-bg-primary', '#ffffff'),
+          borderColor: tokenColor('--neutral-100', '#E5E7EB'),
+          textStyle: { color: tokenColor('--color-text-primary', '#1F2937'), fontSize: 12 },
+          axisPointer: { type: 'line', lineStyle: { color: tokenColor('--neutral-200', '#D1D5DB') } },
+          valueFormatter: v => `$${Number(v).toLocaleString('en-US')}`,
+        },
+      });
+      el._echartsInstance = instance;
+      new ResizeObserver(() => instance.resize()).observe(el);
+    }
+
+    function initPendingSparklines() {
+      if (!roiWideLayoutQuery.matches) return;
+      document.querySelectorAll('.roi-sparkline').forEach(renderSparkline);
+    }
+
+    roiWideLayoutQuery.addEventListener('change', initPendingSparklines);
+
+    function initRoiChartKeyboardNav(instance, container, labels, values) {
+      let currentIndex = -1;
+
+      function announce(message) {
+        const el = container.querySelector('[data-chart-announcer]');
+        if (!el) return;
+        el.textContent = '';
+        setTimeout(() => { el.textContent = message; }, 50);
+      }
+
+      function highlightPoint(index) {
+        instance.dispatchAction({ type: 'downplay' });
+        instance.dispatchAction({ type: 'highlight', seriesIndex: 0, dataIndex: index });
+        announce(`${labels[index]}: $${values[index].toLocaleString('en-US')}`);
+      }
+
+      container.addEventListener('focus', () => {
+        if (currentIndex === -1) currentIndex = 0;
+        highlightPoint(currentIndex);
+      });
+      container.addEventListener('blur', () => {
+        instance.dispatchAction({ type: 'downplay' });
+        instance.dispatchAction({ type: 'hideTip' });
+        currentIndex = -1;
+      });
+      container.addEventListener('keydown', (e) => {
+        if (!['ArrowLeft', 'ArrowRight', 'Enter', ' ', 'Escape'].includes(e.key)) return;
+        e.preventDefault();
+        switch (e.key) {
+          case 'ArrowRight':
+            currentIndex = Math.min(currentIndex + 1, labels.length - 1);
+            highlightPoint(currentIndex);
+            break;
+          case 'ArrowLeft':
+            currentIndex = Math.max(currentIndex - 1, 0);
+            highlightPoint(currentIndex);
+            break;
+          case 'Enter':
+          case ' ':
+            instance.dispatchAction({ type: 'showTip', seriesIndex: 0, dataIndex: currentIndex });
+            break;
+          case 'Escape':
+            instance.dispatchAction({ type: 'hideTip' });
+            break;
+        }
+      });
+    }
+
+    // A card counts as "open" (no hover highlight) while either its ROI
+    // chart or its agents table is expanded.
+    function syncCardOpenState(toggle) {
+      const card = toggle.closest('.opportunity-card');
+      if (!card) return;
+      const anyOpen = Array.from(card.querySelectorAll('.roi-avg-toggle, .agents-table-toggle'))
+        .some(btn => btn.getAttribute('aria-expanded') === 'true');
+      card.classList.toggle('expanded', anyOpen);
+    }
+
+    // Clicking the sparkline opens/closes the full chart exactly like the
+    // "AVG per day" toggle — just proxy the click so there's one source of
+    // truth for the expand/collapse logic.
+    document.addEventListener('click', (event) => {
+      const spark = event.target.closest('.roi-sparkline');
+      if (!spark) return;
+      const toggle = spark.closest('.roi-journey')?.querySelector('.roi-avg-toggle');
+      toggle?.click();
+    });
+
+    document.addEventListener('click', (event) => {
+      const toggle = event.target.closest('.roi-avg-toggle');
+      if (!toggle) return;
+      const wrap = document.getElementById(toggle.getAttribute('aria-controls'));
+      if (!wrap) return;
+      const expanded = toggle.getAttribute('aria-expanded') === 'true';
+      const spark = toggle.closest('.roi-journey')?.querySelector('.roi-sparkline');
+      if (expanded) {
+        wrap.style.maxHeight = '0px';
+        toggle.setAttribute('aria-expanded', 'false');
+        spark?.classList.remove('roi-sparkline-collapsed');
+      } else {
+        const chartEl = wrap.querySelector('.roi-chart');
+        renderRoiChart(chartEl);
+        // Chart needs a frame to lay out before scrollHeight reflects its real height.
+        requestAnimationFrame(() => {
+          wrap.style.maxHeight = `${wrap.scrollHeight}px`;
+        });
+        toggle.setAttribute('aria-expanded', 'true');
+        spark?.classList.add('roi-sparkline-collapsed');
+      }
+      syncCardOpenState(toggle);
+    });
+
+    document.addEventListener('click', (event) => {
+      const toggle = event.target.closest('.agents-table-toggle');
+      if (!toggle) return;
+      const wrap = document.getElementById(toggle.getAttribute('aria-controls'));
+      if (!wrap) return;
+      const expanded = toggle.getAttribute('aria-expanded') === 'true';
+      wrap.hidden = expanded;
+      toggle.setAttribute('aria-expanded', String(!expanded));
+      const label = toggle.querySelector('.expand-label');
+      if (label) label.textContent = expanded ? toggle.dataset.viewLabel : toggle.dataset.hideLabel;
+      syncCardOpenState(toggle);
+    });
+
+    // Open/close the per-card "AI Agent" filter dropdown above the ROI chart.
+    // Its ancestor .roi-chart-collapse has a fixed max-height (a px snapshot
+    // taken when "Daily Breakdown" was expanded) + overflow:hidden, which
+    // would otherwise clip the bottom of this dropdown — temporarily let
+    // overflow show while it's open, restoring hidden overflow on close.
+    function closeAgentDropdown(dd) {
+      dd.classList.remove('visible');
+      dd.closest('.roi-chart-collapse')?.style.removeProperty('overflow');
+    }
+    document.addEventListener('click', (event) => {
+      const btn = event.target.closest('.roi-chart-agent-wrapper .filter-btn');
+      if (btn) {
+        event.stopPropagation();
+        const dd = btn.closest('.filter-wrapper').querySelector('.roi-chart-agent-dropdown');
+        const isOpen = dd.classList.contains('visible');
+        document.querySelectorAll('.roi-chart-agent-dropdown.visible').forEach(closeAgentDropdown);
+        if (!isOpen) {
+          dd.classList.add('visible');
+          const wrap = dd.closest('.roi-chart-collapse');
+          if (wrap) wrap.style.overflow = 'visible';
+        }
+        return;
+      }
+      if (!event.target.closest('.roi-chart-agent-dropdown')) {
+        document.querySelectorAll('.roi-chart-agent-dropdown.visible').forEach(closeAgentDropdown);
+      }
+    });
+
+    // Multi-select "AI Agent" filter above the ROI chart — rescales the
+    // chart + insight to the selected agents' share of realized value.
+    document.addEventListener('change', (event) => {
+      const cb = event.target.closest('.roi-chart-agent-dropdown input[type="checkbox"]');
+      if (!cb) return;
+      const dropdown = cb.closest('.roi-chart-agent-dropdown');
+      const allCb = dropdown.querySelector('.roi-agent-all-cb');
+      const agentCbs = Array.from(dropdown.querySelectorAll('.roi-agent-cb'));
+
+      if (cb === allCb) {
+        if (allCb.checked) agentCbs.forEach(c => { c.checked = false; });
+      } else if (cb.checked) {
+        allCb.checked = false;
+      }
+      const selected = agentCbs.filter(c => c.checked);
+      if (!selected.length) allCb.checked = true;
+
+      const label = dropdown.closest('.filter-wrapper').querySelector('.filter-btn-value');
+      if (label) {
+        if (allCb.checked || !selected.length) {
+          label.textContent = 'All';
+        } else if (selected.length === 1) {
+          label.textContent = selected[0].nextElementSibling.textContent;
+        } else {
+          label.textContent = `${selected.length} selected`;
+        }
+      }
+
+      const total = agentCbs.reduce((sum, c) => sum + Number(c.dataset.value), 0);
+      const fraction = (allCb.checked || !selected.length || !total)
+        ? 1
+        : selected.reduce((sum, c) => sum + Number(c.dataset.value), 0) / total;
+
+      const chartEl = dropdown.closest('.roi-chart-collapse').querySelector('.roi-chart');
+      applyRoiAgentFilter(chartEl, fraction);
+    });
+
+    document.addEventListener('click', (event) => {
+      const granBtn = event.target.closest('.roi-granularity-btn');
+      if (!granBtn) return;
+      const group = granBtn.closest('.roi-granularity-group');
+      group.querySelectorAll('.roi-granularity-btn').forEach(btn => btn.classList.toggle('active', btn === granBtn));
+      const chartEl = group.closest('.roi-chart-collapse').querySelector('.roi-chart');
+      applyRoiGranularity(chartEl, granBtn.dataset.granularity);
+    });
+
+    document.addEventListener('click', (event) => {
+      const viewBtn = event.target.closest('.roi-view-btn');
+      if (!viewBtn) return;
+      const group = viewBtn.closest('.roi-view-toggle');
+      group.querySelectorAll('.roi-view-btn').forEach(btn => {
+        btn.classList.toggle('active', btn === viewBtn);
+        btn.setAttribute('aria-pressed', String(btn === viewBtn));
+      });
+      const collapse = group.closest('.roi-chart-collapse');
+      const isTable = viewBtn.dataset.view === 'table';
+      collapse.querySelector('.roi-chart').hidden = isTable;
+      collapse.querySelector('.roi-chart-table').hidden = !isTable;
+    });
+
+    document.addEventListener('click', (event) => {
+      const sortBtn = event.target.closest('.agents-sort-btn');
+      if (!sortBtn) return;
+      const group = sortBtn.closest('.sort-toggle-group');
+      group.querySelectorAll('.agents-sort-btn').forEach(btn => {
+        btn.classList.toggle('active', btn === sortBtn);
+        btn.setAttribute('aria-pressed', String(btn === sortBtn));
+      });
+      const table = group.closest('.agents-table-collapse').querySelector('.agents-table');
+      const rows = Array.from(table.querySelectorAll('.agents-table-row'));
+      const dir = sortBtn.dataset.sort === 'asc' ? 1 : -1;
+      rows.sort((a, b) => dir * (Number(a.dataset.value) - Number(b.dataset.value)));
+      rows.forEach(row => table.appendChild(row));
+    });
+
+    function runAgentsSearch(input) {
+      const collapse = input.closest('.agents-table-collapse');
+      const query = input.value.trim().toLowerCase();
+      const rows = collapse.querySelectorAll('.agents-table-row');
+      let visible = 0;
+      rows.forEach(row => {
+        const hidden = query.length > 0 && !row.textContent.toLowerCase().includes(query);
+        row.hidden = hidden;
+        if (!hidden) visible++;
+      });
+      collapse.querySelector('.agents-table-empty').hidden = rows.length === 0 || visible > 0;
+    }
+
+    document.addEventListener('input', (event) => {
+      const input = event.target.closest('.agents-table-search .search-box-input');
+      if (!input) return;
+      runAgentsSearch(input);
+    });
+
+    document.addEventListener('click', (event) => {
+      const resetBtn = event.target.closest('.agents-table-empty-reset');
+      if (!resetBtn) return;
+      const collapse = resetBtn.closest('.agents-table-collapse');
+      const input = collapse.querySelector('.agents-table-search .search-box-input');
+      input.value = '';
+      runAgentsSearch(input);
+      input.focus();
+    });
+
+    // lucide.js is deferred, so it isn't loaded yet during this inline
+    // script's synchronous run — wait for DOMContentLoaded before the first
+    // icon pass; later calls (after loadMoreRows) can run immediately.
+    function refreshLucideIcons() {
+      if (window.lucide) lucide.createIcons();
+    }
+
+    // Summary KPI row — computed from allRows (the real actions dataset),
+    // never hardcoded. #actionsDemoCards is intentionally excluded, same as
+    // every other Actions-count/search/grouping computation in this file.
+    function renderActionsSummaryKpis() {
+      let totalAgents = 0, liveAgents = 0, draftAgents = 0;
+      let totalRealized = 0, totalProjected = 0, aheadCount = 0;
+      allRows.forEach(row => {
+        totalAgents += row.agents.total;
+        liveAgents += row.agents.live;
+        draftAgents += row.agents.draft;
+        const { projected, realizedTotal } = buildAgentsList(row);
+        totalProjected += projected;
+        totalRealized += realizedTotal;
+        const pctRealized = projected ? Math.round(realizedTotal / projected * 100) : 0;
+        const daysTracked = Math.max(0, Math.round((Date.now() - new Date(row.startDate).getTime()) / 86400000));
+        const pace = buildPaceState(pctRealized, daysTracked);
+        if (pace.state === 'ahead' || pace.state === 'exceeded') aheadCount++;
+      });
+      const totalActions = allRows.length;
+      const behindCount = totalActions - aheadCount;
+      const livePct = totalAgents ? Math.round((liveAgents / totalAgents) * 100) : 0;
+      const realizedPct = totalProjected ? Math.round((totalRealized / totalProjected) * 100) : 0;
+
+      document.getElementById('kpiLiveDraft').textContent = `${liveAgents} / ${draftAgents}`;
+      document.getElementById('kpiLiveDraftMeta').textContent = `${livePct}% live`;
+      document.getElementById('kpiRealizedValue').textContent = formatSavingsShort(totalRealized);
+      document.getElementById('kpiRealizedValueMeta').textContent = `${realizedPct}% of projected ROI`;
+      document.getElementById('kpiAheadTarget').textContent = `${aheadCount} / ${totalActions}`;
+      document.getElementById('kpiAheadTargetMeta').textContent = `${behindCount} behind target`;
+
+      const aheadPct = totalActions ? Math.round((aheadCount / totalActions) * 100) : 0;
+      document.getElementById('kpiLiveDraftProgress').style.width = `${livePct}%`;
+      document.getElementById('kpiRealizedValueProgress').style.width = `${realizedPct}%`;
+      const aheadFill = document.getElementById('kpiAheadTargetProgress');
+      aheadFill.style.width = `${aheadPct}%`;
+      aheadFill.style.background = aheadPct >= 50 ? 'var(--success-default)' : 'var(--error-default)';
+    }
+
+    initialRows.forEach(row => tableBody.appendChild(createCard(row)));
+    renderActionsDemoCards();
+    renderActionsSummaryKpis();
+    document.addEventListener('DOMContentLoaded', () => { refreshLucideIcons(); initPendingSparklines(); });
+
+    // Live KPI feed — polls the mock metrics endpoint (see vite.config.js,
+    // actionsMetricsMock) every 3s and renders exactly what it returns.
+    // Nothing here invents numbers: every value and every progress bar
+    // comes from that server-owned, independently-ticking state.
+    const KPI_POLL_MS = 3000;
+
+    function setKpiProgress(id, pct, fillColor) {
+      const el = document.getElementById(id);
+      if (!el) return;
+      el.style.width = `${Math.max(0, Math.min(100, pct))}%`;
+      if (fillColor) el.style.background = fillColor;
+    }
+
+    function flashKpiValue(el) {
+      el.classList.remove('kpi-flash');
+      void el.offsetWidth; // restart the animation if it's already mid-flash
+      el.classList.add('kpi-flash');
+      setTimeout(() => el.classList.remove('kpi-flash'), 300);
+    }
+
+    function setKpiValue(id, text) {
+      const el = document.getElementById(id);
+      if (!el || el.textContent === text) return;
+      el.textContent = text;
+      flashKpiValue(el);
+    }
+
+    async function pollActionsMetrics() {
+      let data;
+      try {
+        const res = await fetch('/api/actions-metrics', { cache: 'no-store' });
+        if (!res.ok) throw new Error(`HTTP ${res.status}`);
+        data = await res.json();
+      } catch (err) {
+        console.error('actions-metrics poll failed:', err);
+        return;
+      }
+
+      const livePct = data.totalAgents ? Math.round((data.liveAgents / data.totalAgents) * 100) : 0;
+      const realizedPct = data.totalProjected ? Math.round((data.totalRealized / data.totalProjected) * 100) : 0;
+      const aheadPct = data.totalActions ? Math.round((data.aheadCount / data.totalActions) * 100) : 0;
+
+      setKpiValue('kpiTotalAgentHours', `${data.totalHours.toLocaleString('en-US')}h`);
+      const hoursDeltaEl = document.getElementById('kpiTotalAgentHoursDelta');
+      hoursDeltaEl.hidden = false;
+      document.getElementById('kpiTotalAgentHoursDeltaText').textContent = `+${data.hoursDeltaToday.toLocaleString('en-US')}h today`;
+
+      setKpiValue('kpiLiveDraft', `${data.liveAgents} / ${data.draftAgents}`);
+      document.getElementById('kpiLiveDraftMeta').textContent = `${livePct}% live`;
+      setKpiProgress('kpiLiveDraftProgress', livePct);
+
+      setKpiValue('kpiRealizedValue', formatSavingsShort(data.totalRealized));
+      document.getElementById('kpiRealizedValueMeta').textContent = `${realizedPct}% of projected ROI`;
+      setKpiProgress('kpiRealizedValueProgress', realizedPct);
+
+      setKpiValue('kpiAheadTarget', `${data.aheadCount} / ${data.totalActions}`);
+      document.getElementById('kpiAheadTargetMeta').textContent = `${data.behindCount} behind target`;
+      setKpiProgress('kpiAheadTargetProgress', aheadPct, aheadPct >= 50 ? 'var(--success-default)' : 'var(--error-default)');
+    }
+
+    pollActionsMetrics();
+    setInterval(pollActionsMetrics, KPI_POLL_MS);
+
+    function loadMoreRows() {
+      if (isLoading || moreRows.length === 0) return;
+      isLoading = true;
+      loadIndicator.hidden = false;
+      setTimeout(() => {
+        const rowsToAdd = moreRows.splice(0, 10);
+        rowsToAdd.forEach(row => tableBody.appendChild(createCard(row)));
+        filterTableRows();
+        updateRowCount();
+        refreshLucideIcons();
+        initPendingSparklines();
+        isLoading = false;
+        loadIndicator.hidden = true;
+        if (moreRows.length === 0) {
+          mainArea.removeEventListener('scroll', handleScroll);
+        }
+      }, 800);
+    }
+
+    const DEFAULT_ACTION_MENU_HTML = actionMenu.innerHTML;
+
+    function renderActionMenuItems(items) {
+      actionMenu.innerHTML = items.map(item =>
+        `<a class="action-menu-item" href="AI Agent.html">${item.icon}${item.label}</a>`
+      ).join('');
+    }
+
+    document.addEventListener('click', (event) => {
+      const menuButton = event.target.closest('.agent-menu-btn');
+      const menuItem = event.target.closest('.action-menu-item');
+
+      if (menuItem) {
+        window.location.href = 'AI Agent.html';
+        return;
+      }
+
+      if (menuButton) {
+        event.stopPropagation();
+        const agentStatus = menuButton.dataset.agentStatus;
+        actionMenu.innerHTML = agentStatus ? '' : DEFAULT_ACTION_MENU_HTML;
+        if (agentStatus) renderActionMenuItems(agentMenuItems(agentStatus));
+
+        const rect = menuButton.getBoundingClientRect();
+        actionMenu.classList.add('visible');
+
+        actionMenu.style.left = `${Math.min(rect.left, window.innerWidth - actionMenu.offsetWidth - 8)}px`;
+        const belowTop = rect.bottom + 6;
+        const maxTop = window.innerHeight - actionMenu.offsetHeight - 8;
+        actionMenu.style.top = `${Math.min(belowTop, maxTop)}px`;
+        return;
+      }
+
+      if (!event.target.closest('.action-menu-popover')) {
+        actionMenu.classList.remove('visible');
+      }
+    });
+
+    function handleScroll() {
+      if (isLoading || moreRows.length === 0) return;
+      const remaining = mainArea.scrollHeight - mainArea.scrollTop - mainArea.clientHeight;
+      if (remaining < 80) {
+        loadMoreRows();
+      }
+    }
+
+    mainArea.addEventListener('scroll', handleScroll);
+
+    // Wheel fallback — triggers load when user scrolls down even before there's
+    // overflow content (e.g. when only 5 rows are loaded and they fit exactly).
+    mainArea.addEventListener('wheel', (e) => {
+      if (e.deltaY > 0) handleScroll();
+    }, { passive: true });
+
+    // Touch fallback — same idea on touch devices
+    let lastTouchY = null;
+    mainArea.addEventListener('touchstart', (e) => {
+      lastTouchY = e.touches[0].clientY;
+    }, { passive: true });
+    mainArea.addEventListener('touchmove', (e) => {
+      const y = e.touches[0].clientY;
+      if (lastTouchY !== null && y < lastTouchY) handleScroll();
+      lastTouchY = y;
+    }, { passive: true });
+
+    // Toggle sidebar with the topbar back button
+    const sidebar = document.querySelector('.sidebar');
+    const topbarBackBtn = document.querySelector('.topbar-back-btn');
+    topbarBackBtn.addEventListener('click', function() {
+      sidebar.classList.toggle('collapsed');
+    });
+
+    // AI Panel Toggle
+    const aiPanel = document.getElementById('aiPanel');
+    const askAiBtn = document.querySelector('.topbar-ask-ai-btn');
+    const aiPanelClose = document.getElementById('aiPanelClose');
+    const aiPanelInput = document.getElementById('aiPanelInput');
+    const aiPanelSend = document.getElementById('aiPanelSend');
+    const contentWrapper = document.querySelector('.content-wrapper');
+
+    // Toggle AI panel
+    askAiBtn.addEventListener('click', () => {
+      aiPanel.classList.toggle('open');
+      contentWrapper.classList.toggle('ai-open');
+      if (aiPanel.classList.contains('open')) {
+        setTimeout(() => aiPanelInput.focus(), 300);
+      }
+    });
+
+    // Close AI panel
+    // Close (X) button — closes the chat panel and clears the input.
+    aiPanelClose.addEventListener('click', () => {
+      aiPanel.classList.remove('open');
+      contentWrapper.classList.remove('ai-open');
+      aiPanelInput.value = '';
+      aiPanelSend.disabled = true;
+    });
+
+    // Right Side Panel — demo-only sketch. Duplicates just the real
+    // "Automate Bill Payment" card (via createCard(), not a DOM clone) into
+    // a plain block under the Actions heading. Same is-active toggle
+    // pattern as automation-opportunities-P4.html's demo buttons — the
+    // button stays selected while we're "in" this mode.
+    // Replaces the Daily/Weekly/Monthly segmented toggle with a calendar-
+    // app-style view dropdown (Day/Three Day/Work Week/Week/Month — no
+    // List, there's nothing list-shaped to switch to here). Each option
+    // maps to whichever of our three real aggregations is closest, since
+    // that's all applyRoiGranularity() actually supports.
+    function replaceGranularityWithDropdown(card) {
+      const granularityGroup = card.querySelector('.roi-granularity-group');
+      if (!granularityGroup) return;
+      const options = [
+        { label: 'Day', granularity: 'daily', icon: VIEW_DAY_ICON_SVG },
+        { label: 'Three Day', granularity: 'daily', icon: VIEW_THREE_DAY_ICON_SVG },
+        { label: 'Work Week', granularity: 'weekly', icon: VIEW_WORK_WEEK_ICON_SVG },
+        { label: 'Week', granularity: 'weekly', icon: VIEW_WEEK_ICON_SVG },
+        { label: 'Month', granularity: 'monthly', icon: VIEW_MONTH_ICON_SVG },
+      ];
+      const dropdown = document.createElement('div');
+      dropdown.className = 'filter-wrapper roi-granularity-dropdown';
+      dropdown.innerHTML = `
+        <button type="button" class="filter-btn roi-granularity-select-btn">
+          <span class="roi-granularity-select-icon">${options[0].icon}</span>
+          <span class="roi-granularity-select-label">${options[0].label}</span>
+          <svg class="filter-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
+        </button>
+        <div class="filter-dropdown roi-granularity-dropdown-menu">
+          ${options.map((opt, i) => `
+            <button type="button" class="filter-checkbox-item roi-granularity-option${i === 0 ? ' active' : ''}" data-granularity="${opt.granularity}" data-label="${opt.label}">
+              <span class="roi-granularity-option-icon">${opt.icon}</span>
+              <span class="roi-granularity-option-label">${opt.label}</span>
+            </button>
+          `).join('')}
+        </div>
+      `;
+      granularityGroup.replaceWith(dropdown);
+    }
+
+    // The reference cards in #actionsDemoCards are always rendered in their
+    // own normal-mode look (pace badge, inline expand, agents-table toggle)
+    // — but while Right Side Panel mode is on, leaving them in that look
+    // makes them stick out next to the drawer-driven panel cards. Convert
+    // them to the same stripped/click-to-open-drawer treatment while active,
+    // and rebuild them back to their original look when panel mode ends.
+    const demoCardsContainer = document.getElementById('actionsDemoCards');
+
+    function applyPanelModeToDemoCards(active) {
+      if (!demoCardsContainer) return;
+      if (active) {
+        demoCardsContainer.querySelectorAll('.opportunity-card').forEach(card => {
+          // Already split one-per-agent by renderActionsDemoCards() — that
+          // shape is already what the panel wants, untouched.
+          if (card.dataset.singleAgentCard === '1') return;
+          card.querySelector('.roi-journey-pace')?.remove();
+          card.querySelector('.agents-table-toggle')?.remove();
+          card.dataset.hasLiveAgent = card.querySelector('.agents-table-status .badge-success') ? '1' : '0';
+          card.style.cursor = 'pointer';
+        });
+      } else {
+        renderActionsDemoCards();
+      }
+    }
+
+    // A row with multiple agents becomes one panel card per agent whenever
+    // the "Agent" grouping is active (Type filter narrowed to AI Agent +
+    // View by: Agent) — same split renderFlatAgentList() does for the main
+    // list, kept in sync here so the Right Side Panel matches it.
+    function createAgentCard(row, agent) {
+      const article = document.createElement('article');
+      article.className = 'opportunity-card actions-agent-card';
+      article.dataset.singleAgentCard = '1';
+      article.dataset.hasLiveAgent = agent.status === 'Live' ? '1' : '0';
+      const roiChartId = `roi-chart-${++roiChartIdCounter}`;
+      const roiJourneyHtml = buildRoiJourneyHtml({
+        roiChartId,
+        name: agent.name,
+        startDate: row.startDate,
+        projected: agent.projected,
+        realizedTotal: agent.rawValue,
+        liveCount: agent.status === 'Live' ? 1 : 0,
+      });
+      article.innerHTML = `
+        <header class="opportunity-card-header">
+          <div class="opportunity-card-title-block">
+            <span class="opportunity-card-title-icon" aria-hidden="true">${BOT_ICON_SVG}</span>
+            <div>
+              <div class="opportunity-card-title-row">
+                <h3 class="opportunity-card-title">${agent.name}</h3>
+              </div>
+              <p class="opportunity-card-subtitle">Part of ${row.name}<span class="subtitle-sep">|</span>${agent.by}<span class="subtitle-sep">|</span>Started ${agent.date}</p>
+            </div>
+          </div>
+          <div class="opportunity-card-actions">
+            <span class="badge ${agent.status === 'Live' ? 'badge-success' : 'badge-default'}">${agent.status}</span>
+            <button type="button" class="opportunities-settings agent-menu-btn" data-agent-status="${agent.status}" aria-label="${agent.name} options" aria-haspopup="true">${KEBAB_ICON_SVG}</button>
+          </div>
+        </header>
+        ${roiJourneyHtml}
+      `;
+      article.querySelector('.roi-journey-pace')?.remove();
+      replaceGranularityWithDropdown(article);
+      return article;
+    }
+
+    function renderRightPanel() {
+      const panel = document.getElementById('rightSidePanel');
+      if (!panel) return;
+      panel.replaceChildren();
+      const splitByAgent = currentGroupMode === 'agent' && isAiAgentOnlySelected();
+      if (splitByAgent) {
+        allRows.forEach(row => {
+          const { list } = buildAgentsList(row);
+          list.forEach(agent => panel.appendChild(createAgentCard(row, agent)));
+        });
+      } else {
+        allRows.forEach(row => {
+          const card = createCard(row);
+          // Daily Breakdown / View Agents toggles are redundant here — that
+          // content already lives in the card drawer's tabs.
+          card.querySelector('.roi-journey-pace')?.remove();
+          card.querySelector('.agents-table-toggle')?.remove();
+          panel.appendChild(card);
+        });
+      }
+      refreshLucideIcons();
+      initPendingSparklines();
+    }
+
+    document.getElementById('demoRightPanelBtn')?.addEventListener('click', function () {
+      const panel = document.getElementById('rightSidePanel');
+      const active = this.classList.toggle('is-active');
+      rightPanelActive = active;
+      if (active) renderRightPanel();
+      panel.hidden = !active;
+      applyPanelModeToDemoCards(active);
+      // Real Actions list below the panel — a pure CSS switch (not a DOM
+      // mutation) so it applies uniformly to every card already on screen
+      // AND every card loadMoreRows() appends later while scrolling, with
+      // no special-casing needed and an instant, lossless revert on toggle-off.
+      document.body.classList.toggle('right-panel-mode', active);
+    });
+
+    // Open/close the granularity dropdown, and apply a selection.
+    document.addEventListener('click', (event) => {
+      const toggleBtn = event.target.closest('.roi-granularity-select-btn');
+      if (toggleBtn) {
+        event.stopPropagation();
+        const menu = toggleBtn.closest('.roi-granularity-dropdown').querySelector('.roi-granularity-dropdown-menu');
+        const isOpen = menu.classList.contains('visible');
+        document.querySelectorAll('.roi-granularity-dropdown-menu.visible').forEach(m => m.classList.remove('visible'));
+        if (!isOpen) menu.classList.add('visible');
+        return;
+      }
+      const option = event.target.closest('.roi-granularity-option');
+      if (option) {
+        const wrapper = option.closest('.roi-granularity-dropdown');
+        wrapper.querySelectorAll('.roi-granularity-option').forEach(o => {
+          o.classList.toggle('active', o === option);
+        });
+        wrapper.querySelector('.roi-granularity-select-label').textContent = option.dataset.label;
+        wrapper.querySelector('.roi-granularity-select-icon').innerHTML = option.querySelector('.roi-granularity-option-icon').innerHTML;
+        wrapper.querySelector('.roi-granularity-dropdown-menu').classList.remove('visible');
+        const chartEl = wrapper.closest('.roi-chart-collapse')?.querySelector('.roi-chart');
+        if (chartEl) applyRoiGranularity(chartEl, option.dataset.granularity);
+        return;
+      }
+      if (!event.target.closest('.roi-granularity-dropdown')) {
+        document.querySelectorAll('.roi-granularity-dropdown-menu.visible').forEach(m => m.classList.remove('visible'));
+      }
+    });
+
+    // Card Drawer — demo-only sketch, scoped to the Right Side Panel's
+    // duplicated card. Clicking the card anywhere except an existing
+    // interactive control (buttons, links, inputs, checkboxes) opens the
+    // drawer; its Daily Breakdown content and AI Agents table are MOVED
+    // (not cloned) into the drawer's two tabs on first open, so the chart/
+    // table already wired up on those nodes keeps working untouched.
+    const cardDrawer = document.getElementById('cardDrawer');
+    const cardDrawerBackdrop = document.getElementById('cardDrawerBackdrop');
+    const cardDrawerClose = document.getElementById('cardDrawerClose');
+    const cardDrawerAvatar = document.getElementById('cardDrawerAvatar');
+    const cardDrawerTitle = document.getElementById('cardDrawerTitle');
+    const cardDrawerSubtitle = document.getElementById('cardDrawerSubtitle');
+    const cardDrawerBreakdown = document.getElementById('cardDrawerBreakdown');
+    const cardDrawerAgents = document.getElementById('cardDrawerAgents');
+    const cardDrawerTabs = document.getElementById('cardDrawerTabs');
+    const cardDrawerBreakdownTab = cardDrawerTabs.querySelector('[data-drawer-tab="breakdown"]');
+    const cardDrawerAgentsTab = cardDrawerTabs.querySelector('[data-drawer-tab="agents"]');
+    const cardDrawerBadge = document.getElementById('cardDrawerBadge');
+    const cardDrawerJourney = document.getElementById('cardDrawerJourney');
+
+    function openCardDrawer(card) {
+      cardDrawerAvatar.innerHTML = card.querySelector('.opportunity-card-title-icon')?.innerHTML || '';
+      cardDrawerTitle.textContent = card.querySelector('.opportunity-card-title')?.textContent || '';
+      cardDrawerSubtitle.innerHTML = card.querySelector('.opportunity-card-subtitle')?.innerHTML || '';
+      const cardActions = card.querySelector('.opportunity-card-actions');
+      const paceBadge = cardActions?.querySelector('.pace-badge');
+      const statusBadge = cardActions?.querySelector('.badge:not(.pace-badge)');
+      cardDrawerBadge.innerHTML = (paceBadge?.outerHTML || '') + (statusBadge?.outerHTML || '');
+
+      // A card with no live agent has no ROI/realized-value story to show —
+      // skip the tab bar and go straight to the agents table. A card split
+      // out for a single agent (Agent grouping) has no agents table of its
+      // own to show — skip the tab bar the other way, straight to Breakdown.
+      const singleAgentCard = card.dataset.singleAgentCard === '1';
+      const hasLiveAgent = card.dataset.hasLiveAgent !== '0';
+      const showTabs = hasLiveAgent && !singleAgentCard;
+      const showBreakdown = showTabs || singleAgentCard;
+      cardDrawerTabs.hidden = !showTabs;
+      cardDrawerBreakdownTab.classList.toggle('active', showBreakdown);
+      cardDrawerBreakdownTab.setAttribute('aria-selected', String(showBreakdown));
+      cardDrawerAgentsTab.classList.toggle('active', !showBreakdown);
+      cardDrawerAgentsTab.setAttribute('aria-selected', String(!showBreakdown));
+      cardDrawerBreakdown.hidden = !showBreakdown;
+      cardDrawerAgents.hidden = showBreakdown;
+
+      // Only one card's content should live in the drawer's tabs at a time —
+      // detach whatever the previously-opened card left behind (its refs are
+      // kept on that card, so it can be re-attached if reopened).
+      cardDrawerBreakdown.replaceChildren();
+      cardDrawerAgents.replaceChildren();
+      cardDrawerJourney.replaceChildren();
+
+      if (card._drawerBreakdown) cardDrawerBreakdown.appendChild(card._drawerBreakdown);
+      if (card._drawerAgents) cardDrawerAgents.appendChild(card._drawerAgents);
+
+      if (card.dataset.drawerMoved !== '1') {
+        const agentsTable = card.querySelector('.agents-table');
+        if (agentsTable) {
+          cardDrawerAgents.appendChild(agentsTable);
+          card._drawerAgents = agentsTable;
+        }
+        const breakdownContent = card.querySelector('.roi-chart-collapse');
+        if (breakdownContent) {
+          cardDrawerBreakdown.appendChild(breakdownContent);
+          card._drawerBreakdown = breakdownContent;
+          // Normally lazy-initialized by clicking "Daily Breakdown" — that
+          // button was removed here, so the chart is rendered explicitly.
+          const chartEl = breakdownContent.querySelector('.roi-chart');
+          if (chartEl) renderRoiChart(chartEl);
+        }
+        card.dataset.drawerMoved = '1';
+      }
+
+      // The ROI/realized-value summary sits above the tabs — cloned (not
+      // moved) so it keeps showing in the underlying panel card too, and
+      // shared ahead of both panels so it's visible on whichever tab is active.
+      if (!card._drawerJourney) {
+        const journeySource = card.querySelector('.roi-journey');
+        if (journeySource) card._drawerJourney = journeySource.cloneNode(true);
+      }
+      if (card._drawerJourney) {
+        cardDrawerJourney.appendChild(card._drawerJourney);
+        const sparkEl = card._drawerJourney.querySelector('.roi-sparkline');
+        if (sparkEl) renderSparkline(sparkEl);
+      }
+
+      cardDrawerBackdrop.hidden = false;
+      cardDrawer.classList.add('open');
+      cardDrawer.setAttribute('aria-hidden', 'false');
+    }
+
+    function closeCardDrawer() {
+      cardDrawer.classList.remove('open');
+      cardDrawer.setAttribute('aria-hidden', 'true');
+      cardDrawerBackdrop.hidden = true;
+    }
+
+    document.getElementById('rightSidePanel')?.addEventListener('click', (event) => {
+      if (event.target.closest('button, a, input, select, textarea, label')) return;
+      const card = event.target.closest('.opportunity-card');
+      if (!card) return;
+      openCardDrawer(card);
+    });
+
+    demoCardsContainer?.addEventListener('click', (event) => {
+      // Drawer is a Right Side Panel concept only — the regular view (panel
+      // off) always uses the same inline collapse/expand as Intent mode,
+      // whether these demo cards are aggregate or split by agent.
+      if (!rightPanelActive) return;
+      if (event.target.closest('button, a, input, select, textarea, label')) return;
+      const card = event.target.closest('.opportunity-card');
+      if (!card) return;
+      openCardDrawer(card);
+    });
+
+    // Real Actions list — while Right Side Panel mode is on, its inline
+    // Daily Breakdown toggle is CSS-hidden (see body.right-panel-mode
+    // above), so the drawer is the only way to reach that content; wire
+    // the same click-to-open here, for every card regardless of whether it
+    // was on screen already or appended later by loadMoreRows().
+    tableBody?.addEventListener('click', (event) => {
+      if (!rightPanelActive) return;
+      if (event.target.closest('button, a, input, select, textarea, label')) return;
+      const card = event.target.closest('.opportunity-card');
+      if (!card) return;
+      openCardDrawer(card);
+    });
+
+
+    cardDrawerClose.addEventListener('click', closeCardDrawer);
+    cardDrawerBackdrop.addEventListener('click', closeCardDrawer);
+
+    document.querySelectorAll('.card-drawer-tab').forEach(tab => {
+      tab.addEventListener('click', () => {
+        document.querySelectorAll('.card-drawer-tab').forEach(t => {
+          const active = t === tab;
+          t.classList.toggle('active', active);
+          t.setAttribute('aria-selected', String(active));
+        });
+        cardDrawerBreakdown.hidden = tab.dataset.drawerTab !== 'breakdown';
+        cardDrawerAgents.hidden = tab.dataset.drawerTab !== 'agents';
+      });
+    });
+
+    // Handle suggestion buttons
+    document.querySelectorAll('.ai-suggestion-btn').forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        aiPanelInput.value = e.target.textContent;
+        aiPanelInput.focus();
+      });
+    });
+
+    // "Ask AI ↗" inline link on a ROI chart insight — opens the chat panel
+    // and pre-fills the dynamically-built question for that card, ready for
+    // the user to review/edit and send themselves. Never fires on its own;
+    // only in response to this click.
+    document.addEventListener('click', (event) => {
+      const link = event.target.closest('.roi-ask-ai-link');
+      if (!link) return;
+      if (link.closest('.card-drawer')) closeCardDrawer();
+      aiPanel.classList.add('open');
+      contentWrapper.classList.add('ai-open');
+      aiPanelInput.value = link.dataset.question || '';
+      aiPanelSend.disabled = !aiPanelInput.value.trim();
+      aiPanelInput.focus();
+    });
+
+    // Handle send button
+    aiPanelSend.addEventListener('click', () => {
+      const message = aiPanelInput.value.trim();
+      if (message) {
+        console.log('Sending message:', message);
+        // Add your AI message handling here
+        aiPanelInput.value = '';
+      }
+    });
+
+    // Handle Enter key in input
+    aiPanelInput.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' && !e.shiftKey) {
+        e.preventDefault();
+        aiPanelSend.click();
+      }
+    });
+
+    // Enable/disable send button based on input
+    aiPanelInput.addEventListener('input', () => {
+      aiPanelSend.disabled = !aiPanelInput.value.trim();
+    });
+
+    // Initialize send button state
+    aiPanelSend.disabled = true;
+
+    // Initialize row counts
+    totalCountEl.textContent = tableBody.querySelectorAll('.opportunity-card').length + moreRows.length;
+    updateRowCount();
+
+    // AI Insights — collapse / expand toggle
+    const aiInsights = document.getElementById('aiInsights');
+    const aiInsightsToggle = document.getElementById('aiInsightsToggle');
+    aiInsightsToggle.addEventListener('click', () => {
+      const isCollapsed = aiInsights.classList.toggle('collapsed');
+      aiInsightsToggle.setAttribute('aria-expanded', String(!isCollapsed));
+      aiInsightsToggle.setAttribute('aria-label', isCollapsed ? 'Expand AI Insights' : 'Collapse AI Insights');
+    });
+
+    // AI Insights — dismiss recommended actions section
+    const aiInsightsDismiss = document.querySelector('.ai-insights-dismiss');
+    if (aiInsightsDismiss) {
+      aiInsightsDismiss.addEventListener('click', () => {
+        aiInsightsDismiss.closest('.ai-insights-section').remove();
+      });
+    }
+  </script>
+  <!-- A11y: sync ARIA on .ai-panel + its trigger when `.open` toggles. -->
+  <script>
+    (function () {
+      const panel = document.getElementById('aiPanel');
+      const trigger = document.querySelector('.topbar-ask-ai-btn');
+      if (!panel) return;
+      // Track previously-focused element so we can restore focus on close.
+      let lastFocus = null;
+
+      const syncAria = () => {
+        const open = panel.classList.contains('open');
+        panel.setAttribute('aria-hidden', open ? 'false' : 'true');
+        if (trigger) trigger.setAttribute('aria-expanded', open ? 'true' : 'false');
+        if (open) {
+          lastFocus = document.activeElement;
+          const focusTarget = panel.querySelector('input, textarea, button, [tabindex]:not([tabindex="-1"])');
+          if (focusTarget) setTimeout(() => focusTarget.focus(), 50);
+        } else if (lastFocus && typeof lastFocus.focus === 'function') {
+          lastFocus.focus();
+          lastFocus = null;
+        }
+      };
+
+      // Initial sync (in case .open is already present on load).
+      syncAria();
+
+      // React to class changes triggered by the existing open/close handlers.
+      new MutationObserver((mutations) => {
+        if (mutations.some(m => m.attributeName === 'class')) syncAria();
+      }).observe(panel, { attributes: true, attributeFilter: ['class'] });
+
+      // Escape closes the panel.
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && panel.classList.contains('open')) {
+          panel.classList.remove('open');
+          const wrapper = document.querySelector('.content-wrapper');
+          if (wrapper) wrapper.classList.remove('ai-open');
+        }
+      });
+
+      // Trap Tab inside the panel while it's open.
+      panel.addEventListener('keydown', (e) => {
+        if (e.key !== 'Tab' || !panel.classList.contains('open')) return;
+        const focusables = panel.querySelectorAll(
+          'a[href], button:not([disabled]), textarea:not([disabled]), input:not([disabled]), select:not([disabled]), [tabindex]:not([tabindex="-1"])'
+        );
+        if (!focusables.length) return;
+        const first = focusables[0];
+        const last = focusables[focusables.length - 1];
+        if (e.shiftKey && document.activeElement === first) {
+          e.preventDefault();
+          last.focus();
+        } else if (!e.shiftKey && document.activeElement === last) {
+          e.preventDefault();
+          first.focus();
+        }
+      });
+    })();
+  </script>
+  <!-- A11y: sync topbar-back-btn aria-expanded with .sidebar.collapsed. -->
+  <script>
+    (function () {
+      const sidebar = document.querySelector('.sidebar');
+      const trigger = document.querySelector('.topbar-back-btn');
+      if (!sidebar || !trigger) return;
+      const sync = () => {
+        const collapsed = sidebar.classList.contains('collapsed');
+        trigger.setAttribute('aria-expanded', collapsed ? 'false' : 'true');
+      };
+      sync();
+      new MutationObserver(() => sync()).observe(sidebar, {
+        attributes: true, attributeFilter: ['class']
+      });
+    })();
+  </script>
+  <!-- A11y: shared dialog ARIA sync for `[hidden]`-driven modals. -->
+  <script>
+    (function () {
+      const SELECTOR = '.modal-backdrop, .share-modal-backdrop, .chart-modal-backdrop, .chart-card-fullscreen-backdrop';
+      const focusStack = new WeakMap();
+
+      const focusablesIn = (root) => root.querySelectorAll(
+        'a[href], button:not([disabled]), textarea:not([disabled]), input:not([disabled]), select:not([disabled]), [tabindex]:not([tabindex="-1"])'
+      );
+
+      const sync = (el) => {
+        const isOpen = !el.hidden;
+        el.setAttribute('aria-hidden', isOpen ? 'false' : 'true');
+        if (!el.hasAttribute('role')) el.setAttribute('role', 'dialog');
+        if (!el.hasAttribute('aria-modal')) el.setAttribute('aria-modal', 'true');
+        if (isOpen) {
+          focusStack.set(el, document.activeElement);
+          const focusables = focusablesIn(el);
+          if (focusables.length) setTimeout(() => focusables[0].focus(), 50);
+        } else {
+          const prev = focusStack.get(el);
+          if (prev && typeof prev.focus === 'function') prev.focus();
+          focusStack.delete(el);
+        }
+      };
+
+      const observe = (el) => {
+        if (el.dataset.a11yWired === '1') return;
+        el.dataset.a11yWired = '1';
+        sync(el);
+        new MutationObserver((mutations) => {
+          if (mutations.some(m => m.attributeName === 'hidden')) sync(el);
+        }).observe(el, { attributes: true, attributeFilter: ['hidden'] });
+
+        // Tab trap
+        el.addEventListener('keydown', (e) => {
+          if (el.hidden) return;
+          if (e.key === 'Escape') {
+            el.hidden = true;
+            return;
+          }
+          if (e.key !== 'Tab') return;
+          const focusables = focusablesIn(el);
+          if (!focusables.length) return;
+          const first = focusables[0];
+          const last = focusables[focusables.length - 1];
+          if (e.shiftKey && document.activeElement === first) {
+            e.preventDefault();
+            last.focus();
+          } else if (!e.shiftKey && document.activeElement === last) {
+            e.preventDefault();
+            first.focus();
+          }
+        });
+      };
+
+      // Wire existing modals on load.
+      document.querySelectorAll(SELECTOR).forEach(observe);
+
+      // Catch dialogs added later (e.g. the fullscreen chart overlay).
+      new MutationObserver((mutations) => {
+        mutations.forEach((m) => {
+          m.addedNodes.forEach((node) => {
+            if (!(node instanceof Element)) return;
+            if (node.matches(SELECTOR)) observe(node);
+            node.querySelectorAll && node.querySelectorAll(SELECTOR).forEach(observe);
+          });
+        });
+      }).observe(document.body, { childList: true, subtree: true });
+    })();
+  </script>
+  <!-- A11y: track whether the user is navigating via Tab so the focus
+       ring only shows during keyboard navigation, not on mouse clicks. -->
+  <script>
+    (function () {
+      const body = document.body;
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'Tab') body.classList.add('using-keyboard');
+      });
+      const drop = () => body.classList.remove('using-keyboard');
+      document.addEventListener('mousedown', drop, true);
+      document.addEventListener('pointerdown', drop, true);
+      document.addEventListener('touchstart', drop, { capture: true, passive: true });
+    })();
+  </script>
+<script src="/js/filter-keyboard.js"></script>
+<script>
+  (function () {
+    const agents = [
+      { name: 'Balance Inquiry',   calls: 412, live: 18, resolved: 91, handle: '1:48', saved: 14.7, money: 559  },
+      { name: 'Card Activation',   calls: 287, live: 9,  resolved: 88, handle: '2:05', saved: 9.8,  money: 372  },
+      { name: 'Fraud Alert',       calls: 154, live: 6,  resolved: 76, handle: '3:12', saved: 6.1,  money: 232  },
+      { name: 'Password Reset',    calls: 531, live: 22, resolved: 95, handle: '1:20', saved: 16.2, money: 616  },
+      { name: 'Loan Status',       calls: 98,  live: 3,  resolved: 82, handle: '2:40', saved: 3.9,  money: 148  },
+      { name: 'Statement Request', calls: 203, live: 7,  resolved: 93, handle: '1:35', saved: 7.4,  money: 281  },
+      { name: 'Dispute Filing',    calls: 67,  live: 4,  resolved: 68, handle: '4:02', saved: 2.1,  money: 80   },
+      { name: 'Branch Locator',    calls: 319, live: 11, resolved: 97, handle: '0:58', saved: 11.6, money: 441  },
+      { name: 'Interest Rate',     calls: 142, live: 5,  resolved: 90, handle: '1:52', saved: 5.3,  money: 201  },
+      { name: 'Account Closure',   calls: 45,  live: 2,  resolved: 71, handle: '3:44', saved: 1.4,  money: 53   },
+    ];
+
+    function ranked() { return [...agents].sort((a, b) => b.live - a.live); }
+
+    const body = document.getElementById('ahLiveBody');
+
+    function getOrCreateRow(name) {
+      let tr = body.querySelector(`[data-agent="${CSS.escape(name)}"]`);
+      if (!tr) {
+        tr = document.createElement('tr');
+        tr.dataset.agent = name;
+        tr.innerHTML = `
+          <td class="cell-agent" style="padding-left:0.9375rem;"></td>
+          <td class="cell-calls"></td>
+          <td class="cell-live"></td>
+          <td class="cell-resolved"></td>
+          <td class="cell-handle"></td>
+          <td class="cell-saved"></td>
+          <td class="cell-money"></td>`;
+      }
+      return tr;
+    }
+
+    function renderLive(flashId) {
+      const tCalls     = document.getElementById('ahTotalCalls');
+      const tLive      = document.getElementById('ahTotalLive');
+      const tSaved     = document.getElementById('ahTotalSaved');
+      const tResolved  = document.getElementById('ahAvgResolved');
+      if (!body) return;
+
+      const sorted     = ranked();
+      const sumCalls   = agents.reduce((s, a) => s + a.calls, 0);
+      const sumLive    = agents.reduce((s, a) => s + a.live,  0);
+      const sumSaved   = agents.reduce((s, a) => s + a.saved, 0);
+      const avgResolved= agents.reduce((s, a) => s + a.resolved, 0) / agents.length;
+      if (tCalls)    tCalls.textContent    = sumCalls.toLocaleString();
+      if (tLive)     tLive.textContent     = sumLive;
+      if (tSaved)    tSaved.textContent    = '~' + sumSaved.toFixed(1) + ' hrs';
+      if (tResolved) tResolved.textContent = avgResolved.toFixed(1) + '%';
+
+      // FLIP — snapshot positions before DOM changes
+      const before = {};
+      body.querySelectorAll('[data-agent]').forEach(r => {
+        before[r.dataset.agent] = r.getBoundingClientRect().top;
+      });
+
+      // Update cells and re-append in sorted order
+      sorted.forEach(agent => {
+        const tr = getOrCreateRow(agent.name);
+        const cells = tr.querySelectorAll('td');
+        cells[0].textContent = agent.name + ' Bot';
+        cells[1].textContent = agent.calls.toLocaleString();
+
+        let pill = cells[2].querySelector('.lat-live-pill');
+        if (!pill) {
+          pill = document.createElement('span');
+          pill.className = 'lat-live-pill';
+          pill.innerHTML = `<svg class="lat-headset" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11h3a1 1 0 0 1 1 1v5a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1z"/><path d="M21 11h-3a1 1 0 0 0-1 1v5a1 1 0 0 0 1 1h2a1 1 0 0 0 1-1z"/><path d="M3 11a9 9 0 0 1 18 0"/><path d="M21 16v2a4 4 0 0 1-4 4h-5"/></svg><span class="lat-live-num"></span>`;
+          cells[2].innerHTML = '';
+          cells[2].appendChild(pill);
+        }
+        const numEl = pill.querySelector('.lat-live-num');
+        if (numEl.textContent !== String(agent.live)) {
+          numEl.textContent = agent.live;
+          if (agent.name === flashId) {
+            pill.classList.add('flash');
+            setTimeout(() => pill.classList.remove('flash'), 600);
+          }
+        }
+
+        cells[3].textContent = agent.resolved + '%';
+        cells[4].textContent = agent.handle;
+        cells[5].textContent = agent.saved + 'h';
+        cells[6].textContent = '$' + agent.money.toLocaleString();
+        body.appendChild(tr);
+      });
+
+      // FLIP — animate rows that moved
+      body.querySelectorAll('[data-agent]').forEach(tr => {
+        const name = tr.dataset.agent;
+        if (!(name in before)) return;
+        const dy = before[name] - tr.getBoundingClientRect().top;
+        if (Math.abs(dy) < 1) return;
+        tr.style.transition = 'none';
+        tr.style.transform  = `translateY(${dy}px)`;
+        requestAnimationFrame(() => {
+          tr.style.transition = 'transform 0.45s cubic-bezier(0.4,0,0.2,1)';
+          tr.style.transform  = 'translateY(0)';
+        });
+      });
+    }
+
+    renderLive(null);
+
+    setInterval(() => {
+      const idx = Math.floor(Math.random() * agents.length);
+      agents[idx].live  = Math.max(0, agents[idx].live + (Math.random() < 0.5 ? 1 : -1));
+      agents[idx].calls += Math.floor(Math.random() * 3);
+      renderLive(agents[idx].name);
+    }, 3000);
+  })();
+</script>
+<!-- Mark the first metric cell of each visual row so the inter-cell
+     vertical separator is suppressed on wrapped rows. -->
+<script>
+  (function () {
+    const markRowStarts = (grid) => {
+      const items = grid.querySelectorAll(':scope > .opportunity-metric');
+      let lastTop = -Infinity;
+      items.forEach((el) => {
+        const top = el.offsetTop;
+        if (top > lastTop + 1) {
+          el.classList.add('is-row-start');
+          lastTop = top;
+        } else {
+          el.classList.remove('is-row-start');
+        }
+      });
+    };
+    const observeAll = () => {
+      document.querySelectorAll('.opportunity-metrics').forEach((grid) => {
+        if (grid.dataset.rowMarkerReady === '1') return;
+        grid.dataset.rowMarkerReady = '1';
+        markRowStarts(grid);
+        if (typeof ResizeObserver !== 'undefined') {
+          new ResizeObserver(() => markRowStarts(grid)).observe(grid);
+        }
+      });
+    };
+    observeAll();
+    new MutationObserver(() => observeAll()).observe(document.body, {
+      childList: true, subtree: true
+    });
+    window.addEventListener('resize', () => {
+      document.querySelectorAll('.opportunity-metrics').forEach(markRowStarts);
+    });
+  })();
+</script>
+
+</body>
+</html>

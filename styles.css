@@ -2654,7 +2654,7 @@ a.topbar-breadcrumb:hover {
 }
 
 .ai-briefing-tag {
-    font-size: var(--text-sm);
+    font-size: var(--text-lg);
     font-weight: var(--font-semibold);
     letter-spacing: 0.08em;
     color: var(--color-primary-900);
@@ -2757,9 +2757,8 @@ a.topbar-breadcrumb:hover {
 
 /* When "WHAT TO ACT ON FIRST" is hidden, cap the narrative's line length
    instead of letting it stretch across the now-empty full-width layout. */
-.ai-briefing:has(.ai-brief-right[hidden]) .ai-brief-narrative {
-    max-width: 52.5rem;
-}
+
+
 
 .ai-brief-narrative strong {
     color: var(--color-primary-900);
@@ -2800,6 +2799,26 @@ a.topbar-breadcrumb:hover {
     font-weight: var(--font-regular);
     color: var(--color-text-secondary);
     letter-spacing: -0.01em;
+}
+
+.ai-brief-hero-caption-text {
+    font-size: var(--text-sm);
+}
+
+.ai-brief-hero-info {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    vertical-align: middle;
+    width: 1.125rem;
+    height: 1.125rem;
+    margin-left: var(--space-1);
+    padding: 0;
+    border: none;
+    background: none;
+    color: inherit;
+    cursor: pointer;
+    flex-shrink: 0;
 }
 
 .ai-brief-badge {
@@ -3580,6 +3599,7 @@ a.topbar-breadcrumb:hover {
     background: transparent;
     border: none;
     text-align: left;
+    text-decoration: none;
     color: var(--color-text-primary);
     font-family: var(--font-sans);
     font-size: var(--text-sm);
@@ -3741,8 +3761,8 @@ a.topbar-breadcrumb:hover {
 }
 
 .opportunities-settings {
-    width: 2rem;
-    height: 2rem;
+    width: 1.5rem;
+    height: 1.5rem;
     display: inline-flex;
     align-items: center;
     justify-content: center;
@@ -3750,8 +3770,13 @@ a.topbar-breadcrumb:hover {
     border: none;
     cursor: pointer;
     color: var(--color-text-muted);
-    border-radius: var(--rounded-md);
+    border-radius: var(--rounded-sm);
     transition: color 0.2s, background-color 0.2s;
+}
+
+.opportunities-settings svg {
+    width: 1rem;
+    height: 1rem;
 }
 
 .opportunities-settings:hover {
@@ -3917,8 +3942,15 @@ a.topbar-breadcrumb:hover {
     margin-bottom: var(--space-2);
 }
 
-.opportunity-viewby-wrapper {
+.opportunity-viewby-sort-group {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: var(--space-2);
     margin-left: auto;
+}
+
+.opportunity-viewby-wrapper {
     align-self: center;
 }
 
@@ -3927,7 +3959,7 @@ a.topbar-breadcrumb:hover {
 }
 
 .opportunity-viewby-wrapper .filter-btn {
-    width: 16rem;
+    width: 14.9rem;
     height: 2.25rem;
     box-sizing: border-box;
     padding-top: 0;
@@ -3955,6 +3987,8 @@ a.topbar-breadcrumb:hover {
    Sort by dropdown. Right-most element in the row. */
 .sort-toggle-group {
     display: inline-flex;
+    height: 2.25rem;
+    box-sizing: border-box;
     border: 0.0625rem solid var(--color-border);
     border-radius: var(--rounded-md);
 }
@@ -3975,7 +4009,7 @@ a.topbar-breadcrumb:hover {
     justify-content: center;
     position: relative;
     width: 2.25rem;
-    height: 2.25rem;
+    height: 100%;
     padding: 0;
     border: none;
     background: var(--color-bg-primary);
@@ -4050,6 +4084,7 @@ a.topbar-breadcrumb:hover {
 .section-meta-sub {
     font-size: var(--text-sm);
     color: var(--neutral-500);
+    padding-bottom: var(--space-1)
 }
 
 /* Analyzed Period — compact single-row variant */
@@ -4064,9 +4099,13 @@ a.topbar-breadcrumb:hover {
     padding: var(--space-4) var(--space-5);
 }
 
+.ai-briefing .ai-brief-footer {
+    border: none;
+}
+
 .analyzed-period-compact-label {
-    font-size: var(--text-md);
-    color: var(--neutral-500);
+    font-size: var(--text-sm);
+    color: rgba(255, 255, 255, 0.55);
     font-weight: var(--font-regular);
     white-space: nowrap;
 }
@@ -4092,24 +4131,23 @@ a.topbar-breadcrumb:hover {
     display: inline-flex;
     align-items: center;
     gap: var(--space-2);
-    font-size: var(--text-md);
-    font-weight: var(--font-medium);
-    color: var(--color-primary-900);
+    font-size: var(--text-sm);
+    color: rgba(255, 255, 255, 0.55);
 }
 
 .stat-inline svg {
     width: 1rem;
     height: 1rem;
-    color: var(--neutral-400);
+    color: rgba(255, 255, 255, 0.55);
     flex-shrink: 0;
 }
 
 .stat-inline-label {
     font-size: var(--text-xs);
-    color: var(--neutral-500);
     font-weight: var(--font-regular);
     position: relative;
-    top: -0.125rem;
+    top: -0.200rem;
+   color: rgba(255, 255, 255, 0.55);
 }
 
 /* Stats grid — six tiles for Analyzed Period */
@@ -4271,8 +4309,6 @@ a.topbar-breadcrumb:hover {
     font-size: var(--text-lg);
     font-weight: var(--font-medium);
     color: var(--color-primary-900);
-     padding-bottom: var(--space-1);
-
 }
 
 .opportunity-card-subtitle {
@@ -4628,10 +4664,18 @@ a.topbar-breadcrumb:hover {
 }
 
 .agent-actions-inline-title {
+    display: flex;
+    align-items: center;
+    gap: 8px;
     font-size: var(--text-sm);
     font-weight: var(--font-semibold);
     color: var(--color-primary-900);
     margin: 0 0 var(--space-2);
+}
+
+.agent-actions-inline-title .section-meta-sub {
+    font-size: var(--text-xs);
+    font-weight: var(--font-regular);
 }
 
 /* Sub-sub-cards (numbered Charge Breakdown items inside an expanded sub-card) */
@@ -7618,6 +7662,26 @@ body.using-keyboard .agent-edit-input:focus-visible {
     display: none;
 }
 
+.global-tooltip--wrap {
+    white-space: pre-line;
+    max-width: 25rem;
+    text-align: left;
+}
+
+.global-tooltip--above {
+    transform: translate(-50%, -100%);
+}
+
+.global-tooltip--above::after {
+    content: "";
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    border: 0.25rem solid transparent;
+    border-top-color: var(--neutral-900);
+}
+
 .automation-opportunities-copy .opportunity-sub-list-chart-card-fs:hover[data-tooltip]::after,
 .automation-opportunities-copy .opportunity-sub-list-chart-card-fs:focus-visible[data-tooltip]::after {
     opacity: 1;
@@ -7809,6 +7873,52 @@ body.using-keyboard .agent-edit-input:focus-visible {
     white-space: normal;
     word-break: normal;
     overflow-wrap: break-word;
+}
+
+/* On wide/high-res viewports there's enough per-column width for every
+   metric header to sit on one line. Raise each column's floor width just
+   enough for its own label (+ the info icon on Automatable Volume) so a
+   header's nowrap text can't overflow into the neighboring column — this is
+   what caused Total Volume / Automatable Volume to visually collide before.
+   Left at minmax(0, …) below this breakpoint so narrow/mobile layouts keep
+   relying on the existing horizontal-scroll behavior instead of being forced
+   wider than the viewport. */
+@media (min-width: 1440px) {
+    .automation-opportunities-copy .opportunity-sub-list {
+        --sub-grid-cols:
+            minmax(0, 3.5fr)         /* 1. Topic — widest */
+            minmax(7rem, 1.1fr)      /* 2. Total Volume */
+            minmax(10.5rem, 1.1fr)   /* 3. Automatable Volume (label + info icon) */
+            minmax(7rem, 1.1fr)      /* 4. Automatable % */
+            minmax(7rem, 1.1fr)      /* 5. Avg. Duration */
+            minmax(7.5rem, 1.1fr)    /* 6. Avg. Sentiment */
+            minmax(7rem, 1fr)        /* 7. Annual Savings */
+            2.5rem;                  /* 8. Actions (kebab only) */
+    }
+
+    .automation-opportunities-copy .opportunity-sub-list-header > div:nth-child(n+2):nth-child(-n+8) {
+        white-space: nowrap;
+    }
+}
+
+.automation-opportunities-copy .opportunity-sub-list-header > div[data-col="automatableVolume"] {
+    display: inline-flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: var(--space-1);
+}
+
+.automation-opportunities-copy .opportunity-sub-list-header .automatable-volume-info {
+    width: 1rem;
+    height: 1rem;
+    flex-shrink: 0;
+    position: relative;
+    top: 0.125rem;
+}
+
+.automation-opportunities-copy .opportunity-sub-list-header .automatable-volume-info svg {
+    width: 0.75rem;
+    height: 0.75rem;
 }
 
 /* col 9 (Actions) — empty header cell aligned right */
@@ -8421,17 +8531,9 @@ body.using-keyboard :focus-visible {
 body.using-keyboard input:focus-visible,
 body.using-keyboard textarea:focus-visible,
 body.using-keyboard select:focus-visible,
+body.using-keyboard .opportunity-sub-list-search-input:focus-visible,
 body.using-keyboard .filter-search-input:focus-visible,
 body.using-keyboard [contenteditable="true"]:focus-visible {
-    outline: none;
-    box-shadow: 0 0 0 0.125rem var(--color-bg-primary),
-                0 0 0 0.25rem var(--primary-500);
-}
-
-/* The search box's ring wraps the whole pill (icon + input + padding), not
-   just the bare <input>, so keyboard focus reads as "this whole field",
-   matching every other keyboard-focus ring on the page. */
-body.using-keyboard .opportunity-sub-list-search:focus-within {
     outline: none;
     box-shadow: 0 0 0 0.125rem var(--color-bg-primary),
                 0 0 0 0.25rem var(--primary-500);
